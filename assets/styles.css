@@ -1,0 +1,51 @@
+/* Reset some default styles */
+*, *:before, *:after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Set a background color and font styles for the whole page */
+body {
+    background-color: #f0f0f0; /* Change this to your preferred background color */
+    font-family: Arial, sans-serif; /* Change the font-family as needed */
+    color: #333; /* Change the text color as needed */
+}
+
+/* Center content in the middle of the page */
+.container {
+    max-width: 960px; /* Adjust the maximum width as needed */
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Style headings */
+h1 {
+    font-size: 36px; /* Adjust the font size as needed */
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 24px; /* Adjust the font size as needed */
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* Style paragraphs */
+p {
+    font-size: 16px; /* Adjust the font size as needed */
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+/* Style links */
+a {
+    color: #007BFF; /* Change the link color as needed */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #0056b3; /* Change the link color on hover as needed */
+}

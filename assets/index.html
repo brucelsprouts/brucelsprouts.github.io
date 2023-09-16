@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head>  
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bruce's Portfolio</title>
-    <!-- Add your CSS links here -->
+    <title>Bruce's Portfolio    </title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
     <!-- EnterView with your name -->
@@ -57,9 +57,17 @@
                         <div class="_dot">&#9679;</div>
                         <a class="_text" href="#">Home</a>
                     </li>
-                    <li :class="{ 'is-selected': $store.ui.currentPath === '/projects/' }">
+                    <li :class="{ 'is-selected': $store.ui.currentPath === '/code-projects/' }">
                         <div class="_dot">&#9679;</div>
-                        <a class="_text" href="#">Projects</a>
+                        <a class="_text" href="#">Code Projects</a>
+                    </li>
+                    <li :class="{ 'is-selected': $store.ui.currentPath === '/after-effects-projects/' }">
+                        <div class="_dot">&#9679;</div>
+                        <a class="_text" href="#">After Effects Projects</a>
+                    </li>
+                    <li :class="{ 'is-selected': $store.ui.currentPath === '/photoshop-projects/' }">
+                        <div class="_dot">&#9679;</div>
+                        <a class="_text" href="#">Photoshop Projects</a>
                     </li>
                     <li :class="{ 'is-selected': $store.ui.currentPath === '/info/' }">
                         <div class="_dot">&#9679;</div>
