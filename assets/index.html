@@ -1,15 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bruce's Portfolio</title>
-    <link rel="stylesheet" href="homepage.css">
-    <script src="js/homepage.js"></script>
-</head> 
+    <!-- Add your CSS links here -->
+</head>
 <body>
-    <button>Click me!</button>
-    <div class="main">
-            
+    <!-- EnterView with your name -->
+    <div id="EnterView">
+        <div class="_t1">Bruce's Portfolio</div>
     </div>
-    
+
+    <!-- Main content -->
+    <div id="Page">
+        <!-- Background elements -->
+        <div id="Background">
+            <!-- Your background content here -->
+        </div>
+
+        <!-- Mask elements -->
+        <div class="mask" id="Mask">
+            <div class="mask_top"></div>
+            <div class="mask_bottom"></div>
+        </div>
+
+        <!-- Frame elements -->
+        <div class="frame" id="Frame">
+            <div class="frame_line frame_line-left"></div>
+            <div class="frame_line frame_line-right"></div>
+            <div class="frame_line frame_line-top"></div>
+            <div class="frame_line frame_line-bottom"></div>
+        </div>
+
+        <!-- Theme selector -->
+        <div class="theme" id="Theme" x-data>
+            <div class="theme_color" :class="{ 'is-selected': $store.ui.theme === 'light' }">
+                <div class="_box"></div>
+                <div class="_text">Light</div>
+            </div>
+            <div class="theme_color" :class="{ 'is-selected': $store.ui.theme === 'dark' }">
+                <div class="_box"></div>
+                <div class="_text">Dark</div>
+            </div>
+        </div>
+
+        <!-- Site header -->
+        <header class="siteHeader" id="SiteHeader">
+            <h1 class="siteHeader_title">Bruce's Portfolio</h1>
+            <p class="siteHeader_label">Designer & Developer</p>
+            
+            <!-- Navigation -->
+            <nav class="siteHeader_nav" x-data>
+                <ol>
+                    <li :class="{ 'is-selected': $store.ui.currentPath === '/' }">
+                        <div class="_dot">&#9679;</div>
+                        <a class="_text" href="#">Home</a>
+                    </li>
+                    <li :class="{ 'is-selected': $store.ui.currentPath === '/projects/' }">
+                        <div class="_dot">&#9679;</div>
+                        <a class="_text" href="#">Projects</a>
+                    </li>
+                    <li :class="{ 'is-selected': $store.ui.currentPath === '/info/' }">
+                        <div class="_dot">&#9679;</div>
+                        <a class="_text" href="#">Info</a>
+                    </li>
+                    <li :class="{ 'is-selected': $store.ui.currentPath === '/contact/' }">
+                        <div class="_dot">&#9679;</div>
+                        <a class="_text" href="#">Contact</a>
+                    </li>
+                </ol>
+            </nav>
+        </header>
+
+        <!-- Main content goes here -->
+
+    </div>
+
+    <!-- Your JavaScript file -->
+    <script src="js/js-main.js"></script>
 </body>
 </html>
