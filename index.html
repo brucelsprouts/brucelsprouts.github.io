@@ -1,132 +1,131 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>  
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bruce's Portfolio</title>
-    <meta name="description" content="Computer scientist and Multimedia creater">
-    <link rel="canonical" href="https://brucelsprouts.github.io/brucelsprouts">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://brucelsprouts.github.io">
-    <link rel="stylesheet" type="text/css" href="styles.css">
-</head>
-<body>
-    <!-- EnterView with your name -->
-    <div id="EnterView">
-        <div class="_t1">Bruce's Portfolio</div>
-    </div>
-
-    <!-- Main content -->
-    <div id="Page">
-        <!-- Background elements -->
-        <div id="Background">
-            <!-- Your background content here -->
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Bruce's Portfolio</title>
+        <meta name="description" content="Computer scientist and Multimedia creator">
+        <link rel="canonical" href="https://brucelsprouts.github.io/brucelsprouts">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://brucelsprouts.github.io">
+        <link rel="stylesheet" type="text/css" href="styles.css">
+    </head>
+    <body>
+        <!-- EnterView with your name -->
+        <div id="EnterView" class="fade-out">
+            <div class="_t1">Bruce's Portfolio</div>
         </div>
 
-        <!-- Mask elements -->
-        <div class="mask" id="Mask">
-            <div class="mask_top"></div>
-            <div class="mask_bottom"></div>
-        </div>
-
-        <!-- Frame elements -->
-        <div class="frame" id="Frame">
-            <div class="frame_line frame_line-left"></div>
-            <div class="frame_line frame_line-right"></div>
-            <div class="frame_line frame_line-top"></div>
-            <div class="frame_line frame_line-bottom"></div>
-        </div>
-
-        <!-- Theme selector -->
-        <div class="theme" id="Theme" x-data>
-            <div class="theme_color" :class="{ 'is-selected': $store.ui.theme === 'light' }">
-                <div class="_box"></div>
-                <div class="_text">Light</div>
-            </div>
-            <div class="theme_color" :class="{ 'is-selected': $store.ui.theme === 'dark' }">
-                <div class="_box"></div>
-                <div class="_text">Dark</div>
-            </div>
-        </div>
-
-        <!-- Site header -->
-        <header class="siteHeader" id="SiteHeader">
-            <h1 class="siteHeader_title">Bruce's Portfolio</h1>
-            <p class="siteHeader_label">Designer & Developer</p>
-            
-            <!-- Navigation -->
-            
-            <nav class="siteHeader_nav" x-data>
-                <ol>
-                    <li :class="{ 'is-selected': $store.ui.currentPath === '#home' }">
-                        <div class="_dot">&#9679;</div>
-                        <a class="_text" href="#home">Home</a>
-                    </li>
-                    <li :class="{ 'is-selected': $store.ui.currentPath === '#code-projects' }">
-                        <div class="_dot">&#9679;</div>
-                        <a class="_text" href="#code-projects">Code Projects</a>
-                    </li>
-                    <li :class="{ 'is-selected': $store.ui.currentPath === '#after-effects-projects' }">
-                        <div class="_dot">&#9679;</div>
-                        <a class="_text" href="#after-effects-projects">After Effects Projects</a>
-                    </li>
-                    <li :class="{ 'is-selected': $store.ui.currentPath === '#photoshop-projects' }">
-                        <div class="_dot">&#9679;</div>
-                        <a class="_text" href="#photoshop-projects">Photoshop Projects</a>
-                    </li>
-                    <li :class="{ 'is-selected': $store.ui.currentPath === '#info' }">
-                        <div class="_dot">&#9679;</div>
-                        <a class="_text" href="#info">Info</a>
-                    </li>
-                    <li :class="{ 'is-selected': $store.ui.currentPath === '#contact' }">
-                        <div class="_dot">&#9679;</div>
-                        <a class="_text" href="#contact">Contact</a>
-                    </li>
-                </ol>
-            </nav>
-        </header>
-
-        <!-- Main content goes here -->
-        <div id="content">
-            <!-- Home Page Content -->
-            <section id="home" class="page">
-                <h2>Welcome to My Portfolio</h2>
-                <p>This is the home page content.</p>
-            </section>
-        
-            <!-- Code Projects Page Content -->
-            <section id="code-projects" class="page">
-                <h2>Code Projects</h2>
-                <p>This is the code projects page content.</p>
-            </section>
-        
-            <!-- After Effects Projects Page Content -->
-            <section id="after-effects-projects" class="page">
-                <h2>After Effects Projects</h2>
-                <p>This is the After Effects projects page content.</p>
-            </section>
-        
-            <!-- Photoshop Projects Page Content -->
-            <section id="photoshop-projects" class="page">
-                <h2>Photoshop Projects</h2>
-                <p>This is the Photoshop projects page content.</p>
-            </section>
-        
-            <!-- Info Page Content -->
-            <section id="info" class="page">
-                <h2>Info</h2>
-                <p>This is the info page content.</p>
-            </section>
-        
-            <!-- Contact Page Content -->
-            <section id="contact" class="page">
-                <h2>Contact</h2>
-                <p>This is the contact page content.</p>
-            </section>
+        <!-- Main content -->
+        <div id="Page">
+            <!-- Background elements -->
+            <div id="Background">
+                <!-- Your background content here -->
             </div>
 
-    </div>
-    <!-- Your JavaScript file -->
-    <script src="main.js"></script>
-</body>
-</html>
+            <!-- Mask elements -->
+            <div class="mask" id="Mask">
+                <div class="mask_top"></div>
+                <div class="mask_bottom"></div>
+            </div>
+
+            <!-- Frame elements -->
+            <div class="frame" id="Frame">
+                <div class="frame_line frame_line-left"></div>
+                <div class="frame_line frame_line-right"></div>
+                <div class="frame_line frame_line-top"></div>
+                <div class="frame_line frame_line-bottom"></div>
+            </div>
+
+            <!-- Theme selector -->
+            <div class="theme" id="Theme" x-data>
+                <div class="theme_color" :class="{ 'is-selected': $store.ui.theme === 'light' }">
+                    <div class="_box"></div>
+                    <div class="_text">Light</div>
+                </div>
+                <div class="theme_color" :class="{ 'is-selected': $store.ui.theme === 'dark' }">
+                    <div class="_box"></div>
+                    <div class="_text">Dark</div>
+                </div>
+            </div>
+
+            <!-- Site header -->
+            <header class="siteHeader" id="SiteHeader">
+                <h1 class="siteHeader_title">Bruce's Portfolio</h1>
+                <p class="siteHeader_label">Designer & Developer</p>
+
+                <!-- Navigation -->
+
+                <nav class="siteHeader_nav" x-data>
+                    <ol>
+                        <li :class="{ 'is-selected': $store.ui.currentPath === '#home' }">
+                            <div class="_dot">&#9679;</div>
+                            <a class="_text" href="#home">Home</a>
+                        </li>
+                        <li :class="{ 'is-selected': $store.ui.currentPath === '#code-projects' }">
+                            <div class="_dot">&#9679;</div>
+                            <a class="_text" href="#code-projects">Code Projects</a>
+                        </li>
+                        <li :class="{ 'is-selected': $store.ui.currentPath === '#after-effects-projects' }">
+                            <div class="_dot">&#9679;</div>
+                            <a class="_text" href="#after-effects-projects">After Effects Projects</a>
+                        </li>
+                        <li :class="{ 'is-selected': $store.ui.currentPath === '#photoshop-projects' }">
+                            <div class="_dot">&#9679;</div>
+                            <a class="_text" href="#photoshop-projects">Photoshop Projects</a>
+                        </li>
+                        <li :class="{ 'is-selected': $store.ui.currentPath === '#info' }">
+                            <div class="_dot">&#9679;</div>
+                            <a class="_text" href="#info">Info</a>
+                        </li>
+                        <li :class="{ 'is-selected': $store.ui.currentPath === '#contact' }">
+                            <div class="_dot">&#9679;</div>
+                            <a class="_text" href="#contact">Contact</a>
+                        </li>
+                    </ol>
+                </nav>
+            </header>
+
+            <!-- Main content goes here -->
+            <div id="content">
+                <!-- Home Page Content -->
+                <section id="home" class="page">
+                    <h2>Welcome to My Portfolio</h2>
+                    <p>This is the home page content.</p>
+                </section>
+
+                <!-- Code Projects Page Content -->
+                <section id="code-projects" class="page">
+                    <h2>Code Projects</h2>
+                    <p>This is the code projects page content.</p>
+                </section>
+
+                <!-- After Effects Projects Page Content -->
+                <section id="after-effects-projects" class="page">
+                    <h2>After Effects Projects</h2>
+                    <p>This is the After Effects projects page content.</p>
+                </section>
+
+                <!-- Photoshop Projects Page Content -->
+                <section id="photoshop-projects" class="page">
+                    <h2>Photoshop Projects</h2>
+                    <p>This is the Photoshop projects page content.</p>
+                </section>
+
+                <!-- Info Page Content -->
+                <section id="info" class="page">
+                    <h2>Info</h2>
+                    <p>This is the info page content.</p>
+                </section>
+
+                <!-- Contact Page Content -->
+                <section id="contact" class="page">
+                    <h2>Contact</h2>
+                    <p>This is the contact page content.</p>
+                </section>
+            </div>
+        </div>
+        <!-- Your JavaScript file -->
+        <script src="main.js"></script>
+    </body>
+    </html>

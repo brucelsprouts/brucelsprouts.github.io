@@ -2,16 +2,23 @@
 const navItems = document.querySelectorAll('.siteHeader_nav li');
 const contentSections = document.querySelectorAll('.page');
 
+// Function to update the content based on the selected menu item
+function updateContent(targetURL) {
+    // Hide all content sections
+    contentSections.forEach(section => section.style.display = 'none');
+
+    // Show the content section corresponding to the target URL
+    const targetSection = document.querySelector(targetURL);
+    if (targetSection) targetSection.style.display = 'block';
+}
+
 // Add click event listeners to navigation items
-navItems.forEach((item) => {
-    item.addEventListener('click', (event) => {
-        // Prevent default link behavior
+navItems.forEach(item => {
+    item.addEventListener('click', event => {
         event.preventDefault();
 
         // Remove the 'is-selected' class from all items
-        navItems.forEach((navItem) => {
-            navItem.classList.remove('is-selected');
-        });
+        navItems.forEach(navItem => navItem.classList.remove('is-selected'));
 
         // Add the 'is-selected' class to the clicked item
         item.classList.add('is-selected');
@@ -24,23 +31,32 @@ navItems.forEach((item) => {
     });
 });
 
-// Function to update the content based on the selected menu item
-function updateContent(targetURL) {
-    // Hide all content sections
-    contentSections.forEach((section) => {
-        section.style.display = 'none';
+// Add smooth scrolling behavior for internal anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', e => {
+        e.preventDefault();
+        const targetId = anchor.getAttribute('href').substring(1);
+        const targetSection = document.getElementById(targetId);
+        if (targetSection) targetSection.scrollIntoView({ behavior: 'smooth' });
     });
-
-    // Show the content section corresponding to the target URL
-    const targetSection = document.querySelector(targetURL);
-    if (targetSection) {
-        targetSection.style.display = 'block';
-    }
-}
+});
 
 // Initial page load: Show the Home page by default
 updateContent('#home');
 
 // Add the 'is-selected' class to the Home tab by default
-const homeTab = document.querySelector('[href="#home"]').closest('li');
-homeTab.classList.add('is-selected');
+document.querySelector('[href="#home"]').closest('li').classList.add('is-selected');
+
+// Wait for the DOM to be fully loaded
+document.addEventListener("DOMContentLoaded", function () {
+    // Get the EnterView element
+    const enterView = document.getElementById("EnterView");
+
+    // Function to remove the EnterView after fade-out animation
+    function removeEnterView() {
+        enterView.style.display = "none";
+    }
+
+    // Add an event listener to remove EnterView after animation completes
+    enterView.addEventListener("animationend", removeEnterView);
+});

@@ -1,67 +1,307 @@
-/* Reset some default styles */
 *, *:before, *:after {
-    box-sizing: border-box;
+    box-sizing: inherit;
+    -webkit-user-select: inherit;
+    user-select: inherit;
+    -webkit-user-drag: inherit;
+    -webkit-tap-highlight-color: inherit;
+    backface-visibility: inherit;
+}
+
+* {
     margin: 0;
     padding: 0;
 }
 
-/* Set a background color and font styles for the whole page */
-body {
-    background-color: #f0f0f0; /* Change this to your preferred background color */
-    font-family: Arial, sans-serif; /* Change the font-family as needed */
-    color: #333; /* Change the text color as needed */
+html {
+    line-height: 1;
+    box-sizing: border-box;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-/* Center content in the middle of the page */
-.container {
-    max-width: 960px; /* Adjust the maximum width as needed */
-    margin: 0 auto;
-    padding: 20px;
+main, canvas {
+    display: block;
 }
 
-/* Style headings */
-h1 {
-    font-size: 36px; /* Adjust the font size as needed */
-    font-weight: bold;
-    margin-bottom: 20px;
+h1, h2, h3, h4, h5, h6 {
+    font-weight: inherit;
+    font-size: inherit;
 }
 
-h2 {
-    font-size: 24px; /* Adjust the font size as needed */
-    font-weight: bold;
-    margin-bottom: 15px;
-}
-
-/* Style paragraphs */
-p {
-    font-size: 16px; /* Adjust the font size as needed */
-    line-height: 1.5;
-    margin-bottom: 20px;
-}
-
-/* Style links */
 a {
-    color: #007BFF; /* Change the link color as needed */
+    color: inherit;
     text-decoration: none;
-    transition: color 0.3s ease;
 }
 
-a:hover {
-    color: #0056b3; /* Change the link color on hover as needed */
-}
-                                                                             
-/* Add a dot to the active tab */
-.siteHeader_nav .is-selected {
-    position: relative;
+ol, ul {
+    list-style: none;
 }
 
-.siteHeader_nav .is-selected::before {
-    content: "•"; /* Use a bullet (•) or any other preferred symbol */
+:root {
+    --c-bg: hsl(0, 0%, 90%);
+    --c-text: hsl(0, 0%, 10%);
+    --pad: max(20px, 4vmin);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --c-bg: hsl(0, 0%, 5%);
+        --c-text: hsl(0, 0%, 95%);
+    }
+}
+
+@font-face {
+    font-family: "Neue Montreal";
+    font-weight: 200;
+    src: url("../fonts/font-PPNeueMontreal-Thin.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Neue Montreal";
+    font-weight: 400;
+    src: url("../fonts/font-PPNeueMontreal-Book.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Neue Montreal";
+    font-weight: 600;
+    src: url("../fonts/font-PPNeueMontreal-SemiBold.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Neue Montreal Mono";
+    font-weight: 200;
+    src: url("../fonts/font-PPNeueMontrealMono-Thin.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Neue Montreal Mono";
+    font-weight: 400;
+    src: url("../fonts/font-PPNeueMontrealMono-Book.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Neue Montreal Mono";
+    font-weight: 600;
+    src: url("../fonts/font-PPNeueMontrealMono-SemiBold.woff2") format("woff2");
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    background-color: var(--c-bg);
+    font-family: "Neue Montreal";
+    font-weight: 600;
+    font-size: 14px;
+    font-feature-settings: "palt";
+    -webkit-text-size-adjust: none;
+    text-size-adjust: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overscroll-behavior: none;
+}
+
+body.is-monospaced {
+    font-family: "Neue Montreal Mono";
+}
+
+#Page {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--c-bg);
+    color: #fff;
+    white-space: nowrap;
+    transition-property: background-color;
+    transition-duration: .9s;
+    transition-timing-function: cubic-bezier(0.1, 0.4, 0.2, 1);
+}
+
+#EnterView {
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    will-change: opacity;
+    background-color: var(--c-bg);
+    color: var(--c-text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: .5em;
+    font-size: 30px;
+}
+
+#EnterView ._t1 {
+    font-weight: 400;
+}
+
+#EnterView ._t2 {
+    font-weight: 200;
+}
+
+#Background {
+    position: fixed;
+    z-index: 1;
+    left: var(--pad);
+    right: var(--pad);
+    top: var(--pad);
+    bottom: var(--pad);
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.mask {
+    position: fixed;
+    z-index: 3;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.mask_top, .mask_bottom {
     position: absolute;
-    top: 50%;
-    right: -10px; /* Adjust the position of the dot as needed */
-    transform: translateY(-50%);
-    font-size: 12px; /* Adjust the dot size as needed */
-    color: #007BFF; /* Change the dot color as needed */
-    margin-right: 5px; /* Add some space between the dot and the text */
+    left: 0;
+    width: 100%;
+    height: var(--pad);
+    background-color: var(--c-bg);
+    transition-property: background-color;
+    transition-duration: .9s;
+    transition-timing-function: cubic-bezier(0.1, 0.4, 0.2, 1);
+    opacity: .9;
+}
+
+.mask_top {
+    top: 0;
+}
+
+.mask_bottom {
+    bottom: 0;
+}
+
+.frame {
+    position: fixed;
+    z-index: 10;
+    left: var(--pad);
+    right: var(--pad);
+    top: var(--pad);
+    bottom: var(--pad);
+    mix-blend-mode: difference;
+    pointer-events: none;
+}
+
+.frame_line {
+    position: absolute;
+    background-color: #fff;
+    opacity: .5;
+}
+
+.frame_line-left {
+    left: 0;
+    top: 0;
+    width: 1px;
+    height: 100%;
+}
+
+.frame_line-right {
+    right: 0;
+    top: 0;
+    width: 1px;
+    height: 100%;
+}
+
+.frame_line-top {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 1px;
+}
+
+.frame_line-bottom {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+}
+
+.theme {
+    position: fixed;
+    z-index: 10;
+    left: calc(var(--pad) - .15em);
+    bottom: var(--pad);
+    transform-origin: left bottom;
+    transform: rotate(-90deg);
+    white-space: nowrap;
+    mix-blend-mode: difference;
+    display: flex;
+    column-gap: 15px;
+    cursor: pointer;
+}
+
+.theme_colors {
+    display: flex;
+    column-gap: 15px;
+}
+
+.theme_btn {
+    display: flex;
+    column-gap: 3px;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.theme_btn ._box::before {
+    content: "□";
+}
+
+.theme_btn.is-selected ._box::before {
+    content: "■";
+}
+
+.content {
+    position: fixed;
+    z-index: 2;
+    left: 0
+}
+
+/* Add these animations at the end of your CSS file */
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+#EnterView {
+    /* ... (your existing styles) */
+    animation: fadeOut 2s ease-in-out forwards; /* Apply fade-out animation */
+}
+
+#Page {
+    /* ... (your existing styles) */
+    animation: fadeIn 2s ease-in-out forwards; /* Apply fade-in animation */
 }
