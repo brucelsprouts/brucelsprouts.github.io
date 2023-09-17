@@ -40,3 +40,7 @@ function updateContent(targetURL) {
 
 // Initial page load: Show the Home page by default
 updateContent('#home');
+
+// Add the 'is-selected' class to the Home tab by default
+const homeTab = document.querySelector('[href="#home"]').closest('li');
+homeTab.classList.add('is-selected');

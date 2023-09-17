@@ -49,3 +49,19 @@ a {
 a:hover {
     color: #0056b3; /* Change the link color on hover as needed */
 }
+                                                                             
+/* Add a dot to the active tab */
+.siteHeader_nav .is-selected {
+    position: relative;
+}
+
+.siteHeader_nav .is-selected::before {
+    content: "•"; /* Use a bullet (•) or any other preferred symbol */
+    position: absolute;
+    top: 50%;
+    right: -10px; /* Adjust the position of the dot as needed */
+    transform: translateY(-50%);
+    font-size: 12px; /* Adjust the dot size as needed */
+    color: #007BFF; /* Change the dot color as needed */
+    margin-right: 5px; /* Add some space between the dot and the text */
+}
