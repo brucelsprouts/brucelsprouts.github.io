@@ -260,6 +260,7 @@ body.is-monospaced {
     }
 }
 
+
 #EnterView {
     /* ... (your existing styles) */
     animation: fadeOut 2s ease-in-out forwards; /* Apply fade-out animation */
@@ -268,4 +269,15 @@ body.is-monospaced {
 #Page {
     /* ... (your existing styles) */
     animation: fadeIn 2s ease-in-out forwards; /* Apply fade-in animation */
+}
+
+body {
+    font-family: 'Inter', sans-serif; /* Use Inter as the primary font for the body */
+    font-weight: 400; /* Use the regular (400) weight */
+}
+
+/* If you want a slightly bolder text for certain elements, use the 500 weight */
+h1, h2, h3 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500; /* Use the medium (500) weight */
 }
