@@ -4,13 +4,15 @@ const contentSections = document.querySelectorAll('.page');
 const enterView = document.getElementById("EnterView");
 
 // Function to update the content based on the selected menu item
-function updateContent(targetURL) {
-    // Hide all content sections
-    contentSections.forEach(section => section.style.display = 'none');
+function navigateToSection(targetURL) {
+    // Remove the 'active' class from all content sections
+    contentSections.forEach(section => section.classList.remove('active'));
 
     // Show the content section corresponding to the target URL
     const targetSection = document.querySelector(targetURL);
-    if (targetSection) targetSection.style.display = 'block';
+    if (targetSection) {
+        targetSection.classList.add('active');
+    }
 }
 
 // Function to handle navigation item clicks
@@ -28,9 +30,7 @@ function handleNavigationClick(event) {
     const targetURL = item.getAttribute('href');
 
     // Update the content based on the target URL
-    updateContent(targetURL);
-
-    // If you want to close a mobile menu after clicking a link, you can add code here.
+    navigateToSection(targetURL);
 }
 
 // Function to add smooth scrolling to anchor links
@@ -45,6 +45,21 @@ function addSmoothScrolling(anchor) {
             top: targetElement.offsetTop,
             behavior: 'smooth'
         });
+    });
+}
+
+// Function to change header background color on scroll
+function changeHeaderBackgroundColor() {
+    const header = document.querySelector('.siteHeader');
+    const headerHeight = header.clientHeight;
+
+    contentSections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionBottom = sectionTop + section.clientHeight;
+
+        if (window.scrollY >= sectionTop && window.scrollY < sectionBottom) {
+            header.style.backgroundColor = section.getAttribute('data-header-bg-color');
+        }
     });
 }
 
@@ -64,7 +79,11 @@ function removeEnterView() {
 // Add an event listener to remove EnterView after animation completes
 enterView.addEventListener("animationend", removeEnterView);
 
-// Wait for the DOM to be fully loaded
-document.addEventListener("DOMContentLoaded", function () {
-    // Your additional initialization code can go here
-});
+// Add a scroll event listener for changing header background color
+window.addEventListener('scroll', changeHeaderBackgroundColor);
+
+// Initial page load: Show the Home page by default
+navigateToSection('#home');
+
+// Add the 'is-selected' class to the Home tab by default
+document.querySelector('[href="#home"]').classList.add('is-selected');
