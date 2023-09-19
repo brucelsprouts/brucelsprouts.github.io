@@ -2,123 +2,174 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bruce's Portfolio</title>
     <meta name="description" content="Computer scientist and Multimedia creator">
-    <link rel="canonical" href="https://brucelsprouts.github.io/brucelsprouts">
+    <meta name="google" content="nositelinkssearchbox">
+    <meta name="google" content="notranslate">
+    
+    <!-- Open Graph Protocol Metadata -->
+    <meta property="og:locale" content="en_US">
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Bruce Lin">
+    <meta property="og:title" content="Bruce Lin">
+    <meta property="og:description" content="Computer scientist and Creator">
     <meta property="og:url" content="https://brucelsprouts.github.io">
+    <meta property="og:image" content="https://p5aholic.me/assets/share-image.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    
+    <!-- Twitter Card Metadata -->
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Styles and Icons -->
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="icon" href="favicons/assets-favicon.png">
+    <link rel="apple-touch-icon" href="favicons/assets-favicon.png">
+    
+    <!-- Canonical Link -->
+    <link rel="canonical" href="https://brucelsprouts.github.io/brucelsprouts">
 </head>
 <body>
-    <!-- EnterView with your name -->
-    <div id="EnterView" class="fade-out">
-        <div class="_t1">Bruce's Portfolio</div>
+    <div id="EnterView">
+        <div class="_t1">Bruce Lin</div>
+        <div class="_t2">Portfolio</div>
     </div>
-
-    <!-- Main content -->
     <div id="Page">
-        <!-- Background elements -->
-        <div id="Background">
-            <!-- Your background content here -->
-        </div>
-
-        <!-- Mask elements -->
+        <div id="Background"><canvas></canvas></div>
         <div class="mask" id="Mask">
             <div class="mask_top"></div>
             <div class="mask_bottom"></div>
         </div>
-
-        <!-- Frame elements -->
         <div class="frame" id="Frame">
             <div class="frame_line frame_line-left"></div>
             <div class="frame_line frame_line-right"></div>
             <div class="frame_line frame_line-top"></div>
             <div class="frame_line frame_line-bottom"></div>
         </div>
-
-        <!-- Theme selector -->
         <div class="theme" id="Theme" x-data>
-            <div class="theme_color" :class="{ 'is-selected': $store.ui.theme === 'light' }">
-                <div class="_box"></div>
-                <div class="_text">Light</div>
+            <div class="theme_colors">
+                <div class="theme_btn" :class="{ 'is-selected': $store.app.theme === 'light' }">
+                    <div class="_box"></div>
+                    <div class="_text">Light</div>
+                </div>
+                <div class="theme_btn" :class="{ 'is-selected': $store.app.theme === 'dark' }">
+                    <div class="_box"></div>
+                    <div class="_text">Dark</div>
+                </div>
             </div>
-            <div class="theme_color" :class="{ 'is-selected': $store.ui.theme === 'dark' }">
+            <div class="theme_btn" :class="{ 'is-selected': $store.app.fontStyle === 'mono' }">
                 <div class="_box"></div>
-                <div class="_text">Dark</div>
+                <div class="_text">Monospaced</div>
             </div>
         </div>
-
-        <!-- Site header -->
         <header class="siteHeader" id="SiteHeader">
-            <h1 class="siteHeader_title">Bruce's Portfolio</h1>
-            <p class="siteHeader_label">Designer & Developer</p>
-
-            <!-- Navigation -->
+            <h1 class="siteHeader_title">Keita Yamada</h1>
+            <p class="siteHeader_label">Designer &amp; Developer</p>
             <nav class="siteHeader_nav" x-data>
                 <ol>
-                    <li :class="{ 'is-selected': $store.ui.currentPath === '#home' }">
-                        <a class="_text" href="#home">Home</a>
+                    <li :class="{ 'is-selected': $store.app.currentPath === '/' }">
+                        <div class="_dot">&#9679;</div>
+                        <a class="_text" href="index.html">Home</a>
                     </li>
-                    <li :class="{ 'is-selected': $store.ui.currentPath === '#code-projects' }">
-                        <a class="_text" href="#code-projects">Code Projects</a>
+                    <li :class="{ 'is-selected': $store.app.currentPath === '/projects/' }">
+                        <div class="_dot">&#9679;</div>
+                        <a class="_text" href="projects.html">Projects</a>
                     </li>
-                    <li :class="{ 'is-selected': $store.ui.currentPath === '#after-effects-projects' }">
-                        <a class="_text" href="#after-effects-projects">After Effects Projects</a>
+                    <li :class="{ 'is-selected': $store.app.currentPath === '/info/' }">
+                        <div class="_dot">&#9679;</div>
+                        <a class="_text" href="info.html">Info</a>
                     </li>
-                    <li :class="{ 'is-selected': $store.ui.currentPath === '#photoshop-projects' }">
-                        <a class="_text" href="#photoshop-projects">Photoshop Projects</a>
-                    </li>
-                    <li :class="{ 'is-selected': $store.ui.currentPath === '#info' }">
-                        <a class="_text" href="#info">Info</a>
-                    </li>
-                    <li :class="{ 'is-selected': $store.ui.currentPath === '#contact' }">
-                        <a class="_text" href="#contact">Contact</a>
+                    <li :class="{ 'is-selected': $store.app.currentPath === '/contact/' }">
+                        <div class="_dot">&#9679;</div>
+                        <a class="_text" href="contact.html">Contact</a>
                     </li>
                 </ol>
             </nav>
         </header>
-
-        <!-- Main content goes here -->
-        <div id="content">
-            <!-- Home Page Content -->
-            <section id="home" class="page">
-                <h2>Welcome to My Portfolio</h2>
-                <p>This is the home page content.</p>
-            </section>
-
-            <!-- Code Projects Page Content -->
-            <section id="code-projects" class="page">
-                <h2>Code Projects</h2>
-                <p>This is the code projects page content.</p>
-            </section>
-
-            <!-- After Effects Projects Page Content -->
-            <section id="after-effects-projects" class="page">
-                <h2>After Effects Projects</h2>
-                <p>This is the After Effects projects page content.</p>
-            </section>
-
-            <!-- Photoshop Projects Page Content -->
-            <section id="photoshop-projects" class="page">
-                <h2>Photoshop Projects</h2>
-                <p>This is the Photoshop projects page content.</p>
-            </section>
-
-            <!-- Info Page Content -->
-            <section id="info" class="page">
-                <h2>Info</h2>
-                <p>This is the info page content.</p>
-            </section>
-
-            <!-- Contact Page Content -->
-            <section id="contact" class="page">
-                <h2>Contact</h2>
-                <p>This is the contact page content.</p>
-            </section>
-        </div>
+        <main class="content" id="Content" data-scroll="area">
+            <div class="content_inner" data-scroll="target">
+                <section class="page" data-page="home">
+                    <div class="page_content home">
+                        <p class="home_aboutme">
+                            <span>Born in 1994</span>
+                            <span>in Osaka, Japan.</span>
+                            <span>I believe</span>
+                            <span>web design</span>
+                            <span>can be more</span>
+                            <span>diverse and inspiring.</span>
+                            <span>With a mission</span>
+                            <span>to present</span>
+                            <span>the possibilities</span>
+                            <span>of web design,</span>
+                            <span>I am pursuing</span>
+                            <span>new expressions</span>
+                            <span>through experiments</span>
+                            <span>and thoughts.</span>
+                        </p>
+                    </div>
+                </section>
+                <section class="page" data-page="projects">
+                    <div class="page_content project">
+                        <div class="project_section">
+                            <h2 class="project_heading">&#9632; Projects (Design &amp; Develop)</h2>
+                            <div class="project_list">
+                                <a class="project_item text-btn" href="https://midnight-grand-orchestra.jp/starpeggio/" target="_blank">
+                                    <div class="project_title">Starpeggio</div>
+                                    <div class="project_info">2023 / Commission / Special</div>
+                                </a>
+                                <a class="project_item text-btn" href="https://bnn.co.jp" target="_blank">
+                                    <div class="project_title">BNN Online Store</div>
+                                    <div class="project_info">2023 / Commission / Corporate</div>
+                                </a>
+                                <a class="project_item text-btn" href="https://ily-girl.mikapikazo.info" target="_blank">
+                                    <div class="project_title">ILY GIRL</div>
+                                    <div class="project_info">2023 / Commission / Special</div>
+                                </a>
+                                <!-- Add more projects here -->
+                            </div>
+                        </div>
+                        <div class="project_section">
+                            <h2 class="project_heading">&#9632; Projects (Only Develop)</h2>
+                            <div class="project_list">
+                                <a class="project_item text-btn" href="https://vortex-live.com" target="_blank">
+                                    <div class="project_title">vortex</div>
+                                    <div class="project_info">2023 / Commission / Corporate</div>
+                                </a>
+                                <a class="project_item text-btn" href="https://reinakanishi.com" target="_blank">
+                                    <div class="project_title">REI NAKANISHI</div>
+                                    <div class="project_info">2022 / Commission / Portfolio</div>
+                                </a>
+                                <!-- Add more projects here -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="page" data-page="info">
+                    <div class="page_content info">
+                        <div class="info_item info_item-1">
+                            <div class="info_content">
+                                <ul>
+                                    <li><a class="text-btn" href="https://twitter.com/P5_keita" target="_blank" rel="noopener">Twitter &#8599;</a></li>
+                                    <li><a class="text-btn" href="https://www.instagram.com/p5aholic/" target="_blank" rel="noopener">Instagram &#8599;</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Add more info items here -->
+                    </div>
+                </section>
+                <section class="page" data-page="contact">
+                    <div class="page_content contact">
+                        <div class="contact_wrap">
+                            <a class="contact_text jp text-btn" href="https://p5aholic.notion.site/p5aholic/Web-aac658c501b8458080dcc19e5ff26e51" target="_blank" rel="noopener">&#21046;&#20316;&#12398;&#20381;&#38972;&#12395;&#12388;&#12356;&#12390; &#8599;</a>
+                            <a class="contact_text en text-btn" href="https://p5aholic.notion.site/p5aholic/Contact-f7a0724e15d44eaebddbf7f09459aef4" target="_blank" rel="noopener">Contact Form &#8599;</a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
     </div>
-    <!-- Your JavaScript file -->
     <script src="main.js"></script>
 </body>
 </html>
