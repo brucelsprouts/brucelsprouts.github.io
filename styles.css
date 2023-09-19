@@ -281,3 +281,12 @@ h1, h2, h3 {
     font-family: 'Inter', sans-serif;
     font-weight: 500; /* Use the medium (500) weight */
 }
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+

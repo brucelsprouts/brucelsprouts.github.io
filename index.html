@@ -69,79 +69,74 @@
             <p class="siteHeader_label">Computer Scientist</p>
             <nav class="siteHeader_nav" x-data>
                 <ol>
-                    <li :class="{ 'is-selected': $store.app.currentPath === '/' }">
+                    <li>
                         <div class="_dot">&#9679;</div>
-                        <a class="_text" href="index.html">Home</a>
+                        <a class="_text" href="#home">Home</a>
                     </li>
-                    <li :class="{ 'is-selected': $store.app.currentPath === '/codepj/' }">
+                    <li>
                         <div class="_dot">&#9679;</div>
-                        <a class="_text" href="codepj.html">Code Projects</a>
+                        <a class="_text" href="#code-projects">Code Projects</a>
                     </li>
-                    <li :class="{ 'is-selected': $store.app.currentPath === '/aftereffectpj/' }">
+                    <li>
                         <div class="_dot">&#9679;</div>
-                        <a class="_text" href="aftereffectpj.html">After Effects Projects</a>
+                        <a class="_text" href="#after-effects-projects">After Effects Projects</a>
                     </li>
-                    <li :class="{ 'is-selected': $store.app.currentPath === '/photoshoppj/' }">
+                    <li>
                         <div class="_dot">&#9679;</div>
-                        <a class="_text" href="photoshoppj.html">Photoshop Projects</a>
+                        <a class="_text" href="#photoshop-projects">Photoshop Projects</a>
                     </li>
-                    <li :class="{ 'is-selected': $store.app.currentPath === '/info/' }">
+                    <li>
                         <div class="_dot">&#9679;</div>
-                        <a class="_text" href="info.html">Info</a>
+                        <a class="_text" href="#info">Info</a>
                     </li>
-                    <li :class="{ 'is-selected': $store.app.currentPath === '/contact/' }">
+                    <li>
                         <div class="_dot">&#9679;</div>
-                        <a class="_text" href="contact.html">Contact</a>
+                        <a class="_text" href="#contact">Contact</a>
                     </li>
                 </ol>
             </nav>            
         </header>
-        <main class="content" id="Content" data-scroll="area">
-            <div class="content_inner" data-scroll="target">
-                <section class="page" data-page="home">
-                    <div class="page_content home">
-                        <div class="page_content home">
-                            <p class="home_aboutme">
-                                <span>testline 1</span>
-                                <span>second line</span>
-                            </p>
-                        </div>
-                    </div>
-                </section>
 
-                <section class="page" data-page="code projects">
-                    <div class="page_content code projects">
-                        <!-- Your Content Here -->
-                    </div>
-                </section>
+        <!-- Main content goes here -->
+        <div id="content">
+            <!-- Home Page Content -->
+            <section id="home" class="page">
+                <h2>Welcome to My Portfolio</h2>
+                <p>This is the home page content.</p>
+            </section>
 
-                <section class="page" data-page="after effect projects">
-                    <div class="page_content after effect projects">
-                        <!-- Your Content Here -->
-                    </div>
-                </section>
+            <!-- Code Projects Page Content -->
+            <section id="code-projects" class="page">
+                <h2>Code Projects</h2>
+                <p>This is the code projects page content.</p>
+            </section>
 
-                <section class="page" data-page="photoshop projects">
-                    <div class="page_content photoshop projects">
-                        <!-- Your Content Here -->
-                    </div>
-                </section>
+            <!-- After Effects Projects Page Content -->
+            <section id="after-effects-projects" class="page">
+                <h2>After Effects Projects</h2>
+                <p>This is the After Effects projects page content.</p>
+            </section>
 
-                <section class="page" data-page="info">
-                    <div class="page_content info">
-                        <!-- Your Content Here -->
-                        <a href="https://www.instagram.com/skaterbug92/" target="_blank">Instagram &#8599;</a></li>
-                    </div>
-                </section>
-                
-                <section class="page" data-page="contact">
-                    <div class="page_content contact">
-                        <!-- Your Content Here -->
-                    </div>
-                </section>
-            </div>
-        </main>
+            <!-- Photoshop Projects Page Content -->
+            <section id="photoshop-projects" class="page">
+                <h2>Photoshop Projects</h2>
+                <p>This is the Photoshop projects page content.</p>
+            </section>
+
+            <!-- Info Page Content -->
+            <section id="info" class="page">
+                <h2>Info</h2>
+                <p>This is the info page content.</p>
+            </section>
+
+            <!-- Contact Page Content -->
+            <section id="contact" class="page">
+                <h2>Contact</h2>
+                <p>This is the contact page content.</p>
+            </section>
+        </div>
     </div>
+    <!-- Your JavaScript file -->
     <script src="main.js"></script>
 </body>
 </html>
