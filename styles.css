@@ -290,3 +290,43 @@ h1, h2, h3 {
     display: block;
 }
 
+/* Add these animations at the end of your CSS file */
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Apply the fade-out animation to #EnterView */
+#EnterView {
+    /* ... (your existing styles) */
+    animation: fadeOut 2s ease-in-out forwards; /* Apply fade-out animation */
+}
+
+/* Apply the fade-in animation to #Page */
+#Page {
+    /* ... (your existing styles) */
+    animation: fadeIn 2s ease-in-out forwards; /* Apply fade-in animation */
+}
+
+/* Add a class for sections to control their display */
+.section {
+    display: none;
+}
+
+/* Display the active section */
+.section.active {
+    display: block;
+}
