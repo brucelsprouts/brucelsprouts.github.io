@@ -52,42 +52,6 @@ ol, ul {
     }
 }
 
-@font-face {
-    font-family: "Neue Montreal";
-    font-weight: 200;
-    src: url("../fonts/font-PPNeueMontreal-Thin.woff2") format("woff2");
-}
-
-@font-face {
-    font-family: "Neue Montreal";
-    font-weight: 400;
-    src: url("../fonts/font-PPNeueMontreal-Book.woff2") format("woff2");
-}
-
-@font-face {
-    font-family: "Neue Montreal";
-    font-weight: 600;
-    src: url("../fonts/font-PPNeueMontreal-SemiBold.woff2") format("woff2");
-}
-
-@font-face {
-    font-family: "Neue Montreal Mono";
-    font-weight: 200;
-    src: url("../fonts/font-PPNeueMontrealMono-Thin.woff2") format("woff2");
-}
-
-@font-face {
-    font-family: "Neue Montreal Mono";
-    font-weight: 400;
-    src: url("../fonts/font-PPNeueMontrealMono-Book.woff2") format("woff2");
-}
-
-@font-face {
-    font-family: "Neue Montreal Mono";
-    font-weight: 600;
-    src: url("../fonts/font-PPNeueMontrealMono-SemiBold.woff2") format("woff2");
-}
-
 html, body {
     height: 100%;
 }

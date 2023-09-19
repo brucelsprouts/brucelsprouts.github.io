@@ -1,5 +1,5 @@
 // Store references to navigation items and content sections
-const navItems = document.querySelectorAll('.siteHeader_nav li');
+const navItems = document.querySelectorAll('.siteHeader_nav a');
 const contentSections = document.querySelectorAll('.page');
 
 // Function to update the content based on the selected menu item
@@ -24,10 +24,12 @@ navItems.forEach(item => {
         item.classList.add('is-selected');
 
         // Get the target URL from the clicked item's href attribute
-        const targetURL = item.querySelector('a').getAttribute('href');
+        const targetURL = item.getAttribute('href');
 
         // Update the content based on the target URL
         updateContent(targetURL);
+
+        // If you want to close a mobile menu after clicking a link, you can add code here.
     });
 });
 
@@ -45,7 +47,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 updateContent('#home');
 
 // Add the 'is-selected' class to the Home tab by default
-document.querySelector('[href="#home"]').closest('li').classList.add('is-selected');
+document.querySelector('[href="#home"]').classList.add('is-selected');
 
 // Wait for the DOM to be fully loaded
 document.addEventListener("DOMContentLoaded", function () {
@@ -60,3 +62,4 @@ document.addEventListener("DOMContentLoaded", function () {
     // Add an event listener to remove EnterView after animation completes
     enterView.addEventListener("animationend", removeEnterView);
 });
+
