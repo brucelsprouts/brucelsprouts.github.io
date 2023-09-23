@@ -25,6 +25,7 @@
     <!-- Styles and Icons -->
     <link rel="stylesheet" type="text/css" href="styles.css"> <!-- Make sure "styles.css" exists -->
     <link rel="icon" href="favicons/assets-favicon.png">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i&display=swap" rel="stylesheet">
     <link rel="apple-touch-icon" href="favicons/assets-favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
     
@@ -43,10 +44,18 @@
             <div class="mask_bottom"></div>
         </div>
         <div class="frame" id="Frame">
-            <div class="frame_line frame_line-left"></div>
-            <div class="frame_line frame_line-right"></div>
-            <div class="frame_line frame_line-top"></div>
-            <div class="frame_line frame_line-bottom"></div>
+            <!-- Lower z-index for the video container -->
+            <div class="video-container" style="z-index: -1;">
+                <video controls autoplay loop muted>
+                    <source src="assets/video/Video.mp4" type="video/mp4">
+                </video>
+            </div>
+            
+            <!-- Frame lines with higher z-index -->
+            <div class="frame_line frame_line-left" style="z-index: 1;"></div>
+            <div class="frame_line frame_line-right" style="z-index: 1;"></div>
+            <div class="frame_line frame_line-top" style="z-index: 1;"></div>
+            <div class="frame_line frame_line-bottom" style="z-index: 1;"></div>
         </div>
         <div class="theme" id="Theme" x-data>
             <div class="theme_colors">
