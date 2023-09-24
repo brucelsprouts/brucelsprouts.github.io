@@ -25,7 +25,7 @@ ol, ul {
     height: 100%;
     overflow: hidden;
     background-color: var(--c-bg);
-    color: #fff;
+    color: #ffffff;
     white-space: nowrap;
     transition-property: background-color;
     transition-duration: .9s;
@@ -125,7 +125,6 @@ h2 {
 /* line stuff*/
 .frame {
     position: fixed;
-    z-index: 10;
     left: var(--pad);
     right: var(--pad);
     top: var(--pad);
@@ -135,7 +134,7 @@ h2 {
 }
 .frame_line {
     position: absolute;
-    background-color: #fff;
+    background-color: #ffffff;
     opacity: .5;
 }
 .frame_line-left {
@@ -195,8 +194,8 @@ h2 {
 }
 @media (prefers-color-scheme: dark) {
     :root {
-        --c-bg: hsl(0, 0%, 5%);
-        --c-text: hsl(0, 0%, 95%);
+        --c-bg: hsl(0, 0%, 0%);
+        --c-text: hsl(0, 0%, 100%);
     }
 }
 
@@ -206,6 +205,7 @@ h2 {
     border: 2px solid #000000; /* Add a white border around the video */
     box-sizing: border-box; /* Include the border in the dimensions */
 }/* Style the video container */
+
 .video-container {
     position: absolute;
     top: 0;
