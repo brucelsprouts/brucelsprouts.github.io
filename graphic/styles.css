@@ -1,0 +1,16 @@
+body {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    font-family: monospace;
+    color: rgba(255, 255, 255, 0.301);
+}
+
+pre {
+    font-size: 20px;
+    line-height: 20px;
+}

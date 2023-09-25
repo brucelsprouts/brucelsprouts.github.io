@@ -42,11 +42,9 @@
             <div class="mask_bottom"></div>
         </div>
         <div class="frame" id="Frame">
-            <!-- Lower z-index for the video container -->
-            <div class="video-container" style="z-index: -1;">
-                <video controls autoplay loop muted>
-                    <source src="assets/video/Video.mp4" type="video/mp4">
-                </video>
+            <!-- Replace the video container with the graphic container -->
+            <div class="graphic-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                <iframe src="graphic/cube.html" frameborder="0" scrolling="no" style="width: 100%; height: 100%;"></iframe>
             </div>
             
             <!-- Frame lines with higher z-index -->
