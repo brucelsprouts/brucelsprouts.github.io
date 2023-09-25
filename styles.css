@@ -125,6 +125,7 @@ h2 {
 /* line stuff*/
 .frame {
     position: fixed;
+    z-index: -1;
     left: var(--pad);
     right: var(--pad);
     top: var(--pad);

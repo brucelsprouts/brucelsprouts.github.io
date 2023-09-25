@@ -7,7 +7,7 @@ body {
     margin: 0;
     overflow: hidden;
     font-family: monospace;
-    color: rgba(255, 255, 255, 0.301);
+    color: rgb(73, 73, 73);
 }
 
 pre {
