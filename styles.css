@@ -46,13 +46,10 @@ ol, ul {
 body {
     background-color: var(--c-bg);
 }
-body.is-monospaced {
-    font-family: "Neue Montreal Mono";
-}
 /*heading*/
 h1 {
-  font-family: 'Roboto', sans-serif;
-  font-weight: 300; /* Light weight */
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300; /* Light weight */
 }
 /*computer scientist*/
 p {
@@ -66,10 +63,6 @@ nav {
 }
 /*section heading*/
 h2 {
-  font-family: 'Roboto', sans-serif;
-  font-weight: 300; /* Light weight */
-}
-.theme {
   font-family: 'Roboto', sans-serif;
   font-weight: 300; /* Light weight */
 }
@@ -136,7 +129,7 @@ h2 {
 .frame_line {
     position: absolute;
     background-color: #ffffff;
-    opacity: .5;
+    opacity: 1;
 }
 .frame_line-left {
     left: 0;
@@ -167,7 +160,7 @@ h2 {
 .theme {
     position: fixed;
     z-index: 10;
-    left: calc(var(--pad) - .15em);
+    left: calc(var(--pad) - 0.1em);
     bottom: var(--pad);
     transform-origin: left bottom;
     transform: rotate(-90deg);
@@ -192,6 +185,10 @@ h2 {
 }
 .theme_btn.is-selected ._box::before {
     content: "■";
+}
+.theme {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300; /* Light weight */
 }
 @media (prefers-color-scheme: dark) {
     :root {
