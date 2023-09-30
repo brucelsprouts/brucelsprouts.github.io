@@ -1,4 +1,4 @@
-const width = 150, height = 150;
+const width = 500, height = 150;
 const cubeWidth = 20;
 const distanceFromCam = 100;
 const incrementSpeed = 0.6;
