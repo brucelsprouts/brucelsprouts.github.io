@@ -76,7 +76,10 @@ nav {
 h2 {
   font-family: 'Roboto', sans-serif;
   font-weight: 300; /* Light weight */
+  top: calc(var(--pad) + 3rem); 
+  left: calc(var(--pad) - 1.5rem); 
 }
+
 
 /*enter view stuff*/
 #EnterView {
@@ -94,21 +97,8 @@ h2 {
     align-items: center;
     column-gap: .5em;
     font-size: 30px;
-}
-#EnterView ._t1 {
-    font-weight: 400;
-}
-#EnterView ._t2 {
-    font-weight: 200;
-}
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-}
+    font-family: 'Roboto', sans-serif; 
+} 
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -116,10 +106,6 @@ h2 {
     to {
         opacity: 1;
     }
-}
-#EnterView {
-    /* ... (your existing styles) */
-    animation: fadeOut 2s ease-in-out forwards; /* Apply fade-out animation */
 }
 #Page {
     /* ... (your existing styles) */

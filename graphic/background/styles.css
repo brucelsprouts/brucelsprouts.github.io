@@ -6,10 +6,10 @@ body {
     margin: 0;
     overflow: hidden;
     font-family: monospace;
-    color: rgb(73, 73, 73);
+    color: rgb(31, 31, 31);
 }
 
 pre {
-    font-size: 15px;
-    line-height: 15px;
+    font-size: 10px;
+    line-height: 10px;
 }

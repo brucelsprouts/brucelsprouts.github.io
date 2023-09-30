@@ -42,16 +42,25 @@
                 <div class="mask_bottom"></div>
             </div>
             <div class="frame" id="Frame">
-                <!-- Replace the video container with the graphic container -->
+                <!-- Replace the video container with the graphic container --> 
+                <div class="graphic-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                    <iframe src="graphic/background/background.html" frameborder="0" scrolling="no" style="width: 100%; height: 100%;"></iframe>
+                </div>
+
+                <div class="graphic-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                    <iframe src="graphic/cubeincube/cubeincube.html" frameborder="0" scrolling="no" style="width: 100%; height: 100%;"></iframe>
+                </div>
+                
                 <div class="graphic-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
                     <iframe src="graphic/cube.html" frameborder="0" scrolling="no" style="width: 100%; height: 100%;"></iframe>
                 </div>
-                
+
                 <!-- Frame lines with higher z-index -->
                 <div class="frame_line frame_line-left" style="z-index: 1;"></div>
                 <div class="frame_line frame_line-right" style="z-index: 1;"></div>
                 <div class="frame_line frame_line-top" style="z-index: 1;"></div>
                 <div class="frame_line frame_line-bottom" style="z-index: 1;"></div>
+                
             </div>
             <div class="theme" id="Theme" x-data>
                 <div class="theme_colors">
