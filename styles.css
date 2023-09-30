@@ -72,14 +72,83 @@ nav {
     top: calc(var(--pad) + 3rem); 
     left: calc(var(--pad) - 1.5rem); 
 }
-/*section heading*/
-h2 {
-  font-family: 'Roboto', sans-serif;
-  font-weight: 300; /* Light weight */
-  top: calc(var(--pad) + 3rem); 
-  left: calc(var(--pad) - 1.5rem); 
+/* Apply general styles to all <p> elements within .content-container */
+.content-container p {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 16px; /* Adjust the font size as needed */
+    line-height: 1.5; /* Adjust the line height as needed */
+    margin-bottom: 20px; /* Add spacing between paragraphs */
 }
 
+/* Style the headings in each section */
+.page h2 {
+    font-family: 'Roboto', sans-serif; /* Change the font family to Roboto */
+    font-weight: 300;
+    font-size: 24px; /* Adjust the heading font size as needed */
+    position: absolute;
+    top: calc(var(--pad) + 30rem); 
+    left: calc(var(--pad) - 1.5rem); 
+}
+/* Home section */
+#home .content-container p {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    position: absolute;
+    top: calc(var(--pad) + 30rem);
+    left: auto; /* Remove the left property */
+    right: var(--pad); /* Add the right property */
+}
+
+/* Code Projects section */
+#code-projects .content-container p {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    position: absolute;
+    top: calc(var(--pad) + 30rem);
+    left: auto; /* Remove the left property */
+    right: var(--pad); /* Add the right property */
+}
+
+/* After Effects Projects section */
+#after-effects-projects .content-container p {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    position: absolute;
+    top: calc(var(--pad) + 30rem);
+    left: auto; /* Remove the left property */
+    right: var(--pad); /* Add the right property */
+}
+
+/* Photoshop Projects section */
+#photoshop-projects .content-container p {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    position: absolute;
+    top: calc(var(--pad) + 30rem);
+    left: auto; /* Remove the left property */
+    right: var(--pad); /* Add the right property */
+}
+
+/* Info section */
+#info .content-container p {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    position: absolute;
+    top: calc(var(--pad) + 30rem);
+    left: auto; /* Remove the left property */
+    right: var(--pad); /* Add the right property */
+}
+
+/* Contact section */
+#contact .content-container p {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    position: absolute;
+    top: calc(var(--pad) + 30rem);
+    left: auto; /* Remove the left property */
+    right: var(--pad); /* Add the right property */
+}
 
 /*enter view stuff*/
 #EnterView {

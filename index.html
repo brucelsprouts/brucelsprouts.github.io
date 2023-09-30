@@ -1,152 +1,164 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Bruce's Portfolio</title>
-        <meta name="description" content="Computer scientist and Multimedia creator">
-        <script src="main.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bruce's Portfolio</title>
+    <meta name="description" content="Computer scientist and Multimedia creator">
+    <script src="main.js"></script>
 
-        <!-- Open Graph Protocol Metadata -->
-        <meta property="og:locale" content="en_US">
-        <meta property="og:type" content="website">
-        <meta property="og:site_name" content="Bruce Lin">
-        <meta property="og:title" content="Bruce Lin">
-        <meta property="og:description" content="Computer scientist and Creator">
-        <meta property="og:url" content="https://brucelsprouts.github.io">
-        <meta property="og:image" content="https://cdn.discordapp.com/attachments/950767175684210698/1155686381780213760/image.png">
-        <meta property="og:image:type" content="png">
-        <meta property="og:image:width" content="1200">
-        <meta property="og:image:height" content="630">
-        
-        <!-- Twitter Card Metadata -->
-        <meta name="twitter:card" content="summary_large_image">
-        
-        <!-- Styles and Icons -->
-        <link rel="stylesheet" type="text/css" href="styles.css"> <!-- Make sure "styles.css" exists -->
-        <link rel="icon" href="assets/images/icon.png">
-        <link rel="apple-touch-icon" href="assets/images/icon.png">
-        
-        <!-- Canonical Link -->
-        <link rel="canonical" href="https://brucelsprouts.github.io/brucelsprouts">
-    </head>
-    <body>
-        <div id="EnterView">
-            <div class="_t1">Bruce Lin</div>
-            <div class="_t2">Portfolio</div>
+    <!-- Open Graph Protocol Metadata -->
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Bruce Lin">
+    <meta property="og:title" content="Bruce Lin">
+    <meta property="og:description" content="Computer scientist and Creator">
+    <meta property="og:url" content="https://brucelsprouts.github.io">
+    <meta property="og:image" content="https://cdn.discordapp.com/attachments/950767175684210698/1155686381780213760/image.png">
+    <meta property="og:image:type" content="png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    
+    <!-- Twitter Card Metadata -->
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Styles and Icons -->
+    <link rel="stylesheet" type="text/css" href="styles.css"> <!-- Make sure "styles.css" exists -->
+    <link rel="icon" href="assets/images/icon.png">
+    <link rel="apple-touch-icon" href="assets/images/icon.png">
+    
+    <!-- Canonical Link -->
+    <link rel="canonical" href="https://brucelsprouts.github.io/brucelsprouts">
+</head>
+<body>
+    <div id="EnterView">
+        <div class="_t1">Bruce Lin</div>
+        <div class="_t2">Portfolio</div>
+    </div>
+    <div id="Page">
+        <div id="Background"><canvas></canvas></div>
+        <div class="mask" id="Mask">
+            <div class="mask_top"></div>
+            <div class="mask_bottom"></div>
         </div>
-        <div id="Page">
-            <div id="Background"><canvas></canvas></div>
-            <div class="mask" id="Mask">
-                <div class="mask_top"></div>
-                <div class="mask_bottom"></div>
+        <div class="frame" id="Frame">
+            <!-- Replace the video container with the graphic container --> 
+            <div class="graphic-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                <iframe src="graphic/background/background.html" frameborder="0" scrolling="no" style="width: 100%; height: 100%;"></iframe>
             </div>
-            <div class="frame" id="Frame">
-                <!-- Replace the video container with the graphic container --> 
-                <div class="graphic-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
-                    <iframe src="graphic/background/background.html" frameborder="0" scrolling="no" style="width: 100%; height: 100%;"></iframe>
-                </div>
 
-                <div class="graphic-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
-                    <iframe src="graphic/cubeincube/cubeincube.html" frameborder="0" scrolling="no" style="width: 100%; height: 100%;"></iframe>
-                </div>
-                
-                <div class="graphic-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
-                    <iframe src="graphic/cube/cube.html" frameborder="0" scrolling="no" style="width: 100%; height: 100%;"></iframe>
-                </div>
-
-                <!-- Frame lines with higher z-index -->
-                <div class="frame_line frame_line-left" style="z-index: 1;"></div>
-                <div class="frame_line frame_line-right" style="z-index: 1;"></div>
-                <div class="frame_line frame_line-top" style="z-index: 1;"></div>
-                <div class="frame_line frame_line-bottom" style="z-index: 1;"></div>
-                
+            <div class="graphic-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                <iframe src="graphic/cubeincube/cubeincube.html" frameborder="0" scrolling="no" style="width: 100%; height: 100%;"></iframe>
             </div>
-            <div class="theme" id="Theme" x-data>
-                <div class="theme_colors">
-                    <div class="theme_btn" :class="{ 'is-selected': $store.app.theme === 'light' }">
-                        <div class="_box"></div>
-                        <div class="_text">Light</div>
-                    </div>
-                    <div class="theme_btn" :class="{ 'is-selected': $store.app.theme === 'dark' }">
-                        <div class="_box"></div>
-                        <div class="_text">Dark</div>
-                    </div>
+            
+            <div class="graphic-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                <iframe src="graphic/cube/cube.html" frameborder="0" scrolling="no" style="width: 100%; height: 100%;"></iframe>
+            </div>
+
+            <!-- Frame lines with higher z-index -->
+            <div class="frame_line frame_line-left" style="z-index: 1;"></div>
+            <div class="frame_line frame_line-right" style="z-index: 1;"></div>
+            <div class="frame_line frame_line-top" style="z-index: 1;"></div>
+            <div class="frame_line frame_line-bottom" style="z-index: 1;"></div>
+            
+        </div>
+        <div class="theme" id="Theme" x-data>
+            <div class="theme_colors">
+                <div class="theme_btn" :class="{ 'is-selected': $store.app.theme === 'light' }">
+                    <div class="_box"></div>
+                    <div class="_text">Light</div>
+                </div>
+                <div class="theme_btn" :class="{ 'is-selected': $store.app.theme === 'dark' }">
+                    <div class="_box"></div>
+                    <div class="_text">Dark</div>
                 </div>
             </div>
-            <header class="siteHeader" id="SiteHeader">
-                <h1 class="siteHeader_title">Bruce Lin</h1>
-                <p class="siteHeader_label">Computer Scientist</p>
-                <nav class="siteHeader_nav" x-data>
-                    <ol>
-                        <li>
-                            <div class="_dot">&#9679;</div>
-                            <a class="_text" href="#home">Home</a>
-                        </li>
-                        <li>
-                            <div class="_dot">&#9679;</div>
-                            <a class="_text" href="#code-projects">Code Projects</a>
-                        </li>
-                        <li>
-                            <div class="_dot">&#9679;</div>
-                            <a class="_text" href="#after-effects-projects">After Effects Projects</a>
-                        </li>
-                        <li>
-                            <div class="_dot">&#9679;</div>
-                            <a class="_text" href="#photoshop-projects">Photoshop Projects</a>
-                        </li>
-                        <li>
-                            <div class="_dot">&#9679;</div>
-                            <a class="_text" href="#info">Info</a>
-                        </li>
-                        <li>
-                            <div class="_dot">&#9679;</div>
-                            <a class="_text" href="#contact">Contact</a>
-                        </li>
-                    </ol>
-                </nav>            
-            </header>
+        </div>
+        <header class="siteHeader" id="SiteHeader">
+            <h1 class="siteHeader_title">Bruce Lin</h1>
+            <p class="siteHeader_label">Computer Scientist</p>
+            <nav class="siteHeader_nav" x-data>
+                <ol>
+                    <li>
+                        <div class="_dot">&#9679;</div>
+                        <a class="_text" href="#home">Home</a>
+                    </li>
+                    <li>
+                        <div class="_dot">&#9679;</div>
+                        <a class="_text" href="#code-projects">Code Projects</a>
+                    </li>
+                    <li>
+                        <div class="_dot">&#9679;</div>
+                        <a class="_text" href="#after-effects-projects">After Effects Projects</a>
+                    </li>
+                    <li>
+                        <div class="_dot">&#9679;</div>
+                        <a class="_text" href="#photoshop-projects">Photoshop Projects</a>
+                    </li>
+                    <li>
+                        <div class="_dot">&#9679;</div>
+                        <a class="_text" href="#info">Info</a>
+                    </li>
+                    <li>
+                        <div class="_dot">&#9679;</div>
+                        <a class="_text" href="#contact">Contact</a>
+                    </li>
+                </ol>
+            </nav>            
+        </header>
 
-            <!-- Main content goes here -->
-            <div id="content">
-                <!-- Home Page Content -->
-                <section id="home" class="page">
-                    <h2>Welcome to My Portfolio</h2>
+        <!-- Main content goes here -->
+        <div id="content">
+            <!-- Home Page Content -->
+            <section id="home" class="page">
+                <h2>Welcome to My Portfolio</h2>
+                <div class="content-container">
                     <p>This is the home page content.</p>
-                </section>
+                </div>
+            </section>
 
-                <!-- Code Projects Page Content -->
-                <section id="code-projects" class="page">
-                    <h2>Code Projects</h2>
+            <!-- Code Projects Page Content -->
+            <section id="code-projects" class="page">
+                <h2>Code Projects</h2>
+                <div class="content-container">
                     <p>This is the code projects page content.</p>
-                </section>
+                </div>
+            </section>
 
-                <!-- After Effects Projects Page Content -->
-                <section id="after-effects-projects" class="page">
-                    <h2>After Effects Projects</h2>
+            <!-- After Effects Projects Page Content -->
+            <section id="after-effects-projects" class="page">
+                <h2>After Effects Projects</h2>
+                <div class="content-container">
                     <p>This is the After Effects projects page content.</p>
-                </section>
+                </div>
+            </section>
 
-                <!-- Photoshop Projects Page Content -->
-                <section id="photoshop-projects" class="page">
-                    <h2>Photoshop Projects</h2>
+            <!-- Photoshop Projects Page Content -->
+            <section id="photoshop-projects" class="page">
+                <h2>Photoshop Projects</h2>
+                <div class="content-container">
                     <p>This is the Photoshop projects page content.</p>
-                </section>
+                </div>
+            </section>
 
-                <!-- Info Page Content -->
-                <section id="info" class="page">
-                    <h2>Info</h2>
+            <!-- Info Page Content -->
+            <section id="info" class="page">
+                <h2>Info</h2>
+                <div class="content-container">
                     <p>This is the info page content.</p>
-                </section>
+                </div>
+            </section>
 
-                <!-- Contact Page Content -->
-                <section id="contact" class="page">
-                    <h2>Contact</h2>
+            <!-- Contact Page Content -->
+            <section id="contact" class="page">
+                <h2>Contact</h2>
+                <div class="content-container">
                     <p>This is the contact page content.</p>
-                </section>
-            </div>
+                </div>
+            </section>
         </div>
-        <!-- Your JavaScript file -->
-        <script src="main.js"></script>
-    </body>
-    </html>
+    </div>
+    <!-- Your JavaScript file -->
+    <script src="main.js"></script>
+</body>
+</html>
