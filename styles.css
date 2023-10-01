@@ -49,7 +49,7 @@ body {
 /*heading*/
 h1 {
     font-family: 'Roboto', sans-serif;
-    font-weight: 300; /* Light weight */
+    font-weight: 300;
     position: absolute;
     top: calc(var(--pad) + 1rem);
     left: calc(var(--pad) + 1rem);
@@ -58,7 +58,7 @@ h1 {
 /*computer scientist*/
 p {
     font-family: 'Roboto', sans-serif;
-    font-weight: 300; /* Light weight */
+    font-weight: 300;
     position: absolute;
     top: calc(var(--pad) + 3rem); 
     left: calc(var(--pad) + 1rem); 
@@ -72,32 +72,16 @@ nav {
     top: calc(var(--pad) + 3rem); 
     left: calc(var(--pad) - 1.5rem); 
 }
-/* Apply general styles to all <p> elements within .content-container */
-.content-container p {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
-    font-size: 16px; /* Adjust the font size as needed */
-    line-height: 1.5; /* Adjust the line height as needed */
-    margin-bottom: 20px; /* Add spacing between paragraphs */
-}
 
-/* Style the headings in each section */
-.page h2 {
-    font-family: 'Roboto', sans-serif; /* Change the font family to Roboto */
-    font-weight: 300;
-    font-size: 24px; /* Adjust the heading font size as needed */
-    position: absolute;
-    top: calc(var(--pad) + 30rem); 
-    left: calc(var(--pad) - 1.5rem); 
-}
 /* Home section */
 #home .content-container p {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     position: absolute;
-    top: calc(var(--pad) + 30rem);
-    left: auto; /* Remove the left property */
-    right: var(--pad); /* Add the right property */
+    top: auto;
+    bottom: calc(var(--pad) + 2rem);
+    left: auto;
+    right: calc(var(--pad) + 2rem);
 }
 
 /* Code Projects section */
@@ -106,8 +90,8 @@ nav {
     font-weight: 300;
     position: absolute;
     top: calc(var(--pad) + 30rem);
-    left: auto; /* Remove the left property */
-    right: var(--pad); /* Add the right property */
+    left: auto;
+    right: var(--pad);
 }
 
 /* After Effects Projects section */
@@ -116,8 +100,8 @@ nav {
     font-weight: 300;
     position: absolute;
     top: calc(var(--pad) + 30rem);
-    left: auto; /* Remove the left property */
-    right: var(--pad); /* Add the right property */
+    left: auto;
+    right: var(--pad);
 }
 
 /* Photoshop Projects section */
@@ -126,8 +110,8 @@ nav {
     font-weight: 300;
     position: absolute;
     top: calc(var(--pad) + 30rem);
-    left: auto; /* Remove the left property */
-    right: var(--pad); /* Add the right property */
+    left: auto;
+    right: var(--pad);
 }
 
 /* Info section */
@@ -136,8 +120,31 @@ nav {
     font-weight: 300;
     position: absolute;
     top: calc(var(--pad) + 30rem);
-    left: auto; /* Remove the left property */
-    right: var(--pad); /* Add the right property */
+    right: var(--pad);
+}
+
+.info_item-1 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    position: absolute;
+    right: calc(var(--pad) + 2rem);
+    top: calc(var(--pad) + 1rem);
+}
+
+.info_item-2 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    position: absolute;
+    right: calc(var(--pad) + 2rem);
+    top: calc(var(--pad) + 9rem);
+}
+
+.info_item-3 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    position: absolute;
+    right: calc(var(--pad) + 2rem);
+    top: calc(var(--pad) + 12rem);
 }
 
 /* Contact section */
@@ -146,8 +153,8 @@ nav {
     font-weight: 300;
     position: absolute;
     top: calc(var(--pad) + 30rem);
-    left: auto; /* Remove the left property */
-    right: var(--pad); /* Add the right property */
+    left: auto;
+    right: var(--pad);
 }
 
 /*enter view stuff*/
@@ -177,8 +184,7 @@ nav {
     }
 }
 #Page {
-    /* ... (your existing styles) */
-    animation: fadeIn 2s ease-in-out forwards; /* Apply fade-in animation */
+    animation: fadeIn 2s ease-in-out forwards;
 }
 
 /* line stuff*/
@@ -254,34 +260,11 @@ nav {
 }
 .theme {
     font-family: 'Roboto', sans-serif;
-    font-weight: 300; /* Light weight */
+    font-weight: 300;
 }
 @media (prefers-color-scheme: dark) {
     :root {
         --c-bg: hsl(0, 0%, 0%);
         --c-text: hsl(0, 0%, 100%);
     }
-}
-
-.frame video {
-    width: 100%;
-    height: 100%;
-    border: 2px solid #000000; /* Add a white border around the video */
-    box-sizing: border-box; /* Include the border in the dimensions */
-}/* Style the video container */
-
-.video-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-
-/* Style the video element within the container */
-.video-container video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Maintain aspect ratio and cover the entire container */
 }
