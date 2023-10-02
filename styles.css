@@ -144,7 +144,7 @@ nav {
     font-weight: 300;
     position: absolute;
     right: calc(var(--pad) + 2rem);
-    top: calc(var(--pad) + 12rem);
+    top: calc(var(--pad) + 13rem);
 }
 
 /* Contact section */
