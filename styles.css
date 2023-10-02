@@ -128,7 +128,7 @@ nav {
     font-weight: 300;
     position: absolute;
     right: calc(var(--pad) + 2rem);
-    top: calc(var(--pad) + 1rem);
+    bottom: calc(var(--pad) + 9rem);
 }
 
 .info_item-2 {
@@ -136,7 +136,7 @@ nav {
     font-weight: 300;
     position: absolute;
     right: calc(var(--pad) + 2rem);
-    top: calc(var(--pad) + 9rem);
+    bottom: calc(var(--pad) + 5rem);
 }
 
 .info_item-3 {
@@ -144,17 +144,17 @@ nav {
     font-weight: 300;
     position: absolute;
     right: calc(var(--pad) + 2rem);
-    top: calc(var(--pad) + 13rem);
+    bottom: calc(var(--pad) + 1rem);
 }
 
 /* Contact section */
-#contact .content-container p {
+#contact .content-container {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     position: absolute;
-    top: calc(var(--pad) + 30rem);
+    bottom: calc(var(--pad) + 1rem);
     left: auto;
-    right: var(--pad);
+    right: calc(var(--pad) + 2rem);
 }
 
 /*enter view stuff*/
