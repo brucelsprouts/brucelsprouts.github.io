@@ -27,29 +27,15 @@ document.addEventListener("DOMContentLoaded", function() {
             e.preventDefault();
             const targetSectionId = link.getAttribute("href").substring(1); // Remove the '#' symbol
             showSection(targetSectionId);
+
+            // Toggle the "nav-active" class for all links
+            navLinks.forEach(navLink => {
+                navLink.classList.toggle("nav-active");
+
+            });
         });
     });
 
     // Show the default section (e.g., Home) when the page loads
     showSection("home");
-});
-
-// Add event listeners to the navigation links to show the corresponding sections
-const navLinks = document.querySelectorAll(".siteHeader_nav a");
-navLinks.forEach(link => {
-    link.addEventListener("click", function (e) {
-        e.preventDefault();
-        const targetId = link.getAttribute("href").substring(1);
-        const targetSection = document.getElementById(targetId);
-        if (targetSection) {
-            // Hide all sections
-            const sections = document.querySelectorAll(".page");
-            sections.forEach(section => {
-                section.style.display = "none";
-            });
-
-            // Show the target section
-            targetSection.style.display = "block";
-        }
-    });
 });

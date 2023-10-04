@@ -54,13 +54,14 @@ h1 {
     top: calc(var(--pad) + 1rem);
     left: calc(var(--pad) + 1rem);
     margin: 0;
+    font-size: 3rem;
 }
 /*computer scientist*/
 p {
     font-family: 'Roboto', sans-serif;
-    font-weight: 300;
+    font-weight: 100;
     position: absolute;
-    top: calc(var(--pad) + 3rem); 
+    top: calc(var(--pad) + 4rem); 
     left: calc(var(--pad) + 1rem); 
     margin: 0; 
 }
@@ -69,7 +70,7 @@ nav {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     position: absolute;
-    top: calc(var(--pad) + 3rem); 
+    top: calc(var(--pad) + 6rem); 
     left: calc(var(--pad) - 1.5rem); 
 }
 
@@ -267,4 +268,17 @@ nav {
         --c-bg: hsl(0, 0%, 0%);
         --c-text: hsl(0, 0%, 100%);
     }
+}
+@media (prefers-color-scheme: light) {
+    :root {
+        --c-bg: hsl(0, 0%, 100%);
+        --c-text: hsl(0, 0%, 0%);
+    }
+}
+
+/* Add styles for _dot class */
+._dot {
+    position: absolute;
+    left: 40px;
+    z-index: -1;
 }
