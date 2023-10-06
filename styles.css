@@ -261,7 +261,7 @@ nav {
 }
 .theme {
     font-family: 'Roboto', sans-serif;
-    font-weight: 300;
+    font-weight: 100;
 }
 @media (prefers-color-scheme: dark) {
     :root {
