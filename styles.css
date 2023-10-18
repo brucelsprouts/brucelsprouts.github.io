@@ -1,6 +1,9 @@
 body {
   font-family: "Roboto", sans-serif;
   font-weight: 300;
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+  transition: background-color 0.25s, color 0.25s; /* Add transitions for background and text color */
 }
 
 /* You can specify individual elements if needed, e.g., headings, paragraphs, etc. */
@@ -14,7 +17,7 @@ p {
   font-weight: 300;
 }
 
-/* list for ino container stuff*/
+/* list for info container stuff*/
 ul {
   list-style-type: none;
 }
@@ -54,10 +57,13 @@ body.light-mode .info_item-3 a{
   overflow: hidden;
   text-align: center;
   border-bottom: 1px solid #555; /* Add a 1-pixel top border for the underline effect */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+  transition: background-color 0.25s, color 0.25s; /* Add transitions for background and text color */
 }
 .topnav a {
   display: inline-block;
-  padding: 14px 16px;
+  padding: 8px 10px;
   text-decoration: none;
 }
 /* Change the color of the links when you hover over them (shared between dark and light modes) */
@@ -70,10 +76,9 @@ body.dark-mode {
   background-color: #000;
   color: #C8C8C8;
 }
-
 /* Your CSS for light mode */
 body.light-mode {
-  color: #C8C8C8;
+  background-color: #ffffff;
   color: #000;
 }
 
@@ -81,7 +86,6 @@ body.light-mode {
 body.dark-mode .topnav a {
   color: #C8C8C8;
 }
-
 /* Light mode styles for .topnav links */
 body.light-mode .topnav a {
   color: #000;
@@ -91,7 +95,6 @@ body.light-mode .topnav a {
 body.dark-mode .topnav {
   background-color: #000;
 }
-
 /* Light mode styles for .topnav */
 body.light-mode .topnav {
   color: #C8C8C8;
