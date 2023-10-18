@@ -21,17 +21,17 @@ ul {
 
 body.dark-mode .info_item-1 a{
   text-decoration: none;
-  color: #fff;
+  color: #C8C8C8;
 }
 
 body.dark-mode .info_item-2 a{
   text-decoration: none;
-  color: #fff;
+  color: #C8C8C8;
 }
 
 body.dark-mode .info_item-3 a{
   text-decoration: none;
-  color: #fff;
+  color: #C8C8C8;
 }
 
 body.light-mode .info_item-1 a{
@@ -68,18 +68,18 @@ body.light-mode .info_item-3 a{
 /* Your CSS for dark mode */
 body.dark-mode {
   background-color: #000;
-  color: #fff;
+  color: #C8C8C8;
 }
 
 /* Your CSS for light mode */
 body.light-mode {
-  background-color: #fff;
+  color: #C8C8C8;
   color: #000;
 }
 
 /* Dark mode styles for .topnav links */
 body.dark-mode .topnav a {
-  color: #fff;
+  color: #C8C8C8;
 }
 
 /* Light mode styles for .topnav links */
@@ -94,5 +94,5 @@ body.dark-mode .topnav {
 
 /* Light mode styles for .topnav */
 body.light-mode .topnav {
-  background-color: #fff;
+  color: #C8C8C8;
 }
