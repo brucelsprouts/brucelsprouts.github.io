@@ -1,27 +1,63 @@
-/* Add a black background color to the top navigation */
+body {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+}
+
+/* You can specify individual elements if needed, e.g., headings, paragraphs, etc. */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+}
+
+p {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+}
+
+/* Add any other elements as necessary */
 .topnav {
-    background-color: #333;
-    overflow: hidden;
-  }
-  
-  /* Style the links inside the navigation bar */
-  .topnav a {
-    float: left;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-  }
-  
-  /* Change the color of links on hover */
-  .topnav a:hover {
-    background-color: #ddd;
-    color: black;
-  }
-  
-  /* Add a color to the active/current link */
-  .topnav a.active {
-    background-color: #04AA6D;
-    color: white;
-  }
+  overflow: hidden;
+  text-align: center;
+  border-bottom: 1px solid #555; /* Add a 1-pixel top border for the underline effect */
+}
+.topnav a {
+  display: inline-block;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+/* Change the color of the links when you hover over them (shared between dark and light modes) */
+.topnav a:hover {
+  background-color: #555; /* Change the hover background color if desired */
+}
+
+/* Your CSS for dark mode */
+body.dark-mode {
+  background-color: #000;
+  color: #fff;
+}
+
+/* Dark mode styles for .topnav */
+body.dark-mode .topnav {
+  background-color: #000;
+}
+
+/* Dark mode styles for .topnav links */
+body.dark-mode .topnav a {
+  color: #fff;
+}
+
+/* Your CSS for light mode */
+body.light-mode {
+  background-color: #fff;
+  color: #000;
+}
+
+/* Light mode styles for .topnav */
+body.light-mode .topnav {
+  background-color: #fff;
+}
+
+/* Light mode styles for .topnav links */
+body.light-mode .topnav a {
+  color: #000;
+}

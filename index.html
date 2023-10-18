@@ -27,14 +27,88 @@
     <!-- Canonical Link -->
     <link rel="canonical" href="https://brucelsprouts.github.io/brucelsprouts">
 </head>
-<body>
-    <p>test text hiudaniwdn</p>
+<body class="dark-mode"> <!-- Default mode is dark -->
     <div class="topnav">
-        <a class="active" href="#home">Home</a>
-        <a href="#news">News</a>
-        <a href="#contact">Contact</a>
-        <a href="#about">About</a>
+        <a href="javascript:void(0);" onclick="openTab('Home')">Home</a>
+        <a href="javascript:void(0);" onclick="openTab('Codes')">Code</a>
+        <a href="javascript:void(0);" onclick="openTab('AfterEffects')">After Effects</a>
+        <a href="javascript:void(0);" onclick="openTab('Photoshop')">Photoshop</a>
+        <a href="javascript:void(0);" onclick="openTab('Info')">Info</a>
+        <a href="javascript:void(0);" onclick="openTab('Contact')">Contact</a>
     </div>
-</body>
-</html>
 
+    <button onclick="toggleMode()">Toggle Dark/Light Mode</button>
+
+    <div class="tab" id="Home">
+        <section id="home" class="page">
+            <div class="content-container">
+                <p class="home_aboutme">
+                    Computer scientist<br>
+                    studying at Western<br>
+                    University of Ontario.<br>
+                    Born in 2005 in<br>
+                    Mississauga,<br>
+                    Canada, with strong<br>
+                    aspiration to become<br>
+                    a successful<br>
+                    computer scientist.<br>
+                    Through hard work<br>
+                    and commitment, I'll<br>
+                    achieve my goals as<br>
+                    not only as a<br>
+                    computer scientist,<br>
+                    but a content creator,<br>
+                    student and individual.<br>
+                </p>                
+            </div>
+        </section>
+    </div>
+    
+    <div class="tab" id="Code" style="display:none;">
+        <!-- Your content for the Code Projects tab goes here -->
+    </div>
+    
+    <div class="tab" id="AfterEffect" style="display:none;">
+        <!-- Your content for the After Effect Projects tab goes here -->
+    </div>
+    
+    <div class="tab" id="Photoshop" style="display:none;">
+        <!-- Your content for the Photoshop Projects tab goes here -->
+    </div>
+    
+    <div class="tab" id="Info" style="display:none;">
+        <div class="content-container">
+            <div class="info_item info_item-1">
+                <div class="info_content">
+                    <ul>
+                        <li><a class="text-btn" href="https://github.com/brucelsprouts" target="_blank" rel="noopener">GitHub &#8599;</a></li>
+                        <li><a class="text-btn" href="https://www.youtube.com/channel/UCIZq5zDOCw1Xq49H1Mpx05Q" target="_blank" rel="noopener">YouTube &#8599;</a></li>
+                        <li><a class="text-btn" href="https://www.instagram.com/brucelsproutss/" target="_blank" rel="noopener">Instagram (personal) &#8599;</a></li>
+                        <li><a class="text-btn" href="https://www.instagram.com/skaterbug92/" target="_blank" rel="noopener">Instagram (edits) &#8599;</a></li>
+                        <li><a class="text-btn" href="https://www.tiktok.com/@brucelsproutss" target="_blank" rel="noopener">TikTok &#8599;</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="info_item info_item-2">
+                <div class="info_content">
+                    <ul>
+                        <li><a class="text-btn" href="https://github.com/brucelsprouts/brucelsprouts.github.io" target="_blank" rel="noopener">brucelsprouts.github.io (REPO) &#8599;</a></li>
+                        <li><a class="text-btn" href="https://github.com/brucelsprouts/pacmangame" target="_blank rel="noopener">pacman game (REPO) &#8599;</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="info_item info_item-3">
+                <div class="info_content">
+                    <ul>
+                        <li><span class="is-light">Ontario Scholar<br></span><span>September 2019 - August 2023</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="tab" id="Contact" style="display:none;">
+        <!-- Your content for the Contact tab goes here -->
+    </div>
+    
+</html>
