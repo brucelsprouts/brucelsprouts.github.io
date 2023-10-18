@@ -30,18 +30,29 @@
 </head>
 <body class="dark-mode" onload="showPage('Home')">
     <div class="topnav" id="myTopnav">
-        <a href="#Home" class="active" onclick="showPage('Home')">Home</a>
-        <a href="#Code" onclick="showPage('Code')">Code</a>
-        <a href="#AfterEffects" onclick="showPage('AfterEffects')">After Effects</a>
-        <a href="#Photoshop" onclick="showPage('Photoshop')">Photoshop</a>
-        <a href="#Info" onclick="showPage('Info')">Info</a>
-        <a href="#Contact" onclick="showPage('Contact')">Contact</a>
-        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-            <i class="fa fa-bars"></i>
-        </a>
+        <div class="left-section">
+            <a href="#Home" class="active" onclick="showPage('Home')">&lt;&#47;&gt; Bruce Lin</a>
+        </div>
+        <div class="middle-section">
+            <a href="#Code" onclick="showPage('Code')">Code</a>
+            <a href="#AfterEffects" onclick="showPage('AfterEffects')">After Effects</a>
+            <a href="#Photoshop" onclick="showPage('Photoshop')">Photoshop</a>
+            <a href="#Info" onclick="showPage('Info')">Info</a>
+            <a href="#Contact" onclick="showPage('Contact')">Contact</a>
+        </div>
+        <div class="right-section">
+            <a href="#" onclick="lightDark(); return false;">
+                <img src="assets/images/moon.png" alt="Toggle" id="moon-image" />
+                <img src="assets/images/sun.png" alt="Toggle" id="sun-image" />
+            </a>
+        </div>
     </div>
+    
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+    </a>
 
-    <button onclick="lightDark()">Toggle</button>
+    <div class="white-square"></div>
 
     <div class="content" id="Home">
         <section id="home" class="page">

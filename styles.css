@@ -3,7 +3,7 @@ body {
   font-weight: 300;
   margin: 0; /* Remove default margin */
   padding: 0; /* Remove default padding */
-  transition: background-color 0.25s, color 0.25s; /* Add transitions for background and text color */
+  transition: background-color .2s, color .2s;
 }
 
 /* You can specify individual elements if needed, e.g., headings, paragraphs, etc. */
@@ -52,50 +52,132 @@ body.light-mode .info_item-3 a{
   color: #000;
 }
 
-/* Add any other elements as necessary */
-.topnav {
-  overflow: hidden;
-  text-align: center;
-  border-bottom: 1px solid #555; /* Add a 1-pixel top border for the underline effect */
-  margin: 0; /* Remove default margin */
-  padding: 0; /* Remove default padding */
-  transition: background-color 0.25s, color 0.25s; /* Add transitions for background and text color */
-}
-.topnav a {
-  display: inline-block;
-  padding: 8px 10px;
+.dark-mode .contact-container a{
   text-decoration: none;
+  color: #C8C8C8;
 }
-/* Change the color of the links when you hover over them (shared between dark and light modes) */
-.topnav a:hover {
-  background-color: #555; /* Change the hover background color if desired */
+.light-mode .contact-container a{
+  text-decoration: none;
+  color: #C8C8C8;
 }
 
 /* Your CSS for dark mode */
 body.dark-mode {
   background-color: #000;
-  color: #C8C8C8;
+  color: #C8C8C8;  
 }
 /* Your CSS for light mode */
 body.light-mode {
   background-color: #ffffff;
-  color: #000;
+  color: #000;  
 }
 
 /* Dark mode styles for .topnav links */
 body.dark-mode .topnav a {
-  color: #C8C8C8;
+  color: #C8C8C8;  
 }
 /* Light mode styles for .topnav links */
 body.light-mode .topnav a {
-  color: #000;
+  color: #000; 
 }
-
 /* Dark mode styles for .topnav */
 body.dark-mode .topnav {
   background-color: #000;
+  display: flex; /* Use flexbox for alignment */
+  justify-content: space-between; /* Space content evenly */
+  align-items: center; /* Align items vertically in the center */
 }
 /* Light mode styles for .topnav */
 body.light-mode .topnav {
   color: #C8C8C8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+/* Add any other elements as necessary */
+.topnav {
+  height: 40px; /* Adjust this value as needed */
+  border-bottom: 1px solid #555;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color .2s;
+}
+.topnav a {
+  display: inline-block;
+  padding: 8px 10px;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.2s;
+
+}
+/* Change the color of the links when you hover over them (shared between dark and light modes) */
+.dark-mode .topnav a:hover {
+  background-color: #201c1c; /* Change the hover background color if desired */
+  transition: background-color 0.3s;
+}
+.light-mode .topnav a:hover {
+  background-color: #e8e4e4; /* Change the hover background color if desired */
+  transition: background-color 0.3s;
+}
+
+.dark-mode .topnav .left-section {
+  text-align: left; /* Align content to the right */
+  margin-left: 10px; /* Add margin to push it slightly away from the left */
+}
+.light-mode .topnav .left-section {
+  text-align: left;
+  margin-left: 10px; /* Add margin to push it slightly away from the left */
+}
+.dark-mode .topnav .left-section a{
+  padding: 9px; /* Adjust the vertical padding as needed */
+  font-size: 19px;
+}
+.light-mode .topnav .left-section a{
+  padding: 9px; /* Adjust the vertical padding as needed */
+  font-size: 19px;
+}
+
+.dark-mode .topnav .middle-section a{
+  padding: 11px; /* Adjust the vertical padding as needed */
+}
+.light-mode .topnav .middle-section a{
+  padding: 11px; /* Adjust the vertical padding as needed */
+}
+
+.dark-mode .topnav .right-section {
+  text-align: right; /* Align content to the right */
+  margin-right: 10px; /* Add margin to push it slightly away from the left */
+}
+.light-mode .topnav .right-section {
+  text-align: right;
+  margin-right: 10px; /* Add margin to push it slightly away from the left */
+}
+
+#moon-image, #sun-image {
+  padding: 1px; /* Adjust the vertical padding as needed */
+}
+.dark-mode #moon-image {
+  width: 18px;
+  height: 18px;
+}
+.dark-mode #sun-image {
+  display: none; /* Hide the moon image in light mode */
+}
+.light-mode #sun-image {
+  width: 18px;
+  height: 18px;
+}
+.light-mode #moon-image {
+  display: none; /* Hide the moon image in light mode */
+}
+
+.white-square {
+  z-index: -1;
+  height: 40px;
+  width: 100vw; /* 100% of the viewport width */
+  background-color: white;
+  position: absolute;
+  top: 0; /* Position it at the top of the viewport */
+  left: 0;
 }
