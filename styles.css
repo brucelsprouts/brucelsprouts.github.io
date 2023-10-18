@@ -14,6 +14,41 @@ p {
   font-weight: 300;
 }
 
+/* list for ino container stuff*/
+ul {
+  list-style-type: none;
+}
+
+body.dark-mode .info_item-1 a{
+  text-decoration: none;
+  color: #fff;
+}
+
+body.dark-mode .info_item-2 a{
+  text-decoration: none;
+  color: #fff;
+}
+
+body.dark-mode .info_item-3 a{
+  text-decoration: none;
+  color: #fff;
+}
+
+body.light-mode .info_item-1 a{
+  text-decoration: none;
+  color: #000;
+}
+
+body.light-mode .info_item-2 a{
+  text-decoration: none;
+  color: #000;
+}
+
+body.light-mode .info_item-3 a{
+  text-decoration: none;
+  color: #000;
+}
+
 /* Add any other elements as necessary */
 .topnav {
   overflow: hidden;
@@ -36,9 +71,10 @@ body.dark-mode {
   color: #fff;
 }
 
-/* Dark mode styles for .topnav */
-body.dark-mode .topnav {
-  background-color: #000;
+/* Your CSS for light mode */
+body.light-mode {
+  background-color: #fff;
+  color: #000;
 }
 
 /* Dark mode styles for .topnav links */
@@ -46,18 +82,17 @@ body.dark-mode .topnav a {
   color: #fff;
 }
 
-/* Your CSS for light mode */
-body.light-mode {
-  background-color: #fff;
+/* Light mode styles for .topnav links */
+body.light-mode .topnav a {
   color: #000;
+}
+
+/* Dark mode styles for .topnav */
+body.dark-mode .topnav {
+  background-color: #000;
 }
 
 /* Light mode styles for .topnav */
 body.light-mode .topnav {
   background-color: #fff;
-}
-
-/* Light mode styles for .topnav links */
-body.light-mode .topnav a {
-  color: #000;
 }
