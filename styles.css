@@ -204,7 +204,7 @@ body.light-mode .topnav {
 
 .menu-icons {
   position:relative;
-  left: 99999px;
+  bottom: 50px;
 }
 
 .dark-mode #white-menu {
@@ -226,7 +226,7 @@ body.light-mode .topnav {
   }
   .menu-icons {
     position:inherit;
-    right: 99999px;
+    top: 50px;
   }
   .dark-mode #white-menu {
     display: block;
