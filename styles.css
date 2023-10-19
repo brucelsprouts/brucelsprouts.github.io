@@ -146,12 +146,32 @@ body.light-mode .topnav {
 }
 
 .dark-mode .topnav .right-section {
+  display: flex;
   text-align: right; /* Align content to the right */
   margin-right: 10px; /* Add margin to push it slightly away from the left */
 }
 .light-mode .topnav .right-section {
+  display: flex;
   text-align: right;
   margin-right: 10px; /* Add margin to push it slightly away from the left */
+}
+
+#white-search, #black-search {
+  padding: 1px; /* Adjust the vertical padding as needed */
+}
+.dark-mode #white-search {
+  width: 18px;
+  height: 18px;
+}
+.dark-mode #black-search {
+  display: none; /* Hide the moon image in light mode */
+}
+.light-mode #black-search {
+  width: 18px;
+  height: 18px;
+}
+.light-mode #white-search {
+  display: none; /* Hide the moon image in light mode */
 }
 
 #moon-image, #sun-image {
@@ -180,4 +200,50 @@ body.light-mode .topnav {
   position: absolute;
   top: 0; /* Position it at the top of the viewport */
   left: 0;
+}
+
+.menu-icons {
+  position:relative;
+  left: 99999px;
+}
+
+.dark-mode #white-menu {
+  display: none;
+}
+.dark-mode #black-menu {
+  display: none;
+}
+.light-mode #white-menu {
+  display: none;
+}
+.light-mode #black-menu {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .middle-section {
+    display: none;
+  }
+  .menu-icons {
+    position:inherit;
+    right: 99999px;
+  }
+  .dark-mode #white-menu {
+    display: block;
+    padding: 1px; /* Adjust the vertical padding as needed */
+    width: 18px;
+    height: 18px;
+  }
+  .dark-mode #black-menu{
+    display: none;
+  }
+  .light-mode #black-menu {
+    display: block;
+    padding: 1px; /* Adjust the vertical padding as needed */
+    width: 18px;
+    height: 18px;
+  }
+  .light-mode #white-menu{
+    display: none;
+  }
 }
