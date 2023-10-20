@@ -109,7 +109,6 @@ body.light-mode .topnav {
   text-decoration: none;
   font-size: 16px;
   transition: color 0.2s;
-
 }
 /* Change the color of the links when you hover over them (shared between dark and light modes) */
 .dark-mode .topnav a:hover {
@@ -207,16 +206,10 @@ body.light-mode .topnav {
   bottom: 50px;
 }
 
-.dark-mode #white-menu {
+#white-menu {
   display: none;
 }
-.dark-mode #black-menu {
-  display: none;
-}
-.light-mode #white-menu {
-  display: none;
-}
-.light-mode #black-menu {
+#black-menu {
   display: none;
 }
 
@@ -245,5 +238,35 @@ body.light-mode .topnav {
   }
   .light-mode #white-menu{
     display: none;
+  }
+  .menu-show .topnav .middle-section {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 41px;
+    justify-content: space-between; /* Space content evenly */
+    align-items: flex-start; /* Align items to the start of the cross-axis (vertically) */
+    transition: background-color 0.2s;
+  }
+  .topnav .middle-section {
+    border-right: 1px solid #555;
+    border-left: 1px solid #555;
+    border-bottom: 1px solid rgb(85, 85, 85);
+    position: fixed;
+    left: 0;
+    right: 0;
+  }
+  .topnav .middle-section a:not(:first-child) {
+    border-top: 1px solid rgba(85, 85, 85, 0.2);
+  }
+  .dark-mode .topnav .middle-section {
+    flex-direction: column;
+    align-items: stretch;
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+  .light-mode .topnav .middle-section {
+    flex-direction: column;
+    align-items: stretch;
+    background-color: rgba(255, 255, 255, 0.9);
   }
 }

@@ -30,25 +30,25 @@
 <body class="dark-mode" onload="showPage('Home')">
     <div class="topnav" id="myTopnav">
         <div class="left-section">
-            <a href="#Home" class="active" onclick="showPage('Home')">&lt;&#47;&gt; Bruce Lin</a>
+            <a href="#Home" class="active" onclick="showPage('Home'),menuHide()">&lt;&#47;&gt; Bruce Lin</a>
         </div>
         <div class="middle-section">
-            <a href="#Code" onclick="showPage('Code')">Code</a>
-            <a href="#AfterEffects" onclick="showPage('AfterEffects')">After Effects</a>
-            <a href="#Photoshop" onclick="showPage('Photoshop')">Photoshop</a>
-            <a href="#Info" onclick="showPage('Info')">Info</a>
-            <a href="#Contact" onclick="showPage('Contact')">Contact</a>
+            <a href="#Code" onclick="showPage('Code'),menuHide()">Code</a>
+            <a href="#AfterEffects" onclick="showPage('AfterEffects'),menuHide()">After Effects</a>
+            <a href="#Photoshop" onclick="showPage('Photoshop'),menuHide()">Photoshop</a>
+            <a href="#Info" onclick="showPage('Info'),menuHide()">Info</a>
+            <a href="#Contact" onclick="showPage('Contact'),menuHide()">Contact</a>
         </div>
         <div class="right-section">
-            <a class="menu-icons">
+            <a class="menu-icons" onclick="menuSwitch(); return false;">
                 <img src="assets/images/icons/white-menu.png" id="white-menu">
                 <img src="assets/images/icons/black-menu.png" id="black-menu">
             </a>
-            <a>
-                <img src="assets/images/icons/white-search.png" id="white-search" />
-                <img src="assets/images/icons/black-search.png" id="black-search" />
+            <a class="search-icons" onclick="myFunction(); return false;">
+                <img src="assets/images/icons/white-search.png" onclick="menuHide()" id="white-search" />
+                <img src="assets/images/icons/black-search.png" onclick="menuHide()" id="black-search" />
             </a>
-            <a href="#" onclick="lightDark(); return false;">
+            <a href="darklight-icons" onclick="lightDark(); return false;">
                 <img src="assets/images/icons/moon.png" id="moon-image" />
                 <img src="assets/images/icons/sun.png" id="sun-image" />
             </a>
