@@ -1,9 +1,30 @@
 body {
+  overflow-x: hidden;  
+
   font-family: "Roboto", sans-serif;
   font-weight: 300;
   margin: 0; /* Remove default margin */
   padding: 0; /* Remove default padding */
   transition: background-color .2s, color .2s;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+/* Track */
+.dark-mode::-webkit-scrollbar-track {
+  background: #000;
+}
+/* Track */
+.light-mode::-webkit-scrollbar-track {
+  background: #C8C8C8;
 }
 
 /* You can specify individual elements if needed, e.g., headings, paragraphs, etc. */
@@ -102,6 +123,7 @@ body.light-mode .topnav {
   justify-content: space-between;
   align-items: center;
   transition: background-color .2s;
+  background-color: white;
 }
 .topnav a {
   display: inline-block;
@@ -271,35 +293,45 @@ body.light-mode .topnav {
   }
 }
 
-div.code-container {
+.code-container {
   display: flex;
+  justify-content: space-evenly;
   flex-wrap: wrap;
+  align-content: flex-start;
+  align-items: left;
 }
-div.gallery {
-  display: flex;
-  flex-direction: column;
-  margin: 5px;
-  border: 1px solid #ccc;
-  width: 25%;
-  flex-grow: 1;
-}
-
-div.gallery:hover {
-  border: 1px solid #777;
-}
-
-div.gallery img {
+.gallery img {
   width: 100%;
   height: auto;
 }
-
-div.desc {
+.desc {
   padding: 15px;
   text-align: center;
 }
 
+.dark-mode .gallery {
+  display: flex;
+  flex-direction: column;
+  margin: 1em;
+  border: 1px solid #C8C8C8;
+  flex-basis: 400px;
+}
+.dark-mode .gallery:hover {
+  border: 1px solid #e8e4e4;
+}
+.light-mode .gallery {
+  display: flex;
+  flex-direction: column;
+  margin: 1em;
+  border: 1px solid #000000;
+  flex-basis: 400px;
+}
+.light-mode .gallery:hover {
+  border: 1px solid #201c1c;
+}
+
 @media (max-width: 800px) {
-  div.gallery {
-    width: 50%;
+  .gallery {
+    flex-basis: 300px;
   }
 }
