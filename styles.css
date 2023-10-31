@@ -1,6 +1,5 @@
 body {
   overflow-x: hidden;  
-
   font-family: "Roboto", sans-serif;
   font-weight: 300;
   margin: 0; /* Remove default margin */
@@ -9,7 +8,8 @@ body {
 }
 /* width */
 ::-webkit-scrollbar {
-  width: 10px;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
@@ -28,9 +28,14 @@ body {
 }
 
 /* You can specify individual elements if needed, e.g., headings, paragraphs, etc. */
-h1, h2, h3, h4, h5, h6 {
+h2, h3, h4, h5, h6 {
   font-family: "Roboto", sans-serif;
   font-weight: 300;
+}
+
+h1 {
+  font-size: 3em;
+  text-align: center;
 }
 
 p {
@@ -116,9 +121,13 @@ body.light-mode .topnav {
   align-items: center;
 }
 /* Add any other elements as necessary */
-.topnav {
-  height: 40px; /* Adjust this value as needed */
+.topnav-container {
   border-bottom: 1px solid #555;
+}
+.topnav {
+  max-width: 1200px; /* Set the maximum width to 1200px */
+  margin: 0 auto; /* Center the top navigation horizontally */
+  height: 40px; /* Adjust this value as needed */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -213,14 +222,40 @@ body.light-mode .topnav {
   display: none; /* Hide the moon image in light mode */
 }
 
-.white-square {
-  z-index: -1;
-  height: 40px;
-  width: 100vw; /* 100% of the viewport width */
-  background-color: white;
-  position: absolute;
-  top: 0; /* Position it at the top of the viewport */
-  left: 0;
+.search-container {
+  text-align: center;
+  margin: 10px;
+  max-width: 1300px; /* Set the maximum width to 1200px */
+  margin: 0 auto; /* Center the search container horizontally */
+}
+.search-input {
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  width:90%; /* Make the input element 100% width within its container */
+  transition: background-color .2s, color .2s;
+}
+.dark-mode .search-input {
+  border: 1px solid #C8C8C8;
+  background-color: #000;
+  color: #fff;
+}
+.light-mode .search-input {
+  /* Adjust the styles for light mode */
+  border: 1px solid #000000;
+  background-color: #ffffff;
+  color: #000;
+}
+
+.dark-mode .white-container {
+  max-width: 1300px; /* Set the maximum width to 1300px */
+  margin: 0 auto; /* Center the line horizontally */
+}
+.dark-mode .white-line {
+  background-color: #C8C8C8;
+  width: 90%; /* Make it fill 90% of the screen when smaller */
+  margin: 0 auto; /* Center the line horizontally */
+  height: 1px; /* Adjust the height as needed */
 }
 
 .menu-icons {
@@ -319,18 +354,8 @@ body.light-mode .topnav {
 .dark-mode .gallery:hover {
   border: 1px solid #e8e4e4;
 }
-.light-mode .gallery {
-  display: flex;
-  flex-direction: column;
-  margin: 1em;
-  border: 1px solid #000000;
-  flex-basis: 400px;
-}
-.light-mode .gallery:hover {
-  border: 1px solid #201c1c;
-}
 
-@media (max-width: 800px) {
+@media (max-width: 600px) {
   .gallery {
     flex-basis: 300px;
   }
