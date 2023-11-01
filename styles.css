@@ -28,13 +28,18 @@ body {
 }
 
 /* You can specify individual elements if needed, e.g., headings, paragraphs, etc. */
-h2, h3, h4, h5, h6 {
+h3, h4, h5, h6 {
   font-family: "Roboto", sans-serif;
   font-weight: 300;
 }
 
 h1 {
   font-size: 3em;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1em;
   text-align: center;
 }
 
@@ -328,35 +333,71 @@ body.light-mode .topnav {
   }
 }
 
-.code-container {
+
+.grid {
   display: flex;
-  justify-content: space-evenly;
   flex-wrap: wrap;
-  align-content: flex-start;
-  align-items: left;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto; /* Center the grid on larger screens */
+  gap: 20px; /* Adjust this to set the spacing between items */
+  padding: 3%;
+
+}
+
+.gallery {
+  flex: 0 0 calc(33.33% - 20px); /* Adjust the width of each gallery item as needed */
+  padding: 10px;
+  text-align: center;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+.dark-mode .gallery {
+  border: 1px solid #C8C8C8;
+}
+.light-mode .gallery {
+  border: 1px solid #000000;
 }
 .gallery img {
-  width: 100%;
+  max-width: 100%;
   height: auto;
+  border-radius: 5px;
+}
+.dark-mode .gallery img{
+  border: 1px solid #C8C8C8;
+}
+.light-mode .gallery img{
+  border: 1px solid #000000;
 }
 .desc {
-  padding: 15px;
-  text-align: center;
+  margin-top: 5px;
+  font-size: 14px;
 }
 
-.dark-mode .gallery {
-  display: flex;
-  flex-direction: column;
-  margin: 1em;
-  border: 1px solid #C8C8C8;
-  flex-basis: 400px;
-}
-.dark-mode .gallery:hover {
-  border: 1px solid #e8e4e4;
-}
-
-@media (max-width: 600px) {
-  .gallery {
-    flex-basis: 300px;
+@media (max-width: 800px) {
+  .grid {
+    max-width: none; /* Remove max-width to make it fluid at smaller screen sizes */
   }
+  .gallery {
+    flex: 0 0 calc(50% - 20px); /* Adjust for two items per row */
+  }
+}
+
+.home-content {
+  margin: 0 auto; /* This centers the element horizontally */
+  max-width: 1200px;
+}
+.home-container {
+  margin: 0 auto; /* This centers the element horizontally */
+  width: 90%;
+}
+
+.info-content {
+  margin: 0 auto; /* This centers the element horizontally */
+  max-width: 1200px;
+}
+
+.contact-content {
+  margin: 0 auto; /* This centers the element horizontally */
+  max-width: 1200px;
 }

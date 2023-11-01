@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bruce's Portfolio</title>
+    <title>Blender | Bruce's Portfolio</title>
     <meta name="description" content="Computer scientist and Multimedia">
     <script src="script.js"></script>
 
@@ -60,13 +60,20 @@
     
     <h1>Blender</h1>
     <div class="search-container">
-        <form action="/search" method="get">
-            <input type="text" class="search-input" name="q" placeholder="Search..." />
-        </form>
+      <input type="text" class="search-input" name="q" id="myInput" onkeyup="searchThing()" placeholder="Search for name..">
     </div>
-    <div class="content" id="Blender">
-        <h1>Blender Page</h1>
-        <!-- Your Blender-related content goes here -->
+
+    <div class="blender-content">
+      <div class="blender-container">
+        <div class="grid">
+          <div class="gallery">
+            <a href="blender/donut.html">
+              <img src="assets/images/blenderimages/donut.png" alt="donutmodel" width="600" height="400">
+            </a>
+            <div class="desc">Donut model | WIP</div>
+          </div>
+        </div>
+      </div>
     </div>
 </body>
 </html>

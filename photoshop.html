@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bruce's Portfolio</title>
+    <title>Photoshop | Bruce's Portfolio</title>
     <meta name="description" content="Computer scientist and Multimedia">
     <script src="script.js"></script>
 
@@ -60,12 +60,19 @@
     
     <h1>Photoshop</h1>
     <div class="search-container">
-        <form action="/search" method="get">
-            <input type="text" class="search-input" name="q" placeholder="Search..." />
-        </form>
+      <input type="text" class="search-input" name="q" id="myInput" onkeyup="searchThing()" placeholder="Search for name..">
     </div>
-    <div class="content" id="Photoshop">
-        <!-- Your Photoshop-related content goes here -->
+
+    <div class="photoshop-content">
+      <div class="photoshop-container">
+        <div class="grid">
+          <div class="gallery">
+            <a href="photoshop/schoolposter.html">
+              <img src="assets/images/photoshopimages/blin232_poster.jpg" alt="poster assignment" width="600" height="400">
+            </a>
+            <div class="desc">Poster Assignment - Fall 2023 | Oct 13, 2023/div>
+          </div>
+      </div>
     </div>
 </body>
 </html>

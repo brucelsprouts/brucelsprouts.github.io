@@ -14,3 +14,23 @@ function menuHide() {
     element.classList.remove("menu-show");
     element.classList.add("menu-hide");
 }
+
+function searchThing() {
+    // Declare variables
+    var input, filter, gallery, items, i, img, alt;
+    input = document.getElementById('myInput');
+    filter = input.value.toUpperCase();
+    gallery = document.getElementsByClassName("gallery");
+
+    // Loop through all gallery items and hide those that don't match the search query
+    for (i = 0; i < gallery.length; i++) {
+        items = gallery[i];
+        img = items.getElementsByTagName("img")[0];
+        alt = img.getAttribute("alt");
+        if (alt.toUpperCase().indexOf(filter) > -1) {
+            items.style.display = "";
+        } else {
+            items.style.display = "none";
+        }
+    }
+}
