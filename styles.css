@@ -337,14 +337,12 @@ body.light-mode .topnav {
 .grid {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
   max-width: 1200px;
-  margin: 0 auto; /* Center the grid on larger screens */
-  gap: 20px; /* Adjust this to set the spacing between items */
+  margin: 0 auto;
+  gap: 20px;
   padding: 3%;
-
 }
-
 .gallery {
   flex: 0 0 calc(33.33% - 20px); /* Adjust the width of each gallery item as needed */
   padding: 10px;
@@ -373,7 +371,6 @@ body.light-mode .topnav {
   margin-top: 5px;
   font-size: 14px;
 }
-
 @media (max-width: 800px) {
   .grid {
     max-width: none; /* Remove max-width to make it fluid at smaller screen sizes */
