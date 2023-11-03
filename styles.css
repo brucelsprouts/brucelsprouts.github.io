@@ -43,8 +43,10 @@ h1 {
 }
 
 h2 {
-  font-size: 4em;
+  font-size: 60px;
   text-align: left;
+  padding: 0px;
+  margin: 0px;
 }
 
 h3 {
@@ -408,39 +410,6 @@ body.light-mode .topnav {
   max-width: 1200px;
 }
 
-.row:after {
-  content: "";
-  display: table;
-  clear: both
-}
-.column-text {
-  float: left;
-  width: 66.66666%;
-  padding: 10px;
-}
-.colum-code {
-  float: left;
-  width: 33.33333%;
-  padding: 10px;
-}
-.text-box {
-  padding-right: 20px; /* Add right padding */
-}
-
-.background-2 {
-  transition: background-color 0.2s ease; /* Add a transition effect to smoothly change the background color */
-}
-.dark-mode .background-2 {
-  background-color: #111111;
-}
-.light-mode .background-2 {
-  background-color: #eeeeee;
-}
-.container-1 {
-  margin: 0 auto;
-  max-width: 1200px;
-}
-
 .grid-container {
   display: grid;
   grid-template-columns: auto auto;
@@ -461,7 +430,6 @@ body.light-mode .topnav {
 
 .dark-mode .custom-link {
   color: #C8C8C8; /* Default color */
-  text-decoration: none; /* Remove underlines, if desired */
   transition: background-color .2s, color .2s;
 }
 .dark-mode .custom-link:visited {
@@ -470,30 +438,17 @@ body.light-mode .topnav {
 }
 .light-mode .custom-link {
   color: #000000; /* Default color */
-  text-decoration: none; /* Remove underlines, if desired */
   transition: background-color .2s, color .2s;
 }
 .light-mode .custom-link:visited {
   color: #000; /* Style for visited link */
   transition: background-color .2s, color .2s;
 }
-
 .grid-item-icon {
   text-align: right;
 }
-@media screen and (max-width: 750px) {
-  .column-text,
-  .column-image,
-  .colum-code {
-    width: 100%;
-    text-align: left;
-  }
-  img {
-    margin: auto;
-  }
-  .grid-container {
-    grid-gap: 20px;
-  }
+.row {
+  max-width: 1200px;
 }
 
 #github-icon {
@@ -542,11 +497,128 @@ body.light-mode .topnav {
   content: url('assets/images/home/light-tiktok-icon.png');
 }
 
-.container-2 {
-  max-width: 1200px;
+.container-1,
+.container-2,
+.container-3 {
+  display: flex; /* Use flexbox to center contents */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  /* Add any other styles you want for the container here */
 }
 
-.column-skill h2{
+/* Default styles for the columns */
+.column-featured,
+.column-code {
+  float: left;
+  width: 50%; /* Each column takes up one-third of the available space */
+  box-sizing: border-box;
   padding: 10px;
+}
+.column-text {
+  float: left;
+  width: 50%; /* Each column takes up one-third of the available space */
+  box-sizing: border-box;
+  padding: 10px;
+  padding-top: 40px; /* Adjust the value as needed */
+}
+
+
+
+/* Media query for screens less than 750px wide */
+@media (max-width: 750px) {
+  .column-text,
+  .column-featured,
+  .column-code {
+    width: 100%; /* Each column takes up the full width */
+  }
+  .column-text {
+    text-align: center;
+  }
+  .column-text h2{
+    text-align: center;
+  }
+}
+.dark-mode .background-2 {
+  background-color: rgb(22, 22, 22);
+  transition: background-color 0.2s ease; /* Add a transition effect to smoothly change the background color */
+
+}
+.light-mode .background-2 {
+  background-color: rgb(245, 245, 245);
+  transition: background-color 0.2s ease; /* Add a transition effect to smoothly change the background color */
+
+}
+.column-featured-product {
+  flex: 0 0 calc(33.33% - 20px); /* Adjust the width of each gallery item as needed */
+  padding: 30px;
   text-align: center;
+  box-sizing: border-box;
+  border-radius: 5px;
+
+}
+.dark-mode .column-featured-product {
+  border: 1px solid #C8C8C8;
+}
+.light-mode .column-featured-product {
+  border: 1px solid #000000;
+}
+.column-featured-product img{
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+
+
+}
+.dark-mode .column-featured-product img {
+  border: 1px solid #C8C8C8;
+}
+.light-mode .column-featured-product img {
+  border: 1px solid #000000;
+}
+/* Default styles for the columns */
+.column-featured-text {
+  float: left;
+  width: 50%; /* Each column takes up one-third of the available space */
+  box-sizing: border-box;
+  padding: 10px;
+  text-align: left;
+}
+/* Media query for screens less than 750px wide */
+@media (max-width: 750px) {
+  .column-featured-text {
+    width: 100%; /* Set the width to 100% for small screens */
+    text-align: center;
+  }
+  .column-featured-text h2{
+    text-align: center;
+  }
+}
+
+.column-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Reduce the minmax width for smaller items */
+  gap: 30px; /* Increase the gap for more space between items */
+  padding: 20px; /* Add padding around the grid */
+}
+
+.skills-description {
+  float: left;
+  width: 20%; /* Adjust the width as needed */
+  padding: 20px;
+}
+
+.column-card {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px; /* Reduce the padding for smaller items */
+  text-align: center;
+}
+
+.column-card h3 {
+  font-size: 20px; /* Make the text smaller */
+}
+
+.column-card p {
+  font-size: 14px; /* Make the text smaller */
 }
