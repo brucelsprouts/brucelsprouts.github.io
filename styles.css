@@ -1,31 +1,35 @@
 body {
   overflow-x: hidden;  
+  overflow-y: overlay;  
   font-family: "Roboto", sans-serif;
   font-weight: 300;
   margin: 0; /* Remove default margin */
   padding: 0; /* Remove default padding */
   transition: background-color .2s, color .2s;
 }
-/* width */
+
 ::-webkit-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  width: 6px;
+  background: transparent;
 }
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
+::-webkit-scrollbar-track {
+  background: transparent;
 }
-::-webkit-scrollbar-thumb {
+.dark-mode::-webkit-scrollbar-thumb {
   background: #888;
+  border-radius: 10px;
 }
-/* Track */
-.dark-mode::-webkit-scrollbar-track {
-  background: #000;
+.dark-mode::-webkit-scrollbar-thumb:hover {
+  background: #999;
 }
-/* Track */
-.light-mode::-webkit-scrollbar-track {
-  background: #C8C8C8;
+.light-mode::-webkit-scrollbar-thumb {
+  background: #b0b0b0 ;
+  border-radius: 10px;
 }
+.light-mode::-webkit-scrollbar-thumb:hover {
+  background: #a0a0a0;
+}
+
 
 /* You can specify individual elements if needed, e.g., headings, paragraphs, etc. */
 h3, h4, h5, h6 {
@@ -263,6 +267,17 @@ body.light-mode .topnav {
   height: 1px; /* Adjust the height as needed */
 }
 
+.light-mode .white-container {
+  max-width: 1300px; /* Set the maximum width to 1300px */
+  margin: 0 auto; /* Center the line horizontally */
+}
+.light-mode .white-line {
+  background-color: #000000;
+  width: 90%; /* Make it fill 90% of the screen when smaller */
+  margin: 0 auto; /* Center the line horizontally */
+  height: 1px; /* Adjust the height as needed */
+}
+
 .menu-icons {
   position:relative;
   bottom: 50px;
@@ -332,7 +347,6 @@ body.light-mode .topnav {
     background-color: rgba(255, 255, 255, 0.9);
   }
 }
-
 
 .grid {
   display: flex;
