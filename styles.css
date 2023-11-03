@@ -295,7 +295,7 @@ body.light-mode .topnav {
   display: none;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 750px) {
   .middle-section {
     display: none;
   }
@@ -390,7 +390,7 @@ body.light-mode .topnav {
   margin-top: 5px;
   font-size: 14px;
 }
-@media (max-width: 800px) {
+@media (max-width: 750px) {
   .grid {
     max-width: none; /* Remove max-width to make it fluid at smaller screen sizes */
   }
@@ -481,7 +481,7 @@ body.light-mode .topnav {
 .grid-item-icon {
   text-align: right;
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 750px) {
   .column-text,
   .column-image,
   .colum-code {
