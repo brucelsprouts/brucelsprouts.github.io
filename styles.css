@@ -32,7 +32,7 @@ body {
 
 
 /* You can specify individual elements if needed, e.g., headings, paragraphs, etc. */
-h3, h4, h5, h6 {
+h4, h5, h6 {
   font-family: "Roboto", sans-serif;
   font-weight: 300;
 }
@@ -43,10 +43,15 @@ h1 {
 }
 
 h2 {
-  font-size: 1em;
-  text-align: center;
+  font-size: 4em;
+  text-align: left;
 }
 
+h3 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+
+}
 p {
   font-family: "Roboto", sans-serif;
   font-weight: 300;
@@ -394,21 +399,154 @@ body.light-mode .topnav {
   }
 }
 
-.home-content {
-  margin: 0 auto; /* This centers the element horizontally */
-  max-width: 1200px;
-}
-.home-container {
-  margin: 0 auto; /* This centers the element horizontally */
-  width: 90%;
-}
-
 .info-content {
   margin: 0 auto; /* This centers the element horizontally */
   max-width: 1200px;
 }
-
 .contact-content {
   margin: 0 auto; /* This centers the element horizontally */
   max-width: 1200px;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both
+}
+.column-text {
+  float: left;
+  width: 66.66666%;
+  padding: 10px;
+}
+.colum-code {
+  float: left;
+  width: 33.33333%;
+  padding: 10px;
+}
+.text-box {
+  padding-right: 20px; /* Add right padding */
+}
+
+.background-2 {
+  transition: background-color 0.2s ease; /* Add a transition effect to smoothly change the background color */
+}
+.dark-mode .background-2 {
+  background-color: #111111;
+}
+.light-mode .background-2 {
+  background-color: #eeeeee;
+}
+.container-1 {
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 30px;
+  background-color: transparent;
+  padding: 30px;
+}
+.grid-item {
+  padding: 10px;
+  text-align: right;
+}
+.icon {
+  grid-column: 1;
+}
+.text {
+  grid-column: 2;
+}
+
+.dark-mode .custom-link {
+  color: #C8C8C8; /* Default color */
+  text-decoration: none; /* Remove underlines, if desired */
+  transition: background-color .2s, color .2s;
+}
+.dark-mode .custom-link:visited {
+  color: #C8C8C8; /* Style for visited link */
+  transition: background-color .2s, color .2s;
+}
+.light-mode .custom-link {
+  color: #000000; /* Default color */
+  text-decoration: none; /* Remove underlines, if desired */
+  transition: background-color .2s, color .2s;
+}
+.light-mode .custom-link:visited {
+  color: #000; /* Style for visited link */
+  transition: background-color .2s, color .2s;
+}
+
+.grid-item-icon {
+  text-align: right;
+}
+@media screen and (max-width: 800px) {
+  .column-text,
+  .column-image,
+  .colum-code {
+    width: 100%;
+    text-align: left;
+  }
+  img {
+    margin: auto;
+  }
+  .grid-container {
+    grid-gap: 20px;
+  }
+}
+
+#github-icon {
+  width: 24px; /* Set the desired width for your icon */
+  height: 24px; 
+  transition: background-color 0.2s ease; /* Add a transition effect to smoothly change the background color */
+}
+.dark-mode #github-icon {
+  content: url('assets/images/home/dark-github-icon.png');
+}
+.light-mode #github-icon {
+  content: url('assets/images/home/light-github-icon.png');
+}
+
+#youtube-icon {
+  width: 24px; /* Set the desired width for your icon */
+  height: 24px; 
+  transition: background-color 0.2s ease; /* Add a transition effect to smoothly change the background color */
+}
+.dark-mode #youtube-icon {
+  content: url('assets/images/home/dark-youtube-icon.png');
+}
+.light-mode #youtube-icon {
+  content: url('assets/images/home/light-youtube-icon.png');
+}
+#instagram-icon {
+  width: 24px; /* Set the desired width for your icon */
+  height: 24px; 
+  transition: background-color 0.2s ease; /* Add a transition effect to smoothly change the background color */
+}
+.dark-mode #instagram-icon {
+  content: url('assets/images/home/dark-instagram-icon.png');
+}
+.light-mode #instagram-icon {
+  content: url('assets/images/home/light-instagram-icon.png');
+}
+#tiktok-icon {
+  width: 24px; /* Set the desired width for your icon */
+  height: 24px; 
+  transition: background-color 0.2s ease; /* Add a transition effect to smoothly change the background color */
+}
+.dark-mode #tiktok-icon {
+  content: url('assets/images/home/dark-tiktok-icon.png');
+}
+.light-mode #tiktok-icon {
+  content: url('assets/images/home/light-tiktok-icon.png');
+}
+
+.container-2 {
+  max-width: 1200px;
+}
+
+.column-skill h2{
+  padding: 10px;
+  text-align: center;
 }
