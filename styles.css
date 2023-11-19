@@ -409,13 +409,26 @@ body.light-mode .topnav {
   margin: 0 auto; /* This centers the element horizontally */
   max-width: 1200px;
 }
+.social-column {
+  margin: 0 auto; /* This centers the element horizontally */
+  display: flex;
+  width: 45%;
+  justify-content: space-between; /* Evenly space items */
+  box-sizing: border-box;
+  padding: 10px;
+}
+.header-text {
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.2em; /* You can adjust the font size as needed */
+  padding: 10px; /* Adjust the padding as desired */
+}
 
 .grid-container {
   display: grid;
   grid-template-columns: auto auto;
-  grid-gap: 30px;
-  background-color: transparent;
-  padding: 30px;
+  grid-column-gap: 11px;
+  grid-row-gap: 20px;
 }
 .grid-item {
   padding: 10px;
@@ -451,7 +464,12 @@ body.light-mode .topnav {
   max-width: 1200px;
 }
 
-#github-icon {
+#github-icon,
+#youtube-icon,
+#instagram-icon,
+#tiktok-icon,
+#linkedin-icon,
+#linktree-icon {
   width: 24px; /* Set the desired width for your icon */
   height: 24px; 
   transition: background-color 0.2s ease; /* Add a transition effect to smoothly change the background color */
@@ -462,22 +480,11 @@ body.light-mode .topnav {
 .light-mode #github-icon {
   content: url('assets/images/home/light-github-icon.png');
 }
-
-#youtube-icon {
-  width: 24px; /* Set the desired width for your icon */
-  height: 24px; 
-  transition: background-color 0.2s ease; /* Add a transition effect to smoothly change the background color */
-}
 .dark-mode #youtube-icon {
   content: url('assets/images/home/dark-youtube-icon.png');
 }
 .light-mode #youtube-icon {
   content: url('assets/images/home/light-youtube-icon.png');
-}
-#instagram-icon {
-  width: 24px; /* Set the desired width for your icon */
-  height: 24px; 
-  transition: background-color 0.2s ease; /* Add a transition effect to smoothly change the background color */
 }
 .dark-mode #instagram-icon {
   content: url('assets/images/home/dark-instagram-icon.png');
@@ -485,18 +492,24 @@ body.light-mode .topnav {
 .light-mode #instagram-icon {
   content: url('assets/images/home/light-instagram-icon.png');
 }
-#tiktok-icon {
-  width: 24px; /* Set the desired width for your icon */
-  height: 24px; 
-  transition: background-color 0.2s ease; /* Add a transition effect to smoothly change the background color */
-}
 .dark-mode #tiktok-icon {
   content: url('assets/images/home/dark-tiktok-icon.png');
 }
 .light-mode #tiktok-icon {
   content: url('assets/images/home/light-tiktok-icon.png');
 }
-
+.dark-mode #linkedin-icon {
+  content: url('assets/images/home/dark-linkedin-icon.png');
+}
+.light-mode #linkedin-icon {
+  content: url('assets/images/home/light-linkedin-icon.png');
+}
+.dark-mode #linktree-icon {
+  content: url('assets/images/home/dark-linktree-icon.png');
+}
+.light-mode #linktree-icon {
+  content: url('assets/images/home/light-linktree-icon.png');
+}
 .container-1,
 .container-2,
 .container-3 {
@@ -507,8 +520,7 @@ body.light-mode .topnav {
 }
 
 /* Default styles for the columns */
-.column-featured,
-.column-code {
+.column-featured {
   float: left;
   width: 50%; /* Each column takes up one-third of the available space */
   box-sizing: border-box;
@@ -527,9 +539,19 @@ body.light-mode .topnav {
 /* Media query for screens less than 750px wide */
 @media (max-width: 750px) {
   .column-text,
-  .column-featured,
-  .column-code {
+  .column-featured{
     width: 100%; /* Each column takes up the full width */
+  }
+  .social-column {
+    width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 0px;
+  }
+  .column-personal,
+  .column-dev,
+  .column-media {
+    margin: 20px;
   }
   .column-text {
     text-align: center;
