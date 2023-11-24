@@ -512,7 +512,8 @@ body.light-mode .topnav {
 }
 .container-1,
 .container-2,
-.container-3 {
+.container-3,
+.container-4 {
   display: flex; /* Use flexbox to center contents */
   justify-content: center; /* Center horizontally */
   align-items: center; /* Center vertically */
@@ -560,15 +561,16 @@ body.light-mode .topnav {
     text-align: center;
   }
 }
+.dark-mode .background-2,
 .dark-mode .background-2 {
   background-color: rgb(22, 22, 22);
   transition: background-color 0.2s ease; /* Add a transition effect to smoothly change the background color */
 
 }
-.light-mode .background-2 {
+.light-mode .background-2,
+.light-mode .background-4 {
   background-color: rgb(245, 245, 245);
   transition: background-color 0.2s ease; /* Add a transition effect to smoothly change the background color */
-
 }
 .column-featured-product {
   flex: 0 0 calc(33.33% - 20px); /* Adjust the width of each gallery item as needed */
@@ -622,16 +624,22 @@ body.light-mode .topnav {
   gap: 30px; /* Increase the gap for more space between items */
   padding: 20px; /* Add padding around the grid */
 }
-
 .skills-description {
   float: left;
-  width: 20%; /* Adjust the width as needed */
+  width: 24%; /* Adjust the width as needed */
   padding: 20px;
 }
 
-.column-card {
-  background-color: #f9f9f9;
+.dark-mode .column-card {
+  background-color: #000000;
   border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px; /* Reduce the padding for smaller items */
+  text-align: center;
+}
+.light-mode .column-card {
+  background-color: #ffffff;
+  border: 1px solid #000000;
   border-radius: 5px;
   padding: 10px; /* Reduce the padding for smaller items */
   text-align: center;
@@ -643,4 +651,18 @@ body.light-mode .topnav {
 
 .column-card p {
   font-size: 14px; /* Make the text smaller */
+}
+@media (max-width: 750px) {
+  .column-grid {
+    width: 100%;
+    text-align: center;
+  }
+  .skills-description {
+    width: 100%;
+    text-align: center;
+  }
+  .skills-description h2{
+    width: 100%;
+    text-align: center;
+  }
 }
