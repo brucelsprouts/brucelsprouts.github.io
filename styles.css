@@ -9,25 +9,7 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
-  background: transparent;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-.dark-mode::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 10px;
-}
-.dark-mode::-webkit-scrollbar-thumb:hover {
-  background: #999;
-}
-.light-mode::-webkit-scrollbar-thumb {
-  background: #b0b0b0 ;
-  border-radius: 10px;
-}
-.light-mode::-webkit-scrollbar-thumb:hover {
-  background: #a0a0a0;
+  display: none;
 }
 
 
