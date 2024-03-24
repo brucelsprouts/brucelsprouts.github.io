@@ -12,7 +12,6 @@ body {
   display: none;
 }
 
-
 /* You can specify individual elements if needed, e.g., headings, paragraphs, etc. */
 h4, h5, h6 {
   font-family: "Roboto", sans-serif;
@@ -647,4 +646,14 @@ body.light-mode .topnav {
     width: 100%;
     text-align: center;
   }
+}
+
+.tooltip {
+  position: absolute;
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  z-index: 1000;
 }

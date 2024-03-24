@@ -34,3 +34,20 @@ function searchThing() {
         }
     }
 }
+
+document.querySelectorAll('.social-link').forEach(link => {
+    link.addEventListener('mouseenter', (event) => {
+      const tooltip = document.createElement('span');
+      tooltip.textContent = event.target.getAttribute('aria-label');
+      tooltip.style.position = 'fixed';
+      tooltip.style.left = `${event.pageX + 10}px`;
+      tooltip.style.top = `${event.pageY + 10}px`;
+      tooltip.className = 'tooltip';
+      document.body.appendChild(tooltip);
+    });
+  
+    link.addEventListener('mouseleave', () => {
+      document.querySelector('.tooltip').remove();
+    });
+  });
+  
