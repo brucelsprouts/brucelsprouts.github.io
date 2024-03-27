@@ -75,11 +75,11 @@ body.light-mode .info_item-3 a{
   color: #000;
 }
 
-.dark-mode .contact-container a{
+.dark-mode .connect-container a{
   text-decoration: none;
   color: #C8C8C8;
 }
-.light-mode .contact-container a{
+.light-mode .connect-container a{
   text-decoration: none;
   color: #000000;
 }
@@ -386,18 +386,33 @@ body.light-mode .topnav {
   margin: 0 auto; /* This centers the element horizontally */
   max-width: 1200px;
 }
-.contact-content {
+.connect-content {
   margin: 0 auto; /* This centers the element horizontally */
   max-width: 1200px;
 }
 .social-column {
-  margin: 0 auto; /* This centers the element horizontally */
   display: flex;
-  width: 45%;
-  justify-content: space-between; /* Evenly space items */
-  box-sizing: border-box;
-  padding: 10px;
+  justify-content: space-around; /* This will space out your social groups */
+  align-items: center;
+  padding: 20px;
 }
+
+.social-group {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* This sets a gap between each icon */
+}
+
+.social-link img {
+  width: 24px; /* Adjust the size of your icons */
+  height: 24px;
+  transition: transform 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.social-link:hover img {
+  transform: scale(1.1); /* Slightly enlarge icons on hover */
+}
+
 .header-text {
   text-align: center;
   font-weight: bold;
@@ -525,11 +540,28 @@ body.light-mode .topnav {
     width: 100%; /* Each column takes up the full width */
   }
   .social-column {
-    width: 100%;
-    justify-content: center;
-    box-sizing: border-box;
-    padding: 0px;
+    display: flex;
+    justify-content: space-around; /* This will space out your social groups */
+    align-items: center;
+    padding: 20px;
   }
+  
+  .social-group {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* This sets a gap between each icon */
+  }
+  
+  .social-link img {
+    width: 24px; /* Adjust the size of your icons */
+    height: 24px;
+    transition: transform 0.3s ease; /* Smooth transition for hover effect */
+  }
+  
+  .social-link:hover img {
+    transform: scale(1.1); /* Slightly enlarge icons on hover */
+  }
+  
   .column-personal,
   .column-dev,
   .column-media {
