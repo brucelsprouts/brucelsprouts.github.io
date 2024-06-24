@@ -603,14 +603,18 @@ body.light-mode .topnav {
   max-width: 100%;
   height: auto;
   border-radius: 5px;
-
-
 }
 .dark-mode .column-featured-product img {
   border: 1px solid #C8C8C8;
 }
 .light-mode .column-featured-product img {
   border: 1px solid #000000;
+}
+.dark-mode .filler {
+  padding: 30px;
+}
+.light-mode .filler {
+  padding: 30px;
 }
 /* Default styles for the columns */
 .column-featured-text {
