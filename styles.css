@@ -621,7 +621,7 @@ body.light-mode .topnav {
   float: left;
   width: 50%; /* Each column takes up one-third of the available space */
   box-sizing: border-box;
-  padding: 10px;
+  padding: 30px;
   text-align: left;
 }
 /* Media query for screens less than 750px wide */

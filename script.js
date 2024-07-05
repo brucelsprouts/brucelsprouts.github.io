@@ -2,7 +2,24 @@ function lightDark() {
     var element = document.body;
     element.classList.toggle("dark-mode");
     element.classList.toggle("light-mode");
+
+    // Save the theme to localStorage
+    var theme = element.className;
+    localStorage.setItem('theme', theme);
 }
+
+// When the page loads
+document.addEventListener('DOMContentLoaded', (event) => {
+    // Get the current theme from localStorage
+    var theme = localStorage.getItem('theme');
+
+    // If there's no saved theme, use the default
+    if (!theme) theme = 'dark-mode';
+
+    // Apply the theme
+    var element = document.body;
+    element.className = theme;
+});
 
 function menuSwitch() {
     var element = document.body;
