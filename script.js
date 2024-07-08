@@ -19,7 +19,35 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // Apply the theme
     var element = document.body;
     element.className = theme;
+
+    // Fade out the overlay
+    var overlay = document.getElementById('overlay');
+    setTimeout(function() {
+        overlay.style.opacity = 0;
+    }, 100); // Delay to ensure the page is loaded before starting the transition
+
+    // Get all the navigation links
+    var navLinks = document.querySelectorAll('.middle-section a');
+
+    // Add event listener to each link
+    navLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            // Prevent the default action (navigation)
+            e.preventDefault();
+
+            // Fade in the overlay
+            overlay.style.opacity = 1;
+
+            // Delay the navigation until after the fade-in animation completes
+            setTimeout(function() {
+                // Navigate to the link's href
+                window.location.href = link.href;
+            }, 100); // Adjust this delay to match the duration of your fade-in animation
+        });
+    });
 });
+
+
 
 function menuSwitch() {
     var element = document.body;
