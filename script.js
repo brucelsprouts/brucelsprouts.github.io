@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }, 100); // Delay to ensure the page is loaded before starting the transition
 
     // Get all the navigation links
-    var navLinks = document.querySelectorAll('.middle-section a');
+    var navLinks = document.querySelectorAll('.middle-section a, .left-section a');
 
     // Add event listener to each link
     navLinks.forEach(function(link) {
@@ -46,8 +46,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         });
     });
 });
-
-
 
 function menuSwitch() {
     var element = document.body;
@@ -95,4 +93,3 @@ document.querySelectorAll('.social-link').forEach(link => {
       document.querySelector('.tooltip').remove();
     });
   });
-  

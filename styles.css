@@ -8,6 +8,10 @@ body {
   transition: background-color .2s, color .2s;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 ::-webkit-scrollbar {
   display: none;
 }
@@ -342,48 +346,58 @@ body.light-mode .topnav {
 .grid {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: space-between; /* Distribute items evenly */
   max-width: 1200px;
   margin: 0 auto;
   gap: 20px;
   padding: 3%;
 }
+
 .gallery {
-  flex: 0 0 calc(33.33% - 20px); /* Adjust the width of each gallery item as needed */
-  padding: 10px;
+  flex: 1 0 300px; /* Grow and shrink as needed, but don't go smaller than 200px */
+  padding: 0px; /* Adjust as needed */
   text-align: center;
   box-sizing: border-box;
   border-radius: 5px;
 }
+
 .dark-mode .gallery {
   border: 1px solid #C8C8C8;
 }
+
 .light-mode .gallery {
   border: 1px solid #000000;
 }
+
 .gallery img {
   max-width: 100%;
   height: auto;
-  border-radius: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
-.dark-mode .gallery img{
-  border: 1px solid #C8C8C8;
+
+.dark-mode .gallery img {
+  border-bottom: 1px solid #C8C8C8;
 }
-.light-mode .gallery img{
+
+.light-mode .gallery img {
   border: 1px solid #000000;
 }
+
 .desc {
-  margin-top: 5px;
+  margin: 5px;
   font-size: 14px;
 }
+
 @media (max-width: 750px) {
   .grid {
     max-width: none; /* Remove max-width to make it fluid at smaller screen sizes */
   }
   .gallery {
-    flex: 0 0 calc(50% - 20px); /* Adjust for two items per row */
+    flex: 1 0 100%; /* Make each item take up the full row on small screens */
   }
 }
+
 
 .info-content {
   margin: 0 auto; /* This centers the element horizontally */
@@ -702,8 +716,14 @@ body.light-mode .topnav {
   display: block;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,1);
   transition: opacity 0.5s; /* Add transition effect */
   opacity: 1; /* Start with an opacity of 0 */
   pointer-events: none; 
 }
+.dark-mode #overlay {
+  background-color: rgba(0,0,0,1);
+}
+.light-mode #overlay {
+  background-color:#ffffff;
+}
+
