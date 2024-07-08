@@ -7,14 +7,6 @@ body {
   padding: 0; /* Remove default padding */
   transition: background-color .2s, color .2s;
 }
-@media screen and (max-width: 768px){
-  ::-webkit-scrollbar {
-      -webkit-appearance: none;
-  }
-}
-html {
-  scroll-behavior: smooth;
-}
 
 ::-webkit-scrollbar {
   display: none;
@@ -32,15 +24,18 @@ h1 {
 }
 
 h2 {
-  font-size: 60px;
+  font-size: 180px;
   text-align: left;
-  padding: 0px;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
   margin: 0px;
 }
 
 h3 {
   font-family: "Roboto", sans-serif;
   font-weight: 300;
+  padding: 20px;
 
 }
 p {
@@ -356,7 +351,6 @@ body.light-mode .topnav {
   gap: 20px;
   padding: 3%;
 }
-
 .gallery {
   flex: 1 0 300px; /* Grow and shrink as needed, but don't go smaller than 200px */
   padding: 0px; /* Adjust as needed */
@@ -364,35 +358,28 @@ body.light-mode .topnav {
   box-sizing: border-box;
   border-radius: 5px;
 }
-
 .dark-mode .gallery {
-  border: 1px solid #C8C8C8;
+  border: 2px solid #C8C8C8;
 }
-
 .light-mode .gallery {
   border: 1px solid #000000;
 }
-
 .gallery img {
   max-width: 100%;
   height: auto;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
-
 .dark-mode .gallery img {
-  border-bottom: 1px solid #C8C8C8;
+  border: 1px solid #C8C8C8;
 }
-
 .light-mode .gallery img {
   border: 1px solid #000000;
 }
-
 .desc {
   margin: 5px;
   font-size: 14px;
 }
-
 @media (max-width: 750px) {
   .grid {
     max-width: none; /* Remove max-width to make it fluid at smaller screen sizes */
@@ -402,7 +389,6 @@ body.light-mode .topnav {
   }
 }
 
-
 .info-content {
   margin: 0 auto; /* This centers the element horizontally */
   max-width: 1200px;
@@ -411,36 +397,30 @@ body.light-mode .topnav {
   margin: 0 auto; /* This centers the element horizontally */
   max-width: 1200px;
 }
-.social-column {
-  display: flex;
-  justify-content: space-around; /* This will space out your social groups */
-  align-items: center;
-  padding: 20px;
+.social-row {
+  float: left;
+  padding-left: 25px;
+  padding-bottom: 20px;
 }
-
 .social-group {
   display: flex;
   align-items: center;
-  gap: 10px; /* This sets a gap between each icon */
+  gap: 5px;
 }
-
 .social-link img {
   width: 24px; /* Adjust the size of your icons */
   height: 24px;
   transition: transform 0.3s ease; /* Smooth transition for hover effect */
 }
-
 .social-link:hover img {
   transform: scale(1.1); /* Slightly enlarge icons on hover */
 }
-
 .header-text {
   text-align: center;
   font-weight: bold;
   font-size: 1.2em; /* You can adjust the font size as needed */
   padding: 10px; /* Adjust the padding as desired */
 }
-
 .grid-container {
   display: grid;
   grid-template-columns: auto auto;
@@ -546,13 +526,11 @@ body.light-mode .topnav {
 }
 .column-text {
   float: left;
-  width: 50%; /* Each column takes up one-third of the available space */
+  width: 90%; /* Each column takes up one-third of the available space */
   box-sizing: border-box;
   padding: 10px;
   padding-top: 40px; /* Adjust the value as needed */
 }
-
-
 
 /* Media query for screens less than 750px wide */
 @media (max-width: 750px) {
@@ -731,3 +709,43 @@ body.light-mode .topnav {
   background-color:#ffffff;
 }
 
+.slide-container {
+  max-width: 600px;
+  position: relative;
+  margin: auto;
+}
+
+.slide {
+  display: none;
+  width: 100%;
+  height: auto;
+}
+
+.arrow {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+.arrow:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+.arrow.left {
+  left: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+.arrow.right {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
