@@ -7,7 +7,11 @@ body {
   padding: 0; /* Remove default padding */
   transition: background-color .2s, color .2s;
 }
-
+@media screen and (max-width: 768px){
+  ::-webkit-scrollbar {
+      -webkit-appearance: none;
+  }
+}
 html {
   scroll-behavior: smooth;
 }
