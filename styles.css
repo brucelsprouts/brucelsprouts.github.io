@@ -24,7 +24,7 @@ h1 {
 }
 
 h2 {
-  font-size: 180px;
+  font-size: 140px;
   text-align: left;
   padding-top: 20px;
   padding-left: 20px;
@@ -399,7 +399,7 @@ body.light-mode .topnav {
 }
 .social-row {
   float: left;
-  padding-left: 25px;
+  padding-left: 30px;
   padding-bottom: 20px;
 }
 .social-group {
@@ -526,7 +526,7 @@ body.light-mode .topnav {
 }
 .column-text {
   float: left;
-  width: 90%; /* Each column takes up one-third of the available space */
+  width: 70%; /* Each column takes up one-third of the available space */
   box-sizing: border-box;
   padding: 10px;
   padding-top: 40px; /* Adjust the value as needed */
@@ -707,45 +707,4 @@ body.light-mode .topnav {
 }
 .light-mode #overlay {
   background-color:#ffffff;
-}
-
-.slide-container {
-  max-width: 600px;
-  position: relative;
-  margin: auto;
-}
-
-.slide {
-  display: none;
-  width: 100%;
-  height: auto;
-}
-
-.arrow {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  width: auto;
-  padding: 16px;
-  margin-top: -22px;
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  transition: 0.6s ease;
-  border-radius: 0 3px 3px 0;
-  user-select: none;
-}
-
-.arrow:hover {
-  background-color: rgba(0,0,0,0.8);
-}
-
-.arrow.left {
-  left: 0;
-  border-radius: 3px 0 0 3px;
-}
-
-.arrow.right {
-  right: 0;
-  border-radius: 3px 0 0 3px;
 }
