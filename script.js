@@ -47,16 +47,37 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 });
 
+// JavaScript
+window.addEventListener('DOMContentLoaded', (event) => {
+    // Check initial viewport width
+    if (window.innerWidth <= 750) {
+        menuHide();
+    } else {
+        menuShow();
+    }
+});
+
 function menuSwitch() {
-    var element = document.body;
-    element.classList.toggle("menu-show");
-    element.classList.toggle("menu-hide");
+    var element = document.getElementById("myMenu");
+    if (element.classList.contains("menu-show")) {
+        menuHide();
+    } else {
+        menuShow();
+    }
 }
+
+function menuShow() {
+    var element = document.getElementById("myMenu");
+    element.classList.remove("menu-hide");
+    element.classList.add("menu-show");
+}
+
 function menuHide() {
-    var element = document.body;
+    var element = document.getElementById("myMenu");
     element.classList.remove("menu-show");
     element.classList.add("menu-hide");
 }
+
 
 function searchThing() {
     // Declare variables

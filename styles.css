@@ -26,9 +26,7 @@ h1 {
 h2 {
   font-size: 140px;
   text-align: left;
-  padding-top: 20px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 20px;
   margin: 0px;
 }
 
@@ -154,72 +152,44 @@ body.light-mode .topnav {
   transition: background-color 0.3s;
 }
 
-.dark-mode .topnav .left-section {
-  text-align: left; /* Align content to the right */
-  margin-left: 10px; /* Add margin to push it slightly away from the left */
-}
-.light-mode .topnav .left-section {
-  text-align: left;
-  margin-left: 10px; /* Add margin to push it slightly away from the left */
-}
-.dark-mode .topnav .left-section a{
-  padding: 9px; /* Adjust the vertical padding as needed */
-  font-size: 19px;
-}
-.light-mode .topnav .left-section a{
-  padding: 9px; /* Adjust the vertical padding as needed */
-  font-size: 19px;
-}
-
-.dark-mode .topnav .middle-section a{
-  padding: 11px; /* Adjust the vertical padding as needed */
-}
-.light-mode .topnav .middle-section a{
-  padding: 11px; /* Adjust the vertical padding as needed */
-}
-
-.dark-mode .topnav .right-section {
+.left-section{
   display: flex;
   text-align: right; /* Align content to the right */
-  margin-right: 10px; /* Add margin to push it slightly away from the left */
+  margin-left: 10px; /* Add margin to push it slightly away from the left */
+  height: 40px;
 }
-.light-mode .topnav .right-section {
+#leftname {
+  padding-top: 10px;
+  height: auto;
+  font-size: 19px;
+}
+.middle-section{
   display: flex;
-  text-align: right;
+  height: 40px;
+}
+.middle-section a{
+  padding-top: 10px;
+  height: auto;
+}
+.right-section{
+  display: flex;
   margin-right: 10px; /* Add margin to push it slightly away from the left */
+  height: 40px;
 }
-
 #white-search, #black-search {
-  padding: 1px; /* Adjust the vertical padding as needed */
-}
-.dark-mode #white-search {
-  width: 18px;
-  height: 18px;
+  height: 100%;
 }
 .dark-mode #black-search {
   display: none; /* Hide the moon image in light mode */
 }
-.light-mode #black-search {
-  width: 18px;
-  height: 18px;
-}
 .light-mode #white-search {
   display: none; /* Hide the moon image in light mode */
 }
-
 #moon-image, #sun-image {
-  padding: 1px; /* Adjust the vertical padding as needed */
-}
-.dark-mode #moon-image {
-  width: 18px;
-  height: 18px;
+  height: 100%;
 }
 .dark-mode #sun-image {
   display: none; /* Hide the moon image in light mode */
-}
-.light-mode #sun-image {
-  width: 18px;
-  height: 18px;
 }
 .light-mode #moon-image {
   display: none; /* Hide the moon image in light mode */
@@ -249,7 +219,6 @@ body.light-mode .topnav {
   background-color: #ffffff;
   color: #000;
 }
-
 .dark-mode .white-container {
   max-width: 1300px; /* Set the maximum width to 1300px */
   margin: 0 auto; /* Center the line horizontally */
@@ -272,51 +241,53 @@ body.light-mode .topnav {
   height: 1px; /* Adjust the height as needed */
 }
 
-.menu-icons {
-  position:relative;
-  bottom: 50px;
+#white-menu, #black-menu {
+  display: none;
+  height: 100%;
 }
 
-#white-menu {
-  display: none;
-}
-#black-menu {
-  display: none;
-}
 
 @media (max-width: 750px) {
+  h2 {
+    font-size: 100px;
+    text-align: left;
+    margin: 0px;
+  }  
   .middle-section {
     display: none;
+    height: 120px;
   }
-  .menu-icons {
-    position:inherit;
-    top: 50px;
-  }
+
   .dark-mode #white-menu {
     display: block;
-    padding: 1px; /* Adjust the vertical padding as needed */
-    width: 18px;
-    height: 18px;
   }
   .dark-mode #black-menu{
     display: none;
   }
   .light-mode #black-menu {
     display: block;
-    padding: 1px; /* Adjust the vertical padding as needed */
-    width: 18px;
-    height: 18px;
   }
   .light-mode #white-menu{
     display: none;
   }
-  .menu-show .topnav .middle-section {
+
+  #myMenu {
+    opacity: 0;
+  }
+  #myMenu.menu-show {
+    opacity: 1;
+    transition: opacity 0.3s ease, background-color 0.2s;
+  }
+  #myMenu.menu-hide {
+    opacity: 0;
+  }
+  
+  .middle-section {
     display: flex;
     flex-direction: column;
     position: absolute;
     top: 41px;
     justify-content: space-between; /* Space content evenly */
-    align-items: flex-start; /* Align items to the start of the cross-axis (vertically) */
     transition: background-color 0.2s;
   }
   .topnav .middle-section {
@@ -324,8 +295,8 @@ body.light-mode .topnav {
     border-left: 1px solid #555;
     border-bottom: 1px solid rgb(85, 85, 85);
     position: fixed;
-    left: 0;
-    right: 0;
+    left: 10px;
+    right: 10px;
   }
   .topnav .middle-section a:not(:first-child) {
     border-top: 1px solid rgba(85, 85, 85, 0.2);
@@ -333,11 +304,11 @@ body.light-mode .topnav {
   .dark-mode .topnav .middle-section {
     flex-direction: column;
     align-items: stretch;
+  }
+  .dark-mode .topnav .middle-section {
     background-color: rgba(0, 0, 0, 0.8);
   }
   .light-mode .topnav .middle-section {
-    flex-direction: column;
-    align-items: stretch;
     background-color: rgba(255, 255, 255, 0.9);
   }
 }
