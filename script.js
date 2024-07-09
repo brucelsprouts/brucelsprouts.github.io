@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     var overlay = document.getElementById('overlay');
     setTimeout(function() {
         overlay.style.opacity = 0;
-    }, 100); // Delay to ensure the page is loaded before starting the transition
+    }, 500); // Delay to ensure the page is loaded before starting the transition
 
     // Get all the navigation links
     var navLinks = document.querySelectorAll('.middle-section a, .left-section a');
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             setTimeout(function() {
                 // Navigate to the link's href
                 window.location.href = link.href;
-            }, 100); // Adjust this delay to match the duration of your fade-in animation
+            }, 500); // Adjust this delay to match the duration of your fade-in animation
         });
     });
 });
