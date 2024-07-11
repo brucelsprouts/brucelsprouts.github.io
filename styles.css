@@ -288,11 +288,10 @@ body.light-mode .topnav {
     transition: background-color 0.2s;
   }
   .topnav .middle-section {
-    position: absolute;
     border-right: 1px solid #555;
     border-left: 1px solid #555;
     border-bottom: 1px solid rgb(85, 85, 85);
-    position: fixed;
+    position: absolute;
     left: 10px;
     right: 10px;
   }
