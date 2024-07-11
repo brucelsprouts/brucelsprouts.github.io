@@ -288,6 +288,7 @@ body.light-mode .topnav {
     top: 41px;
     justify-content: space-between; /* Space content evenly */
     transition: background-color 0.2s;
+    
   }
   .topnav .middle-section {
     border-right: 1px solid #555;
