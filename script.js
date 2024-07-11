@@ -47,15 +47,28 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 });
 
-// JavaScript
 window.addEventListener('DOMContentLoaded', (event) => {
     // Check initial viewport width
+    checkMenu();
+});
+
+window.addEventListener('resize', (event) => {
+    // Check viewport width after resize
+    checkMenu();
+});
+
+function checkMenu() {
+    var element = document.getElementById("myMenu");
+    element.style.transition = "none"; // Remove transition
     if (window.innerWidth <= 750) {
         menuHide();
     } else {
         menuShow();
     }
-});
+    setTimeout(function() {
+        element.style.transition = ""; // Reapply transition
+    }, 100); // Delay in milliseconds
+}
 
 function menuSwitch() {
     var element = document.getElementById("myMenu");
@@ -77,6 +90,7 @@ function menuHide() {
     element.classList.remove("menu-show");
     element.classList.add("menu-hide");
 }
+
 
 
 function searchThing() {

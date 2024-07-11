@@ -246,7 +246,6 @@ body.light-mode .topnav {
   height: 100%;
 }
 
-
 @media (max-width: 750px) {
   h2 {
     font-size: 100px;
@@ -271,15 +270,14 @@ body.light-mode .topnav {
     display: none;
   }
 
-  #myMenu {
-    opacity: 0;
-  }
+
   #myMenu.menu-show {
     opacity: 1;
     transition: opacity 0.3s ease, background-color 0.2s;
   }
   #myMenu.menu-hide {
     opacity: 0;
+    transition: opacity 0.3s ease, background-color 0.2s;
   }
   
   .middle-section {
