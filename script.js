@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // Get all the navigation links
     var navLinks = document.querySelectorAll('.middle-section a, .left-section a');
 
-    // Add event listener to each link
+    // Add event listener to each linzk
     navLinks.forEach(function(link) {
         link.addEventListener('click', function(e) {
             // Prevent the default action (navigation)
@@ -128,3 +128,16 @@ document.querySelectorAll('.social-link').forEach(link => {
       document.querySelector('.tooltip').remove();
     });
   });
+
+  function changeFavicon(src) {
+    var link = document.createElement('link'),
+        oldLink = document.getElementById('dynamic-favicon');
+    link.id = 'dynamic-favicon';
+    link.rel = 'shortcut icon';
+    link.href = src;
+    if (oldLink) {
+     document.head.removeChild(oldLink);
+    }
+    document.head.appendChild(link);
+ }
+ 
