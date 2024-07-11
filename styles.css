@@ -671,6 +671,7 @@ body.light-mode .topnav {
   transition: opacity 0.5s; /* Add transition effect */
   opacity: 1; /* Start with an opacity of 0 */
   pointer-events: none; 
+  z-index: 1000;
 }
 .dark-mode #overlay {
   background-color: rgba(0,0,0,1);
