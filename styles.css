@@ -278,7 +278,9 @@ body.light-mode .topnav {
     opacity: 0;
     transition: opacity 0.3s ease, background-color 0.2s;
   }
-  
+  .wrapper {
+    position: relative;
+  }
   .middle-section {
     display: flex;
     flex-direction: column;
