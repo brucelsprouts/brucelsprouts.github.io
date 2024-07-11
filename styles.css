@@ -270,7 +270,6 @@ body.light-mode .topnav {
     display: none;
   }
 
-
   #myMenu.menu-show {
     opacity: 1;
     transition: opacity 0.3s ease, background-color 0.2s;
@@ -289,6 +288,7 @@ body.light-mode .topnav {
     transition: background-color 0.2s;
   }
   .topnav .middle-section {
+    position: sticky;
     border-right: 1px solid #555;
     border-left: 1px solid #555;
     border-bottom: 1px solid rgb(85, 85, 85);
