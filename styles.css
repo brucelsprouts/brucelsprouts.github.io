@@ -1,3 +1,4 @@
+/* body, text and connect ul */
 body {
   overflow-x: hidden;  
   overflow-y: overlay;  
@@ -7,75 +8,34 @@ body {
   padding: 0; /* Remove default padding */
   transition: background-color .2s, color .2s;
 }
-
 ::-webkit-scrollbar {
   display: none;
 }
-
-/* You can specify individual elements if needed, e.g., headings, paragraphs, etc. */
 h4, h5, h6 {
   font-family: "Roboto", sans-serif;
   font-weight: 300;
 }
-
 h1 {
   font-size: 3em;
   text-align: center;
 }
-
 h2 {
   font-size: 140px;
   text-align: left;
-  padding: 20px;
   margin: 0px;
 }
-
 h3 {
   font-family: "Roboto", sans-serif;
   font-weight: 300;
   padding: 20px;
-
 }
 p {
   font-family: "Roboto", sans-serif;
   font-weight: 300;
 }
-
-/* list for info container stuff*/
 ul {
   list-style-type: none;
 }
-
-body.dark-mode .info_item-1 a{
-  text-decoration: none;
-  color: #C8C8C8;
-}
-
-body.dark-mode .info_item-2 a{
-  text-decoration: none;
-  color: #C8C8C8;
-}
-
-body.dark-mode .info_item-3 a{
-  text-decoration: none;
-  color: #C8C8C8;
-}
-
-body.light-mode .info_item-1 a{
-  text-decoration: none;
-  color: #000;
-}
-
-body.light-mode .info_item-2 a{
-  text-decoration: none;
-  color: #000;
-}
-
-body.light-mode .info_item-3 a{
-  text-decoration: none;
-  color: #000;
-}
-
 .dark-mode .connect-container a{
   text-decoration: none;
   color: #C8C8C8;
@@ -85,50 +45,31 @@ body.light-mode .info_item-3 a{
   color: #000000;
 }
 
-/* Your CSS for dark mode */
-body.dark-mode {
+/* topnav plus background color*/
+body.dark-mode, body.dark-mode .topnav {
   background-color: #000;
   color: #C8C8C8;  
 }
-/* Your CSS for light mode */
-body.light-mode {
+body.light-mode, body.light-mode .topnav {
   background-color: #ffffff;
   color: #000;  
 }
-
-/* Dark mode styles for .topnav links */
 body.dark-mode .topnav a {
   color: #C8C8C8;  
 }
-/* Light mode styles for .topnav links */
 body.light-mode .topnav a {
   color: #000; 
 }
-/* Dark mode styles for .topnav */
-body.dark-mode .topnav {
-  background-color: #000;
-  display: flex; /* Use flexbox for alignment */
-  justify-content: space-between; /* Space content evenly */
-  align-items: center; /* Align items vertically in the center */
-}
-/* Light mode styles for .topnav */
-body.light-mode .topnav {
-  color: #C8C8C8;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-/* Add any other elements as necessary */
 .topnav-container {
   position: sticky;
   top: 0;
-  z-index: 1000; /* Ensure it's on top of other elements */
+  z-index: 1000;
   border-bottom: 1px solid #555;
 }
 .topnav {
-  max-width: 1200px; /* Set the maximum width to 1200px */
-  margin: 0 auto; /* Center the top navigation horizontally */
-  height: 40px; /* Adjust this value as needed */
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -141,17 +82,16 @@ body.light-mode .topnav {
   text-decoration: none;
   font-size: 16px;
   transition: color 0.2s;
-}
-/* Change the color of the links when you hover over them (shared between dark and light modes) */
-.dark-mode .topnav a:hover {
-  background-color: #201c1c; /* Change the hover background color if desired */
   transition: background-color 0.3s;
+}
+.dark-mode .topnav a:hover {
+  background-color: #201c1c;
 }
 .light-mode .topnav a:hover {
-  background-color: #e8e4e4; /* Change the hover background color if desired */
-  transition: background-color 0.3s;
+  background-color: #e8e4e4;
 }
 
+/* left middle and right section with icons */
 .left-section{
   display: flex;
   text-align: right; /* Align content to the right */
@@ -176,36 +116,24 @@ body.light-mode .topnav {
   margin-right: 10px; /* Add margin to push it slightly away from the left */
   height: 40px;
 }
-#white-search, #black-search {
+#white-search, #black-search, #moon-image, #sun-image, #white-menu, #black-menu {
   height: 100%;
 }
-.dark-mode #black-search {
-  display: none; /* Hide the moon image in light mode */
-}
-.light-mode #white-search {
-  display: none; /* Hide the moon image in light mode */
-}
-#moon-image, #sun-image {
-  height: 100%;
-}
-.dark-mode #sun-image {
-  display: none; /* Hide the moon image in light mode */
-}
-.light-mode #moon-image {
-  display: none; /* Hide the moon image in light mode */
+.dark-mode #black-search, .light-mode #white-search, .dark-mode #sun-image, .light-mode #moon-image, #white-menu, #black-menu {
+  display: none;
 }
 
+/* search bar and white line for connect */
 .search-container {
   text-align: center;
-  margin: 10px;
-  max-width: 1300px; /* Set the maximum width to 1200px */
-  margin: 0 auto; /* Center the search container horizontally */
+  max-width: 1300px;
+  margin: 0 auto;
 }
 .search-input {
   padding: 10px;
   border-radius: 5px;
   font-size: 16px;
-  width:90%; /* Make the input element 100% width within its container */
+  width:90%;
   transition: background-color .2s, color .2s;
 }
 .dark-mode .search-input {
@@ -214,62 +142,37 @@ body.light-mode .topnav {
   color: #fff;
 }
 .light-mode .search-input {
-  /* Adjust the styles for light mode */
   border: 1px solid #000000;
   background-color: #ffffff;
   color: #000;
 }
-.dark-mode .white-container {
-  max-width: 1300px; /* Set the maximum width to 1300px */
-  margin: 0 auto; /* Center the line horizontally */
+.dark-mode .white-container, .light-mode .white-container {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+.dark-mode .white-line, .light-mode .white-line {
+  width: 90%;
+  margin: 0 auto;
+  height: 1px;
 }
 .dark-mode .white-line {
   background-color: #C8C8C8;
-  width: 90%; /* Make it fill 90% of the screen when smaller */
-  margin: 0 auto; /* Center the line horizontally */
-  height: 1px; /* Adjust the height as needed */
-}
-
-.light-mode .white-container {
-  max-width: 1300px; /* Set the maximum width to 1300px */
-  margin: 0 auto; /* Center the line horizontally */
 }
 .light-mode .white-line {
   background-color: #000000;
-  width: 90%; /* Make it fill 90% of the screen when smaller */
-  margin: 0 auto; /* Center the line horizontally */
-  height: 1px; /* Adjust the height as needed */
 }
 
-#white-menu, #black-menu {
-  display: none;
-  height: 100%;
-}
-
+/* mobile, topnav and menu */
 @media (max-width: 750px) {
   h2 {
     font-size: 100px;
-    text-align: left;
-    margin: 0px;
   }  
-  .middle-section {
-    display: none;
-    height: 120px;
-  }
-
-  .dark-mode #white-menu {
+  .dark-mode #white-menu, .light-mode #black-menu  {
     display: block;
   }
-  .dark-mode #black-menu{
+  .dark-mode #black-menu, .light-mode #white-menu{
     display: none;
   }
-  .light-mode #black-menu {
-    display: block;
-  }
-  .light-mode #white-menu{
-    display: none;
-  }
-
   #myMenu.menu-show {
     opacity: 1;
     transition: opacity 0.3s ease, background-color 0.2s;
@@ -278,17 +181,14 @@ body.light-mode .topnav {
     opacity: 0;
     transition: opacity 0.3s ease, background-color 0.2s;
   }
-
   .middle-section {
     display: flex;
+    height: 110px;
     flex-direction: column;
     position: absolute;
     top: 41px;
     justify-content: space-between; /* Space content evenly */
     transition: background-color 0.2s;
-    
-  }
-  .topnav .middle-section {
     border-right: 1px solid #555;
     border-left: 1px solid #555;
     border-bottom: 1px solid rgb(85, 85, 85);
@@ -296,12 +196,11 @@ body.light-mode .topnav {
     left: 10px;
     right: 10px;
   }
-  .topnav .middle-section a:not(:first-child) {
-    border-top: 1px solid rgba(85, 85, 85, 0.2);
+  .dark-mode .topnav .middle-section a:not(:first-child) {
+    border-top: 1px solid #201c1c;
   }
-  .dark-mode .topnav .middle-section {
-    flex-direction: column;
-    align-items: stretch;
+  .light-mode .topnav .middle-section a:not(:first-child) {
+    border-top: 1px solid #e8e4e4;
   }
   .dark-mode .topnav .middle-section {
     background-color: rgba(0, 0, 0, 0.8);
@@ -311,6 +210,7 @@ body.light-mode .topnav {
   }
 }
 
+/* grid and gallery items */
 .grid {
   display: flex;
   flex-wrap: wrap;
@@ -325,10 +225,10 @@ body.light-mode .topnav {
   padding: 0px; /* Adjust as needed */
   text-align: center;
   box-sizing: border-box;
-  border-radius: 5px;
+  border-radius: 2px;
 }
 .dark-mode .gallery {
-  border: 2px solid #C8C8C8;
+  border: 1px solid #C8C8C8;
 }
 .light-mode .gallery {
   border: 1px solid #000000;
@@ -336,14 +236,12 @@ body.light-mode .topnav {
 .gallery img {
   max-width: 100%;
   height: auto;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
 }
 .dark-mode .gallery img {
-  border: 1px solid #C8C8C8;
+  border-bottom: 1px solid #C8C8C8;
 }
 .light-mode .gallery img {
-  border: 1px solid #000000;
+  border-bottom: 1px solid #000000;
 }
 .desc {
   margin: 5px;
@@ -354,91 +252,14 @@ body.light-mode .topnav {
     max-width: none; /* Remove max-width to make it fluid at smaller screen sizes */
   }
   .gallery {
-    flex: 1 0 100%; /* Make each item take up the full row on small screens */
+    flex: 1 1 48%; /* Make each item take up the full row on small screens */
   }
 }
 
-.info-content {
-  margin: 0 auto; /* This centers the element horizontally */
-  max-width: 1200px;
-}
-.connect-content {
-  margin: 0 auto; /* This centers the element horizontally */
-  max-width: 1200px;
-}
-.social-row {
-  float: left;
-  padding-left: 30px;
-  padding-bottom: 20px;
-}
-.social-group {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-.social-link img {
-  width: 24px; /* Adjust the size of your icons */
-  height: 24px;
-  transition: transform 0.3s ease; /* Smooth transition for hover effect */
-}
-.social-link:hover img {
-  transform: scale(1.1); /* Slightly enlarge icons on hover */
-}
-.header-text {
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.2em; /* You can adjust the font size as needed */
-  padding: 10px; /* Adjust the padding as desired */
-}
-.grid-container {
-  display: grid;
-  grid-template-columns: auto auto;
-  grid-column-gap: 11px;
-  grid-row-gap: 20px;
-}
-.grid-item {
-  padding: 10px;
-  text-align: right;
-}
-.icon {
-  grid-column: 1;
-}
-.text {
-  grid-column: 2;
-}
-
-.dark-mode .custom-link {
-  color: #C8C8C8; /* Default color */
-  transition: background-color .2s, color .2s;
-}
-.dark-mode .custom-link:visited {
-  color: #C8C8C8; /* Style for visited link */
-  transition: background-color .2s, color .2s;
-}
-.light-mode .custom-link {
-  color: #000000; /* Default color */
-  transition: background-color .2s, color .2s;
-}
-.light-mode .custom-link:visited {
-  color: #000; /* Style for visited link */
-  transition: background-color .2s, color .2s;
-}
-.grid-item-icon {
-  text-align: right;
-}
-.row {
-  max-width: 1200px;
-}
-
-#github-icon,
-#youtube-icon,
-#instagram-icon,
-#tiktok-icon,
-#linkedin-icon,
-#linktree-icon {
+/* icons */
+#github-icon, #youtube-icon, #instagram-icon, #tiktok-icon, #linkedin-icon, #linktree-icon {
   width: 24px; /* Set the desired width for your icon */
   height: 24px; 
-  transition: background-color 0.2s ease; /* Add a transition effect to smoothly change the background color */
 }
 .dark-mode #github-icon {
   content: url('assets/images/home/dark-github-icon.png');
@@ -476,64 +297,93 @@ body.light-mode .topnav {
 .light-mode #linktree-icon {
   content: url('assets/images/home/light-linktree-icon.png');
 }
-.container-1,
-.container-2,
-.container-3,
-.container-4 {
-  display: flex; /* Use flexbox to center contents */
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  /* Add any other styles you want for the container here */
+
+/* overlay */
+#overlay {
+  position: fixed; /* Cover the entire viewport */
+  top: 41px; /* Start 40px from the top */
+  left: 0; /* Start from the left */
+  display: block;
+  width: 100%;
+  height: calc(100% - 41px); /* Reduce the height of the overlay by 40px */
+  transition: opacity 0.5s; /* Add transition effect */
+  opacity: 1; /* Start with an opacity of 0 */
+  pointer-events: none;
+  z-index: 1000; 
+}
+.dark-mode #overlay {
+  background-color: rgba(0,0,0,1);
+}
+.light-mode #overlay {
+  background-color:#ffffff;
 }
 
-/* Default styles for the columns */
+/* zig zag blocks, row length, shaded zig zag and connect page */
+.row {
+  max-width: 1200px;
+}
+.connect-content {
+  margin: 0 auto; /* This centers the element horizontally */
+  max-width: 1200px;
+}
+.background-2, .background-4 {
+  transition: background-color 0.2s ease;
+}
+.dark-mode .background-2, .dark-mode .background-4 {
+  background-color: rgb(22, 22, 22);
+}
+.light-mode .background-2, .light-mode .background-4 {
+  background-color: rgb(245, 245, 245);
+}
+.container-1, .container-2, .container-3, .container-4 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* socials */
+.social-row {
+  padding-left: 20px;
+  padding-bottom: 20px;
+}
+.social-group {
+  display: flex;
+  gap: 12px;
+}
+.social-link {
+  transition: transform 0.1s ease-in-out;
+}
+.social-link:hover {
+  transform: scale(1.1);
+}
+
 .column-featured {
   float: left;
-  width: 50%; /* Each column takes up one-third of the available space */
+  width: 50%;
   box-sizing: border-box;
   padding: 10px;
 }
 .column-text {
   float: left;
-  width: 70%; /* Each column takes up one-third of the available space */
+  width: 70%;
   box-sizing: border-box;
   padding: 10px;
-  padding-top: 40px; /* Adjust the value as needed */
+  padding-right: 0px;
+  padding-top: 40px;
 }
-
-/* Media query for screens less than 750px wide */
+.column-text h2 {
+  padding: 20px;
+  padding-left: 11px;
+  padding-right: 0px;
+  margin: 0px;
+}
 @media (max-width: 750px) {
   .column-text,
   .column-featured{
-    width: 100%; /* Each column takes up the full width */
+    width: 100%;
   }
-  .social-column {
-    display: flex;
-    justify-content: space-around; /* This will space out your social groups */
-    align-items: center;
-    padding: 20px;
-  }
-  
-  .social-group {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* This sets a gap between each icon */
-  }
-  
-  .social-link img {
-    width: 24px; /* Adjust the size of your icons */
-    height: 24px;
-    transition: transform 0.3s ease; /* Smooth transition for hover effect */
-  }
-  
-  .social-link:hover img {
-    transform: scale(1.1); /* Slightly enlarge icons on hover */
-  }
-  
-  .column-personal,
-  .column-dev,
-  .column-media {
-    margin: 20px;
+  .social-row, .social-group {
+    justify-content: center;
   }
   .column-text {
     text-align: center;
@@ -541,17 +391,6 @@ body.light-mode .topnav {
   .column-text h2{
     text-align: center;
   }
-}
-.dark-mode .background-2,
-.dark-mode .background-2 {
-  background-color: rgb(22, 22, 22);
-  transition: background-color 0.2s ease; /* Add a transition effect to smoothly change the background color */
-
-}
-.light-mode .background-2,
-.light-mode .background-4 {
-  background-color: rgb(245, 245, 245);
-  transition: background-color 0.2s ease; /* Add a transition effect to smoothly change the background color */
 }
 .column-featured-product {
   flex: 0 0 calc(33.33% - 20px); /* Adjust the width of each gallery item as needed */
@@ -603,78 +442,3 @@ body.light-mode .topnav {
   }
 }
 
-.column-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Reduce the minmax width for smaller items */
-  gap: 30px; /* Increase the gap for more space between items */
-  padding: 20px; /* Add padding around the grid */
-}
-.skills-description {
-  float: left;
-  width: 24%; /* Adjust the width as needed */
-  padding: 20px;
-}
-
-.dark-mode .column-card {
-  background-color: #000000;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px; /* Reduce the padding for smaller items */
-  text-align: center;
-}
-.light-mode .column-card {
-  background-color: #ffffff;
-  border: 1px solid #000000;
-  border-radius: 5px;
-  padding: 10px; /* Reduce the padding for smaller items */
-  text-align: center;
-}
-
-.column-card h3 {
-  font-size: 20px; /* Make the text smaller */
-}
-
-.column-card p {
-  font-size: 14px; /* Make the text smaller */
-}
-@media (max-width: 750px) {
-  .column-grid {
-    width: 100%;
-    text-align: center;
-  }
-  .skills-description {
-    width: 100%;
-    text-align: center;
-  }
-  .skills-description h2{
-    width: 100%;
-    text-align: center;
-  }
-}
-
-.tooltip {
-  position: absolute;
-  background-color: #333;
-  color: #fff;
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-size: 12px;
-  z-index: 1000;
-}
-
-#overlay {
-  position: absolute;
-  display: block;
-  width: 100%;
-  height: 100%;
-  transition: opacity 0.5s; /* Add transition effect */
-  opacity: 1; /* Start with an opacity of 0 */
-  pointer-events: none;
-  z-index: 1000; 
-}
-.dark-mode #overlay {
-  background-color: rgba(0,0,0,1);
-}
-.light-mode #overlay {
-  background-color:#ffffff;
-}

@@ -51,12 +51,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
     // Check initial viewport width
     checkMenu();
 });
-
 window.addEventListener('resize', (event) => {
     // Check viewport width after resize
     checkMenu();
 });
-
 function checkMenu() {
     var element = document.getElementById("myMenu");
     element.style.transition = "none"; // Remove transition
@@ -69,7 +67,6 @@ function checkMenu() {
         element.style.transition = ""; // Reapply transition
     }, 100); // Delay in milliseconds
 }
-
 function menuSwitch() {
     var element = document.getElementById("myMenu");
     if (element.classList.contains("menu-show")) {
@@ -78,20 +75,16 @@ function menuSwitch() {
         menuShow();
     }
 }
-
 function menuShow() {
     var element = document.getElementById("myMenu");
     element.classList.remove("menu-hide");
     element.classList.add("menu-show");
 }
-
 function menuHide() {
     var element = document.getElementById("myMenu");
     element.classList.remove("menu-show");
     element.classList.add("menu-hide");
 }
-
-
 
 function searchThing() {
     // Declare variables
@@ -112,32 +105,3 @@ function searchThing() {
         }
     }
 }
-
-document.querySelectorAll('.social-link').forEach(link => {
-    link.addEventListener('mouseenter', (event) => {
-      const tooltip = document.createElement('span');
-      tooltip.textContent = event.target.getAttribute('aria-label');
-      tooltip.style.position = 'fixed';
-      tooltip.style.left = `${event.pageX + 10}px`;
-      tooltip.style.top = `${event.pageY + 10}px`;
-      tooltip.className = 'tooltip';
-      document.body.appendChild(tooltip);
-    });
-  
-    link.addEventListener('mouseleave', () => {
-      document.querySelector('.tooltip').remove();
-    });
-  });
-
-  function changeFavicon(src) {
-    var link = document.createElement('link'),
-        oldLink = document.getElementById('dynamic-favicon');
-    link.id = 'dynamic-favicon';
-    link.rel = 'shortcut icon';
-    link.href = src;
-    if (oldLink) {
-     document.head.removeChild(oldLink);
-    }
-    document.head.appendChild(link);
- }
- 
