@@ -303,7 +303,6 @@ body.light-mode .topnav a {
 #overlay {
   position: fixed; /* Cover the entire viewport */
   top: 41px; /* Start 40px from the top */
-  left: 0; /* Start from the left */
   display: block;
   width: 100%;
   height: calc(100% - 41px); /* Reduce the height of the overlay by 40px */
