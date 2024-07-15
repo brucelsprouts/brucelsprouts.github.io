@@ -113,6 +113,7 @@ body.light-mode .topnav a {
 }
 .right-section{
   display: flex;
+  justify-content: right;
   margin-right: 10px; /* Add margin to push it slightly away from the left */
   height: 40px;
 }
