@@ -384,6 +384,9 @@ body.light-mode .topnav a {
   .column-text {
     padding: 10px;
   }
+  .column-text h2 {
+    font-size: 75px;
+  }
 }
 @media (max-width: 750px) {
   .column-text,
