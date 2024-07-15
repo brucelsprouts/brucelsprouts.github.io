@@ -382,8 +382,8 @@ body.light-mode .topnav a {
 }
 
 @media (max-width: 750px) {
-  .column-text h2 {
-    padding: 0px;
+  .column-text {
+    padding: 10px;
   }
 }
 
