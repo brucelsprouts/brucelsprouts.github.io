@@ -119,6 +119,7 @@ body.light-mode .topnav a {
 }
 #white-search, #black-search, #moon-image, #sun-image, #white-menu, #black-menu {
   height: 100%;
+  width: 25px;
 }
 .dark-mode #black-search, .light-mode #white-search, .dark-mode #sun-image, .light-mode #moon-image, #white-menu, #black-menu {
   display: none;
@@ -259,7 +260,7 @@ body.light-mode .topnav a {
 
 /* icons */
 #github-icon, #youtube-icon, #instagram-icon, #tiktok-icon, #linkedin-icon, #linktree-icon {
-  width: 24px; /* Set the desired width for your icon */
+  width: 24px;
   height: 24px; 
 }
 .dark-mode #github-icon {
