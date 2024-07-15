@@ -197,6 +197,7 @@ body.light-mode .topnav a {
     position: absolute;
     left: 10px;
     right: 10px;
+    
   }
   .dark-mode .topnav .middle-section a:not(:first-child) {
     border-top: 1px solid #201c1c;
@@ -210,6 +211,7 @@ body.light-mode .topnav a {
   .light-mode .topnav .middle-section {
     background-color: rgba(255, 255, 255, 0.9);
   }
+  
 }
 
 /* grid and gallery items */
@@ -316,7 +318,7 @@ body.light-mode .topnav a {
   background-color: rgba(0,0,0,1);
 }
 .light-mode #overlay {
-  background-color:#ffffff;
+  background-color:#ff0000;
 }
 
 /* zig zag blocks, row length, shaded zig zag and connect page */
@@ -442,4 +444,3 @@ body.light-mode .topnav a {
     text-align: center;
   }
 }
-
