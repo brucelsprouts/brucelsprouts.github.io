@@ -20,7 +20,7 @@ h1 {
   text-align: center;
 }
 h2 {
-  font-size: 140px;
+  font-size: 100px;
   text-align: left;
   margin: 0px;
 }
@@ -128,7 +128,7 @@ body.light-mode .topnav a {
 /* search bar and white line for connect */
 .search-container {
   text-align: center;
-  max-width: 1300px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 .search-input {
@@ -214,50 +214,63 @@ body.light-mode .topnav a {
   }
 }
 
-/* grid and gallery items */
-.grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between; /* Distribute items evenly */
+/* grid and items */
+.code-content {
   max-width: 1200px;
   margin: 0 auto;
-  gap: 20px;
-  padding: 3%;
+}
+.code-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 20px; 
+}
+.responsive {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  float: left;
 }
 .gallery {
-  flex: 1 0 300px; /* Grow and shrink as needed, but don't go smaller than 200px */
-  padding: 0px; /* Adjust as needed */
-  text-align: center;
+  width: 33%;
+  padding: 1%;
   box-sizing: border-box;
+}  
+.inner {
+  text-align: center;
   border-radius: 2px;
+  margin-bottom: 1%;
 }
-.dark-mode .gallery {
+@media only screen and (max-width: 750px) {
+  .gallery {
+    width: 50%;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .gallery {
+    width: 100%;
+  }
+}
+.dark-mode .inner {
   border: 1px solid #C8C8C8;
 }
-.light-mode .gallery {
+.light-mode .inner {
   border: 1px solid #000000;
 }
-.gallery img {
+.inner img {
   max-width: 100%;
   height: auto;
 }
-.dark-mode .gallery img {
+.dark-mode .inner img {
   border-bottom: 1px solid #C8C8C8;
 }
-.light-mode .gallery img {
+.light-mode .inner img {
   border-bottom: 1px solid #000000;
 }
 .desc {
   margin: 5px;
   font-size: 14px;
-}
-@media (max-width: 750px) {
-  .grid {
-    max-width: none; /* Remove max-width to make it fluid at smaller screen sizes */
-  }
-  .gallery {
-    flex: 1 1 48%; /* Make each item take up the full row on small screens */
-  }
 }
 
 /* icons */
@@ -344,7 +357,21 @@ body.light-mode .topnav a {
   align-items: center;
 }
 
-/* socials */
+/* block 1 */
+.column-text {
+  float: left;
+  width: 70%;
+  box-sizing: border-box;
+  padding: 10px;
+  padding-right: 0px;
+  padding-top: 40px;  
+}
+.column-text h2 {
+  padding: 20px;
+  padding-left: 11px;
+  padding-right: 0px;
+  margin: 0px;    
+}
 .social-row {
   padding-left: 20px;
   padding-bottom: 20px;
@@ -359,94 +386,17 @@ body.light-mode .topnav a {
 .social-link:hover {
   transform: scale(1.1);
 }
-
-.column-featured {
-  float: left;
-  width: 50%;
-  box-sizing: border-box;
-  padding: 10px;
-}
-.column-text {
-  float: left;
-  width: 70%;
-  box-sizing: border-box;
-  padding: 10px;
-  padding-right: 0px;
-  padding-top: 40px;
-}
-.column-text h2 {
-  padding: 20px;
-  padding-left: 11px;
-  padding-right: 0px;
-  margin: 0px;
-}
 @media (max-width: 750px) {
   .column-text {
+    width: 100%;
     padding: 10px;
+    text-align: center;
   }
   .column-text h2 {
     font-size: 75px;
-  }
-}
-@media (max-width: 750px) {
-  .column-text,
-  .column-featured{
-    width: 100%;
+    text-align: center;
   }
   .social-row, .social-group {
     justify-content: center;
-  }
-  .column-text {
-    text-align: center;
-  }
-  .column-text h2{
-    text-align: center;
-  }
-}
-.column-featured-product {
-  flex: 0 0 calc(33.33% - 20px);
-  padding: 30px;
-  text-align: center;
-  box-sizing: border-box;
-  border-radius: 5px;
-
-}
-.dark-mode .column-featured-product {
-  border: 1px solid #C8C8C8;
-}
-.light-mode .column-featured-product {
-  border: 1px solid #000000;
-}
-.column-featured-product img{
-  max-width: 100%;
-  height: auto;
-  border-radius: 5px;
-}
-.dark-mode .column-featured-product img {
-  border: 1px solid #C8C8C8;
-}
-.light-mode .column-featured-product img {
-  border: 1px solid #000000;
-}
-.dark-mode .filler {
-  padding: 30px;
-}
-.light-mode .filler {
-  padding: 30px;
-}
-.column-featured-text {
-  float: left;
-  width: 50%;
-  box-sizing: border-box;
-  padding: 30px;
-  text-align: left;
-}
-@media (max-width: 750px) {
-  .column-featured-text {
-    width: 100%;
-    text-align: center;
-  }
-  .column-featured-text h2{
-    text-align: center;
   }
 }
