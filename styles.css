@@ -318,7 +318,7 @@ body.light-mode .topnav a {
   background-color: rgba(0,0,0,1);
 }
 .light-mode #overlay {
-  background-color:#ff0000;
+  background-color:#ffffff;
 }
 
 /* zig zag blocks, row length, shaded zig zag and connect page */
@@ -380,6 +380,13 @@ body.light-mode .topnav a {
   padding-right: 0px;
   margin: 0px;
 }
+
+@media (max-width: 750px) {
+  .column-text h2 {
+    padding: 0px;
+  }
+}
+
 @media (max-width: 750px) {
   .column-text,
   .column-featured{
