@@ -167,7 +167,7 @@ body.light-mode .topnav a {
 /* mobile, topnav and menu */
 @media (max-width: 750px) {
   h2 {
-    font-size: 100px;
+    font-size: 80px;
   }  
   .dark-mode #white-menu, .light-mode #black-menu  {
     display: block;
