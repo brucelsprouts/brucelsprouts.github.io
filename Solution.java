@@ -1,25 +1,35 @@
-import java.util.Stack;
-import java.util.HashMap;
-
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
 class Solution {
-    public boolean isValid(String s) {
-        Stack<Character> stack = new Stack<>();
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode output = new ListNode(0);
+        ListNode current = output;
 
-        HashMap<Character, Character> brackets = new HashMap<>();
-        brackets.put(')', '(');
-        brackets.put('}', '{');
-        brackets.put(']', '[');
-
-        for (char c : s.toCharArray()) {
-            if (brackets.containsValue(c)) {
-                stack.push(c);
-            } else if (brackets.containsKey(c)) {
-                if (stack.isEmpty() || brackets.get(c) != stack.pop()) {
-                    return false;
-                }
+        while (list1 != null && list2 != null) {
+            if (list1.val <= list2.val) {
+                current.next = list1;
+                list1 = list1.next;
+            } else {
+                current.next = list2;
+                list2 = list2.next;
             }
+            current = current.next;
         }
 
-        return stack.isEmpty();
+        if (list1 != null) {
+            current.next = list1;
+        } else if (list2 != null) {
+            current.next = list2;
+        }
+
+        return output.next;
     }
 }
