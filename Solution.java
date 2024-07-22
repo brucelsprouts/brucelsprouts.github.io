@@ -1,18 +1,17 @@
 class Solution {
-    public int searchInsert(int[] nums, int target) {
-        int left = 0;
-        int right = nums.length - 1;
-
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-            if (nums[mid] == target) {
-                return mid;
-            } else if (nums[mid] < target) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
+    public int climbStairs(int n) {
+        if (n <= 2) {
+            return n;
         }
-        return left;
+
+        int[] steps = new int[n + 1];
+        steps[1] = 1;
+        steps[2] = 2;
+
+        for (int i = 3; i <= n; i++) {
+            steps[i] = steps[i - 1] + steps[i - 2];
+        }
+        
+        return steps[n];
     }
 }
