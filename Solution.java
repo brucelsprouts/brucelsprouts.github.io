@@ -1,17 +1,23 @@
+import java.util.ArrayList;
+import java.util.List;
+
 class Solution {
-    public int climbStairs(int n) {
-        if (n <= 2) {
-            return n;
-        }
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        helper(root, result);
+        return result;
+    }
 
-        int[] steps = new int[n + 1];
-        steps[1] = 1;
-        steps[2] = 2;
+    private void helper(TreeNode root, List<Integer> result) {
+        if (root != null) {
+            // First recur for left subtree
+            helper(root.left, result);
 
-        for (int i = 3; i <= n; i++) {
-            steps[i] = steps[i - 1] + steps[i - 2];
+            // Then add the value of the node
+            result.add(root.val);
+
+            // Finally recur for the right subtree
+            helper(root.right, result);
         }
-        
-        return steps[n];
     }
 }
