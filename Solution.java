@@ -1,23 +1,32 @@
 import java.util.ArrayList;
 import java.util.List;
 
+public class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode() {}
+    TreeNode(int val) { this.val = val; }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
 class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
-        helper(root, result);
+        traverse(root, result);
         return result;
     }
 
-    private void helper(TreeNode root, List<Integer> result) {
-        if (root != null) {
-            // First recur for left subtree
-            helper(root.left, result);
-
-            // Then add the value of the node
-            result.add(root.val);
-
-            // Finally recur for the right subtree
-            helper(root.right, result);
+    private void traverse(TreeNode node, List<Integer> result) {
+        if (node != null) {
+            traverse(node.left, result);
+            result.add(node.val);
+            traverse(node.right, result);
         }
     }
 }
+ 
