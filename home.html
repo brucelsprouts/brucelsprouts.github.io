@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home | Bruce's Portfolio</title>
+    <meta name="description" content="Computer scientist and Multimedia">
+    <script src="script.js"></script>
+    
+    <!-- Open Graph Protocol Metadata -->
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Bruce Lin">
+    <meta property="og:title" content="Bruce Lin">
+    <meta property="og:description" content="Computer scientist and Creator">
+    <meta property="og:url" content="https://brucelsprouts.github.io">
+    <meta property="og:image" content="https://cdn.discordapp.com/attachments/950767175684210698/1155686381780213760/image.png">
+    <meta property="og:image:type" content="png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Styles and Icons -->
+    <link rel="stylesheet" type="text/css" href="global.css">
+    <link rel="icon" href="assets/images/icons/icon.png" type="image/png">
+
+    <!-- Canonical Link -->
+    <link rel="canonical" href="https://brucelsprouts.github.io/brucelsprouts">
+  
+</head>
+<body class="dark-mode">
+    <!-- Top Navigation -->
+    <div class="topnav-container">
+        <div class="topnav" id="myTopnav">
+            <div class="left-section">
+                <a href="index.html" id="leftname">&lt;&#47;&gt; Bruce Lin</a>
+            </div>
+            <div class="wrapper">
+                <div id="myMenu" class="middle-section">
+                    <!-- Navigation Links -->
+                    <a href="code.html">Code</a>
+                    <a href="video.html">Video</a>
+                    <a href="connect.html">Connect</a>
+                </div>
+            </div>
+            <div class="right-section">
+                <!-- Menu, Search, and Dark Mode Icons -->
+                <a class="menu-icons" onclick="menuSwitch(); return false;">
+                    <img src="assets/images/icons/white-menu.png" id="white-menu">
+                    <img src="assets/images/icons/black-menu.png" id="black-menu">
+                </a>
+                <a class="search-icons" onclick="myFunction(); return false;">
+                    <img src="assets/images/icons/white-search.png" onclick="menuHide()" id="white-search" />
+                    <img src="assets/images/icons/black-search.png" onclick="menuHide()" id="black-search" />
+                </a>
+                <a href="darklight-icons" onclick="lightDark(); return false;">
+                    <img src="assets/images/icons/moon.png" id="moon-image" />
+                    <img src="assets/images/icons/sun.png" id="sun-image" />
+                </a>
+            </div>
+        </div>
+    </div>
+    <div id="overlay"></div>
+
+    <!-- Main Content -->
+    <div class="home-content">
+        <!-- Background Section 1 -->
+        <div class="background-1">
+            <div class="container-1">
+                <div class="herorow">
+                    <div class="column-text">
+                        <h2 class="xlarge-font"><b>Bruce Lin</b></h2>
+                        <h3 class="text-box">
+                            Hello there! I'm a second year student for Computer Science at Western University. In addition to my studies, I've also worked as an English tutor for several years at Ignite Youth Club and currently I'm working as a video editor freelancer at AMG. Additionally, I just wanted to note that the YouTube and Instagram socials are for my YouTube channel.
+                        </h3>
+                        <div class="social-row">
+                            <!-- Coding Links -->
+                            <div class="social-group">
+                                <a href="https://github.com/brucelsprouts" target="_blank" class="social-link" aria-label="GitHub">
+                                    <img id="github-icon" src="assets/images/home/dark-github-icon.png" alt="GitHub Icon">
+                                </a>
+                                <a href="https://www.linkedin.com/in/bruce-lin-6284b323b/" target="_blank" class="social-link" aria-label="LinkedIn">
+                                    <img id="linkedin-icon" src="assets/images/home/dark-linkedin-icon.png" alt="Linkedin Icon">
+                                </a>
+                                <a href="https://www.youtube.com/channel/UCIZq5zDOCw1Xq49H1Mpx05Q" target="_blank" class="social-link" aria-label="YouTube">
+                                    <img id="youtube-icon" src="assets/images/home/dark-youtube-icon.png" alt="YouTube Icon">
+                                </a>
+                                <a href="https://www.instagram.com/brucelsproutss/" target="_blank" class="social-link" aria-label="Instagram Media">
+                                    <img id="instagram-icon" src="assets/images/home/dark-instagram-icon.png" alt="Instagram Icon">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Background Section 2 -->
+        <div class="background-2">
+            <div class="container-2">
+                <div class="row">
+                    <!-- Content can go here -->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

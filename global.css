@@ -36,15 +36,6 @@ p {
 ul {
   list-style-type: none;
 }
-.dark-mode .connect-container a{
-  text-decoration: none;
-  color: #C8C8C8;
-}
-.light-mode .connect-container a{
-  text-decoration: none;
-  color: #000000;
-}
-
 /* topnav plus background color*/
 body.dark-mode, body.dark-mode .topnav {
   background-color: #000;
@@ -336,10 +327,6 @@ body.light-mode .topnav a {
 
 /* zig zag blocks, row length, shaded zig zag and connect page */
 .row {
-  max-width: 1200px;
-}
-.connect-content {
-  margin: 0 auto; /* This centers the element horizontally */
   max-width: 1200px;
 }
 .background-2, .background-4 {
