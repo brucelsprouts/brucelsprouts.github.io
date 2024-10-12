@@ -1,0 +1,52 @@
+.contact-page a {
+    color: inherit; /* Inherit color from parent elements */
+    text-decoration: none; /* Optional: Remove underline from links */
+}
+
+.contact-page a:hover {
+    text-decoration: underline; /* Optional: Add underline on hover */
+}
+
+.contact-page a::after {
+    content: ' ↗'; /* Adds arrow after the link */
+    font-size: 0.9em; /* Make arrow slightly smaller */
+    color: inherit; /* Inherit the color of the link */
+}
+
+.dark-mode .white-container, .light-mode .white-container {
+    max-width: 1300px;
+    margin: 0 auto;
+}
+.dark-mode .white-line, .light-mode .white-line {
+    width: 90%;
+    margin: 0 auto;
+    height: 1px;
+}
+.dark-mode .white-line {
+    background-color: #C8C8C8;
+}
+.light-mode .white-line {
+    background-color: #000000;
+}
+
+/* Contact Page CSS */
+.contact-page {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* General Section */
+.general-section {
+    padding: 20px;
+}
+
+/* Video Section */
+.video-section {
+    padding: 20px;
+}
+
+/* Code Section */
+.code-section {
+    padding: 20px;
+}
