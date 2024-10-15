@@ -94,3 +94,143 @@
       flex-direction: column;
     }
   }
+
+
+/* grid and items */
+.grid-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.grid-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-top: 20px; 
+}
+
+.responsive {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  float: left;
+}
+.gallery {
+  width: 33%;
+  padding: 1%;
+  box-sizing: border-box;
+}  
+.inner {
+  text-align: center;
+  border-radius: 2px;
+  margin-bottom: 1%;
+}
+@media only screen and (max-width: 750px) {
+  .gallery {
+    width: 50%;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .gallery {
+    width: 100%;
+  }
+}
+.dark-mode .inner {
+  border: 1px solid #C8C8C8;
+}
+.light-mode .inner {
+  border: 1px solid #000000;
+}
+.inner img {
+  max-width: 100%;
+  height: auto;
+}
+.dark-mode .inner img {
+  border-bottom: 1px solid #C8C8C8;
+}
+.light-mode .inner img {
+  border-bottom: 1px solid #000000;
+}
+.desc {
+  margin: 5px;
+  font-size: 14px;
+}
+
+.line-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.line-header h1 {
+  margin: 20px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.dark-mode .line-header .line {
+  flex-grow: 1;
+  height: 2px;
+  background-color: #C8C8C8;
+  margin-right: 20px; /* Ensures margin on the right */
+}
+.light-mode .line-header .line {
+  flex-grow: 1;
+  height: 2px;
+  background-color: #000000;
+  margin-right: 20px; /* Ensures margin on the right */
+}
+
+@media (max-width: 750px) {
+  .skills-header .line {
+    margin-right: 10px; /* Adjust margin for smaller screens */
+  }
+}
+
+/* zig zag blocks, row length, shaded zig zag and connect page */
+.row {
+  max-width: 1200px;
+}
+/* .background-2, .background-4 {
+  transition: background-color 0.2s ease;
+}
+.dark-mode .background-2, .dark-mode .background-4 {
+  background-color: rgb(22, 22, 22);
+}
+.light-mode .background-2, .light-mode .background-4 {
+  background-color: rgb(245, 245, 245);
+} */
+.container-1, .container-2, .container-3, .container-4 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* block 1 */
+.background-1 {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container-1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.scrollable-blog {
+  max-height: 400px; /* Adjust height as needed */
+  max-width: 1200px;
+  overflow-y: auto; /* Enables vertical scrolling */
+  padding: 10px; /* Optional: padding */
+  margin: 20px;
+}
+.dark-mode .scrollable-blog {
+  border: 1px solid #C8C8C8; /* Optional: border for visibility */
+}
+.light-mode .scrollable-blog {
+  border: 1px solid #000000; /* Optional: border for visibility */
+}
