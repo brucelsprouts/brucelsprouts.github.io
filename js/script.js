@@ -27,9 +27,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }, 200); // Delay to ensure the page is loaded before starting the transition
 
     // Get all the navigation links
-    var navLinks = document.querySelectorAll('.middle-section a, .left-section a');
-
-    // Add event listener to each linzk
+    var navLinks = document.querySelectorAll('.middle-section a, .left-section a, .gallery a');
+    
+    // Add event listener to each link
     navLinks.forEach(function(link) {
         link.addEventListener('click', function(e) {
             // Prevent the default action (navigation)

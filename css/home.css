@@ -182,7 +182,7 @@
 }
 
 @media (max-width: 750px) {
-  .skills-header .line {
+  .line-header .line {
     margin-right: 10px; /* Adjust margin for smaller screens */
   }
 }

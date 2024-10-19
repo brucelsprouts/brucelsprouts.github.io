@@ -142,7 +142,7 @@ body.light-mode .topnav a {
   }
   .middle-section {
     display: flex;
-    height: 110px;
+    height: 300%;
     flex-direction: column;
     position: absolute;
     top: 41px;

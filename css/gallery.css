@@ -82,3 +82,205 @@
   background-color: #ffffff;
   color: #000;
 }
+/*line stuff*/
+.line-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.line-header h1 {
+  margin: 20px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.dark-mode .line-header .line {
+  flex-grow: 1;
+  height: 2px;
+  background-color: #C8C8C8;
+  margin-right: 20px; /* Ensures margin on the right */
+}
+.light-mode .line-header .line {
+  flex-grow: 1;
+  height: 2px;
+  background-color: #000000;
+  margin-right: 20px; /* Ensures margin on the right */
+}
+
+@media (max-width: 750px) {
+  .line-header .line {
+    margin-right: 10px; /* Adjust margin for smaller screens */
+  }
+}
+
+/*project page*/
+.project-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  padding: 20px;
+  box-sizing: border-box;
+  min-height: 100vh; /* Ensure the container takes at least the full viewport height */
+}
+
+.project-left {
+  flex: 1;
+  display: flex;
+  align-items: center; /* Center image vertically */
+  justify-content: center; /* Center image horizontally */
+  margin-right: 20px;
+}
+
+.project-left img {
+  width: 100%;
+  height: auto;
+  border: 2px solid #C8C8C8; /* Add border to the image */
+}
+.light-mode .project-left img {
+  width: 100%;
+  height: auto;
+  border: 2px solid #000000; /* Add border to the image */
+}
+
+.project-right {
+  flex: 1;
+}
+
+.project-right h1 {
+  font-size: 2em;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.project-right p {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.project-right a {
+  font-size: 1.2em;
+  text-decoration: underline; /* Underline the text */
+  position: relative; /* Position relative for the arrow */
+}
+.dark-mode .project-right a {
+  color: #C8C8C8; /* Change text color to white */
+}
+.light-mode .project-right a {
+  color: #000000; /* Change text color to white */
+}
+
+.project-right a::after {
+  content: '↗'; /* Unicode for arrow pointing to the top right */
+  position: absolute;
+  right: -20px; /* Adjust the position of the arrow */
+  top: 0;
+  font-size: 1.2em;
+  color: #C8C8C8; /* Match the arrow color with the text */
+}
+.light-mode .project-right a::after {
+  color: #000000; /* Match the arrow color with the text */
+}
+.dark-mode .project-right a:hover {
+  color: #C8C8C8; /* Change text color to white */
+}
+
+.project-right a:hover {
+  text-decoration: underline;
+}
+
+@media only screen and (max-width: 750px) {
+  .project-container {
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+  }
+
+  .project-left {
+    margin-right: 0;
+    margin-bottom: 0px; /* Add space between image and text */
+    width: 100%; /* Ensure the image container takes full width */
+    align-items: flex-end; /* Center image horizontally */
+
+  }
+
+  .project-right {
+    width: 100%; /* Ensure the text container takes full width */
+    text-align: center; /* Center text for smaller screens */
+  }
+
+  .project-right h1,
+  .project-right p,
+  .project-right a {
+    text-align: center; /* Center text for smaller screens */
+  }
+}
+
+.text-container {
+  padding: 20px;
+  margin: 20px;
+  border-radius: 5px;
+}
+.dark-mode .text-container {
+  border: 1px solid #C8C8C8;
+}
+.light-mode .text-container {
+  border: 1px solid #000000;
+}
+
+.tech-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.tech-icon {
+  width: 50px;
+  height: 50px;
+  margin: 0 10px;
+  border-radius: 5px; /* Optional: Add rounded corners to the border */
+}
+.dark-mode .tech-icon {
+  border: 1px solid #C8C8C8; /* Add a border to each icon */
+}
+.light-mode .tech-icon {
+  border: 1px solid #000000; /* Add a border to each icon */
+}
+
+#icon {
+  border: 1px solid #C8C8C8;
+}
+.light-mode #icon {
+  border: 1px solid #000000;
+}
+/* Default font size for h1 */
+h1 {
+  font-size: 2em; /* Adjust this value as needed */
+}
+
+/* Adjust font size for smaller screens */
+@media (max-width: 1200px) {
+  h1 {
+      font-size: 1.8em; /* Adjust this value as needed */
+  }
+}
+
+@media (max-width: 992px) {
+  h1 {
+      font-size: 1.6em; /* Adjust this value as needed */
+  }
+}
+
+@media (max-width: 768px) {
+  h1 {
+      font-size: 1.4em; /* Adjust this value as needed */
+  }
+}
+
+@media (max-width: 576px) {
+  h1 {
+      font-size: 1.2em; /* Adjust this value as needed */
+  }
+}
