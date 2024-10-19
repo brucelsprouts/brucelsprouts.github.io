@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }, 200); // Delay to ensure the page is loaded before starting the transition
 
     // Get all the navigation links
-    var navLinks = document.querySelectorAll('.middle-section a, .left-section a, .gallery a');
+    var navLinks = document.querySelectorAll('.middle-section a, .left-section a, .gallery a , .tech-icons a');
     
     // Add event listener to each link
     navLinks.forEach(function(link) {
@@ -44,6 +44,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 window.location.href = link.href;
             }, 200); // Adjust this delay to match the duration of your fade-in animation
         });
+    });
+
+    // Handle forward and back button navigation
+    window.addEventListener('popstate', function(event) {
+        // Fade in the overlay
+        overlay.style.opacity = 1;
+
+        // Delay the navigation until after the fade-in animation completes
+        setTimeout(function() {
+            // Reload the page to reflect the history state
+            window.location.reload();
+        }, 200); // Adjust this delay to match the duration of your fade-in animation
     });
 });
 

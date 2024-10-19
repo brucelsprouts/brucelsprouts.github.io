@@ -22,7 +22,8 @@
   width: 33%;
   padding: 1%;
   box-sizing: border-box;
-}  
+  position: relative; /* Add this line */
+}
 .inner {
   text-align: center;
   border-radius: 2px;
