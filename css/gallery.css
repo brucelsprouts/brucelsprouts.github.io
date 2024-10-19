@@ -285,3 +285,8 @@ h1 {
       font-size: 1.2em; /* Adjust this value as needed */
   }
 }
+
+.background {
+  max-width: 1200px;
+  margin: 0 auto;
+}
