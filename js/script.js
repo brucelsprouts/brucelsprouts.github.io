@@ -49,7 +49,7 @@ function searchThing() {
 function fadeInPage() {
     if (!window.AnimationEvent) { return; }
     var fader = document.getElementById('fader');
-    fader.classList.add('fade-out');
+    fader.setAttribute('class', 'fade-out');
 }
 function setupLinkFade() {
     if (!window.AnimationEvent) return;
@@ -59,16 +59,20 @@ function setupLinkFade() {
         if (anchor.classList.contains('darklight-icons') || anchor.classList.contains('menu-icons')) return;
         if (anchor.hostname !== window.location.hostname || anchor.pathname === window.location.pathname) return;
         anchor.addEventListener('click', event => {
+            if (event.metaKey || event.ctrlKey) return; // Allow opening in new tab
             event.preventDefault();
-            fader.classList.add('fade-in');
+            fader.setAttribute('class', 'fade-in');
             fader.addEventListener('animationend', () => window.location = anchor.href, { once: true });
         });
     });
 }
 window.addEventListener('pageshow', event => {
-    if (event.persisted) document.getElementById('fader').classList.remove('fade-in');
+    if (event.persisted) {
+        var fader = document.getElementById('fader');
+        fader.removeAttribute('class', 'fade-in');
+        fader.setAttribute('class', 'fade-out');
+    }
 });
-
 document.addEventListener('DOMContentLoaded', function() {
     if (!window.AnimationEvent) { return; }
     var anchors = document.getElementsByTagName('a');
@@ -80,6 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         anchors[idx].addEventListener('click', function(event) {
+            if (event.metaKey || event.ctrlKey) return; // Allow opening in new tab
             var fader = document.getElementById('fader'),
                 anchor = event.currentTarget;
             
@@ -90,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
             fader.addEventListener('animationend', listener);
             
             event.preventDefault();
-            fader.classList.add('fade-in');
+            fader.setAttribute('class', 'fade-in');
         });
     }
 });
