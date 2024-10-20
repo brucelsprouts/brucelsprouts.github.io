@@ -46,51 +46,51 @@ function searchThing() {
     });
 }
 
-// function fadeInPage() {
-//     if (!window.AnimationEvent) { return; }
-//     var fader = document.getElementById('fader');
-//     fader.classList.add('fade-out');
-// }
-// function setupLinkFade() {
-//     if (!window.AnimationEvent) return;
-//     var fader = document.getElementById('fader');
-//     Array.from(document.getElementsByTagName('a')).forEach(anchor => {
-//         // Exclude dark/light mode and menu switch buttons
-//         if (anchor.classList.contains('darklight-icons') || anchor.classList.contains('menu-icons')) return;
-//         if (anchor.hostname !== window.location.hostname || anchor.pathname === window.location.pathname) return;
-//         anchor.addEventListener('click', event => {
-//             event.preventDefault();
-//             fader.classList.add('fade-in');
-//             fader.addEventListener('animationend', () => window.location = anchor.href, { once: true });
-//         });
-//     });
-// }
-// window.addEventListener('pageshow', event => {
-//     if (event.persisted) document.getElementById('fader').classList.remove('fade-in');
-// });
+function fadeInPage() {
+    if (!window.AnimationEvent) { return; }
+    var fader = document.getElementById('fader');
+    fader.classList.add('fade-out');
+}
+function setupLinkFade() {
+    if (!window.AnimationEvent) return;
+    var fader = document.getElementById('fader');
+    Array.from(document.getElementsByTagName('a')).forEach(anchor => {
+        // Exclude dark/light mode and menu switch buttons
+        if (anchor.classList.contains('darklight-icons') || anchor.classList.contains('menu-icons')) return;
+        if (anchor.hostname !== window.location.hostname || anchor.pathname === window.location.pathname) return;
+        anchor.addEventListener('click', event => {
+            event.preventDefault();
+            fader.classList.add('fade-in');
+            fader.addEventListener('animationend', () => window.location = anchor.href, { once: true });
+        });
+    });
+}
+window.addEventListener('pageshow', event => {
+    if (event.persisted) document.getElementById('fader').classList.remove('fade-in');
+});
 
-// document.addEventListener('DOMContentLoaded', function() {
-//     if (!window.AnimationEvent) { return; }
-//     var anchors = document.getElementsByTagName('a');
+document.addEventListener('DOMContentLoaded', function() {
+    if (!window.AnimationEvent) { return; }
+    var anchors = document.getElementsByTagName('a');
     
-//     for (var idx = 0; idx < anchors.length; idx += 1) {
-//         if (anchors[idx].hostname !== window.location.hostname ||
-//             anchors[idx].pathname === window.location.pathname) {
-//             continue;
-//         }
+    for (var idx = 0; idx < anchors.length; idx += 1) {
+        if (anchors[idx].hostname !== window.location.hostname ||
+            anchors[idx].pathname === window.location.pathname) {
+            continue;
+        }
 
-//         anchors[idx].addEventListener('click', function(event) {
-//             var fader = document.getElementById('fader'),
-//                 anchor = event.currentTarget;
+        anchors[idx].addEventListener('click', function(event) {
+            var fader = document.getElementById('fader'),
+                anchor = event.currentTarget;
             
-//             var listener = function() {
-//                 window.location = anchor.href;
-//                 fader.removeEventListener('animationend', listener);
-//             };
-//             fader.addEventListener('animationend', listener);
+            var listener = function() {
+                window.location = anchor.href;
+                fader.removeEventListener('animationend', listener);
+            };
+            fader.addEventListener('animationend', listener);
             
-//             event.preventDefault();
-//             fader.classList.add('fade-in');
-//         });
-//     }
-// });
+            event.preventDefault();
+            fader.classList.add('fade-in');
+        });
+    }
+});
