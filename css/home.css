@@ -298,15 +298,19 @@
 }
 
 #container {
-  width: 30%;
-  height: auto;
+  max-width: 30%;
+  height: justify;
   display: flex;
   justify-content: center; /* Centers items horizontally */
   align-items: center; /* Centers items vertically */
 }
+#dim-container {
+  max-width: 100%;
+  flex-shrink: 1;
+}
 @media (max-width: 750px) {
   #container {
-    width: 100%;
+    max-width: 100%;
     padding: 10px;
     text-align: center;
   }

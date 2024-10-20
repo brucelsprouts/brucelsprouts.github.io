@@ -1,18 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const container = document.getElementById('3d-container');
-    container.style.width = '400px'; // Set specific width
+    const container = document.getElementById('dim-container');
+    container.style.width = '500px'; // Set specific width
     container.style.height = '400px'; // Set specific height
 
     // Create a scene
     const scene = new THREE.Scene();
 
     // Create a camera with a larger FOV and move it further away
-    const camera = new THREE.PerspectiveCamera(10, container.clientWidth / container.clientHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(12, container.clientWidth / container.clientHeight, 0.1, 1000);
     camera.position.z = 5; // Move the camera closer
 
-    // Create a renderer
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    // Create a renderer with alpha set to true
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setClearColor(0x000000, 0); // Set clear color to transparent
     container.appendChild(renderer.domElement);
     
     // Add a directional light coming from the front
@@ -48,7 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add an ambient light for overall illumination
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.1);
     scene.add(ambientLight);
-
 
     // Variable to store the 3D object
     let object3D;
