@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!window.AnimationEvent) { return; }
     var anchors = document.getElementsByTagName('a');
     
-    for (var idx = 0; idx < anchors.length; idx += 1) {
+    for (var idx = 0; idx < anchors.length; idx += 2) {
         if (anchors[idx].hostname !== window.location.hostname ||
             anchors[idx].pathname === window.location.pathname) {
             continue;

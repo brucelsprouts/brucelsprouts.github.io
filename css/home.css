@@ -253,10 +253,10 @@
   z-index: 1; /* Ensure the gradient is on top */
 }
 .dark-mode .image-container::before {
-  background: linear-gradient(135deg, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 80%);
+  background: linear-gradient(135deg, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 100%);
 }
 .light-mode .image-container::before {
-  background: linear-gradient(135deg, rgb(255, 255, 255) 10%, rgba(0,0,0,0) 80%);
+  background: linear-gradient(135deg, rgb(255, 255, 255) 20%, rgba(0,0,0,0) 100%);
 }
 
 .image-container img {
@@ -295,4 +295,19 @@
 
 .dark-mode .scrollable-blog::-webkit-scrollbar-track {
   background: transparent; /* Make the scrollbar track transparent in dark mode */
+}
+
+#container {
+  width: 30%;
+  height: auto;
+  display: flex;
+  justify-content: center; /* Centers items horizontally */
+  align-items: center; /* Centers items vertically */
+}
+@media (max-width: 750px) {
+  #container {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+  }
 }

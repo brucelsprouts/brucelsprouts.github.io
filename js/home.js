@@ -14,39 +14,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(container.clientWidth, container.clientHeight);
     container.appendChild(renderer.domElement);
-// Add a directional light coming from the front
-const frontLight = new THREE.DirectionalLight(0xffffff, 0.01);
-frontLight.position.set(0, 0, 1).normalize();
-scene.add(frontLight);
+    
+    // Add a directional light coming from the front
+    const frontLight = new THREE.DirectionalLight(0xffffff, 0.01);
+    frontLight.position.set(0, 0, 1).normalize();
+    scene.add(frontLight);
 
-// Add a directional light coming from the back
-const backLight = new THREE.DirectionalLight(0xffffff, 1);
-backLight.position.set(0, 0, -1).normalize();
-scene.add(backLight);
+    // Add a directional light coming from the back
+    const backLight = new THREE.DirectionalLight(0xffffff, 1);
+    backLight.position.set(0, 0, -1).normalize();
+    scene.add(backLight);
 
-// Add a directional light coming from the top
-const topLight = new THREE.DirectionalLight(0xffffff, 1);
-topLight.position.set(0, 1, 0).normalize();
-scene.add(topLight);
+    // Add a directional light coming from the top
+    const topLight = new THREE.DirectionalLight(0xffffff, 1);
+    topLight.position.set(0, 1, 0).normalize();
+    scene.add(topLight);
 
-// Add a directional light coming from the bottom
-const bottomLight = new THREE.DirectionalLight(0xffffff, 1);
-bottomLight.position.set(0, -1, 0).normalize();
-scene.add(bottomLight);
+    // Add a directional light coming from the bottom
+    const bottomLight = new THREE.DirectionalLight(0xffffff, 1);
+    bottomLight.position.set(0, -1, 0).normalize();
+    scene.add(bottomLight);
 
-// Add a directional light coming from the left
-const leftLight = new THREE.DirectionalLight(0xffffff, 1);
-leftLight.position.set(-1, 0, 0).normalize();
-scene.add(leftLight);
+    // Add a directional light coming from the left
+    const leftLight = new THREE.DirectionalLight(0xffffff, 1);
+    leftLight.position.set(-1, 0, 0).normalize();
+    scene.add(leftLight);
 
-// Add a directional light coming from the right
-const rightLight = new THREE.DirectionalLight(0xffffff, 1);
-rightLight.position.set(1, 0, 0).normalize();
-scene.add(rightLight);
+    // Add a directional light coming from the right
+    const rightLight = new THREE.DirectionalLight(0xffffff, 1);
+    rightLight.position.set(1, 0, 0).normalize();
+    scene.add(rightLight);
 
-// Add an ambient light for overall illumination
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.1);
-scene.add(ambientLight);
+    // Add an ambient light for overall illumination
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.1);
+    scene.add(ambientLight);
 
 
     // Variable to store the 3D object
