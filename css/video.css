@@ -1,3 +1,17 @@
-.video-border {
-    border: 1px solid #c8c8c8; /* Adjust the color and width as needed */
+.video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: calc(56.25% + 2px); /* 16:9 aspect ratio plus border width */
+    height: 0;
+    overflow: hidden;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #c8c8c8; /* Adjust the color and width as needed */
+    box-sizing: border-box; /* Ensure the border is included in the element's dimensions */
 }

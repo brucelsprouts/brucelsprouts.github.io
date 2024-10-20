@@ -310,12 +310,14 @@
     flex-shrink: 1;
   }
   @media (max-width: 750px) {
-    #container {
-      width: 100%;
-      padding: 10px;
-      text-align: center;
-    }
+  #container {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column-reverse;
   }
+}
   .rotate-instruction {
     text-align: center;
     font-size: 14px;
