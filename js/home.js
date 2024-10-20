@@ -1,13 +1,27 @@
 document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('dim-container');
-    container.style.width = '500px'; // Set specific width
+
+    function updateContainerWidth() {
+        if (window.innerWidth < 750) {
+            container.style.width = '100%';
+        } else {
+            container.style.width = '100%';
+        }
+    }
+
+    // Initial width setting
+    updateContainerWidth();
+
+    // Update width on window resize
+    window.addEventListener('resize', updateContainerWidth);
+
     container.style.height = '400px'; // Set specific height
 
     // Create a scene
     const scene = new THREE.Scene();
 
-    // Create a camera with a larger FOV and move it further away
-    const camera = new THREE.PerspectiveCamera(12, container.clientWidth / container.clientHeight, 0.1, 1000);
+    // Create a camera with a fixed FOV
+    const camera = new THREE.PerspectiveCamera(15, container.clientWidth / container.clientHeight, 0.1, 1000);
     camera.position.z = 5; // Move the camera closer
 
     // Create a renderer with alpha set to true
@@ -15,7 +29,14 @@ document.addEventListener('DOMContentLoaded', () => {
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setClearColor(0x000000, 0); // Set clear color to transparent
     container.appendChild(renderer.domElement);
-    
+
+    // Initialize OrbitControls
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true; // Enable damping (inertia)
+    controls.dampingFactor = 0.05; // Damping factor
+    controls.screenSpacePanning = false; // Disable panning
+    controls.enableZoom = false; // Disable zoom
+
     // Add a directional light coming from the front
     const frontLight = new THREE.DirectionalLight(0xffffff, 0.01);
     frontLight.position.set(0, 0, 1).normalize();
@@ -66,11 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Animation loop
     function animate() {
         requestAnimationFrame(animate);
-        if (object3D) {
-            // Rotate the object based on scroll position
-            const scrollY = window.scrollY;
-            object3D.rotation.y = scrollY * 0.01; // Adjust the rotation speed as needed
-        }
+        controls.update(); // Update controls
         renderer.render(scene, camera);
     }
 
@@ -79,5 +96,13 @@ document.addEventListener('DOMContentLoaded', () => {
         camera.aspect = container.clientWidth / container.clientHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+
+    // Rotate the object based on scroll position
+    window.addEventListener('scroll', () => {
+        if (object3D) {
+            const scrollY = window.scrollY;
+            object3D.rotation.y = scrollY * 0.01; // Adjust the rotation speed as needed
+        }
     });
 });
