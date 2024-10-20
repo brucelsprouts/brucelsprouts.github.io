@@ -46,26 +46,22 @@ function searchThing() {
     });
 }
 
+function isEdge() {
+    return /Edge/.test(navigator.userAgent);
+}
+
 function fadeInPage() {
-    if (!window.AnimationEvent) { return; }
+    if (isEdge() || !window.AnimationEvent) { return; }
     var fader = document.getElementById('fader');
     fader.classList.add('fade-out');
 }
 
 function setupLinkFade() {
-    if (!window.AnimationEvent) return;
-
-    // Detect if the browser is Microsoft Edge
-    var isEdge = /Edge/.test(navigator.userAgent);
-
+    if (isEdge() || !window.AnimationEvent) return;
     var fader = document.getElementById('fader');
     Array.from(document.getElementsByTagName('a')).forEach(anchor => {
         // Exclude dark/light mode and menu switch buttons
         if (anchor.classList.contains('darklight-icons') || anchor.classList.contains('menu-icons')) return;
-
-        // If the browser is Edge, exclude all links
-        if (isEdge) return;
-
         if (anchor.hostname !== window.location.hostname || anchor.pathname === window.location.pathname) return;
         anchor.addEventListener('click', event => {
             event.preventDefault();
@@ -76,6 +72,7 @@ function setupLinkFade() {
 }
 
 window.addEventListener('pageshow', event => {
+    if (isEdge()) return;
     if (event.persisted) document.getElementById('fader').classList.remove('fade-in');
 });
 
