@@ -21,8 +21,10 @@
     
     <!-- Styles and Icons -->
     <link rel="stylesheet" type="text/css" href="../../css/global.css">
+    <link rel="stylesheet" type="text/css" href="../../css/gallery.css">
     <link rel="stylesheet" type="text/css" href="../../css/skills.css">
-   
+    <link rel="stylesheet" type="text/css" href="../../css/video.css">
+
     <link rel="icon" href="../../assets/images/icons/icon.png" type="image/png">
     
     <!-- Canonical Link -->
@@ -34,16 +36,15 @@
     <div class="topnav-container">
         <div class="topnav" id="myTopnav">
             <div class="left-section">
-                <a href="../../html/home.html" id="leftname">&lt;&#47;&gt; Bruce Lin</a>
+                <a href="home.html" id="leftname">&lt;&#47;&gt; Bruce Lin</a>
             </div>
             <div class="wrapper">
-  
-              <div id="myMenu" class="middle-section">
-                  <!-- Navigation Links -->
-                  <a href="../../html/code.html">Code</a>
-                  <a href="../../html/video.html">Video</a>
-                  <a href="../../html/connect.html">Connect</a>
-              </div>
+                <div id="myMenu" class="middle-section">
+                    <!-- Navigation Links -->
+                    <a href="../../html/code.html">Code</a>
+                    <a href="../../html/video.html">Video</a>
+                    <a href="../../html/connect.html">Connect</a>
+                </div>
             </div>
             <div class="right-section">
                 <!-- Menu, Search, and Dark Mode Icons -->
@@ -51,14 +52,42 @@
                     <img src="../../assets/images/icons/white-menu.png" id="white-menu">
                     <img src="../../assets/images/icons/black-menu.png" id="black-menu">
                 </a>
-                <a href="darklight-icons" onclick="lightDark(); return false;">
+                <a class="darklight-icons" onclick="lightDark(); return false;">
                     <img src="../../assets/images/icons/moon.png" id="moon-image" />
                     <img src="../../assets/images/icons/sun.png" id="sun-image" />
                 </a>
             </div>
         </div>
-      </div>
-      <div id="overlay"></div>
+    </div>
+    <svg id="fader"></svg>
+    <script>
+        fadeInPage();
+    </script>
     
+      <div class="project-container">
+        <div class="project-left">
+            <img src="../../assets/images/video/themagicboook.png" alt="Pacman Game" width="600" height="400">
+        </div>
+        <div class="project-right">
+            <h1>The Magic Book</h1>
+            <p><strong>July 10, 2024 - July 25, 2024</strong></p>
+            <p>I assisted in audio editing for the student film "The Magic Book," enhancing quality and synchronizing effects using Adobe Audition. I collaborated with the director and team, ensuring clear dialogue. I received credit for my contributions.</p>
+        </div>
+    </div>
+    <div class="background">
+        <div class="container text-container">
+            <div class="row">
+                <div class="tech-icons">
+                    <img src="../../assets/images/skills/aeicon.png" alt="Aftereffects Icon" class="tech-icon">
+                </div>
+            </div>
+            <div class="row">
+                <div class="line-header">
+                    <h1>Description</h1>
+                    <div class="line"></div>
+                </div>
+                <p>My primary role was to assist in the audio editing portion of the film "The Magic Book," which was a student film for a film festival. I was responsible for enhancing the audio quality, synchronizing sound effects, and ensuring clear dialogue. I used tools like Adobe Audition to edit and mix the audio tracks. Although I don't have the actual video, I received credit for my contributions to the project. The collaborative process involved working closely with the director and other team members to achieve the desired audio effects and overall sound quality.</p>            </div>
+        </div>
+    </div>
     </body>
     </html>

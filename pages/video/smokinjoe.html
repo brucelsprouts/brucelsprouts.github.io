@@ -21,8 +21,10 @@
     
     <!-- Styles and Icons -->
     <link rel="stylesheet" type="text/css" href="../../css/global.css">
+    <link rel="stylesheet" type="text/css" href="../../css/gallery.css">
     <link rel="stylesheet" type="text/css" href="../../css/skills.css">
-   
+    <link rel="stylesheet" type="text/css" href="../../css/video.css">
+
     <link rel="icon" href="../../assets/images/icons/icon.png" type="image/png">
     
     <!-- Canonical Link -->
@@ -34,16 +36,15 @@
     <div class="topnav-container">
         <div class="topnav" id="myTopnav">
             <div class="left-section">
-                <a href="../../html/home.html" id="leftname">&lt;&#47;&gt; Bruce Lin</a>
+                <a href="home.html" id="leftname">&lt;&#47;&gt; Bruce Lin</a>
             </div>
             <div class="wrapper">
-  
-              <div id="myMenu" class="middle-section">
-                  <!-- Navigation Links -->
-                  <a href="../../html/code.html">Code</a>
-                  <a href="../../html/video.html">Video</a>
-                  <a href="../../html/connect.html">Connect</a>
-              </div>
+                <div id="myMenu" class="middle-section">
+                    <!-- Navigation Links -->
+                    <a href="../../html/code.html">Code</a>
+                    <a href="../../html/video.html">Video</a>
+                    <a href="../../html/connect.html">Connect</a>
+                </div>
             </div>
             <div class="right-section">
                 <!-- Menu, Search, and Dark Mode Icons -->
@@ -51,14 +52,42 @@
                     <img src="../../assets/images/icons/white-menu.png" id="white-menu">
                     <img src="../../assets/images/icons/black-menu.png" id="black-menu">
                 </a>
-                <a href="darklight-icons" onclick="lightDark(); return false;">
+                <a class="darklight-icons" onclick="lightDark(); return false;">
                     <img src="../../assets/images/icons/moon.png" id="moon-image" />
                     <img src="../../assets/images/icons/sun.png" id="sun-image" />
                 </a>
             </div>
         </div>
-      </div>
-      <div id="overlay"></div>
+    </div>
+    <svg id="fader"></svg>
+    <script>
+        fadeInPage();
+    </script>
     
+      <div class="project-container">
+        <div class="project-left">
+            <iframe class="video-border" width="600" height="400" src="https://www.youtube.com/watch?v=uOqn7K00dNM" title="Smokin' Joe" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="project-right">
+            <h1>Smokin' Joe</h1>
+            <p><strong>July 25, 2024 - August 7, 2024</strong></p>
+            <p>This was a rip reel project I made during my internship at AMG.</p>        
+        </div>
+    </div>
+    <div class="background">
+        <div class="container text-container">
+            <div class="row">
+                <div class="tech-icons">
+                    <img src="../../assets/images/skills/aeicon.png" alt="Aftereffects Icon" class="tech-icon">
+                </div>
+            </div>
+            <div class="row">
+                <div class="line-header">
+                    <h1>Description</h1>
+                    <div class="line"></div>
+                </div>
+                <p>During my internship at AMG, I worked on a rip reel project where I collaborated with employees and the head of the company to create a trailer for a film that was being proposed to larger studios. My primary role was to develop the front-end components of the trailer. I was responsible for designing the user interface, creating visual assets in Photoshop, and implementing the visuals using Adobe Premiere Pro. Additionally, I assisted with some back-end tasks, such as ensuring smooth transitions and synchronizing audio with video. This project required close collaboration with the team to meet the high standards expected by potential studio partners. Because I was working on-site, I had to use a different computer and therefore didn't have access to all my tools. The Countdown project is a better example of what I can achieve when I have access to all my resources. This experience provided valuable insights into the film industry and the process of pitching projects to major studios.</p>            </div>
+        </div>
+    </div>
     </body>
     </html>

@@ -21,8 +21,10 @@
     
     <!-- Styles and Icons -->
     <link rel="stylesheet" type="text/css" href="../../css/global.css">
+    <link rel="stylesheet" type="text/css" href="../../css/gallery.css">
     <link rel="stylesheet" type="text/css" href="../../css/skills.css">
-   
+    <link rel="stylesheet" type="text/css" href="../../css/video.css">
+
     <link rel="icon" href="../../assets/images/icons/icon.png" type="image/png">
     
     <!-- Canonical Link -->
@@ -34,16 +36,15 @@
     <div class="topnav-container">
         <div class="topnav" id="myTopnav">
             <div class="left-section">
-                <a href="../../html/home.html" id="leftname">&lt;&#47;&gt; Bruce Lin</a>
+                <a href="home.html" id="leftname">&lt;&#47;&gt; Bruce Lin</a>
             </div>
             <div class="wrapper">
-  
-              <div id="myMenu" class="middle-section">
-                  <!-- Navigation Links -->
-                  <a href="../../html/code.html">Code</a>
-                  <a href="../../html/video.html">Video</a>
-                  <a href="../../html/connect.html">Connect</a>
-              </div>
+                <div id="myMenu" class="middle-section">
+                    <!-- Navigation Links -->
+                    <a href="../../html/code.html">Code</a>
+                    <a href="../../html/video.html">Video</a>
+                    <a href="../../html/connect.html">Connect</a>
+                </div>
             </div>
             <div class="right-section">
                 <!-- Menu, Search, and Dark Mode Icons -->
@@ -51,14 +52,58 @@
                     <img src="../../assets/images/icons/white-menu.png" id="white-menu">
                     <img src="../../assets/images/icons/black-menu.png" id="black-menu">
                 </a>
-                <a href="darklight-icons" onclick="lightDark(); return false;">
+                <a class="darklight-icons" onclick="lightDark(); return false;">
                     <img src="../../assets/images/icons/moon.png" id="moon-image" />
                     <img src="../../assets/images/icons/sun.png" id="sun-image" />
                 </a>
             </div>
         </div>
-      </div>
-      <div id="overlay"></div>
+    </div>
+    <svg id="fader"></svg>
+    <script>
+        fadeInPage();
+    </script>
     
+      <div class="project-container">
+        <div class="project-left">
+            <img src="../../assets/images/code/pacman.png" alt="Pacman Game" width="600" height="400">
+        </div>
+        <div class="project-right">
+            <h1>Pacman Recreation</h1>
+            <p><strong>May 2023 - Jun 2023</strong></p>
+            <p>This was a final high school project where I worked with a partner. I developed and worked on the visual and front-end components of this Pacman recreation.</p>
+            <a href="https://github.com/brucelsprouts/pacmangame" target="_blank">GitHub Repository</a>
+        </div>
+    </div>
+    <div class="background">
+        <div class="container text-container">
+            <div class="row">
+                <div class="tech-icons">
+                    <img src="../../assets/images/skills/aeicon.png" alt="Aftereffects Icon" class="tech-icon">
+                </div>
+            </div>
+            <div class="row">
+                <div class="line-header">
+                    <h1>Role and Contributions</h1>
+                    <div class="line"></div>
+                </div>
+                <p>My primary role was to develop the front-end components of the game. I was responsible for designing the user interface, creating visual assets in Photoshop, and implementing the game visuals using Java Swing. Additionally, I assisted with some back-end issues, such as making Pacman move seamlessly from one side of the screen to the other.</p>
+            </div>
+            <div class="row">
+                <div class="line-header">
+                    <h1>Challenges and Solutions</h1>
+                    <div class="line"></div>
+                </div>
+                <p>One of the main challenges was figuring out how to update the screen efficiently. Initially, the game had performance issues, but we optimized the rendering process to ensure smooth gameplay. Another challenge was implementing the wrap-around movement for Pacman, which required careful handling of game state and screen boundaries. Through collaboration and iterative testing, we successfully resolved these issues.</p>
+            </div>
+            <div class="row">
+                <div class="line-header">
+                    <h1>Learnings and Outcomes</h1>
+                    <div class="line"></div>
+                </div>
+                <p>This project taught me how to work effectively with Java Swing and JFrame for creating interactive applications. I also learned the importance of teamwork and communication, as collaborating with my partner was crucial for overcoming challenges. Additionally, I gained experience in optimizing game performance and handling complex game mechanics.</p>
+            </div>
+        </div>
+    </div>
     </body>
     </html>
