@@ -298,6 +298,7 @@
 }
 
 #container {
+  background-color: red;
   max-width: 30%;
   height: justify;
   display: flex;
@@ -305,6 +306,7 @@
   align-items: center; /* Centers items vertically */
 }
 #dim-container {
+  background-color: orange;
   max-width: 100%;
   flex-shrink: 1;
 }
