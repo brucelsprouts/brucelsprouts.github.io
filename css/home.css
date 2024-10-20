@@ -336,7 +336,6 @@
   opacity: 0.2; /* 50% transparency */
   filter: invert(0); /* Default color */
 }
-
 .light-mode .background-image {
   filter: invert(1); /* Change color to black */
 }
