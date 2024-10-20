@@ -2,90 +2,35 @@ function lightDark() {
     var element = document.body;
     element.classList.toggle("dark-mode");
     element.classList.toggle("light-mode");
-
-    // Save the theme to localStorage
-    var theme = element.className;
-    localStorage.setItem('theme', theme);
+    localStorage.setItem('theme', element.className);
 }
 
-// When the page loads
-document.addEventListener('DOMContentLoaded', (event) => {
-    // Get the current theme from localStorage
-    var theme = localStorage.getItem('theme');
-
-    // If there's no saved theme, use the default
-    if (!theme) theme = 'dark-mode';
-
-    // Apply the theme
-    var element = document.body;
-    element.className = theme;
-
-    // Fade out the overlay
-    var overlay = document.getElementById('overlay');
-    setTimeout(function() {
-        overlay.style.opacity = 0;
-    }, 200); // Delay to ensure the page is loaded before starting the transition
-
-    // Get all the navigation links
-    var navLinks = document.querySelectorAll('.middle-section a, .left-section a, .gallery a , .tech-icons a');
-    
-    // Add event listener to each link
-    navLinks.forEach(function(link) {
-        link.addEventListener('click', function(e) {
-            // Prevent the default action (navigation)
-            e.preventDefault();
-
-            // Fade in the overlay
-            overlay.style.opacity = 1;
-
-            // Delay the navigation until after the fade-in animation completes
-            setTimeout(function() {
-                // Navigate to the link's href
-                window.location.href = link.href;
-            }, 200); // Adjust this delay to match the duration of your fade-in animation
-        });
-    });
-
-    // Handle forward and back button navigation
-    window.addEventListener('popstate', function(event) {
-        // Fade out the overlay
-        overlay.style.opacity = 0;
-    });
-});
-
-window.addEventListener('DOMContentLoaded', (event) => {
-    // Check initial viewport width
+document.addEventListener('DOMContentLoaded', () => {
+    var theme = localStorage.getItem('theme') || 'dark-mode';
+    document.body.className = theme;
     checkMenu();
 });
-window.addEventListener('resize', (event) => {
-    // Check viewport width after resize
-    checkMenu();
-});
+
+window.addEventListener('resize', checkMenu);
+
 function checkMenu() {
     var element = document.getElementById("myMenu");
-    element.style.transition = "none"; // Remove transition
-    if (window.innerWidth <= 750) {
-        menuHide();
-    } else {
-        menuShow();
-    }
-    setTimeout(function() {
-        element.style.transition = ""; // Reapply transition
-    }, 100); // Delay in milliseconds
+    element.style.transition = "none";
+    window.innerWidth <= 750 ? menuHide() : menuShow();
+    setTimeout(() => element.style.transition = "", 100);
 }
+
 function menuSwitch() {
     var element = document.getElementById("myMenu");
-    if (element.classList.contains("menu-show")) {
-        menuHide();
-    } else {
-        menuShow();
-    }
+    element.classList.contains("menu-show") ? menuHide() : menuShow();
 }
+
 function menuShow() {
     var element = document.getElementById("myMenu");
     element.classList.remove("menu-hide");
     element.classList.add("menu-show");
 }
+
 function menuHide() {
     var element = document.getElementById("myMenu");
     element.classList.remove("menu-show");
@@ -93,21 +38,34 @@ function menuHide() {
 }
 
 function searchThing() {
-    // Declare variables
-    var input, filter, gallery, items, i, img, alt;
-    input = document.getElementById('myInput');
-    filter = input.value.toUpperCase();
-    gallery = document.getElementsByClassName("gallery");
-
-    // Loop through all gallery items and hide those that don't match the search query
-    for (i = 0; i < gallery.length; i++) {
-        items = gallery[i];
-        img = items.getElementsByTagName("img")[0];
-        alt = img.getAttribute("alt");
-        if (alt.toUpperCase().indexOf(filter) > -1) {
-            items.style.display = "";
-        } else {
-            items.style.display = "none";
-        }
-    }
+    var input = document.getElementById('myInput').value.toUpperCase();
+    var gallery = document.getElementsByClassName("gallery");
+    Array.from(gallery).forEach(items => {
+        var img = items.getElementsByTagName("img")[0];
+        items.style.display = img.getAttribute("alt").toUpperCase().includes(input) ? "" : "none";
+    });
 }
+
+function fadeInPage() {
+    if (!window.AnimationEvent) return;
+    document.getElementById('fader').classList.add('fade-out');
+}
+
+function setupLinkFade() {
+    if (!window.AnimationEvent) return;
+    var fader = document.getElementById('fader');
+    Array.from(document.getElementsByTagName('a')).forEach(anchor => {
+        // Exclude dark/light mode and menu switch buttons
+        if (anchor.classList.contains('darklight-icons') || anchor.classList.contains('menu-icons')) return;
+        if (anchor.hostname !== window.location.hostname || anchor.pathname === window.location.pathname) return;
+        anchor.addEventListener('click', event => {
+            event.preventDefault();
+            fader.classList.add('fade-in');
+            fader.addEventListener('animationend', () => window.location = anchor.href, { once: true });
+        });
+    });
+}
+
+window.addEventListener('pageshow', event => {
+    if (event.persisted) document.getElementById('fader').classList.remove('fade-in');
+});
