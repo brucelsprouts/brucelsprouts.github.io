@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
     var theme = localStorage.getItem('theme') || 'dark-mode';
     document.body.className = theme;
     checkMenu();
+    setupLinkFade();
+    fadeInPage();
 });
 
 window.addEventListener('resize', checkMenu);
@@ -49,8 +51,9 @@ function searchThing() {
 function fadeInPage() {
     if (!window.AnimationEvent) { return; }
     var fader = document.getElementById('fader');
-    fader.setAttribute('class', 'fade-out');
+    fader.classList.add('fade-out');
 }
+
 function setupLinkFade() {
     if (!window.AnimationEvent) return;
     var fader = document.getElementById('fader');
@@ -61,41 +64,18 @@ function setupLinkFade() {
         anchor.addEventListener('click', event => {
             if (event.metaKey || event.ctrlKey) return; // Allow opening in new tab
             event.preventDefault();
-            fader.setAttribute('class', 'fade-in');
-            fader.addEventListener('animationend', () => window.location = anchor.href, { once: true });
+            fader.classList.add('fade-in');
+            fader.addEventListener('animationend', () => {
+                window.location = anchor.href;
+            }, { once: true });
         });
     });
 }
+
 window.addEventListener('pageshow', event => {
     if (event.persisted) {
         var fader = document.getElementById('fader');
-        fader.removeAttribute('class', 'fade-in');
-        fader.setAttribute('class', 'fade-out');
-    }
-});
-document.addEventListener('DOMContentLoaded', function() {
-    if (!window.AnimationEvent) { return; }
-    var anchors = document.getElementsByTagName('a');
-    
-    for (var idx = 0; idx < anchors.length; idx += 2) {
-        if (anchors[idx].hostname !== window.location.hostname ||
-            anchors[idx].pathname === window.location.pathname) {
-            continue;
-        }
-
-        anchors[idx].addEventListener('click', function(event) {
-            if (event.metaKey || event.ctrlKey) return; // Allow opening in new tab
-            var fader = document.getElementById('fader'),
-                anchor = event.currentTarget;
-            
-            var listener = function() {
-                window.location = anchor.href;
-                fader.removeEventListener('animationend', listener);
-            };
-            fader.addEventListener('animationend', listener);
-            
-            event.preventDefault();
-            fader.setAttribute('class', 'fade-in');
-        });
+        fader.classList.remove('fade-in');
+        fader.classList.add('fade-out');
     }
 });
