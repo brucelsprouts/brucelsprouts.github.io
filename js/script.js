@@ -48,14 +48,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // Handle forward and back button navigation
     window.addEventListener('popstate', function(event) {
-        // Fade in the overlay
-        overlay.style.opacity = 1;
-
-        // Delay the navigation until after the fade-in animation completes
-        setTimeout(function() {
-            // Reload the page to reflect the history state
-            window.location.reload();
-        }, 200); // Adjust this delay to match the duration of your fade-in animation
+        // Fade out the overlay
+        overlay.style.opacity = 0;
     });
 });
 

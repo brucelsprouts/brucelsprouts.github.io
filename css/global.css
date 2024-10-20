@@ -171,15 +171,15 @@ body.light-mode .topnav a {
 
 /* overlay */
 #overlay {
-  position: fixed; /* Cover the entire viewport */
-  top: 41px; /* Start 40px from the top */
-  display: block;
+  position: fixed;
+  top: 41;
+  left: 0;
   width: 100%;
-  height: calc(100% - 41px); /* Reduce the height of the overlay by 40px */
-  transition: opacity 0.5s; /* Add transition effect */
-  opacity: 1; /* Start with an opacity of 0 */
-  pointer-events: none;
-  z-index: 1000; 
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Adjust as needed */
+  display: block;
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
 }
 .dark-mode #overlay {
   background-color: rgba(0,0,0,1);
@@ -187,4 +187,5 @@ body.light-mode .topnav a {
 .light-mode #overlay {
   background-color:#ffffff;
 }
+
 
