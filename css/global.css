@@ -178,6 +178,8 @@ body.light-mode .topnav a {
   z-index: 999999;
   pointer-events: none;
   background: rgb(0, 0, 0);
+  opacity: 1; /* Ensure initial opacity is set */
+
   animation-duration: 300ms;
   animation-timing-function: ease-in-out;
 }
