@@ -308,6 +308,7 @@
   #dim-container {
     max-width: 100%;
     flex-shrink: 1;
+    background-color: blue;
   }
   @media (max-width: 750px) {
   #container {
