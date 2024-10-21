@@ -317,6 +317,9 @@
     display: flex;
     flex-direction: column-reverse;
   }
+  .background-1 {
+    max-width: 750px;
+  }
 }
   .rotate-instruction {
     text-align: center;
