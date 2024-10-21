@@ -105,4 +105,23 @@ document.addEventListener('DOMContentLoaded', () => {
             object3D.rotation.y = scrollY * 0.01; // Adjust the rotation speed as needed
         }
     });
+
+function updateBackgroundPosition(e) {
+    const backgroundImage = document.getElementById('background-image');
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    const mouseX = e.clientX;
+    const mouseY = e.clientY;
+
+    // Calculate the new position
+    const offsetX = (mouseX / windowWidth - 0.5) * -40; // Adjust the multiplier for desired effect
+    const offsetY = (mouseY / windowHeight - 0.5) * -40; // Adjust the multiplier for desired effect
+
+    // Apply the new position
+    backgroundImage.style.transform = `translate(-50%, -50%) translate(${offsetX}px, ${offsetY}px)`;
+}
+
+document.addEventListener('mousemove', updateBackgroundPosition);
+document.addEventListener('drag', updateBackgroundPosition);
+    
 });

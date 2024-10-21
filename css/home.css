@@ -347,6 +347,7 @@
   z-index: -1;
   opacity: 0.2; /* 50% transparency */
   filter: invert(0); /* Default color */
+  transition: transform 0.1s ease-out; /* Smooth transition */
 }
 .light-mode .background-image {
   filter: invert(1); /* Change color to black */
