@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
         camera.aspect = container.clientWidth / container.clientHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(container.clientWidth, container.clientHeight);
-    });
+    }); 
 
     // Rotate the object based on scroll position
     window.addEventListener('scroll', () => {
