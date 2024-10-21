@@ -320,6 +320,9 @@
   .background-1 {
     max-width: 750px;
   }
+  .text-box {
+    width: 750px;
+  }
 }
   .rotate-instruction {
     text-align: center;
