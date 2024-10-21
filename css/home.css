@@ -318,10 +318,10 @@
     flex-direction: column-reverse;
   }
   .background-1 {
-    max-width: 750px;
+    max-width: 750px; 
   }
   .text-box {
-    width: 750px;
+    max-width: 750px;
   }
 }
   .rotate-instruction {
