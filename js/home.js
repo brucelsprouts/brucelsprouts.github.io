@@ -36,6 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
     controls.dampingFactor = 0.05; // Damping factor
     controls.screenSpacePanning = false; // Disable panning
     controls.enableZoom = false; // Disable zoom
+    controls.enableRotate = true; // Enable rotation
+    controls.enablePan = false; // Disable panning
 
     // Add a directional light coming from the front
     const frontLight = new THREE.DirectionalLight(0xffffff, 0.01);
@@ -106,22 +108,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-function updateBackgroundPosition(e) {
-    const backgroundImage = document.getElementById('background-image');
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
-    const mouseX = e.clientX;
-    const mouseY = e.clientY;
+    function updateBackgroundPosition(e) {
+        const backgroundImage = document.getElementById('background-image');
+        const windowWidth = window.innerWidth;
+        const windowHeight = window.innerHeight;
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
 
-    // Calculate the new position
-    const offsetX = (mouseX / windowWidth - 0.5) * -40; // Adjust the multiplier for desired effect
-    const offsetY = (mouseY / windowHeight - 0.5) * -40; // Adjust the multiplier for desired effect
+        // Calculate the new position
+        const offsetX = (mouseX / windowWidth - 0.5) * -40; // Adjust the multiplier for desired effect
+        const offsetY = (mouseY / windowHeight - 0.5) * -40; // Adjust the multiplier for desired effect
 
-    // Apply the new position
-    backgroundImage.style.transform = `translate(-50%, -50%) translate(${offsetX}px, ${offsetY}px)`;
-}
+        // Apply the new position
+        backgroundImage.style.transform = `translate(-50%, -50%) translate(${offsetX}px, ${offsetY}px)`;
+    }
 
-document.addEventListener('mousemove', updateBackgroundPosition);
-document.addEventListener('drag', updateBackgroundPosition);
-    
+    document.addEventListener('mousemove', updateBackgroundPosition);
+    document.addEventListener('drag', updateBackgroundPosition);
 });
