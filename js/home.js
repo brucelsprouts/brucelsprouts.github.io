@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', () => {
         document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
     });
-    
+
     // Initial setting
     document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
 });
