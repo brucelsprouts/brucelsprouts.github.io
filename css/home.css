@@ -1,9 +1,3 @@
-body, html {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow: hidden;
-}
 /* icons */
 #github-icon, #youtube-icon, #instagram-icon, #tiktok-icon, #linkedin-icon, #linktree-icon {
     width: 24px;
@@ -47,10 +41,10 @@ body, html {
   }
   
   .dark-mode, .light-mode {
+  /* Example usage */
+  .full-height-element {
     height: calc(var(--vh, 1vh) * 100);
-    overflow-y: auto;
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: env(safe-area-inset-bottom);
+  }  
 }
 .herorow {
     max-width: 1200px;

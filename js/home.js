@@ -126,10 +126,17 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('mousemove', updateBackgroundPosition);
     document.addEventListener('drag', updateBackgroundPosition);
 
-    window.addEventListener('resize', () => {
-        document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
-    });
-
-    // Initial setting
-    document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+    //full screen
+    function setViewportHeight() {
+        // Get the viewport height and multiply it by 1% to get a value for a vh unit
+        let vh = window.innerHeight * 0.01;
+        // Set the value in the --vh custom property to the root of the document
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+    
+    // Initial calculation
+    setViewportHeight();
+    
+    // Recalculate on resize
+    window.addEventListener('resize', setViewportHeight);
 });
