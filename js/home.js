@@ -125,4 +125,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('mousemove', updateBackgroundPosition);
     document.addEventListener('drag', updateBackgroundPosition);
+
+    window.addEventListener('resize', () => {
+        document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+    });
+    
+    // Initial setting
+    document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
 });
