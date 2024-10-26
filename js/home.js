@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateContainerWidth() {
         if (window.innerWidth < 750) {
-            container.style.width = '100%';
+            container.style.width = '70%';
         } else {
             container.style.width = '100%';
         }
