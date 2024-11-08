@@ -1,14 +1,4 @@
-@media (max-width: 750px) {
-  body {
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-  }
-  .home-screen {
-      margin-top: 0; /* Ensure no extra margin at the top */
-      padding-top: 0; /* Ensure no extra padding at the top */
-  }
-}/* icons */
+  /* icons */
 #github-icon, #youtube-icon, #instagram-icon, #tiktok-icon, #linkedin-icon, #linktree-icon {
     width: 24px;
     height: 24px; 
@@ -56,7 +46,7 @@
     height: calc(var(--vh, 1vh) * 100);
   }  
 }
-  .herorow {
+.herorow {
     max-width: 1200px;
     display: flex;
   }
@@ -220,7 +210,6 @@
   justify-content: center;
   align-items: center;
 }
-
 /* block 1 */
 .background-1 {
   height: 100vh;
@@ -232,7 +221,7 @@
 }
 @media (max-width: 750px) {
   .background-1 {
-    height: 120vh;
+    height: auto; /* Remove the height property */
   }
 }
 .container-1 {
@@ -351,10 +340,6 @@
   .rotate-instruction {
     text-align: center;
     font-size: 14px;
-}
-
-.background-1 {
-  position: relative;
 }
 
 .background-image {

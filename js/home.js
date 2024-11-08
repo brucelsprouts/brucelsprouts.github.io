@@ -1,7 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    window.addEventListener('load', function() {
-        window.scrollTo(0, 0);
-    });
     const container = document.getElementById('dim-container');
 
     function updateContainerWidth() {
