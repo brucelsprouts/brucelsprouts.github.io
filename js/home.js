@@ -1,4 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
+    window.onload = function() {
+        window.scrollTo(0, 0); // Ensure the page starts at the top
+    };
+    
     const container = document.getElementById('dim-container');
 
     function updateContainerWidth() {
@@ -125,18 +129,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('mousemove', updateBackgroundPosition);
     document.addEventListener('drag', updateBackgroundPosition);
-
-    //full screen
-    function setViewportHeight() {
-        // Get the viewport height and multiply it by 1% to get a value for a vh unit
-        let vh = window.innerHeight * 0.01;
-        // Set the value in the --vh custom property to the root of the document
-        document.documentElement.style.setProperty('--vh', `${vh}px`);
-    }
-    
-    // Initial calculation
-    setViewportHeight();
-    
-    // Recalculate on resize
-    window.addEventListener('resize', setViewportHeight);
 });

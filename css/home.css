@@ -1,4 +1,7 @@
-  /* icons */
+ .home-content {
+  margin-top: 41px;
+ }
+ /* icons */
 #github-icon, #youtube-icon, #instagram-icon, #tiktok-icon, #linkedin-icon, #linktree-icon {
     width: 24px;
     height: 24px; 
