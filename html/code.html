@@ -6,6 +6,7 @@
     <title>Code | Bruce's Portfolio</title>
     <meta name="description" content="Computer scientist and Multimedia">
     <script src="../js/script.js"></script>
+    <script src="../js/gallery-animation.js"></script>
 
     <!-- Open Graph Protocol Metadata -->
     <meta property="og:locale" content="en_US">
@@ -23,6 +24,7 @@
     <link rel="stylesheet" type="text/css" href="../css/global.css">
     <link rel="stylesheet" type="text/css" href="../css/gallery.css">
     <link rel="stylesheet" type="text/css" href="../css/code.css">
+    <link rel="stylesheet" type="text/css" href="../css/footer.css">
 
     <link rel="icon" href="../assets/images/icons/icon.png" type="image/png">
     
@@ -45,14 +47,15 @@
                 </div>
             </div>
             <div class="right-section">
-                <!-- Menu, Search, and Dark Mode Icons -->
-                <a class="menu-icons" onclick="menuSwitch(); return false;">
-                    <img src="../assets/images/icons/white-menu.png" id="white-menu">
-                    <img src="../assets/images/icons/black-menu.png" id="black-menu">
+                <!-- Theme Toggle -->
+                <a class="darklight-icons" onclick="lightDark(); return false;" aria-label="Toggle dark/light mode">
+                    <img src="../assets/images/icons/moon.png" id="moon-image" alt="Dark mode" style="display:block;" />
+                    <img src="../assets/images/icons/sun.png" id="sun-image" alt="Light mode" style="display:none;" />
                 </a>
-                <a class="darklight-icons" onclick="lightDark(); return false;">
-                    <img src="../assets/images/icons/moon.png" id="moon-image" />
-                    <img src="../assets/images/icons/sun.png" id="sun-image" />
+                <!-- Mobile Menu Button (hidden on desktop) -->
+                <a class="menu-icons" onclick="menuSwitch(); return false;" aria-label="Toggle menu">
+                    <img src="../assets/images/icons/white-menu.png" id="white-menu" alt="Menu" style="display:block;" />
+                    <img src="../assets/images/icons/black-menu.png" id="black-menu" alt="Menu" style="display:none;" />
                 </a>
             </div>
         </div>
@@ -62,73 +65,210 @@
         fadeInPage();
     </script>
 
-    <h1>Code</h1>
+    <div class="gallery-header">
+        <h1>Code Projects</h1>
+        <p>A collection of my programming and development projects showcasing different skills and technologies.</p>
+    </div>
+
+    <div class="gallery-filters">
+        <button class="filter-btn active" data-filter="all">All Projects</button>
+        <button class="filter-btn" data-filter="web">Web Development</button>
+        <button class="filter-btn" data-filter="java">Java</button>
+        <button class="filter-btn" data-filter="python">Python</button>
+    </div>
+
     <div class="search-container">
-        <input type="text" class="search-input" name="q" id="myInput" onkeyup="searchThing()" placeholder="Search for name..">
+        <input type="text" class="search-input" name="q" id="myInput" onkeyup="searchThing()" placeholder="Search for projects...">
+        <div class="search-icon">
+            <img src="../assets/images/icons/search-icon.png" alt="Search" width="20" height="20">
+        </div>
     </div>
 
     <div class="grid-content">
         <div class="grid-container">
             <div class="responsive">
-                <div class="gallery">
+                <div class="gallery" data-category="web">
                     <div class="inner">
                         <a href="../pages/code/webpage.html">
-                            <img src="../assets/images/code/webpage.png" alt="webpage" width="600" height="400">
+                            <div class="image-container">
+                                <img src="../assets/images/code/webpage.png" alt="webpage" width="600" height="400">
+                                <div class="image-overlay"></div>
+                            </div>
                         </a>
                         <div class="desc">
-                            <strong>Webpage Portfolio</strong><br>
-                            Sep 2023 - Present<br>
-                            <a href="../pages/skills/html.html">
-                                <img src="../assets/images/skills/htmlicon.png" alt="HTMl" id="icon" width="24" height="24" title="HTMl">
-                            </a>
-                            <a href="../pages/skills/css.html">
-                                <img src="../assets/images/skills/cssicon.png" alt="CSS" id="icon" width="24" height="24" title="CSS">
-                            </a>
-                            <a href="../pages/skills/js.html">
-                                <img src="../assets/images/skills/jsicon.png" alt="JavaScript" id="icon" width="24" height="24" title="JavaScript">
-                            </a>
-                            <a href="../pages/skills/photoshop.html">
-                                <img src="../assets/images/skills/photoshopicon.png" alt="Photoshop" id="icon" width="24" height="24" title="Photoshop">
-                            </a>
+                            <strong>Webpage Portfolio</strong>
+                            <p>Sep 2023 - Present</p>
+                            <div class="skill-icons">
+                                <a href="../pages/skills/html.html" title="HTML">
+                                    <img src="../assets/images/skills/htmlicon.png" alt="HTML" id="icon" width="24" height="24">
+                                </a>
+                                <a href="../pages/skills/css.html" title="CSS">
+                                    <img src="../assets/images/skills/cssicon.png" alt="CSS" id="icon" width="24" height="24">
+                                </a>
+                                <a href="../pages/skills/js.html" title="JavaScript">
+                                    <img src="../assets/images/skills/jsicon.png" alt="JavaScript" id="icon" width="24" height="24">
+                                </a>
+                                <a href="../pages/skills/photoshop.html" title="Photoshop">
+                                    <img src="../assets/images/skills/photoshopicon.png" alt="Photoshop" id="icon" width="24" height="24">
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="gallery">
+                <div class="gallery" data-category="java">
                     <div class="inner">
                         <a href="../pages/code/pacman.html">
-                            <img src="../assets/images/code/pacman.png" alt="pacman" width="600" height="400">
+                            <div class="image-container">
+                                <img src="../assets/images/code/pacman.png" alt="pacman" width="600" height="400">
+                                <div class="image-overlay"></div>
+                            </div>
                         </a>
                         <div class="desc">
-                            <strong>Pac-Man Recreation (Gr12)</strong><br>
-                            May 2023 - Jun 2023<br>
-                            <a href="../pages/skills/photoshop.html">
-                                <img src="../assets/images/skills/photoshopicon.png" alt="Photoshop" id="icon" width="24" height="24" title="Photoshop">
-                            </a>
-                            <a href="../pages/skills/java.html">
-                                <img src="../assets/images/skills/javaicon.png" alt="Java" id="icon" width="24" height="24" title="Java">
-                            </a>
+                            <strong>Pac-Man Recreation</strong>
+                            <p>May 2023 - Jun 2023</p>
+                            <div class="skill-icons">
+                                <a href="../pages/skills/photoshop.html" title="Photoshop">
+                                    <img src="../assets/images/skills/photoshopicon.png" alt="Photoshop" id="icon" width="24" height="24">
+                                </a>
+                                <a href="../pages/skills/java.html" title="Java">
+                                    <img src="../assets/images/skills/javaicon.png" alt="Java" id="icon" width="24" height="24">
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="gallery">
+                <div class="gallery" data-category="java">
                     <div class="inner">
                         <a href="../pages/code/towerclimber.html">
-                            <img src="../assets/images/code/towerclimber.png" alt="towerclimber" width="600" height="400">
+                            <div class="image-container">
+                                <img src="../assets/images/code/towerclimber.png" alt="towerclimber" width="600" height="400">
+                                <div class="image-overlay"></div>
+                            </div>
                         </a>
                         <div class="desc">
-                            <strong>Tower Climber (Gr11)</strong><br>
-                            Jun 2022 - Jul 2022<br>
-                            <a href="../pages/skills/photoshop.html">
-                                <img src="../assets/images/skills/photoshopicon.png" alt="Photoshop" id="icon" width="24" height="24" title="Photoshop">
-                            </a>
-                            <a href="../pages/skills/java.html">
-                                <img src="../assets/images/skills/javaicon.png" alt="Java" id="icon" width="24" height="24" title="Java">
-                            </a>
+                            <strong>Tower Climber</strong>
+                            <p>Jun 2022 - Jul 2022</p>
+                            <div class="skill-icons">
+                                <a href="../pages/skills/photoshop.html" title="Photoshop">
+                                    <img src="../assets/images/skills/photoshopicon.png" alt="Photoshop" id="icon" width="24" height="24">
+                                </a>
+                                <a href="../pages/skills/java.html" title="Java">
+                                    <img src="../assets/images/skills/javaicon.png" alt="Java" id="icon" width="24" height="24">
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-content">
+            <!-- About Section -->
+            <div class="footer-section">
+                <h3 class="footer-title">About Me</h3>
+                <p>Computer Science student at Western University passionate about web development, video editing, and programming. Always learning and exploring new technologies.</p>
+                <div class="social-links">
+                    <a href="https://github.com/brucelsprouts" target="_blank" class="social-link" aria-label="GitHub">
+                        <img src="../assets/images/home/dark-github-icon.png" alt="GitHub">
+                    </a>
+                    <a href="https://www.linkedin.com/in/bruce-lin-6284b323b/" target="_blank" class="social-link" aria-label="LinkedIn">
+                        <img src="../assets/images/home/dark-linkedin-icon.png" alt="LinkedIn">
+                    </a>
+                    <a href="https://www.youtube.com/channel/UCIZq5zDOCw1Xq49H1Mpx05Q" target="_blank" class="social-link" aria-label="YouTube">
+                        <img src="../assets/images/home/dark-youtube-icon.png" alt="YouTube">
+                    </a>
+                    <a href="https://www.instagram.com/brucelsproutss/" target="_blank" class="social-link" aria-label="Instagram">
+                        <img src="../assets/images/home/dark-instagram-icon.png" alt="Instagram">
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links Section -->
+            <div class="footer-section">
+                <h3 class="footer-title">Quick Links</h3>
+                <ul class="quick-links">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="code.html">Code Projects</a></li>
+                    <li><a href="video.html">Video Portfolio</a></li>
+                    <li><a href="connect.html">Connect</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="footer-section">
+                <h3 class="footer-title">Contact Me</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <img src="../assets/images/icons/email-icon.png" alt="Email" class="contact-icon">
+                        <div class="contact-text">
+                            <a href="mailto:bruce700982@gmail.com">bruce700982@gmail.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <img src="../assets/images/icons/phone-icon.png" alt="Phone" class="contact-icon">
+                        <div class="contact-text">+1 437 988 41012</div>
+                    </div>
+                    <div class="contact-item">
+                        <img src="../assets/images/icons/location-icon.png" alt="Location" class="contact-icon">
+                        <div class="contact-text">London, Ontario, Canada</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Newsletter Section -->
+            <div class="footer-section">
+                <h3 class="footer-title">Stay Updated</h3>
+                <p>Subscribe to my newsletter for the latest projects and updates.</p>
+                <form class="newsletter-form">
+                    <div class="form-input">
+                        <input type="email" placeholder="Your email address">
+                        <button type="submit">Subscribe</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2024 Bruce Lin. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Initialize gallery filters script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click event listeners to filter buttons
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Get filter value
+                    const filterValue = this.getAttribute('data-filter');
+                    
+                    // Filter gallery items
+                    const galleries = document.querySelectorAll('.gallery');
+                    galleries.forEach(gallery => {
+                        if (filterValue === 'all') {
+                            gallery.style.display = '';
+                        } else {
+                            const category = gallery.getAttribute('data-category');
+                            if (category && category.includes(filterValue)) {
+                                gallery.style.display = '';
+                            } else {
+                                gallery.style.display = 'none';
+                            }
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>

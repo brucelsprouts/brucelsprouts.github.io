@@ -129,4 +129,64 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('mousemove', updateBackgroundPosition);
     document.addEventListener('drag', updateBackgroundPosition);
+
+    // Animate elements when they come into view
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize animation for blog cards
+        const blogCards = document.querySelectorAll('.blog-card');
+        
+        // Function to check if element is in viewport
+        function isInViewport(element) {
+            const rect = element.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+        
+        // Function to handle scroll animation
+        function handleScrollAnimation() {
+            blogCards.forEach(card => {
+                if (isInViewport(card) && !card.classList.contains('animated')) {
+                    card.classList.add('fade-in-up', 'animated');
+                }
+            });
+        }
+        
+        // Run on scroll
+        window.addEventListener('scroll', handleScrollAnimation);
+        
+        // Run on page load
+        handleScrollAnimation();
+        
+        // Type writer effect for subtitle highlights
+        const highlights = document.querySelectorAll('.highlight');
+        let currentHighlight = 0;
+        
+        function cycleHighlights() {
+            highlights.forEach(highlight => {
+                highlight.style.opacity = 0;
+            });
+            
+            highlights[currentHighlight].style.opacity = 1;
+            currentHighlight = (currentHighlight + 1) % highlights.length;
+        }
+        
+        // Set initial state
+        highlights.forEach(highlight => {
+            highlight.style.opacity = 0;
+            highlight.style.transition = 'opacity 0.5s ease-in-out';
+        });
+        
+        // Set first highlight visible
+        if (highlights.length > 0) {
+            highlights[0].style.opacity = 1;
+            // Only set interval if there are multiple highlights
+            if (highlights.length > 1) {
+                setInterval(cycleHighlights, 3000);
+            }
+        }
+    });
 });

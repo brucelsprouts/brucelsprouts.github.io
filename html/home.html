@@ -10,6 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/controls/OrbitControls.js"></script>
     <script src="../js/script.js"></script>
     <script src="../js/home.js"></script>
+    <script src="../js/skills-animation.js"></script>
     
     <!-- Open Graph Protocol Metadata -->
     <meta property="og:locale" content="en_US">
@@ -26,6 +27,8 @@
     <!-- Styles and Icons -->
     <link rel="stylesheet" type="text/css" href="../css/global.css">
     <link rel="stylesheet" type="text/css" href="../css/home.css">
+    <link rel="stylesheet" type="text/css" href="../css/skills.css">
+    <link rel="stylesheet" type="text/css" href="../css/footer.css">
 
     <link rel="icon" href="../assets/images/icons/icon.png" type="image/png">
     
@@ -48,14 +51,15 @@
                 </div>
             </div>
             <div class="right-section">
-                <!-- Menu, Search, and Dark Mode Icons -->
-                <a class="menu-icons" onclick="menuSwitch(); return false;">
-                    <img src="../assets/images/icons/white-menu.png" id="white-menu">
-                    <img src="../assets/images/icons/black-menu.png" id="black-menu">
+                <!-- Theme Toggle -->
+                <a class="darklight-icons" onclick="lightDark(); return false;" aria-label="Toggle dark/light mode">
+                    <img src="../assets/images/icons/moon.png" id="moon-image" alt="Dark mode" style="display:block;" />
+                    <img src="../assets/images/icons/sun.png" id="sun-image" alt="Light mode" style="display:none;" />
                 </a>
-                <a class="darklight-icons" onclick="lightDark(); return false;">
-                    <img src="../assets/images/icons/moon.png" id="moon-image" />
-                    <img src="../assets/images/icons/sun.png" id="sun-image" />
+                <!-- Mobile Menu Button (hidden on desktop) -->
+                <a class="menu-icons" onclick="menuSwitch(); return false;" aria-label="Toggle menu">
+                    <img src="../assets/images/icons/white-menu.png" id="white-menu" alt="Menu" style="display:block;" />
+                    <img src="../assets/images/icons/black-menu.png" id="black-menu" alt="Menu" style="display:none;" />
                 </a>
             </div>
         </div>
@@ -74,22 +78,29 @@
                 <div class="herorow">
                     <div class="column-text">
                         <h2 class="xlarge-font"><b>Bruce Lin</b></h2>
-                        <h3 class="text-box">
+                        <div class="subtitle">
+                            <span class="highlight">Computer Science Student</span> | <span class="highlight">Web Developer</span> | <span class="highlight">Video Editor</span>
+                        </div>
+                        <h3 class="text-box animate-text">
                             Hello there! I'm a second year student for Computer Science at Western University. In addition to my studies, I've also worked as an English tutor for several years at Ignite Youth Club and currently I'm working as a video editor freelancer at AMG. Additionally, I just wanted to note that the YouTube and Instagram socials are for my YouTube channel.
                         </h3>
+                        <div class="cta-buttons">
+                            <a href="code.html" class="cta-button primary-button">View Projects</a>
+                            <a href="connect.html" class="cta-button secondary-button">Contact Me</a>
+                        </div>
                         <div class="social-row">
                             <!-- Coding Links -->
                             <div class="social-group">
-                                <a href="https://github.com/brucelsprouts" target="_blank" class="social-link" aria-label="GitHub">
+                                <a href="https://github.com/brucelsprouts" target="_blank" class="social-link social-hover" aria-label="GitHub">
                                     <img id="github-icon" src="../assets/images/home/dark-github-icon.png" alt="GitHub Icon">
                                 </a>
-                                <a href="https://www.linkedin.com/in/bruce-lin-6284b323b/" target="_blank" class="social-link" aria-label="LinkedIn">
+                                <a href="https://www.linkedin.com/in/bruce-lin-6284b323b/" target="_blank" class="social-link social-hover" aria-label="LinkedIn">
                                     <img id="linkedin-icon" src="../assets/images/home/dark-linkedin-icon.png" alt="Linkedin Icon">
                                 </a>
-                                <a href="https://www.youtube.com/channel/UCIZq5zDOCw1Xq49H1Mpx05Q" target="_blank" class="social-link" aria-label="YouTube">
+                                <a href="https://www.youtube.com/channel/UCIZq5zDOCw1Xq49H1Mpx05Q" target="_blank" class="social-link social-hover" aria-label="YouTube">
                                     <img id="youtube-icon" src="../assets/images/home/dark-youtube-icon.png" alt="YouTube Icon">
                                 </a>
-                                <a href="https://www.instagram.com/brucelsproutss/" target="_blank" class="social-link" aria-label="Instagram Media">
+                                <a href="https://www.instagram.com/brucelsproutss/" target="_blank" class="social-link social-hover" aria-label="Instagram Media">
                                     <img id="instagram-icon" src="../assets/images/home/dark-instagram-icon.png" alt="Instagram Icon">
                                 </a>
                             </div>
@@ -104,101 +115,136 @@
             </div>
         </div>
 
-            <!-- Background Section 2 -->
+        <!-- Background Section 2 - Skills -->
         <div class="background-2">
-            <div class="container-2">
-                <div class="row">
-                    <div class="line-header">
-                        <h1>Skills</h1>
-                        <div class="line"></div>
+            <div class="skills-section">
+                <div class="skills-heading">
+                    <h1>Skills</h1>
+                </div>
+                <div class="skills-grid">
+                    <!-- After Effects Skill Card -->
+                    <div class="skill-card fade-in-up" data-skill-level="85">
+                        <div class="skill-image-container">
+                            <img src="../assets/images/home/aftereffects.png" alt="After Effects">
+                            <div class="skill-overlay"></div>
+                            <div class="skill-badges">
+                                <span class="skill-badge">Design</span>
+                            </div>
+                        </div>
+                        <div class="skill-content">
+                            <h3 class="skill-title">After Effects</h3>
+                            <p class="skill-description">Motion graphics, visual effects, and animation for videos and presentations.</p>
+                            <div class="skill-level">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="grid-content">
-                        <div class="grid-container">
-                            <div class="responsive">
-                                <div class="gallery">
-                                    <div class="inner">
-                                        <a href="../pages/skills/aftereffects.html">
-                                            <div class="image-container">
-                                                <img src="../assets/images/home/aftereffects.png" alt="aftereffects" width="600" height="300">
-                                            </div>
-                                        </a>
-                                        <div class="desc">
-                                            <strong>After Effects</strong><br>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="gallery">
-                                    <div class="inner">
-                                        <a href="../pages/skills/java.html">
-                                            <div class="image-container">
-                                                <img src="../assets/images/home/java.png" alt="java" width="600" height="300">
-                                            </div>
-                                        </a>
-                                        <div class="desc">
-                                            <strong>Java</strong><br>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="gallery">
-                                    <div class="inner">
-                                        <a href="../pages/skills/photoshop.html">
-                                            <div class="image-container">
-                                                <img src="../assets/images/home/photoshop.png" alt="photoshop" width="600" height="300">
-                                            </div>
-                                        </a>
-                                        <div class="desc">
-                                            <strong>Photoshop</strong><br>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="gallery">
-                                    <div class="inner">
-                                        <a href="../pages/skills/python.html">
-                                            <div class="image-container">
-                                                <img src="../assets/images/home/python.png" alt="python" width="600" height="300">
-                                            </div>
-                                        </a>
-                                        <div class="desc">
-                                            <strong>Python</strong><br>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="gallery">
-                                    <div class="inner">
-                                        <a href="../pages/skills/html.html">
-                                            <div class="image-container">
-                                                <img src="../assets/images/home/html.png" alt="html" width="600" height="300">
-                                            </div>
-                                        </a>
-                                        <div class="desc">
-                                            <strong>HTML:5</strong><br>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="gallery">
-                                    <div class="inner">
-                                        <a href="../pages/skills/css.html">
-                                            <div class="image-container">
-                                                <img src="../assets/images/home/css.png" alt="css" width="600" height="300">
-                                            </div>
-                                        </a>
-                                        <div class="desc">
-                                            <strong>CSS</strong><br>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="gallery">
-                                    <div class="inner">
-                                        <a href="../pages/skills/js.html">
-                                            <div class="image-container">
-                                                <img src="../assets/images/home/js.png" alt="javascript" width="600" height="300">
-                                            </div>
-                                        </a>
-                                        <div class="desc">
-                                            <strong>JavaScript</strong><br>
-                                        </div>
-                                    </div>
-                                </div>
+
+                    <!-- Java Skill Card -->
+                    <div class="skill-card fade-in-up" data-skill-level="80">
+                        <div class="skill-image-container">
+                            <img src="../assets/images/home/java.png" alt="Java">
+                            <div class="skill-overlay"></div>
+                            <div class="skill-badges">
+                                <span class="skill-badge">Programming</span>
+                            </div>
+                        </div>
+                        <div class="skill-content">
+                            <h3 class="skill-title">Java</h3>
+                            <p class="skill-description">Object-oriented programming for desktop applications and Android development.</p>
+                            <div class="skill-level">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Photoshop Skill Card -->
+                    <div class="skill-card fade-in-up" data-skill-level="75">
+                        <div class="skill-image-container">
+                            <img src="../assets/images/home/photoshop.png" alt="Photoshop">
+                            <div class="skill-overlay"></div>
+                            <div class="skill-badges">
+                                <span class="skill-badge">Design</span>
+                            </div>
+                        </div>
+                        <div class="skill-content">
+                            <h3 class="skill-title">Photoshop</h3>
+                            <p class="skill-description">Image editing, photo manipulation, and graphic design.</p>
+                            <div class="skill-level">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Python Skill Card -->
+                    <div class="skill-card fade-in-up" data-skill-level="90">
+                        <div class="skill-image-container">
+                            <img src="../assets/images/home/python.png" alt="Python">
+                            <div class="skill-overlay"></div>
+                            <div class="skill-badges">
+                                <span class="skill-badge">Programming</span>
+                            </div>
+                        </div>
+                        <div class="skill-content">
+                            <h3 class="skill-title">Python</h3>
+                            <p class="skill-description">Scripting, data analysis, and automation for various projects.</p>
+                            <div class="skill-level">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- HTML Skill Card -->
+                    <div class="skill-card fade-in-up" data-skill-level="95">
+                        <div class="skill-image-container">
+                            <img src="../assets/images/home/html.png" alt="HTML">
+                            <div class="skill-overlay"></div>
+                            <div class="skill-badges">
+                                <span class="skill-badge">Web</span>
+                            </div>
+                        </div>
+                        <div class="skill-content">
+                            <h3 class="skill-title">HTML5</h3>
+                            <p class="skill-description">Structure and content creation for modern web applications.</p>
+                            <div class="skill-level">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CSS Skill Card -->
+                    <div class="skill-card fade-in-up" data-skill-level="90">
+                        <div class="skill-image-container">
+                            <img src="../assets/images/home/css.png" alt="CSS">
+                            <div class="skill-overlay"></div>
+                            <div class="skill-badges">
+                                <span class="skill-badge">Web</span>
+                            </div>
+                        </div>
+                        <div class="skill-content">
+                            <h3 class="skill-title">CSS</h3>
+                            <p class="skill-description">Styling and animations for responsive web interfaces.</p>
+                            <div class="skill-level">
+                                <div class="skill-progress"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- JavaScript Skill Card -->
+                    <div class="skill-card fade-in-up" data-skill-level="85">
+                        <div class="skill-image-container">
+                            <img src="../assets/images/home/js.png" alt="JavaScript">
+                            <div class="skill-overlay"></div>
+                            <div class="skill-badges">
+                                <span class="skill-badge">Web</span>
+                                <span class="skill-badge">Programming</span>
+                            </div>
+                        </div>
+                        <div class="skill-content">
+                            <h3 class="skill-title">JavaScript</h3>
+                            <p class="skill-description">Interactive web applications and dynamic content creation.</p>
+                            <div class="skill-level">
+                                <div class="skill-progress"></div>
                             </div>
                         </div>
                     </div>
@@ -212,39 +258,81 @@
                 <div class="row">
                     <div class="line-header">
                         <h1>Blog</h1>
-                    <div class="line"></div>
+                        <div class="line"></div>
                     </div>
                     <div class="blog-posts">
                         <div class="scrollable-blog">
-                            <article>
+                            <article class="blog-card fade-in-up">
+                                <div class="blog-date-badge">
+                                    <span class="day">9</span>
+                                    <span class="month">Jan</span>
+                                </div>
                                 <h3>Delay...</h3>
                                 <p class="date">Published on: <span>January 9, 2025</span></p>
-                                <p class="summary">Well, I did kind of finish the site, I just have to figure out how to do a proxy server and then it should be done, so I'm gonna take a break from that and start working on something else until I figure out how to do that.</p></a>
+                                <p class="summary">Well, I did kind of finish the site, I just have to figure out how to do a proxy server and then it should be done, so I'm gonna take a break from that and start working on something else until I figure out how to do that.</p>
+                                <div class="read-more-link">
+                                    <a href="#">Read More</a>
+                                </div>
                             </article>
-                            <article>
+                            <article class="blog-card fade-in-up">
+                                <div class="blog-date-badge">
+                                    <span class="day">29</span>
+                                    <span class="month">Dec</span>
+                                </div>
                                 <h3>Streaming site</h3>
                                 <p class="date">Published on: <span>December 29, 2024</span></p>
-                                <p class="summary">Don't have the longest time to do this, but I'm gonna try making an anime streaming site for the last week of this winter break that I left before I go into my second sem. (happy birthday me!)</p></a>
+                                <p class="summary">Don't have the longest time to do this, but I'm gonna try making an anime streaming site for the last week of this winter break that I left before I go into my second sem. (happy birthday me!)</p>
+                                <div class="read-more-link">
+                                    <a href="#">Read More</a>
+                                </div>
                             </article>
-                            <article>
+                            <article class="blog-card fade-in-up">
+                                <div class="blog-date-badge">
+                                    <span class="day">15</span>
+                                    <span class="month">Nov</span>
+                                </div>
                                 <h3>Changes</h3>
                                 <p class="date">Published on: <span>November 15, 2024</span></p>
-                                <p class="summary">Almost done the edit, will upload it tomorrow, the day where the show also releases its new episode. Additionally, I'm now deciding between creating some chrome extension or the plug in for AE, either way, I'll probably wanna end up doing both of them as well as a lot more projects and LeetCode in the next while.</p></a>
+                                <p class="summary">Almost done the edit, will upload it tomorrow, the day where the show also releases its new episode. Additionally, I'm now deciding between creating some chrome extension or the plug in for AE, either way, I'll probably wanna end up doing both of them as well as a lot more projects and LeetCode in the next while.</p>
+                                <div class="read-more-link">
+                                    <a href="#">Read More</a>
+                                </div>
                             </article>
-                            <article>
+                            <article class="blog-card fade-in-up">
+                                <div class="blog-date-badge">
+                                    <span class="day">11</span>
+                                    <span class="month">Nov</span>
+                                </div>
                                 <h3>Progress</h3>
                                 <p class="date">Published on: <span>November 11, 2024</span></p>
-                                <p class="summary">Managed to finish some assignments so now I have some free time, gonna start on an Arcane S2 edit then work on that AE plug in I mentioned before. Hopefully I can finish both of those in the next week or so, cuz I have some school work due in 2 weeks.</p></a>
+                                <p class="summary">Managed to finish some assignments so now I have some free time, gonna start on an Arcane S2 edit then work on that AE plug in I mentioned before. Hopefully I can finish both of those in the next week or so, cuz I have some school work due in 2 weeks.</p>
+                                <div class="read-more-link">
+                                    <a href="#">Read More</a>
+                                </div>
                             </article>
-                            <article>
+                            <article class="blog-card fade-in-up">
+                                <div class="blog-date-badge">
+                                    <span class="day">9</span>
+                                    <span class="month">Nov</span>
+                                </div>
                                 <h3>Update</h3>
                                 <p class="date">Published on: <span>November 9, 2024</span></p>
-                                <p class="summary">Finally fixed the page for mobile, gonna start working on some edits and smaller coding projects when i find more time after I finish up some more school work. Thinking of making some plug in for AE with jsx using Co-pilot so I can edit better, as well as a website for streaming videos.</p></a>
+                                <p class="summary">Finally fixed the page for mobile, gonna start working on some edits and smaller coding projects when i find more time after I finish up some more school work. Thinking of making some plug in for AE with jsx using Co-pilot so I can edit better, as well as a website for streaming videos.</p>
+                                <div class="read-more-link">
+                                    <a href="#">Read More</a>
+                                </div>
                             </article>
-                            <article>
+                            <article class="blog-card fade-in-up">
+                                <div class="blog-date-badge">
+                                    <span class="day">20</span>
+                                    <span class="month">Oct</span>
+                                </div>
                                 <h3>First Blog Post</h3>
                                 <p class="date">Published on: <span>October 20, 2024</span></p>
-                                <p class="summary">I have just finished my portfolio webpage. Everything should be done for the most part, but I will be making small tweaks as needed. 😎</p></a>
+                                <p class="summary">I have just finished my portfolio webpage. Everything should be done for the most part, but I will be making small tweaks as needed. 😎</p>
+                                <div class="read-more-link">
+                                    <a href="#">Read More</a>
+                                </div>
                             </article>
                         </div>
                     </div>
@@ -252,6 +340,79 @@
             </div>
         </div>
 
+        <!-- Footer Section -->
+        <footer class="footer">
+            <div class="footer-wave"></div>
+            <div class="footer-content">
+                <!-- About Section -->
+                <div class="footer-section">
+                    <h3 class="footer-title">About Me</h3>
+                    <p>Computer Science student at Western University passionate about web development, video editing, and programming. Always learning and exploring new technologies.</p>
+                    <div class="social-links">
+                        <a href="https://github.com/brucelsprouts" target="_blank" class="social-link" aria-label="GitHub">
+                            <img src="../assets/images/home/dark-github-icon.png" alt="GitHub">
+                        </a>
+                        <a href="https://www.linkedin.com/in/bruce-lin-6284b323b/" target="_blank" class="social-link" aria-label="LinkedIn">
+                            <img src="../assets/images/home/dark-linkedin-icon.png" alt="LinkedIn">
+                        </a>
+                        <a href="https://www.youtube.com/channel/UCIZq5zDOCw1Xq49H1Mpx05Q" target="_blank" class="social-link" aria-label="YouTube">
+                            <img src="../assets/images/home/dark-youtube-icon.png" alt="YouTube">
+                        </a>
+                        <a href="https://www.instagram.com/brucelsproutss/" target="_blank" class="social-link" aria-label="Instagram">
+                            <img src="../assets/images/home/dark-instagram-icon.png" alt="Instagram">
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links Section -->
+                <div class="footer-section">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="quick-links">
+                        <li><a href="home.html">Home</a></li>
+                        <li><a href="code.html">Code Projects</a></li>
+                        <li><a href="video.html">Video Portfolio</a></li>
+                        <li><a href="connect.html">Connect</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Section -->
+                <div class="footer-section">
+                    <h3 class="footer-title">Contact Me</h3>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <img src="../assets/images/icons/email-icon.png" alt="Email" class="contact-icon">
+                            <div class="contact-text">
+                                <a href="mailto:bruce700982@gmail.com">bruce700982@gmail.com</a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <img src="../assets/images/icons/phone-icon.png" alt="Phone" class="contact-icon">
+                            <div class="contact-text">+1 437 988 41012</div>
+                        </div>
+                        <div class="contact-item">
+                            <img src="../assets/images/icons/location-icon.png" alt="Location" class="contact-icon">
+                            <div class="contact-text">London, Ontario, Canada</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Newsletter Section -->
+                <div class="footer-section">
+                    <h3 class="footer-title">Stay Updated</h3>
+                    <p>Subscribe to my newsletter for the latest projects and updates.</p>
+                    <form class="newsletter-form">
+                        <div class="form-input">
+                            <input type="email" placeholder="Your email address">
+                            <button type="submit">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="copyright">&copy; 2024 Bruce Lin. All rights reserved.</p>
+            </div>
+        </footer>
     </div>
 </body>
 </html>

@@ -22,6 +22,7 @@
     <!-- Styles and Icons -->
     <link rel="stylesheet" type="text/css" href="../css/global.css">
     <link rel="stylesheet" type="text/css" href="../css/connect.css">
+    <link rel="stylesheet" type="text/css" href="../css/footer.css">
 
     <link rel="icon" href="../assets/images/icons/icon.png" type="image/png">
     
@@ -44,14 +45,15 @@
                 </div>
             </div>
             <div class="right-section">
-                <!-- Menu, Search, and Dark Mode Icons -->
-                <a class="menu-icons" onclick="menuSwitch(); return false;">
-                    <img src="../assets/images/icons/white-menu.png" id="white-menu">
-                    <img src="../assets/images/icons/black-menu.png" id="black-menu">
+                <!-- Theme Toggle -->
+                <a class="darklight-icons" onclick="lightDark(); return false;" aria-label="Toggle dark/light mode">
+                    <img src="../assets/images/icons/moon.png" id="moon-image" alt="Dark mode" style="display:block;" />
+                    <img src="../assets/images/icons/sun.png" id="sun-image" alt="Light mode" style="display:none;" />
                 </a>
-                <a class="darklight-icons" onclick="lightDark(); return false;">
-                    <img src="../assets/images/icons/moon.png" id="moon-image" />
-                    <img src="../assets/images/icons/sun.png" id="sun-image" />
+                <!-- Mobile Menu Button (hidden on desktop) -->
+                <a class="menu-icons" onclick="menuSwitch(); return false;" aria-label="Toggle menu">
+                    <img src="../assets/images/icons/white-menu.png" id="white-menu" alt="Menu" style="display:block;" />
+                    <img src="../assets/images/icons/black-menu.png" id="black-menu" alt="Menu" style="display:none;" />
                 </a>
             </div>
         </div>
@@ -61,38 +63,188 @@
         fadeInPage();
     </script>
 
-    <h1>Connect</h1>
-    <div class="white-container">
-        <div class="white-line"></div>
+    <!-- Connect Page Content -->
+    <div class="connect-page">
+        <div class="connect-header">
+            <h1>Get In Touch</h1>
+            <p>Have a question or want to work together? Feel free to reach out using the form below or connect with me on social media.</p>
+        </div>
+
+        <div class="connect-content">
+            <!-- Contact Form -->
+            <div class="contact-form-container">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" class="form-control" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Your Email</label>
+                        <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" class="form-control" placeholder="Enter subject">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" class="form-control" placeholder="Type your message here..." required></textarea>
+                    </div>
+                    <button type="submit" class="form-btn">Send Message</button>
+                </form>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="contact-info-container">
+                <!-- Email Info -->
+                <div class="contact-info-item">
+                    <div class="contact-info-icon">
+                        <img src="../assets/images/icons/email-icon.png" alt="Email">
+                    </div>
+                    <div class="contact-info-content">
+                        <h4>Email</h4>
+                        <p>Personal: <a href="mailto:bruce700982@gmail.com">bruce700982@gmail.com</a></p>
+                        <p>Code: <a href="mailto:email@brucelsprouts.com">email@brucelsprouts.com</a></p>
+                        <p>Video Editing: <a href="mailto:brucelsprouts.ae@gmail.com">brucelsprouts.ae@gmail.com</a></p>
+                    </div>
+                </div>
+
+                <!-- Social Info -->
+                <div class="contact-info-item">
+                    <div class="contact-info-icon">
+                        <img src="../assets/images/icons/social-icon.png" alt="Social">
+                    </div>
+                    <div class="contact-info-content">
+                        <h4>Social Media</h4>
+                        <p>LinkedIn: <a href="https://www.linkedin.com/in/bruce-lin-6284b323b/" target="_blank">bruce-lin</a></p>
+                        <p>GitHub: <a href="https://github.com/brucelsprouts" target="_blank">brucelsprouts</a></p>
+                        <p>YouTube: <a href="https://www.youtube.com/@brucelsprouts" target="_blank">@brucelsprouts</a></p>
+                    </div>
+                </div>
+
+                <!-- Phone Info -->
+                <div class="contact-info-item">
+                    <div class="contact-info-icon">
+                        <img src="../assets/images/icons/phone-icon.png" alt="Phone">
+                    </div>
+                    <div class="contact-info-content">
+                        <h4>Phone</h4>
+                        <p>+1 437 988 41012</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social Media Connect -->
+        <div class="social-connect">
+            <h3>Connect With Me</h3>
+            <div class="social-grid">
+                <a href="https://github.com/brucelsprouts" target="_blank" class="social-card">
+                    <img src="../assets/images/home/dark-github-icon.png" alt="GitHub">
+                    <span>GitHub</span>
+                </a>
+                <a href="https://www.linkedin.com/in/bruce-lin-6284b323b/" target="_blank" class="social-card">
+                    <img src="../assets/images/home/dark-linkedin-icon.png" alt="LinkedIn">
+                    <span>LinkedIn</span>
+                </a>
+                <a href="https://www.youtube.com/channel/UCIZq5zDOCw1Xq49H1Mpx05Q" target="_blank" class="social-card">
+                    <img src="../assets/images/home/dark-youtube-icon.png" alt="YouTube">
+                    <span>YouTube</span>
+                </a>
+                <a href="https://www.instagram.com/brucelsproutss/" target="_blank" class="social-card">
+                    <img src="../assets/images/home/dark-instagram-icon.png" alt="Instagram">
+                    <span>Instagram</span>
+                </a>
+                <a href="https://leetcode.com/u/brucelsprouts/" target="_blank" class="social-card">
+                    <img src="../assets/images/icons/leetcode-icon.png" alt="LeetCode">
+                    <span>LeetCode</span>
+                </a>
+            </div>
+        </div>
     </div>
 
-    <div class="contact-page">
-        <!-- General Section -->
-        <section class="general-section">
-          <h4>General Inquiries</h4>          
-          <p><strong>Personal Email:</strong> <a href="mailto:bruce700982@gmail.com">bruce700982@gmail.com</a></p>
-          <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/bruce-lin-6284b323b/" target="_blank">Connect on LinkedIn</a></p>
-          <p><strong>Phone:</strong> +1 437 988 41012</p>
-          <p><strong>Resume:</strong> <a href="../assets/other/" target="_blank">View Resume (building resume, please see my linkedin instead)</a></p>
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="footer-content">
+            <!-- About Section -->
+            <div class="footer-section">
+                <h3 class="footer-title">About Me</h3>
+                <p>Computer Science student at Western University passionate about web development, video editing, and programming. Always learning and exploring new technologies.</p>
+                <div class="social-links">
+                    <a href="https://github.com/brucelsprouts" target="_blank" class="social-link" aria-label="GitHub">
+                        <img src="../assets/images/home/dark-github-icon.png" alt="GitHub">
+                    </a>
+                    <a href="https://www.linkedin.com/in/bruce-lin-6284b323b/" target="_blank" class="social-link" aria-label="LinkedIn">
+                        <img src="../assets/images/home/dark-linkedin-icon.png" alt="LinkedIn">
+                    </a>
+                    <a href="https://www.youtube.com/channel/UCIZq5zDOCw1Xq49H1Mpx05Q" target="_blank" class="social-link" aria-label="YouTube">
+                        <img src="../assets/images/home/dark-youtube-icon.png" alt="YouTube">
+                    </a>
+                    <a href="https://www.instagram.com/brucelsproutss/" target="_blank" class="social-link" aria-label="Instagram">
+                        <img src="../assets/images/home/dark-instagram-icon.png" alt="Instagram">
+                    </a>
+                </div>
+            </div>
 
-        </section>
-      
-        <!-- Code Section -->
-        <section class="code-section">
-          <h4>Code</h4>          
-          <p><strong>Email:</strong> <a href="mailto:email@brucelsprouts.com">email@brucelsprouts.com</a></p>
-          <p><strong>GitHub:</strong> <a href="https://github.com/brucelsprouts" target="_blank">View GitHub</a></p>
-          <p><strong>LeetCode:</strong> <a href="https://leetcode.com/u/brucelsprouts/" target="_blank">View LeetCode</a></p>
-        </section>
-      
-        <!-- Video Editing Section -->
-        <section class="video-section">
-          <h4>Video Editing</h4>          
-          <p><strong>Email:</strong> <a href="mailto:brucelsprouts.ae@gmail.com">brucelsprouts.ae@gmail.com</a></p>
-          <p><strong>YouTube:</strong> <a href="https://www.youtube.com/@brucelsprouts" target="_blank">View YouTube Channel</a></p>
+            <!-- Quick Links Section -->
+            <div class="footer-section">
+                <h3 class="footer-title">Quick Links</h3>
+                <ul class="quick-links">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="code.html">Code Projects</a></li>
+                    <li><a href="video.html">Video Portfolio</a></li>
+                    <li><a href="connect.html">Connect</a></li>
+                </ul>
+            </div>
 
-        </section>
-      </div>
-      
+            <!-- Contact Section -->
+            <div class="footer-section">
+                <h3 class="footer-title">Contact Me</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <img src="../assets/images/icons/email-icon.png" alt="Email" class="contact-icon">
+                        <div class="contact-text">
+                            <a href="mailto:bruce700982@gmail.com">bruce700982@gmail.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <img src="../assets/images/icons/phone-icon.png" alt="Phone" class="contact-icon">
+                        <div class="contact-text">+1 437 988 41012</div>
+                    </div>
+                    <div class="contact-item">
+                        <img src="../assets/images/icons/location-icon.png" alt="Location" class="contact-icon">
+                        <div class="contact-text">London, Ontario, Canada</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Newsletter Section -->
+            <div class="footer-section">
+                <h3 class="footer-title">Stay Updated</h3>
+                <p>Subscribe to my newsletter for the latest projects and updates.</p>
+                <form class="newsletter-form">
+                    <div class="form-input">
+                        <input type="email" placeholder="Your email address">
+                        <button type="submit">Subscribe</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2024 Bruce Lin. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Form Submission Script -->
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Here you would normally handle form submission
+            // For demo purposes, we'll just show an alert
+            alert('Thank you for your message! I will get back to you soon.');
+            this.reset();
+        });
+    </script>
 </body>
 </html>

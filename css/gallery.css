@@ -1,14 +1,17 @@
-
 /* grid and items */
 .grid-content {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 20px;
 }
 .grid-container {
   width: 90%;
   max-width: 1200px;
   margin: 0 auto;
   margin-top: 20px; 
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
 }
 
 .responsive {
@@ -23,11 +26,20 @@
   padding: 1%;
   box-sizing: border-box;
   position: relative; /* Add this line */
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  background-color: rgba(30, 30, 30, 0.7);
 }
 .inner {
   text-align: center;
   border-radius: 2px;
   margin-bottom: 1%;
+  position: relative;
+  overflow: hidden;
 }
 @media only screen and (max-width: 750px) {
   .gallery {
@@ -58,20 +70,29 @@
 .desc {
   margin: 5px;
   font-size: 14px;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
 /* search bar and white line for connect */
 .search-container {
   text-align: center;
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: 600px;
+  margin: 0 auto 30px;
+  position: relative;
 }
 .search-input {
-  padding: 10px;
-  border-radius: 5px;
-  font-size: 16px;
-  width:90%;
-  transition: background-color .2s, color .2s;
+  padding: 15px 20px;
+  border: none;
+  border-radius: 30px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: inherit;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  width: 100%;
 }
 .dark-mode .search-input {
   border: 1px solid #C8C8C8;
@@ -80,7 +101,7 @@
 }
 .light-mode .search-input {
   border: 1px solid #000000;
-  background-color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.05);
   color: #000;
 }
 /*line stuff*/
@@ -289,4 +310,248 @@ h1 {
 .background {
   max-width: 1200px;
   margin: 0 auto;
+}
+
+/* Enhanced Gallery Styling */
+.gallery-header {
+  text-align: center;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.gallery-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  position: relative;
+  display: inline-block;
+}
+
+.gallery-header h1::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(120, 120, 220, 0.8), rgba(50, 50, 180, 0.8));
+}
+
+.gallery-header p {
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  opacity: 0.8;
+}
+
+/* Filter Buttons */
+.gallery-filters {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.filter-btn {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 30px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: inherit;
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.light-mode .filter-btn {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.filter-btn:hover {
+  background-color: rgba(120, 120, 220, 0.2);
+}
+
+.filter-btn.active {
+  background: linear-gradient(90deg, rgba(120, 120, 220, 0.8), rgba(50, 50, 180, 0.8));
+  color: white;
+}
+
+/* Gallery Items */
+.gallery:hover {
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.inner a {
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+
+.image-container {
+  position: relative;
+  overflow: hidden;
+  height: 0;
+  padding-bottom: 66.67%; /* 3:2 aspect ratio */
+}
+
+.image-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.gallery:hover .image-container img {
+  transform: scale(1.05);
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.7) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gallery:hover .image-overlay {
+  opacity: 1;
+}
+
+.desc strong {
+  font-size: 1.2rem;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.desc strong::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(120, 120, 220, 0.8), rgba(50, 50, 180, 0.8));
+  transition: width 0.3s ease;
+}
+
+.gallery:hover .desc strong::after {
+  width: 50px;
+}
+
+.desc p {
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin: 0;
+}
+
+/* Skills Icons in Gallery */
+.skill-icons {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.skill-icons a {
+  opacity: 0.7;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.skill-icons a:hover {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+.skill-icons img {
+  width: 24px;
+  height: 24px;
+}
+
+/* Animation Classes */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Search Container */
+.search-container {
+  max-width: 600px;
+  margin: 0 auto 30px;
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  padding: 15px 20px;
+  border: none;
+  border-radius: 30px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: inherit;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 2px rgba(120, 120, 220, 0.4);
+}
+
+.search-icon {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.5;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 900px) {
+  .grid-container {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .gallery-header h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .gallery-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .gallery-filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    justify-content: flex-start;
+  }
+  
+  .filter-btn {
+    white-space: nowrap;
+  }
 }
