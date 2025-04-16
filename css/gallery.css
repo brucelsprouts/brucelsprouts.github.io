@@ -5,52 +5,56 @@
   padding: 20px;
 }
 .grid-container {
-  width: 90%;
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   margin-top: 20px; 
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 30px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
 }
 
 .responsive {
-  max-width: 1200px;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  float: left;
+  margin-bottom: 25px;
 }
+
 .gallery {
-  width: 33%;
-  padding: 1%;
-  box-sizing: border-box;
-  position: relative; /* Add this line */
+  width: 100%;
+  position: relative;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  transition: all 0.4s ease;
   transform-style: preserve-3d;
   perspective: 1000px;
   background-color: rgba(30, 30, 30, 0.7);
+  height: 100%;
 }
+
 .inner {
   text-align: center;
-  border-radius: 2px;
-  margin-bottom: 1%;
   position: relative;
   overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
-@media only screen and (max-width: 750px) {
-  .gallery {
-    width: 50%;
+
+@media only screen and (max-width: 1024px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
-@media only screen and (max-width: 500px) {
-  .gallery {
-    width: 100%;
+
+@media only screen and (max-width: 650px) {
+  .grid-container {
+    grid-template-columns: 1fr;
   }
 }
+
 .dark-mode .inner {
   border: 1px solid #C8C8C8;
 }
@@ -60,6 +64,7 @@
 .inner img {
   max-width: 100%;
   height: auto;
+  display: block;
 }
 .dark-mode .inner img {
   border-bottom: 1px solid #C8C8C8;
@@ -74,6 +79,10 @@
   text-align: center;
   position: relative;
   z-index: 1;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 /* search bar and white line for connect */
@@ -104,6 +113,158 @@
   background-color: rgba(0, 0, 0, 0.05);
   color: #000;
 }
+
+/* Improved gallery item styling */
+.image-container {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.gallery:hover .image-container img {
+  transform: scale(1.1);
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.gallery:hover .image-overlay {
+  opacity: 1;
+}
+
+/* Enhanced filter buttons */
+.gallery-filters {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 40px;
+  padding: 0 20px;
+}
+
+.filter-btn {
+  padding: 10px 20px;
+  background: transparent;
+  border: 2px solid;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.dark-mode .filter-btn {
+  color: #C8C8C8;
+  border-color: #333;
+}
+
+.light-mode .filter-btn {
+  color: #333;
+  border-color: #e0e0e0;
+}
+
+.dark-mode .filter-btn:hover, .dark-mode .filter-btn.active {
+  background-color: #333;
+  border-color: #444;
+}
+
+.light-mode .filter-btn:hover, .light-mode .filter-btn.active {
+  background-color: #f0f0f0;
+  border-color: #ccc;
+}
+
+/* Enhanced gallery header */
+.gallery-header {
+  text-align: center;
+  padding: 60px 20px 30px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.gallery-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  position: relative;
+  display: inline-block;
+}
+
+.gallery-header p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Skill icons in gallery items */
+.skill-icons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.skill-icons a {
+  opacity: 0.8;
+  transition: all 0.2s ease;
+}
+
+.skill-icons a:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .gallery-header {
+    padding: 40px 20px 20px;
+  }
+  
+  .gallery-header h1 {
+    font-size: 2.2rem;
+  }
+  
+  .filter-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  .gallery-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .gallery-header p {
+    font-size: 1rem;
+  }
+  
+  .gallery-filters {
+    gap: 10px;
+    margin-bottom: 25px;
+  }
+  
+  .filter-btn {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+}
+
 /*line stuff*/
 .line-header {
   display: flex;
@@ -311,7 +472,6 @@ h1 {
   max-width: 1200px;
   margin: 0 auto;
 }
-
 /* Enhanced Gallery Styling */
 .gallery-header {
   text-align: center;

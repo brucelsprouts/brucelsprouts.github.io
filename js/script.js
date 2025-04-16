@@ -20,15 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Ensure theme-related icons are correctly displayed
     setTimeout(updateThemeIcons, 50); // Small delay to ensure DOM is fully loaded
     
-    // Initialize menu state based on screen size
-    checkMenu();
-    
-    // Set initial visibility of menu buttons based on screen size
-    setMenuButtonVisibility();
-    
     // Setup page transitions and animations
     setupLinkFade();
     fadeInPage();
+    
+    // Setup side menu
+    setupSideMenu();
 });
 
 // Update icon visibility when theme changes
@@ -90,70 +87,79 @@ function updateThemeIcons() {
     }
 }
 
-window.addEventListener('resize', () => {
-    checkMenu();
-    setMenuButtonVisibility();
-});
-
-function checkMenu() {
-    var element = document.getElementById("myMenu");
-    if (!element) return; // Safeguard against null reference
+// Setup side menu functionality
+function setupSideMenu() {
+    const menuButton = document.querySelector('.menu-icons');
+    const sideMenu = document.querySelector('.side-menu-container');
+    const overlay = document.querySelector('.menu-overlay');
+    const closeButton = document.querySelector('.side-menu-close');
     
-    element.style.transition = "none";
-    
-    if (window.innerWidth <= 750) {
-        menuHide();
-    } else {
-        menuShow();
+    if (menuButton && sideMenu && overlay) {
+        // Open menu when menu button is clicked
+        menuButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            sideMenu.classList.add('menu-show');
+            overlay.classList.add('visible');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        });
+        
+        // Close menu when overlay is clicked
+        overlay.addEventListener('click', () => {
+            closeMenu();
+        });
+        
+        // Close menu when close button is clicked
+        if (closeButton) {
+            closeButton.addEventListener('click', () => {
+                closeMenu();
+            });
+        }
+        
+        // Close menu when ESC key is pressed
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && sideMenu.classList.contains('menu-show')) {
+                closeMenu();
+            }
+        });
+        
+        // Close menu when any menu item is clicked
+        const menuLinks = sideMenu.querySelectorAll('a');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                // Only close if it's an internal link and not control buttons
+                if (!link.classList.contains('control-button')) {
+                    closeMenu();
+                }
+            });
+        });
     }
+}
+
+// Function to close the side menu
+function closeMenu() {
+    const sideMenu = document.querySelector('.side-menu-container');
+    const overlay = document.querySelector('.menu-overlay');
     
-    // Re-enable transitions after a short delay
-    setTimeout(() => {
-        if (element) element.style.transition = "";
-    }, 100);
+    if (sideMenu && overlay) {
+        sideMenu.classList.remove('menu-show');
+        overlay.classList.remove('visible');
+        document.body.style.overflow = ''; // Restore scrolling
+    }
 }
 
 function menuSwitch() {
-    var element = document.getElementById("myMenu");
-    if (!element) return; // Safeguard against null reference
+    const sideMenu = document.querySelector('.side-menu-container');
+    const overlay = document.querySelector('.menu-overlay');
     
-    if (element.classList.contains("menu-show")) {
-        menuHide();
-    } else {
-        menuShow();
-    }
-}
-
-function menuShow() {
-    var element = document.getElementById("myMenu");
-    if (!element) return; // Safeguard against null reference
-    
-    element.classList.remove("menu-hide");
-    element.classList.add("menu-show");
-}
-
-function menuHide() {
-    var element = document.getElementById("myMenu");
-    if (!element) return; // Safeguard against null reference
-    
-    element.classList.remove("menu-show");
-    element.classList.add("menu-hide");
-}
-
-function searchThing() {
-    var input = document.getElementById('myInput');
-    if (!input) return; // Safeguard against null reference
-    
-    var searchText = input.value.toUpperCase();
-    var gallery = document.getElementsByClassName("gallery");
-    
-    Array.from(gallery).forEach(items => {
-        var img = items.getElementsByTagName("img")[0];
-        if (img) {
-            var altText = img.getAttribute("alt").toUpperCase();
-            items.style.display = altText.includes(searchText) ? "" : "none";
+    if (sideMenu && overlay) {
+        if (sideMenu.classList.contains('menu-show')) {
+            closeMenu();
+        } else {
+            sideMenu.classList.add('menu-show');
+            overlay.classList.add('visible');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
         }
-    });
+    }
 }
 
 function fadeInPage() {
@@ -201,21 +207,19 @@ window.addEventListener('pageshow', event => {
     }
 });
 
-// Set menu button visibility based on screen width
-function setMenuButtonVisibility() {
-    const menuIcons = document.querySelectorAll('.menu-icons');
+// Function to search gallery items
+function searchThing() {
+    var input = document.getElementById('myInput');
+    if (!input) return;
     
-    if (window.innerWidth <= 750) {
-        // Show menu button on mobile
-        menuIcons.forEach(icon => {
-            icon.style.display = 'flex';
-            icon.style.pointerEvents = 'auto';
-        });
-    } else {
-        // Hide menu button on desktop
-        menuIcons.forEach(icon => {
-            icon.style.display = 'none';
-            icon.style.pointerEvents = 'none';
-        });
-    }
+    var searchText = input.value.toUpperCase();
+    var gallery = document.getElementsByClassName("gallery");
+    
+    Array.from(gallery).forEach(items => {
+        var img = items.getElementsByTagName("img")[0];
+        if (img) {
+            var altText = img.getAttribute("alt").toUpperCase();
+            items.style.display = altText.includes(searchText) ? "" : "none";
+        }
+    });
 }

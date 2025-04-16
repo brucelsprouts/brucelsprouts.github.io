@@ -64,6 +64,29 @@
             </div>
         </div>
     </div>
+    
+    <!-- Side Menu (for mobile) -->
+    <div class="side-menu-container">
+        <div class="side-menu-header">
+            <h3>Menu</h3>
+            <div class="side-menu-close" aria-label="Close menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        </div>
+        <div class="side-menu-content">
+            <a href="home.html">Home</a>
+            <a href="code.html">Code</a>
+            <a href="video.html">Video</a>
+            <a href="connect.html">Connect</a>
+        </div>
+    </div>
+    
+    <!-- Menu Overlay -->
+    <div class="menu-overlay"></div>
+    
     <svg id="fader"></svg>
     <script>
         fadeInPage();
@@ -84,10 +107,6 @@
                         <h3 class="text-box animate-text">
                             Hello there! I'm a second year student for Computer Science at Western University. In addition to my studies, I've also worked as an English tutor for several years at Ignite Youth Club and currently I'm working as a video editor freelancer at AMG. Additionally, I just wanted to note that the YouTube and Instagram socials are for my YouTube channel.
                         </h3>
-                        <div class="cta-buttons">
-                            <a href="code.html" class="cta-button primary-button">View Projects</a>
-                            <a href="connect.html" class="cta-button secondary-button">Contact Me</a>
-                        </div>
                         <div class="social-row">
                             <!-- Coding Links -->
                             <div class="social-group">
@@ -252,97 +271,47 @@
             </div>
         </div>
 
-        <!-- Blog Section -->
-        <div class="background-3">
-            <div class="container-3">
-                <div class="row">
-                    <div class="line-header">
-                        <h1>Blog</h1>
-                        <div class="line"></div>
+        <!-- Blog Section - With Auto Theme -->
+        <div class="blog-section">
+            <div class="section-heading">
+                <h1>Blog</h1>
+            </div>
+            <div class="blog-container">
+                <div class="blog-card">
+                    <div class="blog-image">
+                        <img src="../assets/images/home/blog1.jpg" alt="Programming Tips">
                     </div>
-                    <div class="blog-posts">
-                        <div class="scrollable-blog">
-                            <article class="blog-card fade-in-up">
-                                <div class="blog-date-badge">
-                                    <span class="day">9</span>
-                                    <span class="month">Jan</span>
-                                </div>
-                                <h3>Delay....</h3>
-                                <p class="date">Published on: <span>January 9, 2025</span></p>
-                                <p class="summary">Well, I did kind of finish the site, I just have to figure out how to do a proxy server and then it should be done, so I'm gonna take a break from that and start working on something else until I figure out how to do that.</p>
-                                <div class="read-more-link">
-                                    <a href="#">Read More</a>
-                                </div>
-                            </article>
-                            <article class="blog-card fade-in-up">
-                                <div class="blog-date-badge">
-                                    <span class="day">29</span>
-                                    <span class="month">Dec</span>
-                                </div>
-                                <h3>Streaming site</h3>
-                                <p class="date">Published on: <span>December 29, 2024</span></p>
-                                <p class="summary">Don't have the longest time to do this, but I'm gonna try making an anime streaming site for the last week of this winter break that I left before I go into my second sem. (happy birthday me!)</p>
-                                <div class="read-more-link">
-                                    <a href="#">Read More</a>
-                                </div>
-                            </article>
-                            <article class="blog-card fade-in-up">
-                                <div class="blog-date-badge">
-                                    <span class="day">15</span>
-                                    <span class="month">Nov</span>
-                                </div>
-                                <h3>Changes</h3>
-                                <p class="date">Published on: <span>November 15, 2024</span></p>
-                                <p class="summary">Almost done the edit, will upload it tomorrow, the day where the show also releases its new episode. Additionally, I'm now deciding between creating some chrome extension or the plug in for AE, either way, I'll probably wanna end up doing both of them as well as a lot more projects and LeetCode in the next while.</p>
-                                <div class="read-more-link">
-                                    <a href="#">Read More</a>
-                                </div>
-                            </article>
-                            <article class="blog-card fade-in-up">
-                                <div class="blog-date-badge">
-                                    <span class="day">11</span>
-                                    <span class="month">Nov</span>
-                                </div>
-                                <h3>Progress</h3>
-                                <p class="date">Published on: <span>November 11, 2024</span></p>
-                                <p class="summary">Managed to finish some assignments so now I have some free time, gonna start on an Arcane S2 edit then work on that AE plug in I mentioned before. Hopefully I can finish both of those in the next week or so, cuz I have some school work due in 2 weeks.</p>
-                                <div class="read-more-link">
-                                    <a href="#">Read More</a>
-                                </div>
-                            </article>
-                            <article class="blog-card fade-in-up">
-                                <div class="blog-date-badge">
-                                    <span class="day">9</span>
-                                    <span class="month">Nov</span>
-                                </div>
-                                <h3>Update</h3>
-                                <p class="date">Published on: <span>November 9, 2024</span></p>
-                                <p class="summary">Finally fixed the page for mobile, gonna start working on some edits and smaller coding projects when i find more time after I finish up some more school work. Thinking of making some plug in for AE with jsx using Co-pilot so I can edit better, as well as a website for streaming videos.</p>
-                                <div class="read-more-link">
-                                    <a href="#">Read More</a>
-                                </div>
-                            </article>
-                            <article class="blog-card fade-in-up">
-                                <div class="blog-date-badge">
-                                    <span class="day">20</span>
-                                    <span class="month">Oct</span>
-                                </div>
-                                <h3>First Blog Post</h3>
-                                <p class="date">Published on: <span>October 20, 2024</span></p>
-                                <p class="summary">I have just finished my portfolio webpage. Everything should be done for the most part, but I will be making small tweaks as needed. 😎</p>
-                                <div class="read-more-link">
-                                    <a href="#">Read More</a>
-                                </div>
-                            </article>
-                        </div>
+                    <div class="blog-content">
+                        <h3>Modern Web Development Trends</h3>
+                        <p>Exploring the latest frameworks and technologies shaping the future of web development.</p>
+                        <a href="#" class="blog-link">Read More</a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <div class="blog-image">
+                        <img src="../assets/images/home/blog2.jpg" alt="Design Principles">
+                    </div>
+                    <div class="blog-content">
+                        <h3>UI Design Best Practices</h3>
+                        <p>Key principles to create intuitive and visually appealing user interfaces for your projects.</p>
+                        <a href="#" class="blog-link">Read More</a>
+                    </div>
+                </div>
+                <div class="blog-card">
+                    <div class="blog-image">
+                        <img src="../assets/images/home/blog3.jpg" alt="Video Editing Tips">
+                    </div>
+                    <div class="blog-content">
+                        <h3>Advanced Video Editing Techniques</h3>
+                        <p>Professional tips and tricks to enhance your video editing skills and create stunning visual content.</p>
+                        <a href="#" class="blog-link">Read More</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Footer Section -->
+        <!-- Footer -->
         <footer class="footer">
-            <div class="footer-wave"></div>
             <div class="footer-content">
                 <!-- About Section -->
                 <div class="footer-section">
@@ -394,18 +363,6 @@
                             <div class="contact-text">London, Ontario, Canada</div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Newsletter Section -->
-                <div class="footer-section">
-                    <h3 class="footer-title">Stay Updated</h3>
-                    <p>Subscribe to my newsletter for the latest projects and updates.</p>
-                    <form class="newsletter-form">
-                        <div class="form-input">
-                            <input type="email" placeholder="Your email address">
-                            <button type="submit">Subscribe</button>
-                        </div>
-                    </form>
                 </div>
             </div>
 

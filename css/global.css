@@ -9,16 +9,23 @@ body {
   margin: 0;
   padding: 0;
   transition: background-color 0.3s, color 0.3s;
+  /* Hide scrollbar for all browsers */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  overflow-y: scroll;
 }
 
+/* Hide scrollbar for Chrome, Safari and Opera */
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide all scrollbars */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 0;
+  height: 0;
   background-color: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: rgba(128, 128, 128, 0.5);
-  border-radius: 4px;
+  display: none;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -36,6 +43,7 @@ h2 {
   font-size: clamp(3rem, 8vw, 6.25rem);
   text-align: left;
   margin: 0;
+  color: inherit; /* Ensure no blue text in hero section */
 }
 
 h3 {
@@ -143,22 +151,26 @@ body.light-mode .topnav a {
   height: 100%;
   display: flex;
   align-items: center;
+  overflow: hidden;
 }
 
+/* Improved menu hover effect */
 .middle-section a::after {
   content: '';
   position: absolute;
   bottom: 0;
-  left: 50%;
-  width: 0;
-  height: 2px;
+  left: 0;
+  width: 100%;
+  height: 3px;
   background-color: currentColor;
-  transition: width 0.3s ease, left 0.3s ease;
+  transform: translateY(3px);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .middle-section a:hover::after {
-  width: 80%;
-  left: 10%;
+  transform: translateY(0);
+  opacity: 1;
 }
 
 .right-section {
@@ -200,6 +212,101 @@ body.light-mode .topnav a {
 /* Mobile styles */
 .hamburger {
   display: none;
+}
+
+/* Separate offscreen menu */
+.side-menu-container {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 280px;
+  height: 100%;
+  z-index: 9999;
+  transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .side-menu-container {
+  background-color: #111;
+  border-left: 1px solid #333;
+}
+
+.light-mode .side-menu-container {
+  background-color: #f8f8f8;
+  border-left: 1px solid #ddd;
+}
+
+.side-menu-container.menu-show {
+  right: 0;
+}
+
+.side-menu-header {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+}
+
+.side-menu-close {
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.side-menu-content {
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.side-menu-content a {
+  padding: 15px 20px;
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.dark-mode .side-menu-content a {
+  color: #C8C8C8;
+}
+
+.light-mode .side-menu-content a {
+  color: #000;
+}
+
+.dark-mode .side-menu-content a:hover {
+  background-color: #222;
+  transform: translateX(-5px);
+}
+
+.light-mode .side-menu-content a:hover {
+  background-color: #eee;
+  transform: translateX(-5px);
+}
+
+/* Menu overlay */
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.menu-overlay.visible {
+  opacity: 1;
+  visibility: visible;
 }
 
 @media (max-width: 750px) {
@@ -253,64 +360,9 @@ body.light-mode .topnav a {
     display: none;
   }
   
-  /* Responsive menu */
-  .wrapper {
-    position: static;
-  }
-  
+  /* Hide top navigation links on mobile */
   .middle-section {
-    position: absolute;
-    top: 60px;
-    left: 0;
-    right: 0;
-    flex-direction: column;
-    background-color: inherit;
-    border-bottom: 1px solid #555;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
-    z-index: 999;
-    transform: translateY(-10px);
-    pointer-events: none;
-    opacity: 0;
-    visibility: hidden;
-  }
-  
-  .middle-section a {
-    width: 100%;
-    padding: 15px;
-    justify-content: center;
-  }
-  
-  .middle-section a::after {
     display: none;
-  }
-  
-  /* Menu toggle states */
-  #myMenu.menu-show {
-    transform: translateY(0);
-    opacity: 1;
-    pointer-events: auto;
-    visibility: visible;
-  }
-  
-  #myMenu.menu-hide {
-    transform: translateY(-10px);
-    opacity: 0;
-    pointer-events: none;
-    visibility: hidden;
-  }
-  
-  .dark-mode .middle-section {
-    background-color: rgba(0, 0, 0, 0.95);
-  }
-  
-  .light-mode .middle-section {
-    background-color: rgba(255, 255, 255, 0.95);
-  }
-  
-  .dark-mode .topnav .middle-section a:not(:first-child),
-  .light-mode .topnav .middle-section a:not(:first-child) {
-    border-top: 1px solid rgba(128, 128, 128, 0.2);
   }
 }
 
@@ -351,4 +403,306 @@ body.light-mode .topnav a {
 #fader.fade-in {
   opacity: 1;
   animation-name: fade-in;
+}
+
+/* Blog section styles - Aligned with skills section */
+.blog-section {
+  padding: 60px 20px;
+  transition: background-color 0.3s, color 0.3s;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.blog-section .section-heading {
+  text-align: center;
+  margin-bottom: 50px;
+  position: relative;
+}
+
+.blog-section h1 {
+  font-size: 2.5rem;
+  font-weight: 500;
+  margin-bottom: 15px;
+  position: relative;
+  display: inline-block;
+}
+
+.blog-section h1::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(120, 120, 220, 0.8), rgba(50, 50, 180, 0.8));
+}
+
+.blog-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 30px;
+  padding: 0 20px;
+}
+
+.blog-card {
+  background: rgba(30, 30, 30, 0.7);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  transition: all 0.4s ease;
+  position: relative;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.light-mode .blog-card {
+  background: rgba(240, 240, 240, 0.9);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.blog-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.blog-image {
+  position: relative;
+  overflow: hidden;
+  height: 200px;
+}
+
+.blog-image::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.7) 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 1;
+}
+
+.blog-card:hover .blog-image::before {
+  opacity: 1;
+}
+
+.blog-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.blog-card:hover .blog-image img {
+  transform: scale(1.05);
+}
+
+.blog-content {
+  padding: 25px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 2;
+}
+
+.blog-content h3 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-top: 0;
+  margin-bottom: 15px;
+  padding: 0;
+  position: relative;
+  display: inline-block;
+}
+
+.blog-content h3::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(120, 120, 220, 0.8), rgba(50, 50, 180, 0.8));
+  transition: width 0.3s ease;
+}
+
+.blog-card:hover .blog-content h3::after {
+  width: 50px;
+}
+
+.blog-content p {
+  margin-bottom: 20px;
+  line-height: 1.6;
+  flex-grow: 1;
+  opacity: 0.9;
+}
+
+.light-mode .blog-content p {
+  color: #333;
+}
+
+.blog-link {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 500;
+  align-self: flex-start;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.blog-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(120, 120, 220, 0.8), rgba(50, 50, 180, 0.8));
+  z-index: -1;
+  transition: transform 0.3s ease;
+  transform: translateX(-100%);
+}
+
+.blog-link:hover::before {
+  transform: translateX(0);
+}
+
+.dark-mode .blog-link {
+  background-color: #333;
+  color: #fff;
+}
+
+.light-mode .blog-link {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.blog-link:hover {
+  color: #fff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Animation for blog cards */
+.blog-card {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fade-in-up 0.6s ease forwards;
+}
+
+.blog-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.blog-card:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Theme-specific blog styles */
+@media (prefers-color-scheme: dark) {
+  .blog-section {
+    background-color: #111;
+    color: #C8C8C8;
+  }
+  .blog-section .blog-card {
+    background-color: #222;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .blog-section {
+    background-color: #f5f5f5;
+    color: #333;
+  }
+  .blog-section .blog-card {
+    background-color: #fff;
+  }
+}
+
+/* Respect user's chosen theme */
+.dark-mode .blog-section {
+  background-color: #111;
+  color: #C8C8C8;
+}
+
+.dark-mode .blog-section .blog-card {
+  background-color: #222;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+.light-mode .blog-section {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.light-mode .blog-section .blog-card {
+  background-color: #fff;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .blog-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .blog-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .blog-section {
+    padding: 40px 15px;
+  }
+  
+  .blog-section h1 {
+    font-size: 2.2rem;
+  }
+  
+  .blog-content h3 {
+    font-size: 1.3rem;
+  }
+}
+
+/* Hide scrollbars for all browsers while maintaining scroll functionality */
+html {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+html::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Apply to all elements with scrollbars */
+* {
+  scrollbar-width: none;
+}
+
+*::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
 }

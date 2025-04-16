@@ -23,6 +23,7 @@
     <!-- Styles and Icons -->
     <link rel="stylesheet" type="text/css" href="../css/global.css">
     <link rel="stylesheet" type="text/css" href="../css/gallery.css">
+    <link rel="stylesheet" type="text/css" href="../css/video.css">
     <link rel="stylesheet" type="text/css" href="../css/footer.css">
 
     <link rel="icon" href="../assets/images/icons/icon.png" type="image/png">
@@ -59,6 +60,29 @@
             </div>
         </div>
     </div>
+    
+    <!-- Side Menu (for mobile) -->
+    <div class="side-menu-container">
+        <div class="side-menu-header">
+            <h3>Menu</h3>
+            <div class="side-menu-close" aria-label="Close menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        </div>
+        <div class="side-menu-content">
+            <a href="home.html">Home</a>
+            <a href="code.html">Code</a>
+            <a href="video.html">Video</a>
+            <a href="connect.html">Connect</a>
+        </div>
+    </div>
+    
+    <!-- Menu Overlay -->
+    <div class="menu-overlay"></div>
+    
     <svg id="fader"></svg>
     <script>
         fadeInPage();
@@ -238,18 +262,6 @@
                         <div class="contact-text">London, Ontario, Canada</div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Newsletter Section -->
-            <div class="footer-section">
-                <h3 class="footer-title">Stay Updated</h3>
-                <p>Subscribe to my newsletter for the latest projects and updates.</p>
-                <form class="newsletter-form">
-                    <div class="form-input">
-                        <input type="email" placeholder="Your email address">
-                        <button type="submit">Subscribe</button>
-                    </div>
-                </form>
             </div>
         </div>
 
