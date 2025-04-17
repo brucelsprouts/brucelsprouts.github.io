@@ -23,6 +23,8 @@
     
     <!-- Scrollable Blog Container -->
     <div class="blog-container-wrapper">
+        <!-- Progress Bar -->
+        <div class="blog-progress-bar"></div>
         <div class="blog-container">
             <!-- Blog Post 1 -->
             <article class="blog-card" data-category="updates">
@@ -381,21 +383,24 @@
 <!-- JavaScript for Blog Functionality -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Filter functionality
+        // Blog Filter Functionality
         const filterButtons = document.querySelectorAll('.filter-btn');
+        const blogCards = document.querySelectorAll('.blog-card');
+        
         filterButtons.forEach(button => {
             button.addEventListener('click', function() {
-                // Toggle active class
+                // Remove active class from all buttons
                 filterButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
                 this.classList.add('active');
                 
-                // Get filter value
-                const filter = this.getAttribute('data-filter');
+                // Get the filter value
+                const filterValue = this.getAttribute('data-filter');
                 
-                // Filter blog posts
-                const blogCards = document.querySelectorAll('.blog-card');
+                // Show/hide blog cards based on filter
                 blogCards.forEach(card => {
-                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                    if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
                         card.style.display = 'block';
                     } else {
                         card.style.display = 'none';
@@ -404,31 +409,38 @@
             });
         });
         
-        // Search functionality
+        // Blog Search Functionality
         const searchInput = document.getElementById('blogSearch');
         if (searchInput) {
             searchInput.addEventListener('input', function() {
                 const searchTerm = this.value.toLowerCase();
-                const blogCards = document.querySelectorAll('.blog-card');
                 
                 blogCards.forEach(card => {
                     const title = card.querySelector('h3').textContent.toLowerCase();
                     const content = card.querySelector('.blog-body').textContent.toLowerCase();
-                    const tags = card.querySelectorAll('.tag');
                     
-                    let tagMatch = false;
-                    tags.forEach(tag => {
-                        if (tag.textContent.toLowerCase().includes(searchTerm)) {
-                            tagMatch = true;
-                        }
-                    });
-                    
-                    if (title.includes(searchTerm) || content.includes(searchTerm) || tagMatch) {
+                    if (title.includes(searchTerm) || content.includes(searchTerm)) {
                         card.style.display = 'block';
                     } else {
                         card.style.display = 'none';
                     }
                 });
+            });
+        }
+        
+        // Progress Bar for Blog Scroll
+        const blogContainer = document.querySelector('.blog-container');
+        const progressBar = document.querySelector('.blog-progress-bar');
+        
+        if (blogContainer && progressBar) {
+            blogContainer.addEventListener('scroll', function() {
+                // Calculate the scroll percentage
+                const scrollHeight = this.scrollHeight - this.clientHeight;
+                const scrollTop = this.scrollTop;
+                const scrollPercentage = (scrollTop / scrollHeight) * 100;
+                
+                // Update the progress bar width
+                progressBar.style.width = scrollPercentage + '%';
             });
         }
     });

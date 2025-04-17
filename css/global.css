@@ -458,6 +458,27 @@ body.light-mode .topnav a {
   transition: box-shadow 0.4s ease;
 }
 
+/* Progress bar for blog scroll position */
+.blog-progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 4px;
+  width: 0;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  z-index: 10;
+  transition: width 0.1s ease;
+  border-radius: 4px 0 0 0;
+}
+
+.dark-mode .blog-progress-bar {
+  box-shadow: 0 0 8px rgba(99, 102, 241, 0.5);
+}
+
+.light-mode .blog-progress-bar {
+  box-shadow: 0 0 8px rgba(99, 102, 241, 0.3);
+}
+
 .blog-container-wrapper:hover {
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
 }
