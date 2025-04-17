@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>HTML | Bruce's Portfolio</title>
-    <meta name="description" content="Computer scientist and Multimedia">
+    <meta name="description" content="My projects and experience with HTML development">
     <script src="../../js/script.js"></script>
 
     <!-- Open Graph Protocol Metadata -->
@@ -20,11 +20,10 @@
     <meta property="og:image:height" content="630">
     
     <!-- Styles and Icons -->
-    <link rel="stylesheet" type="text/css" href="../../css/global.css">
-    <link rel="stylesheet" type="text/css" href="../../css/skills.css">
-    <link rel="stylesheet" type="text/css" href="../../css/gallery.css">
-
-   
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/skills.css">
+    <link rel="stylesheet" href="../../css/gallery.css">
+    <link rel="stylesheet" href="../../css/footer.css">
     <link rel="icon" href="../../assets/images/icons/icon.png" type="image/png">
     
     <!-- Canonical Link -->
@@ -39,75 +38,109 @@
                 <a href="../../html/home.html" id="leftname">&lt;&#47;&gt; Bruce Lin</a>
             </div>
             <div class="wrapper">
-  
-              <div id="myMenu" class="middle-section">
-                  <!-- Navigation Links -->
-                  <a href="../../html/code.html">Code</a>
-                  <a href="../../html/video.html">Video</a>
-                  <a href="../../html/connect.html">Connect</a>
-              </div>
+                <div id="myMenu" class="middle-section">
+                    <!-- Navigation Links -->
+                    <a href="../../html/code.html">Code</a>
+                    <a href="../../html/video.html">Video</a>
+                    <a href="../../html/connect.html">Connect</a>
+                </div>
             </div>
             <div class="right-section">
-                <!-- Menu, Search, and Dark Mode Icons -->
-                <a class="menu-icons" onclick="menuSwitch(); return false;">
-                    <img src="../../assets/images/icons/white-menu.png" id="white-menu">
-                    <img src="../../assets/images/icons/black-menu.png" id="black-menu">
+                <!-- Theme Toggle -->
+                <a class="darklight-icons" onclick="lightDark(); return false;" aria-label="Toggle dark/light mode">
+                    <img src="../../assets/images/icons/moon.png" id="moon-image" alt="Dark mode" style="display:block;" />
+                    <img src="../../assets/images/icons/sun.png" id="sun-image" alt="Light mode" style="display:none;" />
                 </a>
-                <a class="darklight-icons" onclick="lightDark(); return false;">
-                    <img src="../../assets/images/icons/moon.png" id="moon-image" />
-                    <img src="../../assets/images/icons/sun.png" id="sun-image" />
+                <!-- Mobile Menu Button (hidden on desktop) -->
+                <a class="menu-icons" onclick="menuSwitch(); return false;" aria-label="Toggle menu">
+                    <img src="../../assets/images/icons/white-menu.png" id="white-menu" alt="Menu" style="display:block;" />
+                    <img src="../../assets/images/icons/black-menu.png" id="black-menu" alt="Menu" style="display:none;" />
                 </a>
             </div>
         </div>
     </div>
-    <svg id="fader"></svg>
-    <script>
-        fadeInPage();
-    </script>
-    
-    
-       <!-- Main Content -->
-       <div class="content">
-        <header class="header-background">
-            <div class="image-container">
-                <img src="../../assets/images/skills/htmlskill.png" alt="Background Image">
-                <h1>HTML:5</h1>
+
+    <!-- Side Menu (for mobile) -->
+    <div class="side-menu-container">
+        <div class="side-menu-header">
+            <h3>Menu</h3>
+            <div class="side-menu-close" aria-label="Close menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
             </div>
-            <div class="line-header">
-                <div class="line"></div>
+        </div>
+        <div class="side-menu-content">
+            <a href="../../html/home.html">Home</a>
+            <a href="../../html/code.html">Code</a>
+            <a href="../../html/video.html">Video</a>
+            <a href="../../html/connect.html">Connect</a>
+        </div>
+    </div>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay"></div>
+
+    <!-- Main Content -->
+    <div class="skill-page-content">
+        <!-- Enhanced Skill Banner -->
+        <div class="skill-banner">
+            <div class="skill-banner-content">
+                <div class="skill-banner-icon">
+                    <img src="../../assets/images/skills/htmlicon.png" alt="HTML" width="80" height="80">
+                </div>
+                <div class="skill-banner-text">
+                    <h1>HTML5</h1>
+                    <p>Structure and content creation for modern web applications</p>
+                </div>
             </div>
-            <p>
-                I haven't done much with HTML yet, but I was able to make this webpage, involving Three.js which displays my projects. I plan to make more projects involving Three.js in the future.
-            </p>      
-        </header>
-        <div class="line-header">
-            <h1>Related Projects</h1>
-            <div class="line"></div>
+            <div class="skill-banner-background"></div>
         </div>
 
-        <div class="grid-content">
-            <div class="grid-container">
-                <div class="responsive">
-                    <div class="gallery">
-                        <div class="inner">
-                            <a href="../../pages/code/webpage.html">
-                                <img src="../../assets/images/code/webpage.png" alt="webpage" width="600" height="400">
-                            </a>
-                            <div class="desc">
-                                <strong>Webpage Portfolio</strong><br>
-                                Sep 2023 - Present<br>
-                                <a href="../../pages/skills/html.html">
-                                    <img src="../../assets/images/skills/htmlicon.png" alt="HTMl" id="icon" width="24" height="24" title="HTMl">
+        <div class="skill-description">
+            <p>
+                I've been working with HTML since I started web development, creating responsive and accessible web pages.
+                This website is one of my latest projects, built entirely with HTML, CSS, and JavaScript.
+                I follow modern HTML5 semantics and best practices to ensure clean, maintainable code.
+            </p>      
+        </div>
+
+        <div class="skill-projects">
+            <div class="section-title">
+                <h2>Projects using HTML</h2>
+            </div>
+
+            <!-- Websites Category -->
+            <div class="category-row">
+                <div class="category-header">
+                    <h2>Websites</h2>
+                </div>
+                <div class="scrollable-gallery">
+                    <div class="responsive">
+                        <div class="gallery" data-category="html">
+                            <div class="inner">
+                                <a href="../../pages/code/portfolio.html">
+                                    <div class="image-container">
+                                        <img src="../../assets/images/code/portfolio.png" alt="Portfolio Website" width="600" height="400">
+                                        <div class="image-overlay"></div>
+                                    </div>
                                 </a>
-                                <a href="../../pages/skills/css.html">
-                                    <img src="../../assets/images/skills/cssicon.png" alt="CSS" id="icon" width="24" height="24" title="CSS">
-                                </a>
-                                <a href="../../pages/skills/js.html">
-                                    <img src="../../assets/images/skills/jsicon.png" alt="JavaScript" id="icon" width="24" height="24" title="JavaScript">
-                                </a>
-                                <a href="../../pages/skills/photoshop.html">
-                                    <img src="../../assets/images/skills/photoshopicon.png" alt="Photoshop" id="icon" width="24" height="24" title="Photoshop">
-                                </a>
+                                <div class="desc">
+                                    <strong>Portfolio Website</strong>
+                                    <p>March 2024 - Present</p>
+                                    <div class="skill-icons">
+                                        <a href="../../pages/skills/html.html" title="HTML">
+                                            <img src="../../assets/images/skills/htmlicon.png" alt="HTML" id="icon" width="24" height="24">
+                                        </a>
+                                        <a href="../../pages/skills/css.html" title="CSS">
+                                            <img src="../../assets/images/skills/cssicon.png" alt="CSS" id="icon" width="24" height="24">
+                                        </a>
+                                        <a href="../../pages/skills/js.html" title="JavaScript">
+                                            <img src="../../assets/images/skills/jsicon.png" alt="JavaScript" id="icon" width="24" height="24">
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -116,5 +149,8 @@
         </div>
     </div>
 
-    </body>
-    </html>
+    <script>
+        fadeInPage();
+    </script>
+</body>
+</html>

@@ -223,3 +223,38 @@ function searchThing() {
         }
     });
 }
+
+// Handle skill section animations on scroll
+document.addEventListener('DOMContentLoaded', function() {
+  // Check if we're on a skill page
+  const skillSections = document.querySelectorAll('.skill-page-content');
+  if (skillSections.length > 0) {
+    // Function to check if element is in viewport
+    function isInViewport(element) {
+      const rect = element.getBoundingClientRect();
+      return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+      );
+    }
+    
+    // Function to handle fade in animation
+    function handleScrollAnimation() {
+      const skillContent = document.querySelector('.skill-page-content');
+      if (skillContent && isInViewport(skillContent)) {
+        skillContent.style.opacity = '1';
+        skillContent.style.transform = 'translateY(0)';
+        // Once we've triggered the animation, remove the scroll listener
+        window.removeEventListener('scroll', handleScrollAnimation);
+      }
+    }
+    
+    // Run on scroll
+    window.addEventListener('scroll', handleScrollAnimation);
+    
+    // Run on page load
+    handleScrollAnimation();
+  }
+});

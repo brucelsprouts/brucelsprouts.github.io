@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Python | Bruce's Portfolio</title>
-    <meta name="description" content="Computer scientist and Multimedia">
+    <meta name="description" content="My projects and experience with Python programming">
     <script src="../../js/script.js"></script>
 
     <!-- Open Graph Protocol Metadata -->
@@ -20,11 +20,10 @@
     <meta property="og:image:height" content="630">
     
     <!-- Styles and Icons -->
-    <link rel="stylesheet" type="text/css" href="../../css/global.css">
-    <link rel="stylesheet" type="text/css" href="../../css/skills.css">
-    <link rel="stylesheet" type="text/css" href="../../css/gallery.css">
-
-   
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/skills.css">
+    <link rel="stylesheet" href="../../css/gallery.css">
+    <link rel="stylesheet" href="../../css/footer.css">
     <link rel="icon" href="../../assets/images/icons/icon.png" type="image/png">
     
     <!-- Canonical Link -->
@@ -39,60 +38,115 @@
                 <a href="../../html/home.html" id="leftname">&lt;&#47;&gt; Bruce Lin</a>
             </div>
             <div class="wrapper">
-  
-              <div id="myMenu" class="middle-section">
-                  <!-- Navigation Links -->
-                  <a href="../../html/code.html">Code</a>
-                  <a href="../../html/video.html">Video</a>
-                  <a href="../../html/connect.html">Connect</a>
-              </div>
+                <div id="myMenu" class="middle-section">
+                    <!-- Navigation Links -->
+                    <a href="../../html/code.html">Code</a>
+                    <a href="../../html/video.html">Video</a>
+                    <a href="../../html/connect.html">Connect</a>
+                </div>
             </div>
             <div class="right-section">
-                <!-- Menu, Search, and Dark Mode Icons -->
-                <a class="menu-icons" onclick="menuSwitch(); return false;">
-                    <img src="../../assets/images/icons/white-menu.png" id="white-menu">
-                    <img src="../../assets/images/icons/black-menu.png" id="black-menu">
+                <!-- Theme Toggle -->
+                <a class="darklight-icons" onclick="lightDark(); return false;" aria-label="Toggle dark/light mode">
+                    <img src="../../assets/images/icons/moon.png" id="moon-image" alt="Dark mode" style="display:block;" />
+                    <img src="../../assets/images/icons/sun.png" id="sun-image" alt="Light mode" style="display:none;" />
                 </a>
-                <a class="darklight-icons" onclick="lightDark(); return false;">
-                    <img src="../../assets/images/icons/moon.png" id="moon-image" />
-                    <img src="../../assets/images/icons/sun.png" id="sun-image" />
+                <!-- Mobile Menu Button (hidden on desktop) -->
+                <a class="menu-icons" onclick="menuSwitch(); return false;" aria-label="Toggle menu">
+                    <img src="../../assets/images/icons/white-menu.png" id="white-menu" alt="Menu" style="display:block;" />
+                    <img src="../../assets/images/icons/black-menu.png" id="black-menu" alt="Menu" style="display:none;" />
                 </a>
             </div>
         </div>
     </div>
-    <svg id="fader"></svg>
-    <script>
-        fadeInPage();
-    </script>
-    
-   
-       <!-- Main Content -->
-       <div class="content">
-        <header class="header-background">
-            <div class="image-container">
-                <img src="../../assets/images/skills/pythonskill.png" alt="Background Image">
-                <h1>Python</h1>
+
+    <!-- Side Menu (for mobile) -->
+    <div class="side-menu-container">
+        <div class="side-menu-header">
+            <h3>Menu</h3>
+            <div class="side-menu-close" aria-label="Close menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
             </div>
-            <div class="line-header">
-                <div class="line"></div>
+        </div>
+        <div class="side-menu-content">
+            <a href="../../html/home.html">Home</a>
+            <a href="../../html/code.html">Code</a>
+            <a href="../../html/video.html">Video</a>
+            <a href="../../html/connect.html">Connect</a>
+        </div>
+    </div>
+
+    <!-- Menu Overlay -->
+    <div class="menu-overlay"></div>
+
+    <!-- Main Content -->
+    <div class="skill-page-content">
+        <!-- Enhanced Skill Banner -->
+        <div class="skill-banner">
+            <div class="skill-banner-content">
+                <div class="skill-banner-icon">
+                    <img src="../../assets/images/skills/pythonskill.png" alt="Python" width="80" height="80">
+                </div>
+                <div class="skill-banner-text">
+                    <h1>Python</h1>
+                    <p>Scripting, data analysis, and automation for various projects</p>
+                </div>
             </div>
-            <p>
-                I've been working with Python for a year throughout my first year at Western University, making projects and doing school assignments. Although I haven't done any personal projects with Python yet, I plan to do so in the near future. My experience so far has given me a solid foundation in the language, and I'm excited to explore its potential further.
-            </p>      
-        </header>
-        <div class="line-header">
-            <h1>Related Projects</h1>
-            <div class="line"></div>
+            <div class="skill-banner-background"></div>
         </div>
 
-        <div class="grid-content">
-            <div class="grid-container">
-                <div class="responsive">
-                    
+        <div class="skill-description">
+            <p>
+                I've been using Python for 7 years. It's been integral to my studies in Computer Science at Western University. 
+                I'm particularly experienced with data analysis libraries like NumPy and Pandas, as well as web frameworks like Flask. 
+                I've completed several academic and personal projects using Python, focusing on algorithm implementation, data analysis, 
+                and automation scripts.
+            </p>      
+        </div>
+
+        <div class="skill-projects">
+            <div class="section-title">
+                <h2>Projects using Python</h2>
+            </div>
+
+            <!-- Python Apps Category -->
+            <div class="category-row">
+                <div class="category-header">
+                    <h2>Python Applications</h2>
+                </div>
+                <div class="scrollable-gallery">
+                    <div class="responsive">
+                        <div class="gallery" data-category="python">
+                            <div class="inner">
+                                <a href="../../pages/code/weatherapp.html">
+                                    <div class="image-container">
+                                        <img src="../../assets/images/code/weatherapp.png" alt="Weather App" width="600" height="400">
+                                        <div class="image-overlay"></div>
+                                    </div>
+                                </a>
+                                <div class="desc">
+                                    <strong>Weather Forecasting App</strong>
+                                    <p>January 2024 - February 2024</p>
+                                    <div class="skill-icons">
+                                        <a href="../../pages/skills/python.html" title="Python">
+                                            <img src="../../assets/images/skills/pythonskill.png" alt="Python" id="icon" width="24" height="24">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    </body>
-    </html>
+    <svg id="fader"></svg>
+    <script>
+        fadeInPage();
+    </script>
+</body>
+</html>
