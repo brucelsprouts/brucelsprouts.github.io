@@ -100,6 +100,8 @@
 
         <!-- Fixed Height Scrollable Blog Container -->
         <div class="blog-container-wrapper">
+            <!-- Progress Bar -->
+            <div class="blog-progress-bar"></div>
             <div class="blog-container">
                 <!-- Blog Post 1 -->
                 <article class="blog-card" data-category="updates">
@@ -329,19 +331,17 @@
     <!-- Blog functionality script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Filter functionality
+            // Filter Functionality
             const filterButtons = document.querySelectorAll('.filter-btn');
+            const blogCards = document.querySelectorAll('.blog-card');
+            
             filterButtons.forEach(button => {
                 button.addEventListener('click', function() {
-                    // Toggle active class
                     filterButtons.forEach(btn => btn.classList.remove('active'));
                     this.classList.add('active');
                     
-                    // Get filter value
                     const filter = this.getAttribute('data-filter');
                     
-                    // Filter blog posts
-                    const blogCards = document.querySelectorAll('.blog-card');
                     blogCards.forEach(card => {
                         if (filter === 'all' || card.getAttribute('data-category') === filter) {
                             card.style.display = 'block';
@@ -352,8 +352,34 @@
                 });
             });
             
-            // Search functionality
+            // Handle "Read More" Button
+            const readMoreButtons = document.querySelectorAll('.read-more');
+            
+            readMoreButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const blogPost = this.closest('.blog-card');
+                    const summary = blogPost.querySelector('.summary');
+                    const fullContent = blogPost.querySelectorAll('.blog-body p:not(.summary)');
+                    
+                    if (this.classList.contains('expanded')) {
+                        // Collapse
+                        fullContent.forEach(p => p.style.display = 'none');
+                        this.textContent = 'Read More';
+                        this.classList.remove('expanded');
+                    } else {
+                        // Expand
+                        fullContent.forEach(p => p.style.display = 'block');
+                        this.textContent = 'Read Less';
+                        this.classList.add('expanded');
+                    }
+                });
+            });
+            
+            // Handle Search
             const searchInput = document.getElementById('blogSearch');
+            
             if (searchInput) {
                 searchInput.addEventListener('input', function() {
                     const searchTerm = this.value.toLowerCase();
@@ -377,6 +403,22 @@
                             card.style.display = 'none';
                         }
                     });
+                });
+            }
+            
+            // Progress Bar for Blog Scroll
+            const blogContainer = document.querySelector('.blog-container');
+            const progressBar = document.querySelector('.blog-progress-bar');
+            
+            if (blogContainer && progressBar) {
+                blogContainer.addEventListener('scroll', function() {
+                    // Calculate the scroll percentage
+                    const scrollHeight = this.scrollHeight - this.clientHeight;
+                    const scrollTop = this.scrollTop;
+                    const scrollPercentage = (scrollTop / scrollHeight) * 100;
+                    
+                    // Update the progress bar width
+                    progressBar.style.width = scrollPercentage + '%';
                 });
             }
             

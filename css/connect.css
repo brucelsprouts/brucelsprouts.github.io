@@ -128,6 +128,7 @@
 .form-group {
   margin-bottom: 5px;
   position: relative;
+  width: 100%; /* Ensure full width */
 }
 
 .form-group label {
@@ -148,6 +149,8 @@
   font-family: 'Roboto', sans-serif;
   font-size: 1rem;
   transition: all 0.3s ease;
+  box-sizing: border-box; /* Ensure padding is included in width calculation */
+  margin-bottom: 5px; /* Add space below inputs */
 }
 
 .light-mode .form-control {
@@ -204,6 +207,7 @@ textarea.form-control {
   position: relative;
   overflow: hidden;
   margin-top: 10px;
+  box-sizing: border-box; /* Ensure padding is included in width calculation */
 }
 
 .form-btn:hover {
@@ -297,6 +301,12 @@ textarea.form-control {
   flex-shrink: 0;
 }
 
+.contact-info-content {
+  flex: 1;
+  width: 100%; /* Ensure content takes full width */
+  padding-right: 10px; /* Add right padding for better text spacing */
+}
+
 .contact-info-icon img {
   width: 24px;
   height: 24px;
@@ -315,6 +325,7 @@ textarea.form-control {
   color: inherit;
   text-decoration: none;
   transition: color 0.3s ease;
+  word-wrap: break-word; /* Allow long text to wrap */
 }
 
 .contact-info-content a:hover {
@@ -408,6 +419,10 @@ textarea.form-control {
     padding: 30px;
     width: 100%;
     max-width: 100%;
+  }
+  
+  .contact-info-content {
+    padding-right: 5px; /* Adjust padding for smaller screens */
   }
 }
 
