@@ -291,6 +291,7 @@
                 <h1>Blog Updates</h1>
             </div>
             <div class="blog-container-wrapper">
+                <div class="blog-progress-bar"></div>
                 <div class="blog-container">
                     <article class="blog-card">
                         <div class="blog-content">
@@ -413,12 +414,14 @@
         document.addEventListener('DOMContentLoaded', function() {
             const blogContainer = document.querySelector('.blog-container');
             const blogWrapper = document.querySelector('.blog-container-wrapper');
+            const progressBar = document.querySelector('.blog-progress-bar');
             
             if (blogContainer && blogWrapper) {
                 let scrollTimeout;
                 let isScrolled = false;
                 
                 blogContainer.addEventListener('scroll', function() {
+                    // Update the scroll indicator class
                     if (this.scrollTop > 20) {
                         if (!isScrolled) {
                             isScrolled = true;
@@ -429,6 +432,20 @@
                             isScrolled = false;
                             blogWrapper.classList.remove('scrolled-down');
                         }
+                    }
+                    
+                    // Update progress bar width
+                    if (progressBar) {
+                        const scrollHeight = this.scrollHeight - this.clientHeight;
+                        const scrollTop = this.scrollTop;
+                        const scrollPercentage = (scrollTop / scrollHeight) * 100;
+                        progressBar.style.width = scrollPercentage + '%';
+                        
+                        // Ensure ARIA attributes for accessibility
+                        progressBar.setAttribute('role', 'progressbar');
+                        progressBar.setAttribute('aria-valuenow', scrollPercentage);
+                        progressBar.setAttribute('aria-valuemin', '0');
+                        progressBar.setAttribute('aria-valuemax', '100');
                     }
                     
                     // Add active class for animation
@@ -447,6 +464,20 @@
                 if (blogContainer.scrollTop > 20) {
                     blogWrapper.classList.add('scrolled-down');
                     isScrolled = true;
+                }
+                
+                // Initialize progress bar with starting position
+                if (progressBar) {
+                    const scrollHeight = blogContainer.scrollHeight - blogContainer.clientHeight;
+                    const scrollTop = blogContainer.scrollTop;
+                    const scrollPercentage = (scrollTop / scrollHeight) * 100;
+                    progressBar.style.width = scrollPercentage + '%';
+                    
+                    // Initial ARIA attributes
+                    progressBar.setAttribute('role', 'progressbar');
+                    progressBar.setAttribute('aria-valuenow', scrollPercentage);
+                    progressBar.setAttribute('aria-valuemin', '0');
+                    progressBar.setAttribute('aria-valuemax', '100');
                 }
             }
         });

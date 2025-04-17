@@ -500,14 +500,16 @@ body.light-mode .topnav a {
   overflow-y: auto; /* Enable vertical scrolling */
   padding: 25px;
   position: relative;
-  scrollbar-width: thin;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
   scroll-behavior: smooth; /* Add smooth scrolling */
 }
 
-/* Customizing scrollbar for blog container */
+/* Hide scrollbar for Chrome, Safari and Opera */
 .blog-container::-webkit-scrollbar {
-  width: 8px;
-  display: block;
+  width: 0;
+  height: 0;
+  display: none;
 }
 
 .blog-container::-webkit-scrollbar-track {
