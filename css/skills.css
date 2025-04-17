@@ -215,6 +215,7 @@ header {
   position: relative;
   transform-style: preserve-3d;
   perspective: 1000px;
+  cursor: pointer;
 }
 
 .light-mode .skill-card {
@@ -383,4 +384,18 @@ header {
 .skill-badge img {
   width: 14px;
   height: 14px;
+}
+
+/* Skill card link */
+.skill-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+  width: 100%;
+}
+
+.skill-link:hover, .skill-link:focus {
+  text-decoration: none;
+  color: inherit;
 }

@@ -301,7 +301,6 @@
 /* Dark Mode Scrollbar */
 .dark-mode .scrollable-blog::-webkit-scrollbar-thumb {
   transition: background-color 0.2s ease; /* Transition for color change */
-
   background-color: #C8C8C8; /* Darker color for dark mode */
 }
 
@@ -420,100 +419,6 @@
 .social-hover:hover {
     transform: translateY(-5px);
 }
-
-/* Blog Section Enhancements */
-.blog-card {
-    background-color: white;
-    border-radius: 8px;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    position: relative;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    overflow: hidden;
-}
-
-.blog-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-}
-
-.blog-date-badge {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background-color: #0077cc;
-    color: white;
-    padding: 0.5rem;
-    border-radius: 4px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 50px;
-}
-
-.blog-date-badge .day {
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-
-.blog-date-badge .month {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-}
-
-.read-more-link {
-    margin-top: 1rem;
-}
-
-.read-more-link a {
-    color: #0077cc;
-    text-decoration: none;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    transition: color 0.3s ease;
-}
-
-.read-more-link a:hover {
-    color: #005fa3;
-}
-
-.read-more-link a:after {
-    content: "→";
-    margin-left: 0.5rem;
-    transition: transform 0.3s ease;
-}
-
-.read-more-link a:hover:after {
-    transform: translateX(4px);
-}
-
-/* Animation classes */
-.fade-in-up {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.6s ease-out forwards;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Add animation delay for staggered effect */
-.blog-card:nth-child(1) { animation-delay: 0.1s; }
-.blog-card:nth-child(2) { animation-delay: 0.2s; }
-.blog-card:nth-child(3) { animation-delay: 0.3s; }
-.blog-card:nth-child(4) { animation-delay: 0.4s; }
-.blog-card:nth-child(5) { animation-delay: 0.5s; }
-.blog-card:nth-child(6) { animation-delay: 0.6s; }
 
 /* Media queries for responsiveness */
 @media (max-width: 768px) {

@@ -1,0 +1,435 @@
+<!-- Simplified Blog Section with Scrollable Container -->
+<section class="blog-section">
+    <div class="section-heading">
+        <h2>Latest Blog Posts</h2>
+        <p>Thoughts, updates, and insights from my journey in tech</p>
+    </div>
+    
+    <!-- Blog Controls -->
+    <div class="blog-controls">
+        <div class="blog-filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="coding">Coding</button>
+            <button class="filter-btn" data-filter="design">Design</button>
+            <button class="filter-btn" data-filter="updates">Updates</button>
+        </div>
+        <div class="search-container">
+            <input type="text" class="search-input" id="blogSearch" placeholder="Search posts...">
+            <div class="search-icon">
+                <img src="../assets/images/icons/search-icon.png" alt="Search" width="20" height="20">
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scrollable Blog Container -->
+    <div class="blog-container-wrapper">
+        <div class="blog-container">
+            <!-- Blog Post 1 -->
+            <article class="blog-card" data-category="updates">
+                <div class="blog-content">
+                    <div class="blog-header">
+                        <h3>Latest Update</h3>
+                        <p class="date">Published on: <span>January 9, 2025</span></p>
+                        <div class="tags">
+                            <span class="tag">Updates</span>
+                        </div>
+                    </div>
+                    <div class="blog-body">
+                        <p>This is a scrollable blog section where all blog posts are contained within a fixed height container. The entire list of posts can be scrolled through without affecting the rest of the page.</p>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- Blog Post 2 -->
+            <article class="blog-card" data-category="coding">
+                <div class="blog-content">
+                    <div class="blog-header">
+                        <h3>Coding Project</h3>
+                        <p class="date">Published on: <span>December 29, 2024</span></p>
+                        <div class="tags">
+                            <span class="tag">Coding</span>
+                        </div>
+                    </div>
+                    <div class="blog-body">
+                        <p>This approach keeps the blog posts neatly contained while allowing users to browse through content without having to navigate to different pages.</p>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- Blog Post 3 -->
+            <article class="blog-card" data-category="design">
+                <div class="blog-content">
+                    <div class="blog-header">
+                        <h3>Design Principles</h3>
+                        <p class="date">Published on: <span>November 15, 2024</span></p>
+                        <div class="tags">
+                            <span class="tag">Design</span>
+                        </div>
+                    </div>
+                    <div class="blog-body">
+                        <p>The fixed container height ensures that the blog section doesn't dominate the page, while still providing ample space to showcase content.</p>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- Blog Post 4 -->
+            <article class="blog-card" data-category="coding">
+                <div class="blog-content">
+                    <div class="blog-header">
+                        <h3>JavaScript Tips</h3>
+                        <p class="date">Published on: <span>November 11, 2024</span></p>
+                        <div class="tags">
+                            <span class="tag">Coding</span>
+                            <span class="tag">JavaScript</span>
+                        </div>
+                    </div>
+                    <div class="blog-body">
+                        <p>You can easily customize the height of the container to suit your specific design needs while maintaining the scrollable functionality.</p>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- Blog Post 5 -->
+            <article class="blog-card" data-category="updates">
+                <div class="blog-content">
+                    <div class="blog-header">
+                        <h3>Site Redesign</h3>
+                        <p class="date">Published on: <span>November 9, 2024</span></p>
+                        <div class="tags">
+                            <span class="tag">Updates</span>
+                            <span class="tag">Design</span>
+                        </div>
+                    </div>
+                    <div class="blog-body">
+                        <p>The filtering system allows users to quickly find posts that interest them without having to scroll through all content.</p>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- Blog Post 6 -->
+            <article class="blog-card" data-category="design">
+                <div class="blog-content">
+                    <div class="blog-header">
+                        <h3>UI/UX Best Practices</h3>
+                        <p class="date">Published on: <span>November 1, 2024</span></p>
+                        <div class="tags">
+                            <span class="tag">Design</span>
+                            <span class="tag">UI/UX</span>
+                        </div>
+                    </div>
+                    <div class="blog-body">
+                        <p>This approach is particularly useful for portfolio sites or personal blogs where you want to showcase multiple posts without overwhelming visitors.</p>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+    
+    <!-- Optional: Pagination -->
+    <div class="blog-pagination">
+        <button class="view-more-btn">View More Posts</button>
+    </div>
+</section>
+
+<!-- CSS Styles for the Blog Section - Can be moved to an external file -->
+<style>
+    /* Blog Section Styles */
+    .blog-section {
+        max-width: 1200px;
+        margin: 60px auto;
+        padding: 0 20px;
+    }
+    
+    .section-heading {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .section-heading h2 {
+        font-size: 2.2rem;
+        margin-bottom: 10px;
+        position: relative;
+        display: inline-block;
+    }
+    
+    .section-heading h2::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background: linear-gradient(90deg, #6366f1, #8b5cf6);
+    }
+    
+    .section-heading p {
+        font-size: 1.1rem;
+        max-width: 600px;
+        margin: 15px auto 0;
+        opacity: 0.8;
+    }
+    
+    /* Blog Controls */
+    .blog-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    
+    .blog-filters {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+    
+    .filter-btn {
+        background: transparent;
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        border-radius: 20px;
+        padding: 6px 14px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .filter-btn.active {
+        background: linear-gradient(90deg, #6366f1, #8b5cf6);
+        border-color: transparent;
+        color: white;
+    }
+    
+    .filter-btn:hover:not(.active) {
+        border-color: rgba(99, 102, 241, 0.6);
+    }
+    
+    .search-container {
+        position: relative;
+        width: 250px;
+    }
+    
+    .search-input {
+        width: 100%;
+        padding: 8px 35px 8px 15px;
+        border-radius: 20px;
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        font-size: 0.9rem;
+    }
+    
+    .search-input:focus {
+        outline: none;
+        border-color: rgba(99, 102, 241, 0.6);
+    }
+    
+    .search-icon {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0.6;
+    }
+    
+    /* Blog Container */
+    .blog-container-wrapper {
+        border-radius: 10px;
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        margin-bottom: 30px;
+    }
+    
+    .blog-container {
+        height: 500px; /* Fixed height container */
+        overflow-y: auto; /* Enable vertical scrolling */
+        padding: 20px;
+    }
+    
+    /* Style the scrollbar */
+    .blog-container::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .blog-container::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    
+    .blog-container::-webkit-scrollbar-thumb {
+        background: rgba(99, 102, 241, 0.4);
+        border-radius: 3px;
+    }
+    
+    .blog-container::-webkit-scrollbar-thumb:hover {
+        background: rgba(99, 102, 241, 0.6);
+    }
+    
+    /* Blog Cards */
+    .blog-card {
+        background-color: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid rgba(99, 102, 241, 0.15);
+        transition: all 0.3s ease;
+    }
+    
+    .blog-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+        border-color: rgba(99, 102, 241, 0.3);
+    }
+    
+    .blog-header {
+        margin-bottom: 15px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid rgba(99, 102, 241, 0.15);
+    }
+    
+    .blog-header h3 {
+        font-size: 1.3rem;
+        margin: 0 0 8px 0;
+        font-weight: 600;
+    }
+    
+    .date {
+        font-size: 0.85rem;
+        opacity: 0.7;
+        margin: 0 0 8px 0;
+        font-style: italic;
+    }
+    
+    .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    
+    .tag {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 15px;
+        font-size: 0.75rem;
+        background: linear-gradient(90deg, #6366f1, #8b5cf6);
+        color: white;
+    }
+    
+    .blog-body p {
+        line-height: 1.6;
+        margin: 0;
+    }
+    
+    /* Pagination */
+    .blog-pagination {
+        text-align: center;
+        margin-top: 25px;
+    }
+    
+    .view-more-btn {
+        background: linear-gradient(90deg, #6366f1, #8b5cf6);
+        border: none;
+        color: white;
+        padding: 8px 25px;
+        border-radius: 20px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .view-more-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+    
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+        .blog-controls {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .search-container {
+            width: 100%;
+        }
+        
+        .blog-container {
+            height: 450px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .blog-container {
+            height: 400px;
+            padding: 15px;
+        }
+        
+        .blog-card {
+            padding: 15px;
+        }
+        
+        .section-heading h2 {
+            font-size: 1.8rem;
+        }
+        
+        .section-heading p {
+            font-size: 1rem;
+        }
+    }
+</style>
+
+<!-- JavaScript for Blog Functionality -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Toggle active class
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Get filter value
+                const filter = this.getAttribute('data-filter');
+                
+                // Filter blog posts
+                const blogCards = document.querySelectorAll('.blog-card');
+                blogCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Search functionality
+        const searchInput = document.getElementById('blogSearch');
+        if (searchInput) {
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const blogCards = document.querySelectorAll('.blog-card');
+                
+                blogCards.forEach(card => {
+                    const title = card.querySelector('h3').textContent.toLowerCase();
+                    const content = card.querySelector('.blog-body').textContent.toLowerCase();
+                    const tags = card.querySelectorAll('.tag');
+                    
+                    let tagMatch = false;
+                    tags.forEach(tag => {
+                        if (tag.textContent.toLowerCase().includes(searchTerm)) {
+                            tagMatch = true;
+                        }
+                    });
+                    
+                    if (title.includes(searchTerm) || content.includes(searchTerm) || tagMatch) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        }
+    });
+</script> 
