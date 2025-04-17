@@ -94,6 +94,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 40px;
+  padding: 0 10px;
 }
 
 .contact-form-container {
@@ -104,6 +105,7 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
+  max-width: 100%;
 }
 
 .light-mode .contact-form-container {
@@ -394,6 +396,7 @@ textarea.form-control {
 @media (max-width: 900px) {
   .connect-content {
     grid-template-columns: 1fr;
+    padding: 0 15px;
   }
   
   .contact-info-container {
@@ -403,6 +406,8 @@ textarea.form-control {
   
   .contact-form-container {
     padding: 30px;
+    width: 100%;
+    max-width: 100%;
   }
 }
 

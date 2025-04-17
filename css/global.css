@@ -455,7 +455,7 @@ body.light-mode .topnav a {
   margin-bottom: 30px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.4s ease;
 }
 
 .blog-container-wrapper:hover {
@@ -485,23 +485,26 @@ body.light-mode .topnav a {
 
 /* Customizing scrollbar for blog container */
 .blog-container::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
   display: block;
 }
 
 .blog-container::-webkit-scrollbar-track {
-  background: transparent;
-  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
 }
 
 .blog-container::-webkit-scrollbar-thumb {
-  background: rgba(99, 102, 241, 0.7);
-  border-radius: 4px;
+  background: rgba(99, 102, 241, 0.5);
+  border-radius: 10px;
   transition: background 0.3s ease;
+  border: 2px solid transparent;
+  background-clip: padding-box;
 }
 
 .blog-container::-webkit-scrollbar-thumb:hover {
-  background: rgba(99, 102, 241, 1);
+  background: rgba(99, 102, 241, 0.8);
+  background-clip: padding-box;
 }
 
 .dark-mode .blog-container::-webkit-scrollbar-thumb {
@@ -732,9 +735,14 @@ html::-webkit-scrollbar {
   display: none;
 }
 
-/* Blog scroll indicators */
+/* Blog scroll indicators with improved transitions */
 .blog-container-wrapper {
   position: relative;
+  transition: box-shadow 0.4s ease;
+}
+
+.blog-container-wrapper.scrolling {
+  transition: box-shadow 0.2s ease;
 }
 
 .blog-container-wrapper::after {
@@ -749,6 +757,7 @@ html::-webkit-scrollbar {
   border-radius: 0 0 12px 12px;
   opacity: 0.8;
   z-index: 1;
+  transition: opacity 0.3s ease, background 0.3s ease;
 }
 
 .blog-container-wrapper::before {
@@ -762,7 +771,7 @@ html::-webkit-scrollbar {
   pointer-events: none;
   border-radius: 12px 12px 0 0;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease, background 0.3s ease;
   z-index: 1;
 }
 
@@ -785,4 +794,5 @@ html::-webkit-scrollbar {
 /* Show top scroll indicator when scrolled down */
 .blog-container-wrapper.scrolled-down::before {
   opacity: 0.8;
+  transition: opacity 0.2s ease;
 }

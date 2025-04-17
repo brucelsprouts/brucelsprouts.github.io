@@ -415,13 +415,39 @@
             const blogWrapper = document.querySelector('.blog-container-wrapper');
             
             if (blogContainer && blogWrapper) {
+                let scrollTimeout;
+                let isScrolled = false;
+                
                 blogContainer.addEventListener('scroll', function() {
-                    if (this.scrollTop > 50) {
-                        blogWrapper.classList.add('scrolled-down');
+                    if (this.scrollTop > 20) {
+                        if (!isScrolled) {
+                            isScrolled = true;
+                            blogWrapper.classList.add('scrolled-down');
+                        }
                     } else {
-                        blogWrapper.classList.remove('scrolled-down');
+                        if (isScrolled) {
+                            isScrolled = false;
+                            blogWrapper.classList.remove('scrolled-down');
+                        }
                     }
+                    
+                    // Add active class for animation
+                    blogWrapper.classList.add('scrolling');
+                    
+                    // Clear the timeout if it's already set
+                    clearTimeout(scrollTimeout);
+                    
+                    // Set a timeout to remove the active class after scrolling stops
+                    scrollTimeout = setTimeout(function() {
+                        blogWrapper.classList.remove('scrolling');
+                    }, 150);
                 });
+                
+                // Check initial position
+                if (blogContainer.scrollTop > 20) {
+                    blogWrapper.classList.add('scrolled-down');
+                    isScrolled = true;
+                }
             }
         });
     </script>
