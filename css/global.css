@@ -121,6 +121,10 @@ body.light-mode .topnav a {
   text-decoration: none;
   font-size: 16px;
   transition: background-color 0.3s, color 0.3s;
+  user-select: none; /* Disable text selection */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE/Edge */
 }
 
 .dark-mode .topnav a:hover {
@@ -161,6 +165,10 @@ body.light-mode .topnav a {
   display: flex;
   align-items: center;
   overflow: hidden;
+  user-select: none; /* Disable text selection */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE/Edge */
 }
 
 /* Improved menu hover effect */
@@ -196,6 +204,10 @@ body.light-mode .topnav a {
   justify-content: center;
   padding: 0 10px;
   cursor: pointer;
+  user-select: none; /* Disable text selection */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE/Edge */
 }
 
 /* Add specific styling for the dark/light toggle button */
@@ -262,6 +274,17 @@ body.light-mode .topnav a {
   justify-content: space-between;
   padding: 0 20px;
   border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+  user-select: none; /* Disable text selection */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE/Edge */
+}
+
+.side-menu-header h3 {
+  user-select: none; /* Disable text selection */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE/Edge */
 }
 
 .side-menu-close {
@@ -286,6 +309,10 @@ body.light-mode .topnav a {
   display: flex;
   align-items: center;
   border-left: 3px solid transparent;
+  user-select: none; /* Disable text selection */
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE/Edge */
 }
 
 .dark-mode .side-menu-content a {
