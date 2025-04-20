@@ -110,6 +110,7 @@ body.light-mode .topnav a {
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE/Edge */
+  padding: 0 10px; /* Add padding to prevent elements from touching edges */
 }
 
 .topnav a {
@@ -185,6 +186,7 @@ body.light-mode .topnav a {
   display: flex;
   align-items: center;
   height: 100%;
+  margin-right: 20px; /* Add margin to prevent items from touching the right edge */
 }
 
 /* Icons */
@@ -194,6 +196,11 @@ body.light-mode .topnav a {
   justify-content: center;
   padding: 0 10px;
   cursor: pointer;
+}
+
+/* Add specific styling for the dark/light toggle button */
+.darklight-icons {
+  margin-right: 5px; /* Add some spacing between the icons */
 }
 
 #white-search, #black-search, 
@@ -275,9 +282,10 @@ body.light-mode .topnav a {
 .side-menu-content a {
   padding: 15px 20px;
   text-decoration: none;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  transition: background-color 0.3s ease, border-left 0.3s ease;
   display: flex;
   align-items: center;
+  border-left: 3px solid transparent;
 }
 
 .dark-mode .side-menu-content a {
@@ -290,12 +298,12 @@ body.light-mode .topnav a {
 
 .dark-mode .side-menu-content a:hover {
   background-color: #222;
-  transform: translateX(-5px);
+  border-left: 3px solid #6366f1;
 }
 
 .light-mode .side-menu-content a:hover {
   background-color: #eee;
-  transform: translateX(-5px);
+  border-left: 3px solid #6366f1;
 }
 
 /* Menu overlay */
@@ -319,7 +327,7 @@ body.light-mode .topnav a {
 
 @media (max-width: 750px) {
   .topnav {
-    padding: 0 10px;
+    padding: 0 15px; /* Increase padding on mobile for better spacing */
   }
   
   /* Show and enable menu button only on mobile */
