@@ -268,6 +268,13 @@
     <!-- Initialize gallery filters script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Initial setup - add visible class to all items
+            const allResponsives = document.querySelectorAll('.responsive');
+            const allCategories = document.querySelectorAll('.category-row');
+            
+            allResponsives.forEach(item => item.classList.add('visible'));
+            allCategories.forEach(category => category.classList.add('visible'));
+            
             // Add click event listeners to filter buttons
             const filterButtons = document.querySelectorAll('.filter-btn');
             filterButtons.forEach(button => {
@@ -283,63 +290,93 @@
                     const categoryRows = document.querySelectorAll('.category-row');
                     
                     if (filterValue === 'all') {
-                        // Show all categories
+                        // Show all categories with animation
                         categoryRows.forEach(row => {
-                            row.style.display = 'block';
+                            row.classList.remove('hidden');
+                            row.classList.add('visible');
                             
                             // Show all gallery items within categories
                             const galleries = row.querySelectorAll('.gallery');
                             galleries.forEach(gallery => {
-                                gallery.closest('.responsive').style.display = 'block';
+                                const responsiveParent = gallery.closest('.responsive');
+                                responsiveParent.classList.remove('hidden');
+                                responsiveParent.classList.add('visible');
                             });
                         });
                     } else {
-                        // Filter based on category
+                        // Filter based on category with animation
                         categoryRows.forEach(row => {
                             const galleries = row.querySelectorAll('.gallery');
                             let hasVisibleItem = false;
                             
                             galleries.forEach(gallery => {
+                                const responsiveParent = gallery.closest('.responsive');
+                                
                                 if (gallery.getAttribute('data-category') === filterValue) {
-                                    gallery.closest('.responsive').style.display = 'block';
+                                    responsiveParent.classList.remove('hidden');
+                                    responsiveParent.classList.add('visible');
                                     hasVisibleItem = true;
                                 } else {
-                                    gallery.closest('.responsive').style.display = 'none';
+                                    responsiveParent.classList.remove('visible');
+                                    responsiveParent.classList.add('hidden');
                                 }
                             });
                             
                             // Show/hide category row based on if it has matching items
-                            row.style.display = hasVisibleItem ? 'block' : 'none';
+                            if (hasVisibleItem) {
+                                row.classList.remove('hidden');
+                                row.classList.add('visible');
+                            } else {
+                                row.classList.remove('visible');
+                                row.classList.add('hidden');
+                            }
                         });
                     }
                 });
             });
 
-            // Search functionality
+            // Search functionality with smooth transitions
             const searchInput = document.getElementById('myInput');
             if (searchInput) {
+                let searchTimeout;
+                
                 searchInput.addEventListener('keyup', function() {
-                    const searchTerm = this.value.toLowerCase();
-                    const categoryRows = document.querySelectorAll('.category-row');
+                    // Clear any pending timeout
+                    clearTimeout(searchTimeout);
                     
-                    categoryRows.forEach(row => {
-                        let hasMatch = false;
-                        const galleries = row.querySelectorAll('.gallery');
+                    // Set a timeout to delay the search execution for smoother experience
+                    searchTimeout = setTimeout(() => {
+                        const searchTerm = this.value.toLowerCase();
+                        const categoryRows = document.querySelectorAll('.category-row');
                         
-                        galleries.forEach(gallery => {
-                            const title = gallery.querySelector('strong').textContent.toLowerCase();
-                            const description = gallery.querySelector('p').textContent.toLowerCase();
+                        categoryRows.forEach(row => {
+                            let hasMatch = false;
+                            const galleries = row.querySelectorAll('.gallery');
                             
-                            if (title.includes(searchTerm) || description.includes(searchTerm)) {
-                                gallery.closest('.responsive').style.display = 'block';
-                                hasMatch = true;
+                            galleries.forEach(gallery => {
+                                const responsiveParent = gallery.closest('.responsive');
+                                const title = gallery.querySelector('strong').textContent.toLowerCase();
+                                const description = gallery.querySelector('p').textContent.toLowerCase();
+                                
+                                if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                                    responsiveParent.classList.remove('hidden');
+                                    responsiveParent.classList.add('visible');
+                                    hasMatch = true;
+                                } else {
+                                    responsiveParent.classList.remove('visible');
+                                    responsiveParent.classList.add('hidden');
+                                }
+                            });
+                            
+                            if (hasMatch) {
+                                row.classList.remove('hidden');
+                                row.classList.add('visible');
                             } else {
-                                gallery.closest('.responsive').style.display = 'none';
+                                row.classList.remove('visible');
+                                row.classList.add('hidden');
                             }
                         });
-                        
-                        row.style.display = hasMatch ? 'block' : 'none';
-                    });
+                    }, 150); // Small delay for smoother typing experience
                 });
             }
         });
@@ -347,31 +384,46 @@
 
     <script>
         function searchThing() {
-            // Get the search input value
-            const input = document.getElementById("myInput");
-            const filter = input.value.toLowerCase();
+            // Clear any pending timeout
+            if (window.searchTimeout) clearTimeout(window.searchTimeout);
             
-            // Get all category rows
-            const categoryRows = document.querySelectorAll('.category-row');
-            
-            categoryRows.forEach(row => {
-                let hasMatch = false;
-                const galleries = row.querySelectorAll('.gallery');
+            // Set a timeout to delay the search execution for smoother experience
+            window.searchTimeout = setTimeout(() => {
+                // Get the search input value
+                const input = document.getElementById("myInput");
+                const filter = input.value.toLowerCase();
                 
-                galleries.forEach(gallery => {
-                    const title = gallery.querySelector('strong').textContent.toLowerCase();
-                    const description = gallery.querySelector('p').textContent.toLowerCase();
+                // Get all category rows
+                const categoryRows = document.querySelectorAll('.category-row');
+                
+                categoryRows.forEach(row => {
+                    let hasMatch = false;
+                    const galleries = row.querySelectorAll('.gallery');
                     
-                    if (title.includes(filter) || description.includes(filter)) {
-                        gallery.closest('.responsive').style.display = 'block';
-                        hasMatch = true;
+                    galleries.forEach(gallery => {
+                        const responsiveParent = gallery.closest('.responsive');
+                        const title = gallery.querySelector('strong').textContent.toLowerCase();
+                        const description = gallery.querySelector('p').textContent.toLowerCase();
+                        
+                        if (title.includes(filter) || description.includes(filter)) {
+                            responsiveParent.classList.remove('hidden');
+                            responsiveParent.classList.add('visible');
+                            hasMatch = true;
+                        } else {
+                            responsiveParent.classList.remove('visible');
+                            responsiveParent.classList.add('hidden');
+                        }
+                    });
+                    
+                    if (hasMatch) {
+                        row.classList.remove('hidden');
+                        row.classList.add('visible');
                     } else {
-                        gallery.closest('.responsive').style.display = 'none';
+                        row.classList.remove('visible');
+                        row.classList.add('hidden');
                     }
                 });
-                
-                row.style.display = hasMatch ? 'block' : 'none';
-            });
+            }, 150); // Small delay for smoother typing experience
         }
     </script>
 </body>

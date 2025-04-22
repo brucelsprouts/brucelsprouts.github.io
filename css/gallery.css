@@ -15,6 +15,18 @@
 /* Category row styling */
 .category-row {
   margin-bottom: 40px;
+  transition: opacity 0.4s ease;
+}
+
+.category-row.hidden {
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  margin: 0;
+}
+
+.category-row.visible {
+  opacity: 1;
 }
 
 .category-header {
@@ -68,6 +80,19 @@
   width: 300px;
   flex: 0 0 auto;
   margin-bottom: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Animation classes for search filtering */
+.responsive.hidden {
+  opacity: 0;
+  transform: scale(0.95);
+  pointer-events: none;
+}
+
+.responsive.visible {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .gallery {
