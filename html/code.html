@@ -272,8 +272,15 @@
             const allResponsives = document.querySelectorAll('.responsive');
             const allCategories = document.querySelectorAll('.category-row');
             
-            allResponsives.forEach(item => item.classList.add('visible'));
-            allCategories.forEach(category => category.classList.add('visible'));
+            allResponsives.forEach(item => {
+                item.classList.remove('hidden');
+                item.classList.add('visible');
+            });
+            
+            allCategories.forEach(category => {
+                category.classList.remove('hidden');
+                category.classList.add('visible');
+            });
             
             // Add click event listeners to filter buttons
             const filterButtons = document.querySelectorAll('.filter-btn');
@@ -289,19 +296,26 @@
                     // Get all category rows
                     const categoryRows = document.querySelectorAll('.category-row');
                     
+                    // Reset search input when filtering
+                    document.getElementById('myInput').value = '';
+                    
                     if (filterValue === 'all') {
                         // Show all categories with animation
                         categoryRows.forEach(row => {
-                            row.classList.remove('hidden');
-                            row.classList.add('visible');
-                            
-                            // Show all gallery items within categories
                             const galleries = row.querySelectorAll('.gallery');
+                            
+                            // First update all gallery items
                             galleries.forEach(gallery => {
                                 const responsiveParent = gallery.closest('.responsive');
                                 responsiveParent.classList.remove('hidden');
                                 responsiveParent.classList.add('visible');
                             });
+                            
+                            // Then update category visibility
+                            setTimeout(() => {
+                                row.classList.remove('hidden');
+                                row.classList.add('visible');
+                            }, 50);
                         });
                     } else {
                         // Filter based on category with animation
@@ -309,6 +323,7 @@
                             const galleries = row.querySelectorAll('.gallery');
                             let hasVisibleItem = false;
                             
+                            // First update all gallery items in this category
                             galleries.forEach(gallery => {
                                 const responsiveParent = gallery.closest('.responsive');
                                 
@@ -317,19 +332,21 @@
                                     responsiveParent.classList.add('visible');
                                     hasVisibleItem = true;
                                 } else {
-                                    responsiveParent.classList.remove('visible');
                                     responsiveParent.classList.add('hidden');
+                                    responsiveParent.classList.remove('visible');
                                 }
                             });
                             
-                            // Show/hide category row based on if it has matching items
-                            if (hasVisibleItem) {
-                                row.classList.remove('hidden');
-                                row.classList.add('visible');
-                            } else {
-                                row.classList.remove('visible');
-                                row.classList.add('hidden');
-                            }
+                            // Then update category visibility after a small delay
+                            setTimeout(() => {
+                                if (hasVisibleItem) {
+                                    row.classList.remove('hidden');
+                                    row.classList.add('visible');
+                                } else {
+                                    row.classList.add('hidden');
+                                    row.classList.remove('visible');
+                                }
+                            }, 50);
                         });
                     }
                 });
@@ -344,6 +361,14 @@
                     // Clear any pending timeout
                     clearTimeout(searchTimeout);
                     
+                    // Set active filter to "All"
+                    document.querySelectorAll('.filter-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                        if (btn.getAttribute('data-filter') === 'all') {
+                            btn.classList.add('active');
+                        }
+                    });
+                    
                     // Set a timeout to delay the search execution for smoother experience
                     searchTimeout = setTimeout(() => {
                         const searchTerm = this.value.toLowerCase();
@@ -353,6 +378,7 @@
                             let hasMatch = false;
                             const galleries = row.querySelectorAll('.gallery');
                             
+                            // First update gallery items
                             galleries.forEach(gallery => {
                                 const responsiveParent = gallery.closest('.responsive');
                                 const title = gallery.querySelector('strong').textContent.toLowerCase();
@@ -363,18 +389,21 @@
                                     responsiveParent.classList.add('visible');
                                     hasMatch = true;
                                 } else {
-                                    responsiveParent.classList.remove('visible');
                                     responsiveParent.classList.add('hidden');
+                                    responsiveParent.classList.remove('visible');
                                 }
                             });
                             
-                            if (hasMatch) {
-                                row.classList.remove('hidden');
-                                row.classList.add('visible');
-                            } else {
-                                row.classList.remove('visible');
-                                row.classList.add('hidden');
-                            }
+                            // Then update category visibility
+                            setTimeout(() => {
+                                if (hasMatch) {
+                                    row.classList.remove('hidden');
+                                    row.classList.add('visible');
+                                } else {
+                                    row.classList.add('hidden');
+                                    row.classList.remove('visible');
+                                }
+                            }, 50);
                         });
                     }, 150); // Small delay for smoother typing experience
                 });
@@ -386,6 +415,14 @@
         function searchThing() {
             // Clear any pending timeout
             if (window.searchTimeout) clearTimeout(window.searchTimeout);
+            
+            // Set active filter to "All"
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-filter') === 'all') {
+                    btn.classList.add('active');
+                }
+            });
             
             // Set a timeout to delay the search execution for smoother experience
             window.searchTimeout = setTimeout(() => {
@@ -400,6 +437,7 @@
                     let hasMatch = false;
                     const galleries = row.querySelectorAll('.gallery');
                     
+                    // First update gallery items
                     galleries.forEach(gallery => {
                         const responsiveParent = gallery.closest('.responsive');
                         const title = gallery.querySelector('strong').textContent.toLowerCase();
@@ -410,18 +448,21 @@
                             responsiveParent.classList.add('visible');
                             hasMatch = true;
                         } else {
-                            responsiveParent.classList.remove('visible');
                             responsiveParent.classList.add('hidden');
+                            responsiveParent.classList.remove('visible');
                         }
                     });
                     
-                    if (hasMatch) {
-                        row.classList.remove('hidden');
-                        row.classList.add('visible');
-                    } else {
-                        row.classList.remove('visible');
-                        row.classList.add('hidden');
-                    }
+                    // Then update category visibility
+                    setTimeout(() => {
+                        if (hasMatch) {
+                            row.classList.remove('hidden');
+                            row.classList.add('visible');
+                        } else {
+                            row.classList.add('hidden');
+                            row.classList.remove('visible');
+                        }
+                    }, 50);
                 });
             }, 150); // Small delay for smoother typing experience
         }
