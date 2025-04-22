@@ -280,25 +280,39 @@
                     // Add active class to clicked button
                     this.classList.add('active');
                     
-                    const filter = this.getAttribute('data-filter');
+                    const filterValue = this.getAttribute('data-filter');
                     
                     // Get all category rows
                     const categoryRows = document.querySelectorAll('.category-row');
                     
-                    if (filter === 'all') {
+                    if (filterValue === 'all') {
                         // Show all categories
                         categoryRows.forEach(row => {
                             row.style.display = 'block';
+                            
+                            // Show all gallery items within categories
+                            const galleries = row.querySelectorAll('.gallery');
+                            galleries.forEach(gallery => {
+                                gallery.closest('.responsive').style.display = 'block';
+                            });
                         });
                     } else {
-                        // Show only categories that have matching items
+                        // Filter based on category
                         categoryRows.forEach(row => {
-                            const galleries = row.querySelectorAll(`.gallery[data-category="${filter}"]`);
-                            if (galleries.length > 0) {
-                                row.style.display = 'block';
-                            } else {
-                                row.style.display = 'none';
-                            }
+                            const galleries = row.querySelectorAll('.gallery');
+                            let hasVisibleItem = false;
+                            
+                            galleries.forEach(gallery => {
+                                if (gallery.getAttribute('data-category') === filterValue) {
+                                    gallery.closest('.responsive').style.display = 'block';
+                                    hasVisibleItem = true;
+                                } else {
+                                    gallery.closest('.responsive').style.display = 'none';
+                                }
+                            });
+                            
+                            // Show/hide category row based on if it has matching items
+                            row.style.display = hasVisibleItem ? 'block' : 'none';
                         });
                     }
                 });
