@@ -345,33 +345,54 @@
                             // First update all gallery items
                             galleries.forEach(gallery => {
                                 const responsiveParent = gallery.closest('.responsive');
+                                responsiveParent.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
                                 responsiveParent.classList.remove('hidden');
-                                responsiveParent.classList.add('visible');
+                                
+                                // Use setTimeout to create a staggered animation effect
+                                setTimeout(() => {
+                                    responsiveParent.classList.add('visible');
+                                    responsiveParent.style.transform = 'scale(1)';
+                                    responsiveParent.style.opacity = '1';
+                                }, 50);
                             });
                             
                             // Then update category visibility
                             setTimeout(() => {
                                 row.classList.remove('hidden');
                                 row.classList.add('visible');
-                            }, 50);
+                            }, 100);
                         });
                     } else {
                         // Filter based on category with animation
                         categoryRows.forEach(row => {
                             const galleries = row.querySelectorAll('.gallery');
                             let hasVisibleItem = false;
+                            let animationDelay = 0;
                             
                             // First update all gallery items in this category
                             galleries.forEach(gallery => {
                                 const responsiveParent = gallery.closest('.responsive');
+                                responsiveParent.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
                                 
                                 if (gallery.getAttribute('data-category') === filterValue) {
-                                    responsiveParent.classList.remove('hidden');
-                                    responsiveParent.classList.add('visible');
+                                    // Create staggered appearance for matching items
+                                    setTimeout(() => {
+                                        responsiveParent.classList.remove('hidden');
+                                        responsiveParent.style.transform = 'scale(1)';
+                                        responsiveParent.style.opacity = '1';
+                                    }, animationDelay);
+                                    
+                                    animationDelay += 50; // Increment delay for next item
                                     hasVisibleItem = true;
                                 } else {
-                                    responsiveParent.classList.add('hidden');
-                                    responsiveParent.classList.remove('visible');
+                                    // Animate items being hidden
+                                    responsiveParent.style.transform = 'scale(0.95)';
+                                    responsiveParent.style.opacity = '0';
+                                    
+                                    setTimeout(() => {
+                                        responsiveParent.classList.add('hidden');
+                                        responsiveParent.classList.remove('visible');
+                                    }, 400); // Match the transition duration
                                 }
                             });
                             
@@ -381,10 +402,16 @@
                                     row.classList.remove('hidden');
                                     row.classList.add('visible');
                                 } else {
-                                    row.classList.add('hidden');
-                                    row.classList.remove('visible');
+                                    row.style.transition = 'opacity 0.4s ease, height 0.4s ease, margin 0.4s ease';
+                                    row.style.opacity = '0';
+                                    row.style.height = '0';
+                                    
+                                    setTimeout(() => {
+                                        row.classList.add('hidden');
+                                        row.classList.remove('visible');
+                                    }, 400);
                                 }
-                            }, 50);
+                            }, 100);
                         });
                     }
                 });
@@ -415,20 +442,36 @@
                         categoryRows.forEach(row => {
                             let hasMatch = false;
                             const galleries = row.querySelectorAll('.gallery');
+                            let animationDelay = 0;
                             
-                            // First update gallery items
+                            // First update gallery items with staggered animations
                             galleries.forEach(gallery => {
                                 const responsiveParent = gallery.closest('.responsive');
+                                responsiveParent.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                                
                                 const title = gallery.querySelector('strong').textContent.toLowerCase();
                                 const description = gallery.querySelector('p').textContent.toLowerCase();
                                 
                                 if (title.includes(searchTerm) || description.includes(searchTerm)) {
-                                    responsiveParent.classList.remove('hidden');
-                                    responsiveParent.classList.add('visible');
+                                    // Create staggered appearance for matching items
+                                    setTimeout(() => {
+                                        responsiveParent.classList.remove('hidden');
+                                        responsiveParent.style.transform = 'scale(1)';
+                                        responsiveParent.style.opacity = '1';
+                                        responsiveParent.classList.add('visible');
+                                    }, animationDelay);
+                                    
+                                    animationDelay += 50; // Increment delay for next item
                                     hasMatch = true;
                                 } else {
-                                    responsiveParent.classList.add('hidden');
-                                    responsiveParent.classList.remove('visible');
+                                    // Animate items being hidden
+                                    responsiveParent.style.transform = 'scale(0.95)';
+                                    responsiveParent.style.opacity = '0';
+                                    
+                                    setTimeout(() => {
+                                        responsiveParent.classList.add('hidden');
+                                        responsiveParent.classList.remove('visible');
+                                    }, 400); // Match the transition duration
                                 }
                             });
                             
@@ -438,10 +481,16 @@
                                     row.classList.remove('hidden');
                                     row.classList.add('visible');
                                 } else {
-                                    row.classList.add('hidden');
-                                    row.classList.remove('visible');
+                                    row.style.transition = 'opacity 0.4s ease, height 0.4s ease, margin 0.4s ease';
+                                    row.style.opacity = '0';
+                                    row.style.height = '0';
+                                    
+                                    setTimeout(() => {
+                                        row.classList.add('hidden');
+                                        row.classList.remove('visible');
+                                    }, 400);
                                 }
-                            }, 50);
+                            }, 100);
                         });
                     }, 150); // Small delay for smoother typing experience
                 });
@@ -474,33 +523,58 @@
                 categoryRows.forEach(row => {
                     let hasMatch = false;
                     const galleries = row.querySelectorAll('.gallery');
+                    let animationDelay = 0;
                     
-                    // First update gallery items
+                    // First update gallery items with staggered animations
                     galleries.forEach(gallery => {
                         const responsiveParent = gallery.closest('.responsive');
+                        responsiveParent.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                        
                         const title = gallery.querySelector('strong').textContent.toLowerCase();
                         const description = gallery.querySelector('p').textContent.toLowerCase();
                         
                         if (title.includes(filter) || description.includes(filter)) {
-                            responsiveParent.classList.remove('hidden');
-                            responsiveParent.classList.add('visible');
+                            // Create staggered appearance for matching items
+                            setTimeout(() => {
+                                responsiveParent.classList.remove('hidden');
+                                responsiveParent.style.transform = 'scale(1)';
+                                responsiveParent.style.opacity = '1';
+                                responsiveParent.classList.add('visible');
+                            }, animationDelay);
+                            
+                            animationDelay += 50; // Increment delay for next item
                             hasMatch = true;
                         } else {
-                            responsiveParent.classList.add('hidden');
-                            responsiveParent.classList.remove('visible');
+                            // Animate items being hidden
+                            responsiveParent.style.transform = 'scale(0.95)';
+                            responsiveParent.style.opacity = '0';
+                            
+                            setTimeout(() => {
+                                responsiveParent.classList.add('hidden');
+                                responsiveParent.classList.remove('visible');
+                            }, 400); // Match the transition duration
                         }
                     });
                     
-                    // Then update category visibility
+                    // Then update category visibility with smooth transition
                     setTimeout(() => {
                         if (hasMatch) {
+                            row.style.transition = 'opacity 0.4s ease, height 0.4s ease, margin 0.4s ease';
+                            row.style.opacity = '1';
+                            row.style.height = '';
                             row.classList.remove('hidden');
                             row.classList.add('visible');
                         } else {
-                            row.classList.add('hidden');
-                            row.classList.remove('visible');
+                            row.style.transition = 'opacity 0.4s ease, height 0.4s ease, margin 0.4s ease';
+                            row.style.opacity = '0';
+                            row.style.height = '0';
+                            
+                            setTimeout(() => {
+                                row.classList.add('hidden');
+                                row.classList.remove('visible');
+                            }, 400);
                         }
-                    }, 50);
+                    }, 150);
                 });
             }, 150); // Small delay for smoother typing experience
         }

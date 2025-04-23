@@ -15,7 +15,7 @@
 /* Category row styling */
 .category-row {
   margin-bottom: 40px;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.4s ease, height 0.4s ease, margin 0.4s ease, visibility 0.4s ease;
 }
 
 .category-row.hidden {
@@ -25,11 +25,13 @@
   margin: 0;
   padding: 0;
   visibility: hidden;
-  transition: opacity 0.4s ease, height 0.4s ease, margin 0.4s ease, padding 0.4s ease;
+  transition: opacity 0.4s ease, height 0.4s ease, margin 0.4s ease, padding 0.4s ease, visibility 0.1s ease 0.4s;
 }
 
 .category-row.visible {
   opacity: 1;
+  visibility: visible;
+  transition: opacity 0.4s ease, height 0.4s ease, margin 0.4s ease, visibility 0s;
 }
 
 .category-header {
@@ -53,6 +55,7 @@
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
   position: relative;
+  min-height: 300px; /* Ensure there's space for animations to happen */
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -84,7 +87,9 @@
   width: 300px;
   flex: 0 0 auto;
   margin-bottom: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s ease;
+  will-change: transform, opacity;
+  position: relative;
 }
 
 /* Animation classes for search filtering */
@@ -95,6 +100,7 @@
   position: absolute;
   visibility: hidden;
   z-index: -1;
+  transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.1s ease 0.4s;
 }
 
 .responsive.visible {
@@ -102,6 +108,8 @@
   transform: scale(1);
   position: relative;
   visibility: visible;
+  z-index: 1;
+  transition: opacity 0.4s ease, transform 0.4s ease, visibility 0s;
 }
 
 .gallery {
