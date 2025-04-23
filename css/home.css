@@ -368,8 +368,15 @@
 }
 
 .highlight {
-    color: #0077cc;
     font-weight: 600;
+}
+
+.dark-mode .highlight {
+    color: #FFFFFF;
+}
+
+.light-mode .highlight {
+    color: #000000;
 }
 
 .animate-text {
