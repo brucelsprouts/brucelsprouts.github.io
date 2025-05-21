@@ -89,457 +89,202 @@
     </script>
 
     <div class="gallery-header">
-        <h1>Code Projects</h1>
-        <p>A collection of my programming and development projects showcasing different skills and technologies.</p>
-    </div>
-
-    <div class="gallery-filters">
-        <button class="filter-btn active" data-filter="all">All Projects</button>
-        <button class="filter-btn" data-filter="web">Web Development</button>
-        <button class="filter-btn" data-filter="java">Java</button>
-        <button class="filter-btn" data-filter="python">Python</button>
+        <h1>Projects</h1>
+        <p>A collection of my programming and development projects.</p>
     </div>
 
     <div class="search-container">
-        <input type="text" class="search-input" name="q" id="myInput" onkeyup="searchThing()" placeholder="Search for projects...">
+        <input type="text" class="search-input" name="q" id="myInput" onkeyup="simpleSearch()" placeholder="Search for projects...">
     </div>
 
     <div class="grid-content">
         <div class="grid-container">
-            <!-- Web Projects Category -->
-            <div class="category-row" id="webProjects">
-                <div class="category-header">
-                    <h2>Web Development</h2>
-                </div>
-                <div class="scrollable-gallery">
-                    <div class="responsive">
-                        <div class="gallery" data-category="web">
-                            <div class="inner">
-                                <a href="../pages/code/webpage.html">
-                                    <div class="image-container">
-                                        <img src="../assets/images/code/webpage.png" alt="webpage" width="600" height="400">
-                                        <div class="image-overlay"></div>
-                                    </div>
-                                </a>
-                                <div class="desc">
-                                    <strong>Webpage Portfolio</strong>
-                                    <p>Sep 2023 - Present</p>
-                                    <div class="skill-icons">
-                                        <a href="../pages/skills/html.html" title="HTML">
-                                            <img src="../assets/images/skills/htmlicon.png" alt="HTML" id="icon" width="24" height="24">
-                                        </a>
-                                        <a href="../pages/skills/css.html" title="CSS">
-                                            <img src="../assets/images/skills/cssicon.png" alt="CSS" id="icon" width="24" height="24">
-                                        </a>
-                                        <a href="../pages/skills/js.html" title="JavaScript">
-                                            <img src="../assets/images/skills/jsicon.png" alt="JavaScript" id="icon" width="24" height="24">
-                                        </a>
-                                        <a href="../pages/skills/photoshop.html" title="Photoshop">
-                                            <img src="../assets/images/skills/photoshopicon.png" alt="Photoshop" id="icon" width="24" height="24">
-                                        </a>
-                                    </div>
+            <div class="scrollable-gallery">
+                <!-- Projects -->
+                <div class="responsive">
+                    <div class="gallery" data-category="web">
+                        <div class="inner">
+                            <a href="../pages/code/webpage.html" aria-label="View Webpage Portfolio project">
+                                <div class="image-container">
+                                    <img src="../assets/images/code/webpage.png" alt="Screenshot of Webpage Portfolio" width="600" height="400">
                                 </div>
+                            </a>
+                            <div class="desc">
+                                <strong>Webpage Portfolio</strong>
+                                <p>Sep 2023 - Present</p>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Java Projects Category -->
-            <div class="category-row" id="javaProjects">
-                <div class="category-header">
-                    <h2>Java Projects</h2>
-                </div>
-                <div class="scrollable-gallery">
-                    <div class="responsive">
-                        <div class="gallery" data-category="java">
-                            <div class="inner">
-                                <a href="../pages/code/pacman.html">
-                                    <div class="image-container">
-                                        <img src="../assets/images/code/pacman.png" alt="pacman" width="600" height="400">
-                                        <div class="image-overlay"></div>
-                                    </div>
-                                </a>
-                                <div class="desc">
-                                    <strong>Pac-Man Recreation</strong>
-                                    <p>May 2023 - Jun 2023</p>
-                                    <div class="skill-icons">
-                                        <a href="../pages/skills/photoshop.html" title="Photoshop">
-                                            <img src="../assets/images/skills/photoshopicon.png" alt="Photoshop" id="icon" width="24" height="24">
-                                        </a>
-                                        <a href="../pages/skills/java.html" title="Java">
-                                            <img src="../assets/images/skills/javaicon.png" alt="Java" id="icon" width="24" height="24">
-                                        </a>
-                                    </div>
+                <div class="responsive">
+                    <div class="gallery" data-category="java">
+                        <div class="inner">
+                            <a href="../pages/code/pacman.html" aria-label="View Pac-Man Recreation project">
+                                <div class="image-container">
+                                    <img src="../assets/images/code/pacman.png" alt="Screenshot of Pac-Man Recreation" width="600" height="400">
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="responsive">
-                        <div class="gallery" data-category="java">
-                            <div class="inner">
-                                <a href="../pages/code/towerclimber.html">
-                                    <div class="image-container">
-                                        <img src="../assets/images/code/towerclimber.png" alt="towerclimber" width="600" height="400">
-                                        <div class="image-overlay"></div>
-                                    </div>
-                                </a>
-                                <div class="desc">
-                                    <strong>Tower Climber</strong>
-                                    <p>Jun 2022 - Jul 2022</p>
-                                    <div class="skill-icons">
-                                        <a href="../pages/skills/photoshop.html" title="Photoshop">
-                                            <img src="../assets/images/skills/photoshopicon.png" alt="Photoshop" id="icon" width="24" height="24">
-                                        </a>
-                                        <a href="../pages/skills/java.html" title="Java">
-                                            <img src="../assets/images/skills/javaicon.png" alt="Java" id="icon" width="24" height="24">
-                                        </a>
-                                    </div>
-                                </div>
+                            </a>
+                            <div class="desc">
+                                <strong>Pac-Man Recreation</strong>
+                                <p>May 2023 - Jun 2023</p>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="responsive">
+                    <div class="gallery" data-category="java">
+                        <div class="inner">
+                            <a href="../pages/code/towerclimber.html" aria-label="View Tower Climber project">
+                                <div class="image-container">
+                                    <img src="../assets/images/code/towerclimber.png" alt="Screenshot of Tower Climber game" width="600" height="400">
+                                </div>
+                            </a>
+                            <div class="desc">
+                                <strong>Tower Climber</strong>
+                                <p>Jun 2022 - Jul 2022</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="responsive">
+                    <div class="gallery" data-category="python">
+                        <div class="inner">
+                            <a href="../pages/code/yttag.html" aria-label="View YouTube Thumbnail Analyzer project">
+                                <div class="image-container">
+                                    <img src="../assets/images/code/yttag.png" alt="Screenshot of YouTube Thumbnail Analyzer" width="600" height="400">
+                                </div>
+                            </a>
+                            <div class="desc">
+                                <strong>YouTube Thumbnail Analyzer</strong>
+                                <p>Jan 2023 - Feb 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="responsive">
+                    <div class="gallery" data-category="python">
+                        <div class="inner">
+                            <a href="../pages/code/rl.html" aria-label="View Reinforcement Learning project">
+                                <div class="image-container">
+                                    <img src="../assets/images/code/rl.png" alt="Screenshot of Reinforcement Learning project" width="600" height="400">
+                                </div>
+                            </a>
+                            <div class="desc">
+                                <strong>Reinforcement Learning</strong>
+                                <p>Feb 2023 - Mar 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="responsive">
+                    <div class="gallery" data-category="web">
+                        <div class="inner">
+                            <a href="../pages/code/ignitewebsite.html" aria-label="View Ignite Youth Club Website project">
+                                <div class="image-container">
+                                    <img src="../assets/images/code/ignitewebsite.png" alt="Screenshot of Ignite Youth Club Website" width="600" height="400">
+                                </div>
+                            </a>
+                            <div class="desc">
+                                <strong>Ignite Youth Club Website</strong>
+                                <p>Mar 2022 - May 2022</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 
-    <!-- Footer Section -->
-    <footer class="footer">
+    <!-- Footer -->
+    <footer>
         <div class="footer-content">
-            <!-- About Section -->
-            <div class="footer-section">
-                <h3 class="footer-title">About Me</h3>
-                <p>Computer Science student at Western University passionate about web development, video editing, and programming. Always learning and exploring new technologies.</p>
-                <div class="social-links">
-                    <a href="https://github.com/brucelsprouts" target="_blank" class="social-link" aria-label="GitHub">
-                        <img src="../assets/images/home/dark-github-icon.png" alt="GitHub">
-                    </a>
-                    <a href="https://www.linkedin.com/in/bruce-lin-6284b323b/" target="_blank" class="social-link" aria-label="LinkedIn">
-                        <img src="../assets/images/home/dark-linkedin-icon.png" alt="LinkedIn">
-                    </a>
-                    <a href="https://www.youtube.com/channel/UCIZq5zDOCw1Xq49H1Mpx05Q" target="_blank" class="social-link" aria-label="YouTube">
-                        <img src="../assets/images/home/dark-youtube-icon.png" alt="YouTube">
-                    </a>
-                    <a href="https://www.instagram.com/brucelsproutss/" target="_blank" class="social-link" aria-label="Instagram">
-                        <img src="../assets/images/home/dark-instagram-icon.png" alt="Instagram">
-                    </a>
-                </div>
+            <div class="footer-text">
+                <p>&copy; 2024 Bruce Lin. All rights reserved.</p>
+                <p>Built with HTML, CSS, and JavaScript.</p>
             </div>
-
-            <!-- Quick Links Section -->
-            <div class="footer-section">
-                <h3 class="footer-title">Quick Links</h3>
-                <ul class="quick-links">
-                    <li><a href="home.html">Home</a></li>
-                    <li><a href="code.html">Code Projects</a></li>
-                    <li><a href="video.html">Video Portfolio</a></li>
-                    <li><a href="connect.html">Connect</a></li>
-                </ul>
-            </div>
-
-            <!-- Contact Section -->
-            <div class="footer-section">
-                <h3 class="footer-title">Contact Me</h3>
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <img src="../assets/images/icons/email-icon.png" alt="Email" class="contact-icon">
-                        <div class="contact-text">
-                            <a href="mailto:bruce700982@gmail.com">bruce700982@gmail.com</a>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <img src="../assets/images/icons/phone-icon.png" alt="Phone" class="contact-icon">
-                        <div class="contact-text">+1 437 988 41012</div>
-                    </div>
-                    <div class="contact-item">
-                        <img src="../assets/images/icons/location-icon.png" alt="Location" class="contact-icon">
-                        <div class="contact-text">London, Ontario, Canada</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <p class="copyright">&copy; 2024 Bruce Lin. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- Initialize gallery filters script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Initial setup - add visible class to all items
-            const allResponsives = document.querySelectorAll('.responsive');
-            const allCategories = document.querySelectorAll('.category-row');
+            // Make sure gallery layout is properly initialized
+            initGalleryLayout();
             
-            allResponsives.forEach(item => {
-                item.classList.remove('hidden');
-                item.classList.add('visible');
-            });
-            
-            allCategories.forEach(category => {
-                category.classList.remove('hidden');
-                category.classList.add('visible');
-            });
-            
-            // Add click event listeners to filter buttons
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Remove active class from all buttons
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    // Add active class to clicked button
-                    this.classList.add('active');
-                    
-                    const filterValue = this.getAttribute('data-filter');
-                    
-                    // Get all category rows
-                    const categoryRows = document.querySelectorAll('.category-row');
-                    
-                    // Reset search input when filtering
-                    document.getElementById('myInput').value = '';
-                    
-                    if (filterValue === 'all') {
-                        // Show all categories with animation
-                        categoryRows.forEach(row => {
-                            const galleries = row.querySelectorAll('.gallery');
-                            
-                            // First update all gallery items
-                            galleries.forEach(gallery => {
-                                const responsiveParent = gallery.closest('.responsive');
-                                responsiveParent.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-                                responsiveParent.classList.remove('hidden');
-                                
-                                // Use setTimeout to create a staggered animation effect
-                                setTimeout(() => {
-                                    responsiveParent.classList.add('visible');
-                                    responsiveParent.style.transform = 'scale(1)';
-                                    responsiveParent.style.opacity = '1';
-                                }, 50);
-                            });
-                            
-                            // Then update category visibility
-                            setTimeout(() => {
-                                row.classList.remove('hidden');
-                                row.classList.add('visible');
-                            }, 100);
-                        });
-                    } else {
-                        // Filter based on category with animation
-                        categoryRows.forEach(row => {
-                            const galleries = row.querySelectorAll('.gallery');
-                            let hasVisibleItem = false;
-                            let animationDelay = 0;
-                            
-                            // First update all gallery items in this category
-                            galleries.forEach(gallery => {
-                                const responsiveParent = gallery.closest('.responsive');
-                                responsiveParent.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-                                
-                                if (gallery.getAttribute('data-category') === filterValue) {
-                                    // Create staggered appearance for matching items
-                                    setTimeout(() => {
-                                        responsiveParent.classList.remove('hidden');
-                                        responsiveParent.classList.add('visible');
-                                        responsiveParent.style.transform = 'scale(1)';
-                                        responsiveParent.style.opacity = '1';
-                                    }, animationDelay);
-                                    
-                                    animationDelay += 50; // Increment delay for next item
-                                    hasVisibleItem = true;
-                                } else {
-                                    // Animate items being hidden
-                                    responsiveParent.style.transform = 'scale(0.95)';
-                                    responsiveParent.style.opacity = '0';
-                                    
-                                    setTimeout(() => {
-                                        responsiveParent.classList.add('hidden');
-                                        responsiveParent.classList.remove('visible');
-                                    }, 400); // Match the transition duration
-                                }
-                            });
-                            
-                            // Then update category visibility after a small delay
-                            setTimeout(() => {
-                                if (hasVisibleItem) {
-                                    row.classList.remove('hidden');
-                                    row.classList.add('visible');
-                                } else {
-                                    row.style.transition = 'opacity 0.4s ease, height 0.4s ease, margin 0.4s ease';
-                                    row.style.opacity = '0';
-                                    row.style.height = '0';
-                                    
-                                    setTimeout(() => {
-                                        row.classList.add('hidden');
-                                        row.classList.remove('visible');
-                                    }, 400);
-                                }
-                            }, 100);
-                        });
-                    }
-                });
-            });
-
-            // Search functionality with smooth transitions
+            // Set up search functionality
             const searchInput = document.getElementById('myInput');
             if (searchInput) {
-                let searchTimeout;
-                
-                searchInput.addEventListener('keyup', function() {
-                    // Clear any pending timeout
-                    clearTimeout(searchTimeout);
-                    
-                    // Set active filter to "All"
-                    document.querySelectorAll('.filter-btn').forEach(btn => {
-                        btn.classList.remove('active');
-                        if (btn.getAttribute('data-filter') === 'all') {
-                            btn.classList.add('active');
-                        }
-                    });
-                    
-                    // Set a timeout to delay the search execution for smoother experience
-                    searchTimeout = setTimeout(() => {
-                        const searchTerm = this.value.toLowerCase();
-                        const categoryRows = document.querySelectorAll('.category-row');
-                        
-                        categoryRows.forEach(row => {
-                            let hasMatch = false;
-                            const galleries = row.querySelectorAll('.gallery');
-                            let animationDelay = 0;
-                            
-                            // First update gallery items with staggered animations
-                            galleries.forEach(gallery => {
-                                const responsiveParent = gallery.closest('.responsive');
-                                responsiveParent.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-                                
-                                const title = gallery.querySelector('strong').textContent.toLowerCase();
-                                const description = gallery.querySelector('p').textContent.toLowerCase();
-                                
-                                if (title.includes(searchTerm) || description.includes(searchTerm)) {
-                                    // Create staggered appearance for matching items
-                                    setTimeout(() => {
-                                        responsiveParent.classList.remove('hidden');
-                                        responsiveParent.style.transform = 'scale(1)';
-                                        responsiveParent.style.opacity = '1';
-                                        responsiveParent.classList.add('visible');
-                                    }, animationDelay);
-                                    
-                                    animationDelay += 50; // Increment delay for next item
-                                    hasMatch = true;
-                                } else {
-                                    // Animate items being hidden
-                                    responsiveParent.style.transform = 'scale(0.95)';
-                                    responsiveParent.style.opacity = '0';
-                                    
-                                    setTimeout(() => {
-                                        responsiveParent.classList.add('hidden');
-                                        responsiveParent.classList.remove('visible');
-                                    }, 400); // Match the transition duration
-                                }
-                            });
-                            
-                            // Then update category visibility
-                            setTimeout(() => {
-                                if (hasMatch) {
-                                    row.classList.remove('hidden');
-                                    row.classList.add('visible');
-                                } else {
-                                    row.style.transition = 'opacity 0.4s ease, height 0.4s ease, margin 0.4s ease';
-                                    row.style.opacity = '0';
-                                    row.style.height = '0';
-                                    
-                                    setTimeout(() => {
-                                        row.classList.add('hidden');
-                                        row.classList.remove('visible');
-                                    }, 400);
-                                }
-                            }, 100);
-                        });
-                    }, 150); // Small delay for smoother typing experience
-                });
+                searchInput.addEventListener('keyup', simpleSearch);
             }
         });
-    </script>
-
-    <script>
-        function searchThing() {
-            // Clear any pending timeout
-            if (window.searchTimeout) clearTimeout(window.searchTimeout);
+        
+        function initGalleryLayout() {
+            // Apply visible class to all gallery items initially
+            const galleryItems = document.querySelectorAll('.gallery');
+            galleryItems.forEach(gallery => {
+                const responsiveParent = gallery.closest('.responsive');
+                responsiveParent.style.display = '';
+                responsiveParent.style.opacity = '1';
+            });
+        }
+        
+        function simpleSearch() {
+            // Get the search input value
+            const input = document.getElementById("myInput");
+            const filter = input.value.toLowerCase();
             
-            // Set active filter to "All"
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.getAttribute('data-filter') === 'all') {
-                    btn.classList.add('active');
+            // Get all gallery items
+            const galleryItems = document.querySelectorAll('.gallery');
+            
+            // Track if we found any matches
+            let foundMatches = false;
+            
+            // Loop through all gallery items and show/hide based on search
+            galleryItems.forEach(gallery => {
+                const title = gallery.querySelector('strong').textContent.toLowerCase();
+                const description = gallery.querySelector('p').textContent.toLowerCase();
+                const responsiveParent = gallery.closest('.responsive');
+                
+                // Check if the item matches the search
+                const isMatch = title.includes(filter) || description.includes(filter);
+                
+                // Update match counter
+                if (isMatch) {
+                    foundMatches = true;
+                }
+                
+                // Show or hide the item with a smooth transition
+                if (isMatch) {
+                    responsiveParent.style.display = '';
+                    setTimeout(() => {
+                        responsiveParent.style.opacity = '1';
+                    }, 10);
+                } else {
+                    responsiveParent.style.opacity = '0';
+                    setTimeout(() => {
+                        responsiveParent.style.display = 'none';
+                    }, 300); // Match transition duration in CSS
                 }
             });
             
-            // Set a timeout to delay the search execution for smoother experience
-            window.searchTimeout = setTimeout(() => {
-                // Get the search input value
-                const input = document.getElementById("myInput");
-                const filter = input.value.toLowerCase();
-                
-                // Get all category rows
-                const categoryRows = document.querySelectorAll('.category-row');
-                
-                categoryRows.forEach(row => {
-                    let hasMatch = false;
-                    const galleries = row.querySelectorAll('.gallery');
-                    let animationDelay = 0;
-                    
-                    // First update gallery items with staggered animations
-                    galleries.forEach(gallery => {
-                        const responsiveParent = gallery.closest('.responsive');
-                        responsiveParent.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-                        
-                        const title = gallery.querySelector('strong').textContent.toLowerCase();
-                        const description = gallery.querySelector('p').textContent.toLowerCase();
-                        
-                        if (title.includes(filter) || description.includes(filter)) {
-                            // Create staggered appearance for matching items
-                            setTimeout(() => {
-                                responsiveParent.classList.remove('hidden');
-                                responsiveParent.style.transform = 'scale(1)';
-                                responsiveParent.style.opacity = '1';
-                                responsiveParent.classList.add('visible');
-                            }, animationDelay);
-                            
-                            animationDelay += 50; // Increment delay for next item
-                            hasMatch = true;
-                        } else {
-                            // Animate items being hidden
-                            responsiveParent.style.transform = 'scale(0.95)';
-                            responsiveParent.style.opacity = '0';
-                            
-                            setTimeout(() => {
-                                responsiveParent.classList.add('hidden');
-                                responsiveParent.classList.remove('visible');
-                            }, 400); // Match the transition duration
-                        }
-                    });
-                    
-                    // Then update category visibility with smooth transition
-                    setTimeout(() => {
-                        if (hasMatch) {
-                            row.style.transition = 'opacity 0.4s ease, height 0.4s ease, margin 0.4s ease';
-                            row.style.opacity = '1';
-                            row.style.height = '';
-                            row.classList.remove('hidden');
-                            row.classList.add('visible');
-                        } else {
-                            row.style.transition = 'opacity 0.4s ease, height 0.4s ease, margin 0.4s ease';
-                            row.style.opacity = '0';
-                            row.style.height = '0';
-                            
-                            setTimeout(() => {
-                                row.classList.add('hidden');
-                                row.classList.remove('visible');
-                            }, 400);
-                        }
-                    }, 150);
-                });
-            }, 150); // Small delay for smoother typing experience
+            // Show a message if no matches found
+            const noResultsMsg = document.getElementById('no-results');
+            if (!foundMatches && filter.length > 0) {
+                if (!noResultsMsg) {
+                    const msg = document.createElement('p');
+                    msg.id = 'no-results';
+                    msg.className = 'no-results-message';
+                    msg.textContent = 'No matching projects found. Try a different search term.';
+                    document.querySelector('.grid-content').appendChild(msg);
+                }
+            } else if (noResultsMsg) {
+                noResultsMsg.remove();
+            }
         }
     </script>
 </body>

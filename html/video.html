@@ -89,149 +89,109 @@
     </script>
 
     <div class="gallery-header">
-        <h1>Video Portfolio</h1>
-        <p>A collection of my video editing and motion graphics projects created with Adobe After Effects.</p>
-    </div>
-
-    <div class="gallery-filters">
-        <button class="filter-btn active" data-filter="all">All Videos</button>
-        <button class="filter-btn" data-filter="motion">Motion Graphics</button>
-        <button class="filter-btn" data-filter="editing">Video Editing</button>
-        <button class="filter-btn" data-filter="music">Music Videos</button>
+        <h1>Video Projects</h1>
+        <p>A collection of my video editing and motion graphics projects.</p>
     </div>
 
     <div class="search-container">
-        <input type="text" class="search-input" name="q" id="myInput" onkeyup="searchThing()" placeholder="Search videos...">
+        <input type="text" class="search-input" name="q" id="myInput" onkeyup="simpleSearch()" placeholder="Search videos...">
     </div>
 
     <div class="grid-content">
         <div class="grid-container">
-            <!-- Motion Graphics Category -->
-            <div class="category-row" id="motionProjects">
-                <div class="category-header">
-                    <h2>Motion Graphics</h2>
-                </div>
-                <div class="scrollable-gallery">
-                    <div class="responsive">
-                        <div class="gallery" data-category="motion">
-                            <div class="inner">
-                                <a href="../pages/video/thecountdown.html">
-                                    <div class="image-container">
-                                        <img src="../assets/images/video/thecountdown.png" alt="The Countdown" width="600" height="400">
-                                        <div class="image-overlay"></div>
-                                    </div>
-                                </a>
-                                <div class="desc">
-                                    <strong>The Countdown</strong>
-                                    <p>July 31, 2024 - August 10, 2024</p>
-                                    <div class="skill-icons">
-                                        <a href="../pages/skills/aftereffects.html" title="After Effects">
-                                            <img src="../assets/images/skills/aeicon.png" alt="After Effects" id="icon" width="24" height="24">
-                                        </a>
-                                    </div>
+            <div class="scrollable-gallery">
+                <!-- Video Projects -->
+                <div class="responsive">
+                    <div class="gallery" data-category="motion">
+                        <div class="inner">
+                            <a href="../pages/video/thecountdown.html" aria-label="View The Countdown project">
+                                <div class="image-container">
+                                    <img src="../assets/images/video/thecountdown.png" alt="Screenshot of The Countdown video" width="600" height="400">
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="responsive">
-                        <div class="gallery" data-category="motion">
-                            <div class="inner">
-                                <a href="../pages/video/themagicbook.html">
-                                    <div class="image-container">
-                                        <img src="../assets/images/video/themagicboook.png" alt="The Magic Book" width="600" height="400">
-                                        <div class="image-overlay"></div>
-                                    </div>
-                                </a>
-                                <div class="desc">
-                                    <strong>The Magic Book</strong>
-                                    <p>July 10, 2024 - July 25, 2024</p>
-                                    <div class="skill-icons">
-                                        <a href="../pages/skills/aftereffects.html" title="After Effects">
-                                            <img src="../assets/images/skills/aeicon.png" alt="After Effects" id="icon" width="24" height="24">
-                                        </a>
-                                    </div>
-                                </div>
+                            </a>
+                            <div class="desc">
+                                <strong>The Countdown</strong>
+                                <p>July 31, 2024 - August 10, 2024</p>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Video Editing Category -->
-            <div class="category-row" id="editingProjects">
-                <div class="category-header">
-                    <h2>Video Editing</h2>
-                </div>
-                <div class="scrollable-gallery">
-                    <div class="responsive">
-                        <div class="gallery" data-category="editing">
-                            <div class="inner">
-                                <a href="../pages/video/smokinjoe.html">
-                                    <div class="image-container">
-                                        <img src="../assets/images/video/smokinjoe.png" alt="Smokin' Joe" width="600" height="400">
-                                        <div class="image-overlay"></div>
-                                    </div>
-                                </a>
-                                <div class="desc">
-                                    <strong>Smokin' Joe</strong>
-                                    <p>July 25, 2024 - August 7, 2024</p>
-                                    <div class="skill-icons">
-                                        <a href="../pages/skills/aftereffects.html" title="After Effects">
-                                            <img src="../assets/images/skills/aeicon.png" alt="After Effects" id="icon" width="24" height="24">
-                                        </a>
-                                    </div>
+                <div class="responsive">
+                    <div class="gallery" data-category="editing">
+                        <div class="inner">
+                            <a href="../pages/video/summerjam.html" aria-label="View Summer Jam project">
+                                <div class="image-container">
+                                    <img src="../assets/images/video/summerjam.png" alt="Screenshot of Summer Jam video" width="600" height="400">
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="responsive">
-                        <div class="gallery" data-category="editing">
-                            <div class="inner">
-                                <a href="../pages/video/foursquaremilestoglory.html">
-                                    <div class="image-container">
-                                        <img src="../assets/images/video/foursquaremilestoglory.png" alt="Four Square Miles to Glory" width="600" height="400">
-                                        <div class="image-overlay"></div>
-                                    </div>
-                                </a>
-                                <div class="desc">
-                                    <strong>Four Square Miles to Glory</strong>
-                                    <p>June 10, 2024 - June 18, 2024</p>
-                                    <div class="skill-icons">
-                                        <a href="../pages/skills/aftereffects.html" title="After Effects">
-                                            <img src="../assets/images/skills/aeicon.png" alt="After Effects" id="icon" width="24" height="24">
-                                        </a>
-                                    </div>
-                                </div>
+                            </a>
+                            <div class="desc">
+                                <strong>Summer Jam</strong>
+                                <p>June 15, 2023 - June 30, 2023</p>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Music Videos Category -->
-            <div class="category-row" id="musicProjects">
-                <div class="category-header">
-                    <h2>Music Videos</h2>
-                </div>
-                <div class="scrollable-gallery">
-                    <div class="responsive">
-                        <div class="gallery" data-category="music">
-                            <div class="inner">
-                                <a href="../pages/video/musicvideo1.html">
-                                    <div class="image-container">
-                                        <img src="../assets/images/video/musicvideo1.png" alt="Music Video 1" width="600" height="400">
-                                        <div class="image-overlay"></div>
-                                    </div>
-                                </a>
-                                <div class="desc">
-                                    <strong>Music Video 1</strong>
-                                    <p>February 5, 2024 - February 20, 2024</p>
-                                    <div class="skill-icons">
-                                        <a href="../pages/skills/aftereffects.html" title="After Effects">
-                                            <img src="../assets/images/skills/aeicon.png" alt="After Effects" id="icon" width="24" height="24">
-                                        </a>
-                                    </div>
+                <div class="responsive">
+                    <div class="gallery" data-category="music">
+                        <div class="inner">
+                            <a href="../pages/video/cityofstars.html" aria-label="View City of Stars project">
+                                <div class="image-container">
+                                    <img src="../assets/images/video/cityofstars.png" alt="Screenshot of City of Stars music video" width="600" height="400">
                                 </div>
+                            </a>
+                            <div class="desc">
+                                <strong>City of Stars</strong>
+                                <p>August 10, 2023 - August 20, 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="responsive">
+                    <div class="gallery" data-category="motion">
+                        <div class="inner">
+                            <a href="../pages/video/visualizer.html" aria-label="View Audio Visualizer project">
+                                <div class="image-container">
+                                    <img src="../assets/images/video/visualizer.png" alt="Screenshot of Audio Visualizer project" width="600" height="400">
+                                </div>
+                            </a>
+                            <div class="desc">
+                                <strong>Audio Visualizer</strong>
+                                <p>March 5, 2023 - March 12, 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="responsive">
+                    <div class="gallery" data-category="editing">
+                        <div class="inner">
+                            <a href="../pages/video/documentary.html" aria-label="View Short Documentary project">
+                                <div class="image-container">
+                                    <img src="../assets/images/video/documentary.png" alt="Screenshot of Short Documentary" width="600" height="400">
+                                </div>
+                            </a>
+                            <div class="desc">
+                                <strong>Short Documentary</strong>
+                                <p>April 15, 2023 - May 1, 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="responsive">
+                    <div class="gallery" data-category="motion">
+                        <div class="inner">
+                            <a href="../pages/video/typography.html" aria-label="View Kinetic Typography project">
+                                <div class="image-container">
+                                    <img src="../assets/images/video/typography.png" alt="Screenshot of Kinetic Typography project" width="600" height="400">
+                                </div>
+                            </a>
+                            <div class="desc">
+                                <strong>Kinetic Typography</strong>
+                                <p>February 10, 2022 - February 25, 2022</p>
                             </div>
                         </div>
                     </div>
@@ -240,343 +200,90 @@
         </div>
     </div>
 
-    <!-- Footer Section -->
-    <footer class="footer">
+    <!-- Footer -->
+    <footer>
         <div class="footer-content">
-            <!-- About Section -->
-            <div class="footer-section">
-                <h3 class="footer-title">About Me</h3>
-                <p>Computer Science student at Western University passionate about web development, video editing, and programming. Always learning and exploring new technologies.</p>
-                <div class="social-links">
-                    <a href="https://github.com/brucelsprouts" target="_blank" class="social-link" aria-label="GitHub">
-                        <img src="../assets/images/home/dark-github-icon.png" alt="GitHub">
-                    </a>
-                    <a href="https://www.linkedin.com/in/bruce-lin-6284b323b/" target="_blank" class="social-link" aria-label="LinkedIn">
-                        <img src="../assets/images/home/dark-linkedin-icon.png" alt="LinkedIn">
-                    </a>
-                    <a href="https://www.youtube.com/channel/UCIZq5zDOCw1Xq49H1Mpx05Q" target="_blank" class="social-link" aria-label="YouTube">
-                        <img src="../assets/images/home/dark-youtube-icon.png" alt="YouTube">
-                    </a>
-                    <a href="https://www.instagram.com/brucelsproutss/" target="_blank" class="social-link" aria-label="Instagram">
-                        <img src="../assets/images/home/dark-instagram-icon.png" alt="Instagram">
-                    </a>
-                </div>
+            <div class="footer-text">
+                <p>&copy; 2024 Bruce Lin. All rights reserved.</p>
+                <p>Built with HTML, CSS, and JavaScript.</p>
             </div>
-
-            <!-- Quick Links Section -->
-            <div class="footer-section">
-                <h3 class="footer-title">Quick Links</h3>
-                <ul class="quick-links">
-                    <li><a href="home.html">Home</a></li>
-                    <li><a href="code.html">Code Projects</a></li>
-                    <li><a href="video.html">Video Portfolio</a></li>
-                    <li><a href="connect.html">Connect</a></li>
-                </ul>
-            </div>
-
-            <!-- Contact Section -->
-            <div class="footer-section">
-                <h3 class="footer-title">Contact Me</h3>
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <img src="../assets/images/icons/email-icon.png" alt="Email" class="contact-icon">
-                        <div class="contact-text">
-                            <a href="mailto:bruce700982@gmail.com">bruce700982@gmail.com</a>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <img src="../assets/images/icons/phone-icon.png" alt="Phone" class="contact-icon">
-                        <div class="contact-text">+1 437 988 41012</div>
-                    </div>
-                    <div class="contact-item">
-                        <img src="../assets/images/icons/location-icon.png" alt="Location" class="contact-icon">
-                        <div class="contact-text">London, Ontario, Canada</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <p class="copyright">&copy; 2024 Bruce Lin. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- Initialize gallery filters script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Initial setup - add visible class to all items
-            const allResponsives = document.querySelectorAll('.responsive');
-            const allCategories = document.querySelectorAll('.category-row');
+            // Make sure gallery layout is properly initialized
+            initGalleryLayout();
             
-            allResponsives.forEach(item => {
-                item.classList.remove('hidden');
-                item.classList.add('visible');
-            });
-            
-            allCategories.forEach(category => {
-                category.classList.remove('hidden');
-                category.classList.add('visible');
-            });
-            
-            // Add click event listeners to filter buttons
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Remove active class from all buttons
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    
-                    // Add active class to clicked button
-                    this.classList.add('active');
-                    
-                    // Get filter value
-                    const filterValue = this.getAttribute('data-filter');
-                    
-                    // Get all category rows
-                    const categoryRows = document.querySelectorAll('.category-row');
-                    
-                    // Reset search input when filtering
-                    document.getElementById('myInput').value = '';
-                    
-                    if (filterValue === 'all') {
-                        // Show all categories with animation
-                        categoryRows.forEach(row => {
-                            const galleries = row.querySelectorAll('.gallery');
-                            
-                            // First update all gallery items
-                            galleries.forEach(gallery => {
-                                const responsiveParent = gallery.closest('.responsive');
-                                responsiveParent.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-                                responsiveParent.classList.remove('hidden');
-                                
-                                // Use setTimeout to create a staggered animation effect
-                                setTimeout(() => {
-                                    responsiveParent.classList.add('visible');
-                                    responsiveParent.style.transform = 'scale(1)';
-                                    responsiveParent.style.opacity = '1';
-                                }, 50);
-                            });
-                            
-                            // Then update category visibility
-                            setTimeout(() => {
-                                row.classList.remove('hidden');
-                                row.classList.add('visible');
-                            }, 100);
-                        });
-                    } else {
-                        // Filter based on category with animation
-                        categoryRows.forEach(row => {
-                            const galleries = row.querySelectorAll('.gallery');
-                            let hasVisibleItem = false;
-                            let animationDelay = 0;
-                            
-                            // First update all gallery items in this category
-                            galleries.forEach(gallery => {
-                                const responsiveParent = gallery.closest('.responsive');
-                                responsiveParent.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-                                
-                                if (gallery.getAttribute('data-category') === filterValue) {
-                                    // Create staggered appearance for matching items
-                                    setTimeout(() => {
-                                        responsiveParent.classList.remove('hidden');
-                                        responsiveParent.style.transform = 'scale(1)';
-                                        responsiveParent.style.opacity = '1';
-                                    }, animationDelay);
-                                    
-                                    animationDelay += 50; // Increment delay for next item
-                                    hasVisibleItem = true;
-                                } else {
-                                    // Animate items being hidden
-                                    responsiveParent.style.transform = 'scale(0.95)';
-                                    responsiveParent.style.opacity = '0';
-                                    
-                                    setTimeout(() => {
-                                        responsiveParent.classList.add('hidden');
-                                        responsiveParent.classList.remove('visible');
-                                    }, 400); // Match the transition duration
-                                }
-                            });
-                            
-                            // Then update category visibility after a small delay
-                            setTimeout(() => {
-                                if (hasVisibleItem) {
-                                    row.classList.remove('hidden');
-                                    row.classList.add('visible');
-                                } else {
-                                    row.style.transition = 'opacity 0.4s ease, height 0.4s ease, margin 0.4s ease';
-                                    row.style.opacity = '0';
-                                    row.style.height = '0';
-                                    
-                                    setTimeout(() => {
-                                        row.classList.add('hidden');
-                                        row.classList.remove('visible');
-                                    }, 400);
-                                }
-                            }, 100);
-                        });
-                    }
-                });
-            });
-            
-            // Search functionality with smooth transitions
+            // Set up search functionality
             const searchInput = document.getElementById('myInput');
             if (searchInput) {
-                let searchTimeout;
-                
-                searchInput.addEventListener('keyup', function() {
-                    // Clear any pending timeout
-                    clearTimeout(searchTimeout);
-                    
-                    // Set active filter to "All"
-                    document.querySelectorAll('.filter-btn').forEach(btn => {
-                        btn.classList.remove('active');
-                        if (btn.getAttribute('data-filter') === 'all') {
-                            btn.classList.add('active');
-                        }
-                    });
-                    
-                    // Set a timeout to delay the search execution for smoother experience
-                    searchTimeout = setTimeout(() => {
-                        const searchTerm = this.value.toLowerCase();
-                        const categoryRows = document.querySelectorAll('.category-row');
-                        
-                        categoryRows.forEach(row => {
-                            let hasMatch = false;
-                            const galleries = row.querySelectorAll('.gallery');
-                            let animationDelay = 0;
-                            
-                            // First update gallery items with staggered animations
-                            galleries.forEach(gallery => {
-                                const responsiveParent = gallery.closest('.responsive');
-                                responsiveParent.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-                                
-                                const title = gallery.querySelector('strong').textContent.toLowerCase();
-                                const description = gallery.querySelector('p').textContent.toLowerCase();
-                                
-                                if (title.includes(searchTerm) || description.includes(searchTerm)) {
-                                    // Create staggered appearance for matching items
-                                    setTimeout(() => {
-                                        responsiveParent.classList.remove('hidden');
-                                        responsiveParent.style.transform = 'scale(1)';
-                                        responsiveParent.style.opacity = '1';
-                                        responsiveParent.classList.add('visible');
-                                    }, animationDelay);
-                                    
-                                    animationDelay += 50; // Increment delay for next item
-                                    hasMatch = true;
-                                } else {
-                                    // Animate items being hidden
-                                    responsiveParent.style.transform = 'scale(0.95)';
-                                    responsiveParent.style.opacity = '0';
-                                    
-                                    setTimeout(() => {
-                                        responsiveParent.classList.add('hidden');
-                                        responsiveParent.classList.remove('visible');
-                                    }, 400); // Match the transition duration
-                                }
-                            });
-                            
-                            // Then update category visibility
-                            setTimeout(() => {
-                                if (hasMatch) {
-                                    row.classList.remove('hidden');
-                                    row.classList.add('visible');
-                                } else {
-                                    row.style.transition = 'opacity 0.4s ease, height 0.4s ease, margin 0.4s ease';
-                                    row.style.opacity = '0';
-                                    row.style.height = '0';
-                                    
-                                    setTimeout(() => {
-                                        row.classList.add('hidden');
-                                        row.classList.remove('visible');
-                                    }, 400);
-                                }
-                            }, 100);
-                        });
-                    }, 150); // Small delay for smoother typing experience
-                });
+                searchInput.addEventListener('keyup', simpleSearch);
             }
         });
-    </script>
-
-    <script>
-        function searchThing() {
-            // Clear any pending timeout
-            if (window.searchTimeout) clearTimeout(window.searchTimeout);
+        
+        function initGalleryLayout() {
+            // Apply visible class to all gallery items initially
+            const galleryItems = document.querySelectorAll('.gallery');
+            galleryItems.forEach(gallery => {
+                const responsiveParent = gallery.closest('.responsive');
+                responsiveParent.style.display = '';
+                responsiveParent.style.opacity = '1';
+            });
+        }
+        
+        function simpleSearch() {
+            // Get the search input value
+            const input = document.getElementById("myInput");
+            const filter = input.value.toLowerCase();
             
-            // Set active filter to "All"
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.getAttribute('data-filter') === 'all') {
-                    btn.classList.add('active');
+            // Get all gallery items
+            const galleryItems = document.querySelectorAll('.gallery');
+            
+            // Track if we found any matches
+            let foundMatches = false;
+            
+            // Loop through all gallery items and show/hide based on search
+            galleryItems.forEach(gallery => {
+                const title = gallery.querySelector('strong').textContent.toLowerCase();
+                const description = gallery.querySelector('p').textContent.toLowerCase();
+                const responsiveParent = gallery.closest('.responsive');
+                
+                // Check if the item matches the search
+                const isMatch = title.includes(filter) || description.includes(filter);
+                
+                // Update match counter
+                if (isMatch) {
+                    foundMatches = true;
+                }
+                
+                // Show or hide the item with a smooth transition
+                if (isMatch) {
+                    responsiveParent.style.display = '';
+                    setTimeout(() => {
+                        responsiveParent.style.opacity = '1';
+                    }, 10);
+                } else {
+                    responsiveParent.style.opacity = '0';
+                    setTimeout(() => {
+                        responsiveParent.style.display = 'none';
+                    }, 300); // Match transition duration in CSS
                 }
             });
             
-            // Set a timeout to delay the search execution for smoother experience
-            window.searchTimeout = setTimeout(() => {
-                // Get the search input value
-                const input = document.getElementById("myInput");
-                const filter = input.value.toLowerCase();
-                
-                // Get all category rows
-                const categoryRows = document.querySelectorAll('.category-row');
-                
-                categoryRows.forEach(row => {
-                    let hasMatch = false;
-                    const galleries = row.querySelectorAll('.gallery');
-                    let animationDelay = 0;
-                    
-                    // First update gallery items with staggered animations
-                    galleries.forEach(gallery => {
-                        const responsiveParent = gallery.closest('.responsive');
-                        responsiveParent.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-                        
-                        const title = gallery.querySelector('strong').textContent.toLowerCase();
-                        const description = gallery.querySelector('p').textContent.toLowerCase();
-                        
-                        if (title.includes(filter) || description.includes(filter)) {
-                            // Create staggered appearance for matching items
-                            setTimeout(() => {
-                                responsiveParent.classList.remove('hidden');
-                                responsiveParent.style.transform = 'scale(1)';
-                                responsiveParent.style.opacity = '1';
-                                responsiveParent.classList.add('visible');
-                            }, animationDelay);
-                            
-                            animationDelay += 50; // Increment delay for next item
-                            hasMatch = true;
-                        } else {
-                            // Animate items being hidden
-                            responsiveParent.style.transform = 'scale(0.95)';
-                            responsiveParent.style.opacity = '0';
-                            
-                            setTimeout(() => {
-                                responsiveParent.classList.add('hidden');
-                                responsiveParent.classList.remove('visible');
-                            }, 400); // Match the transition duration
-                        }
-                    });
-                    
-                    // Then update category visibility with smooth transition
-                    setTimeout(() => {
-                        if (hasMatch) {
-                            row.style.transition = 'opacity 0.4s ease, height 0.4s ease, margin 0.4s ease';
-                            row.style.opacity = '1';
-                            row.style.height = '';
-                            row.classList.remove('hidden');
-                            row.classList.add('visible');
-                        } else {
-                            row.style.transition = 'opacity 0.4s ease, height 0.4s ease, margin 0.4s ease';
-                            row.style.opacity = '0';
-                            row.style.height = '0';
-                            
-                            setTimeout(() => {
-                                row.classList.add('hidden');
-                                row.classList.remove('visible');
-                            }, 400);
-                        }
-                    }, 150);
-                });
-            }, 150); // Small delay for smoother typing experience
+            // Show a message if no matches found
+            const noResultsMsg = document.getElementById('no-results');
+            if (!foundMatches && filter.length > 0) {
+                if (!noResultsMsg) {
+                    const msg = document.createElement('p');
+                    msg.id = 'no-results';
+                    msg.className = 'no-results-message';
+                    msg.textContent = 'No matching videos found. Try a different search term.';
+                    document.querySelector('.grid-content').appendChild(msg);
+                }
+            } else if (noResultsMsg) {
+                noResultsMsg.remove();
+            }
         }
     </script>
 </body>
