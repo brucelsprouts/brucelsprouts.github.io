@@ -93,15 +93,77 @@
         <p>A collection of my programming and development projects.</p>
     </div>
 
-    <div class="search-container">
-        <input type="text" class="search-input" name="q" id="myInput" onkeyup="simpleSearch()" placeholder="Search for projects...">
+    <div class="filter-controls">
+        <div class="search-container">
+            <input type="text" class="search-input" name="q" id="myInput" onkeyup="simpleSearch()" placeholder="Search projects...">
+        </div>
+        <div class="sort-container">
+            <label for="sort-select">Sort by:</label>
+            <select id="sort-select" class="sort-select" onchange="sortProjects(this.value)" aria-label="Sort projects by">
+                <option value="recent">Most Recent</option>
+                <option value="oldest">Oldest</option>
+                <option value="name">Name</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="tags-container">
+        <div class="tags-header">
+            <button class="tags-toggle" id="tags-toggle" aria-label="Toggle tags visibility">
+                Technologies
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            </button>
+        </div>
+        
+        <div class="tags-wrapper" id="tags-wrapper">
+            <div class="tags-search">
+                <div class="tags-search-input-container">
+                    <input type="text" id="tag-search" placeholder="Search tags..." aria-label="Search for tags">
+                    <span class="tags-search-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+            
+            <div class="tags-list" id="tags-list">
+                <!-- Programming Languages -->
+                <div class="tag" data-tag="javascript">JavaScript <span class="tag-count">3</span></div>
+                <div class="tag" data-tag="html">HTML <span class="tag-count">2</span></div>
+                <div class="tag" data-tag="css">CSS <span class="tag-count">2</span></div>
+                <div class="tag" data-tag="java">Java <span class="tag-count">2</span></div>
+                <div class="tag" data-tag="python">Python <span class="tag-count">2</span></div>
+                
+                <!-- Frameworks & Libraries -->
+                <div class="tag" data-tag="react">React <span class="tag-count">1</span></div>
+                <div class="tag" data-tag="node">Node.js <span class="tag-count">1</span></div>
+                <div class="tag" data-tag="tensorflow">TensorFlow <span class="tag-count">1</span></div>
+                
+                <!-- Tools & Technologies -->
+                <div class="tag" data-tag="git">Git <span class="tag-count">3</span></div>
+                <div class="tag" data-tag="responsive">Responsive Design <span class="tag-count">2</span></div>
+                <div class="tag" data-tag="ai">AI/ML <span class="tag-count">1</span></div>
+                <div class="tag" data-tag="game-dev">Game Development <span class="tag-count">2</span></div>
+                <div class="tag" data-tag="database">Database <span class="tag-count">1</span></div>
+            </div>
+        </div>
+        
+        <div class="active-filters hidden" id="active-filters">
+            <span>Active filters:</span>
+            <!-- Active filters will be added here dynamically -->
+            <button class="clear-all-filters" id="clear-filters">Clear all</button>
+        </div>
     </div>
 
     <div class="grid-content">
         <div class="grid-container">
             <div class="scrollable-gallery">
                 <!-- Projects -->
-                <div class="responsive">
+                <div class="responsive" data-date="2023-09-01" data-name="Webpage Portfolio" data-tags="html,css,javascript,responsive,git">
                     <div class="gallery" data-category="web">
                         <div class="inner">
                             <a href="../pages/code/webpage.html" aria-label="View Webpage Portfolio project">
@@ -111,13 +173,20 @@
                             </a>
                             <div class="desc">
                                 <strong>Webpage Portfolio</strong>
-                                <p>Sep 2023 - Present</p>
+                                <p class="date">Sep 2023 - Present</p>
+                                <p class="description">A responsive personal portfolio website built with HTML, CSS, and JavaScript to showcase my projects and skills.</p>
+                                <div class="project-tags">
+                                    <span class="project-tag">HTML</span>
+                                    <span class="project-tag">CSS</span>
+                                    <span class="project-tag">JavaScript</span>
+                                    <span class="project-tag">Responsive</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="responsive">
+                <div class="responsive" data-date="2023-05-01" data-name="Pac-Man Recreation" data-tags="java,game-dev,git">
                     <div class="gallery" data-category="java">
                         <div class="inner">
                             <a href="../pages/code/pacman.html" aria-label="View Pac-Man Recreation project">
@@ -127,13 +196,18 @@
                             </a>
                             <div class="desc">
                                 <strong>Pac-Man Recreation</strong>
-                                <p>May 2023 - Jun 2023</p>
+                                <p class="date">May 2023 - Jun 2023</p>
+                                <p class="description">A Java implementation of the classic Pac-Man game with custom graphics and intelligent ghost behavior.</p>
+                                <div class="project-tags">
+                                    <span class="project-tag">Java</span>
+                                    <span class="project-tag">Game Dev</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="responsive">
+                <div class="responsive" data-date="2022-06-01" data-name="Tower Climber" data-tags="java,game-dev">
                     <div class="gallery" data-category="java">
                         <div class="inner">
                             <a href="../pages/code/towerclimber.html" aria-label="View Tower Climber project">
@@ -143,13 +217,18 @@
                             </a>
                             <div class="desc">
                                 <strong>Tower Climber</strong>
-                                <p>Jun 2022 - Jul 2022</p>
+                                <p class="date">Jun 2022 - Jul 2022</p>
+                                <p class="description">A 2D platformer game developed in Java where players navigate increasingly difficult levels to reach the top of a tower.</p>
+                                <div class="project-tags">
+                                    <span class="project-tag">Java</span>
+                                    <span class="project-tag">Game Dev</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="responsive">
+                <div class="responsive" data-date="2023-01-01" data-name="YouTube Thumbnail Analyzer" data-tags="python,ai,tensorflow">
                     <div class="gallery" data-category="python">
                         <div class="inner">
                             <a href="../pages/code/yttag.html" aria-label="View YouTube Thumbnail Analyzer project">
@@ -159,13 +238,19 @@
                             </a>
                             <div class="desc">
                                 <strong>YouTube Thumbnail Analyzer</strong>
-                                <p>Jan 2023 - Feb 2023</p>
+                                <p class="date">Jan 2023 - Feb 2023</p>
+                                <p class="description">A Python tool that uses AI to analyze YouTube thumbnails and provide optimization recommendations for better click-through rates.</p>
+                                <div class="project-tags">
+                                    <span class="project-tag">Python</span>
+                                    <span class="project-tag">AI/ML</span>
+                                    <span class="project-tag">TensorFlow</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="responsive">
+                <div class="responsive" data-date="2023-02-01" data-name="Reinforcement Learning" data-tags="python,ai">
                     <div class="gallery" data-category="python">
                         <div class="inner">
                             <a href="../pages/code/rl.html" aria-label="View Reinforcement Learning project">
@@ -175,13 +260,18 @@
                             </a>
                             <div class="desc">
                                 <strong>Reinforcement Learning</strong>
-                                <p>Feb 2023 - Mar 2023</p>
+                                <p class="date">Feb 2023 - Mar 2023</p>
+                                <p class="description">An implementation of Q-learning and deep reinforcement learning algorithms to solve complex decision-making problems.</p>
+                                <div class="project-tags">
+                                    <span class="project-tag">Python</span>
+                                    <span class="project-tag">AI/ML</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="responsive">
+                <div class="responsive" data-date="2022-03-01" data-name="Ignite Youth Club Website" data-tags="html,css,javascript,responsive,node,database,git">
                     <div class="gallery" data-category="web">
                         <div class="inner">
                             <a href="../pages/code/ignitewebsite.html" aria-label="View Ignite Youth Club Website project">
@@ -191,7 +281,14 @@
                             </a>
                             <div class="desc">
                                 <strong>Ignite Youth Club Website</strong>
-                                <p>Mar 2022 - May 2022</p>
+                                <p class="date">Mar 2022 - May 2022</p>
+                                <p class="description">A responsive website for Ignite Youth Club with event management, member registration, and multimedia content sharing features.</p>
+                                <div class="project-tags">
+                                    <span class="project-tag">HTML</span>
+                                    <span class="project-tag">CSS</span>
+                                    <span class="project-tag">JavaScript</span>
+                                    <span class="project-tag">Node.js</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -202,90 +299,69 @@
     </div>
 
     <!-- Footer -->
-    <footer>
+    <footer class="footer">
         <div class="footer-content">
-            <div class="footer-text">
-                <p>&copy; 2024 Bruce Lin. All rights reserved.</p>
-                <p>Built with HTML, CSS, and JavaScript.</p>
+            <!-- About Section -->
+            <div class="footer-section">
+                <h3 class="footer-title">About Me</h3>
+                <p>Computer Science student at Western University passionate about web development, video editing, and programming. Always learning and exploring new technologies.</p>
+                <div class="social-links">
+                    <a href="https://github.com/brucelsprouts" target="_blank" class="social-link" aria-label="GitHub">
+                        <img src="../assets/images/home/dark-github-icon.png" alt="GitHub">
+                    </a>
+                    <a href="https://www.linkedin.com/in/bruce-lin-6284b323b/" target="_blank" class="social-link" aria-label="LinkedIn">
+                        <img src="../assets/images/home/dark-linkedin-icon.png" alt="LinkedIn">
+                    </a>
+                    <a href="https://www.youtube.com/channel/UCIZq5zDOCw1Xq49H1Mpx05Q" target="_blank" class="social-link" aria-label="YouTube">
+                        <img src="../assets/images/home/dark-youtube-icon.png" alt="YouTube">
+                    </a>
+                    <a href="https://www.instagram.com/brucelsproutss/" target="_blank" class="social-link" aria-label="Instagram">
+                        <img src="../assets/images/home/dark-instagram-icon.png" alt="Instagram">
+                    </a>
+                </div>
             </div>
+
+            <!-- Quick Links Section -->
+            <div class="footer-section">
+                <h3 class="footer-title">Quick Links</h3>
+                <ul class="quick-links">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="code.html">Code Projects</a></li>
+                    <li><a href="video.html">Video Portfolio</a></li>
+                    <li><a href="connect.html">Connect</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="footer-section">
+                <h3 class="footer-title">Contact Me</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <img src="../assets/images/icons/email-icon.png" alt="Email" class="contact-icon">
+                        <div class="contact-text">
+                            <a href="mailto:bruce700982@gmail.com">bruce700982@gmail.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <img src="../assets/images/icons/phone-icon.png" alt="Phone" class="contact-icon">
+                        <div class="contact-text">+1 437 988 41012</div>
+                    </div>
+                    <div class="contact-item">
+                        <img src="../assets/images/icons/location-icon.png" alt="Location" class="contact-icon">
+                        <div class="contact-text">London, Ontario, Canada</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">&copy; 2024 Bruce Lin. All rights reserved.</p>
         </div>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Make sure gallery layout is properly initialized
-            initGalleryLayout();
-            
-            // Set up search functionality
-            const searchInput = document.getElementById('myInput');
-            if (searchInput) {
-                searchInput.addEventListener('keyup', simpleSearch);
-            }
-        });
-        
-        function initGalleryLayout() {
-            // Apply visible class to all gallery items initially
-            const galleryItems = document.querySelectorAll('.gallery');
-            galleryItems.forEach(gallery => {
-                const responsiveParent = gallery.closest('.responsive');
-                responsiveParent.style.display = '';
-                responsiveParent.style.opacity = '1';
-            });
-        }
-        
-        function simpleSearch() {
-            // Get the search input value
-            const input = document.getElementById("myInput");
-            const filter = input.value.toLowerCase();
-            
-            // Get all gallery items
-            const galleryItems = document.querySelectorAll('.gallery');
-            
-            // Track if we found any matches
-            let foundMatches = false;
-            
-            // Loop through all gallery items and show/hide based on search
-            galleryItems.forEach(gallery => {
-                const title = gallery.querySelector('strong').textContent.toLowerCase();
-                const description = gallery.querySelector('p').textContent.toLowerCase();
-                const responsiveParent = gallery.closest('.responsive');
-                
-                // Check if the item matches the search
-                const isMatch = title.includes(filter) || description.includes(filter);
-                
-                // Update match counter
-                if (isMatch) {
-                    foundMatches = true;
-                }
-                
-                // Show or hide the item with a smooth transition
-                if (isMatch) {
-                    responsiveParent.style.display = '';
-                    setTimeout(() => {
-                        responsiveParent.style.opacity = '1';
-                    }, 10);
-                } else {
-                    responsiveParent.style.opacity = '0';
-                    setTimeout(() => {
-                        responsiveParent.style.display = 'none';
-                    }, 300); // Match transition duration in CSS
-                }
-            });
-            
-            // Show a message if no matches found
-            const noResultsMsg = document.getElementById('no-results');
-            if (!foundMatches && filter.length > 0) {
-                if (!noResultsMsg) {
-                    const msg = document.createElement('p');
-                    msg.id = 'no-results';
-                    msg.className = 'no-results-message';
-                    msg.textContent = 'No matching projects found. Try a different search term.';
-                    document.querySelector('.grid-content').appendChild(msg);
-                }
-            } else if (noResultsMsg) {
-                noResultsMsg.remove();
-            }
-        }
-    </script>
+    <!-- Scripts -->
+    <script src="../js/toggle.js"></script>
+    <script src="../js/gallery.js"></script>
+
 </body>
 </html>
