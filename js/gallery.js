@@ -1,4 +1,4 @@
-// Project search function
+// Project search function - simplified without animations
 function simpleSearch() {
     let input = document.getElementById('myInput');
     let filter = input.value.toUpperCase();
@@ -38,7 +38,7 @@ function simpleSearch() {
     }
 }
 
-// Sort projects by different criteria
+// Sort projects by different criteria - simplified without animations
 function sortProjects(sortBy) {
     let gallery = document.querySelector('.scrollable-gallery');
     let items = Array.from(gallery.getElementsByClassName('responsive'));
@@ -66,7 +66,7 @@ function sortProjects(sortBy) {
     });
 }
 
-// Tags system functionality
+// Tags system functionality - simplified without animations
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize variables
     let activeTags = new Set();
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const clearFilters = document.getElementById('clear-filters');
     const tagSearch = document.getElementById('tag-search');
     
-    // Toggle tags visibility
+    // Toggle tags visibility - simple toggle without animations
     if (tagsToggle && tagsWrapper) {
         tagsToggle.addEventListener('click', function() {
             tagsWrapper.classList.toggle('collapsed');
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Filter projects by tags
+    // Filter projects by tags - simplified without animations
     function filterProjectsByTags() {
         const gallery = document.querySelector('.scrollable-gallery');
         const items = gallery.querySelectorAll('.responsive');
@@ -146,7 +146,10 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Add new filter tags
             activeTags.forEach(tag => {
-                const tagName = document.querySelector(`.tag[data-tag="${tag}"]`).textContent.split(' ')[0]; // Get name without count
+                const tagElement = document.querySelector(`.tag[data-tag="${tag}"]`);
+                if (!tagElement) return;
+                
+                const tagName = tagElement.textContent.split(' ')[0]; // Get name without count
                 
                 const filterTag = document.createElement('div');
                 filterTag.className = 'filter-tag';
@@ -215,30 +218,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Mobile optimization - center dropdowns on small screens
+    // Mobile optimization - simple layout changes
     function optimizeForMobile() {
-        const sortContainer = document.querySelector('.sort-container');
         const mediaQuery = window.matchMedia('(max-width: 480px)');
-        
-        function handleScreenChange(e) {
-            if (e.matches) {
-                // Mobile layout
-                if (sortContainer) {
-                    sortContainer.style.margin = '0 auto';
-                }
-            } else {
-                // Desktop layout
-                if (sortContainer) {
-                    sortContainer.style.margin = '';
-                }
-            }
-        }
-        
-        // Initial check
         handleScreenChange(mediaQuery);
-        
-        // Add listener for changes
         mediaQuery.addEventListener('change', handleScreenChange);
+    }
+    
+    function handleScreenChange(e) {
+        // Basic layout adjustments without animations
     }
     
     // Initialize mobile optimization
