@@ -27,7 +27,7 @@
     <!-- Styles and Icons -->
     <link rel="stylesheet" type="text/css" href="../css/global.css">
     <link rel="stylesheet" type="text/css" href="../css/home.css">
-    <link rel="stylesheet" type="text/css" href="../css/skills.css">
+    <link rel="stylesheet" type="text/css" href="../css/skills-interactive.css">
     <link rel="stylesheet" type="text/css" href="../css/footer.css">
 
     <link rel="icon" href="../assets/images/icons/icon.png" type="image/png">
@@ -134,155 +134,34 @@
             </div>
         </div>
 
-        <!-- Background Section 2 - Skills -->
+        <!-- Background Section 2 - Interactive Skills -->
         <div class="background-2">
-            <div class="skills-section">
-                <div class="skills-heading">
-                    <h1>Skills</h1>
+            <section class="skills-container">
+                <div class="skills-header">
+                    <h2>Skills & Technologies</h2>
+                    <p>Click on a skill to see related projects</p>
                 </div>
+                
+                <div class="skill-categories">
+                    <button class="category-button" data-category="all">All</button>
+                    <button class="category-button" data-category="programming">Programming</button>
+                    <button class="category-button" data-category="framework">Frameworks</button>
+                    <button class="category-button" data-category="design">Design</button>
+                    <button class="category-button" data-category="tech">Technologies</button>
+                    <button class="category-button" data-category="web">Web</button>
+                    <button class="category-button" data-category="tool">Tools</button>
+                </div>
+                
                 <div class="skills-grid">
-                    <!-- After Effects Skill Card -->
-                    <div class="skill-card fade-in-up" data-skill-level="85">
-                        <a href="../pages/skills/aftereffects.html" class="skill-link">
-                            <div class="skill-image-container">
-                                <img src="../assets/images/home/aftereffects.png" alt="After Effects">
-                                <div class="skill-overlay"></div>
-                                <div class="skill-badges">
-                                    <span class="skill-badge">Design</span>
-                                </div>
-                            </div>
-                            <div class="skill-content">
-                                <h3 class="skill-title">After Effects</h3>
-                                <p class="skill-description">Motion graphics, visual effects, and animation for videos and presentations.</p>
-                                <div class="skill-level">
-                                    <div class="skill-progress"></div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <!-- Java Skill Card -->
-                    <div class="skill-card fade-in-up" data-skill-level="80">
-                        <a href="../pages/skills/java.html" class="skill-link">
-                            <div class="skill-image-container">
-                                <img src="../assets/images/home/java.png" alt="Java">
-                                <div class="skill-overlay"></div>
-                                <div class="skill-badges">
-                                    <span class="skill-badge">Programming</span>
-                                </div>
-                            </div>
-                            <div class="skill-content">
-                                <h3 class="skill-title">Java</h3>
-                                <p class="skill-description">Object-oriented programming for desktop applications and Android development.</p>
-                                <div class="skill-level">
-                                    <div class="skill-progress"></div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <!-- Photoshop Skill Card -->
-                    <div class="skill-card fade-in-up" data-skill-level="75">
-                        <a href="../pages/skills/photoshop.html" class="skill-link">
-                            <div class="skill-image-container">
-                                <img src="../assets/images/home/photoshop.png" alt="Photoshop">
-                                <div class="skill-overlay"></div>
-                                <div class="skill-badges">
-                                    <span class="skill-badge">Design</span>
-                                </div>
-                            </div>
-                            <div class="skill-content">
-                                <h3 class="skill-title">Photoshop</h3>
-                                <p class="skill-description">Image editing, photo manipulation, and graphic design.</p>
-                                <div class="skill-level">
-                                    <div class="skill-progress"></div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <!-- Python Skill Card -->
-                    <div class="skill-card fade-in-up" data-skill-level="90">
-                        <a href="../pages/skills/python.html" class="skill-link">
-                            <div class="skill-image-container">
-                                <img src="../assets/images/home/python.png" alt="Python">
-                                <div class="skill-overlay"></div>
-                                <div class="skill-badges">
-                                    <span class="skill-badge">Programming</span>
-                                </div>
-                            </div>
-                            <div class="skill-content">
-                                <h3 class="skill-title">Python</h3>
-                                <p class="skill-description">Scripting, data analysis, and automation for various projects.</p>
-                                <div class="skill-level">
-                                    <div class="skill-progress"></div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <!-- HTML Skill Card -->
-                    <div class="skill-card fade-in-up" data-skill-level="95">
-                        <a href="../pages/skills/html.html" class="skill-link">
-                            <div class="skill-image-container">
-                                <img src="../assets/images/home/html.png" alt="HTML">
-                                <div class="skill-overlay"></div>
-                                <div class="skill-badges">
-                                    <span class="skill-badge">Web</span>
-                                </div>
-                            </div>
-                            <div class="skill-content">
-                                <h3 class="skill-title">HTML5</h3>
-                                <p class="skill-description">Structure and content creation for modern web applications.</p>
-                                <div class="skill-level">
-                                    <div class="skill-progress"></div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <!-- CSS Skill Card -->
-                    <div class="skill-card fade-in-up" data-skill-level="90">
-                        <a href="../pages/skills/css.html" class="skill-link">
-                            <div class="skill-image-container">
-                                <img src="../assets/images/home/css.png" alt="CSS">
-                                <div class="skill-overlay"></div>
-                                <div class="skill-badges">
-                                    <span class="skill-badge">Web</span>
-                                </div>
-                            </div>
-                            <div class="skill-content">
-                                <h3 class="skill-title">CSS</h3>
-                                <p class="skill-description">Styling and animations for responsive web interfaces.</p>
-                                <div class="skill-level">
-                                    <div class="skill-progress"></div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-
-                    <!-- JavaScript Skill Card -->
-                    <div class="skill-card fade-in-up" data-skill-level="85">
-                        <a href="../pages/skills/js.html" class="skill-link">
-                            <div class="skill-image-container">
-                                <img src="../assets/images/home/js.png" alt="JavaScript">
-                                <div class="skill-overlay"></div>
-                                <div class="skill-badges">
-                                    <span class="skill-badge">Web</span>
-                                    <span class="skill-badge">Programming</span>
-                                </div>
-                            </div>
-                            <div class="skill-content">
-                                <h3 class="skill-title">JavaScript</h3>
-                                <p class="skill-description">Interactive web applications and dynamic content creation.</p>
-                                <div class="skill-level">
-                                    <div class="skill-progress"></div>
-                                </div>
-                            </div>
-                        </a>
+                    <!-- Skill icons will be dynamically populated by JavaScript -->
+                </div>
+                
+                <div class="projects-display">
+                    <div class="project-cards">
+                        <!-- Project cards will be dynamically populated when a skill is clicked -->
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
 
         <!-- Blog Section - Enhanced with Dynamic Content -->
@@ -503,5 +382,8 @@
             }
         });
     </script>
+
+    <!-- Add the skills interactive JS before the closing body tag -->
+    <script src="../js/skills-interactive.js"></script>
 </body>
 </html>

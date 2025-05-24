@@ -32,7 +32,7 @@ function simpleSearch() {
             gallery.appendChild(noResults);
         }
         noResults.querySelector('span').textContent = filter;
-        noResults.style.display = 'block';
+        noResults.style.display = 'flex';
     } else if (noResults) {
         noResults.style.display = 'none';
     }
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 noResults.innerHTML = 'No projects found with the selected tags. Try different filter options.';
                 gallery.appendChild(noResults);
             }
-            noResults.style.display = 'block';
+            noResults.style.display = 'flex';
         } else if (noResults) {
             noResults.style.display = 'none';
         }
