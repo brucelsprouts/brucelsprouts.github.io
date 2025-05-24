@@ -93,11 +93,24 @@ document.addEventListener('DOMContentLoaded', function() {
     let allProjects = [];
     let activeSkill = null;
 
-    // Initialize category filters
+    // Initialize category filters with animation
     categoryButtons.forEach(button => {
         button.addEventListener('click', function() {
-            // Remove active class from all buttons
-            categoryButtons.forEach(btn => btn.classList.remove('active'));
+            // Add click animation
+            this.classList.add('category-click');
+            setTimeout(() => {
+                this.classList.remove('category-click');
+            }, 300);
+            
+            // Remove active class from all buttons with animation
+            categoryButtons.forEach(btn => {
+                if (btn.classList.contains('active')) {
+                    btn.classList.add('deactivating');
+                    setTimeout(() => {
+                        btn.classList.remove('active', 'deactivating');
+                    }, 300);
+                }
+            });
             
             // Add active class to clicked button
             this.classList.add('active');
@@ -107,20 +120,51 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Function to filter skills by category
+    // Function to filter skills by category with animations
     function filterSkillsByCategory(category) {
         const skillIcons = document.querySelectorAll('.skill-icon');
         
-        skillIcons.forEach(icon => {
-            if (category === 'all' || skillsConfig[icon.dataset.skill].category === category) {
-                icon.style.display = 'flex';
+        // Apply staggered animations
+        skillIcons.forEach((icon, index) => {
+            const isVisible = category === 'all' || skillsConfig[icon.dataset.skill].category === category;
+            const delay = Math.min(index * 30, 300); // Cap at 300ms
+            
+            // Set transition delay for staggered effect
+            icon.style.transitionDelay = `${delay}ms`;
+            
+            if (isVisible) {
+                // Skill should be visible
+                if (icon.style.display === 'none') {
+                    // Prepare for fade in
+                    icon.classList.add('skill-animating-in');
+                    icon.style.display = 'flex';
+                    
+                    // Force reflow
+                    void icon.offsetWidth;
+                    
+                    // Remove animation class to trigger transition
+                    setTimeout(() => {
+                        icon.classList.remove('skill-animating-in');
+                    }, 10);
+                }
             } else {
-                icon.style.display = 'none';
+                // Skill should be hidden
+                if (icon.style.display !== 'none') {
+                    // Animate out
+                    icon.classList.add('skill-animating-out');
+                    
+                    // After animation, hide the element
+                    setTimeout(() => {
+                        icon.style.display = 'none';
+                        icon.classList.remove('skill-animating-out');
+                        icon.style.transitionDelay = '0ms';
+                    }, 300);
+                }
             }
         });
     }
 
-    // Function to load projects
+    // Function to load projects with enhanced animations
     function loadProjects() {
         // Fetch projects from DOM
         const projectElements = document.querySelectorAll('.responsive');
@@ -162,24 +206,60 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Function to render project cards based on selected skill
+    // Function to render project cards with animations
     function renderProjectCards(skill) {
-        projectCards.innerHTML = '';
-        
+        // Clear with fade out if there are existing cards
+        if (projectCards.children.length > 0) {
+            // Fade out existing cards
+            Array.from(projectCards.children).forEach(card => {
+                card.classList.add('card-fade-out');
+            });
+            
+            // After animation, clear and add new cards
+            setTimeout(() => {
+                projectCards.innerHTML = '';
+                renderNewCards(skill);
+            }, 300);
+        } else {
+            // If no existing cards, just render new ones
+            renderNewCards(skill);
+        }
+    }
+    
+    // Helper function to render new cards with animations
+    function renderNewCards(skill) {
         const filteredProjects = allProjects.filter(project => {
             return skill.projectTags.some(tag => project.tags.includes(tag));
         });
         
         if (filteredProjects.length === 0) {
-            projectCards.innerHTML = '<div class="no-projects">No projects found for this skill</div>';
+            const noProjects = document.createElement('div');
+            noProjects.className = 'no-projects';
+            noProjects.innerHTML = 'No projects found for this skill';
+            
+            // Animate the message in
+            noProjects.style.opacity = '0';
+            noProjects.style.transform = 'translateY(20px)';
+            projectCards.appendChild(noProjects);
+            
+            // Force reflow
+            void noProjects.offsetWidth;
+            
+            // Animate in
+            setTimeout(() => {
+                noProjects.style.opacity = '1';
+                noProjects.style.transform = 'translateY(0)';
+            }, 10);
+            
             return;
         }
         
-        filteredProjects.forEach(project => {
+        // Add cards with staggered animation
+        filteredProjects.forEach((project, index) => {
             const formattedDate = formatDate(project.date);
             
             const projectCard = document.createElement('div');
-            projectCard.className = 'project-card';
+            projectCard.className = 'project-card card-fade-in';
             
             projectCard.innerHTML = `
                 <a href="${project.link}" aria-label="View ${project.title} project">
@@ -195,7 +275,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             `;
             
+            // Set delay for staggered animation
+            const delay = Math.min(index * 100, 500); // Longer delay for project cards
+            projectCard.style.transitionDelay = `${delay}ms`;
+            
             projectCards.appendChild(projectCard);
+            
+            // Force reflow
+            void projectCard.offsetWidth;
+            
+            // Remove animation class to trigger transition
+            setTimeout(() => {
+                projectCard.classList.remove('card-fade-in');
+            }, 10);
         });
     }
 
@@ -211,17 +303,28 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Function to handle skill click
+    // Function to handle skill click with animations
     function handleSkillClick(skillIcon) {
         const skill = skillIcon.dataset.skill;
         const skillConfig = skillsConfig[skill];
         
+        // Add click animation
+        skillIcon.classList.add('skill-click');
+        setTimeout(() => {
+            skillIcon.classList.remove('skill-click');
+        }, 300);
+        
         // Toggle active state
         const wasActive = skillIcon.classList.contains('active');
         
-        // Remove active class from all skill icons
+        // Remove active class from all skill icons with animation
         document.querySelectorAll('.skill-icon').forEach(icon => {
-            icon.classList.remove('active');
+            if (icon !== skillIcon && icon.classList.contains('active')) {
+                icon.classList.add('deactivating');
+                setTimeout(() => {
+                    icon.classList.remove('active', 'deactivating');
+                }, 300);
+            }
         });
         
         // If the clicked skill wasn't active, set it as active
@@ -232,26 +335,36 @@ document.addEventListener('DOMContentLoaded', function() {
             // Render projects for this skill
             renderProjectCards(skillConfig);
             
-            // Show projects display
+            // Show projects display with animation
+            projectsDisplay.classList.add('activating');
             projectsDisplay.classList.add('active');
+            
+            // After initial activation, remove the animation class
+            setTimeout(() => {
+                projectsDisplay.classList.remove('activating');
+            }, 500);
         } else {
-            // Hide projects display
-            projectsDisplay.classList.remove('active');
-            activeSkill = null;
+            // Hide projects display with animation
+            projectsDisplay.classList.add('deactivating');
+            
+            setTimeout(() => {
+                projectsDisplay.classList.remove('active', 'deactivating');
+                activeSkill = null;
+            }, 500);
         }
     }
 
-    // Initialize skills grid
+    // Initialize skills grid with animations
     function initializeSkillsGrid() {
         // Clear existing content
         skillsGrid.innerHTML = '';
         
-        // Create skill icons
-        Object.keys(skillsConfig).forEach(skill => {
+        // Create skill icons with staggered animation
+        Object.keys(skillsConfig).forEach((skill, index) => {
             const skillConfig = skillsConfig[skill];
             
             const skillIcon = document.createElement('div');
-            skillIcon.className = 'skill-icon';
+            skillIcon.className = 'skill-icon skill-fade-in';
             skillIcon.dataset.skill = skill;
             skillIcon.dataset.category = skillConfig.category;
             
@@ -260,11 +373,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 <span>${skillConfig.name}</span>
             `;
             
+            // Set delay for staggered animation
+            const delay = Math.min(index * 50, 500);
+            skillIcon.style.transitionDelay = `${delay}ms`;
+            
             skillIcon.addEventListener('click', function() {
                 handleSkillClick(this);
             });
             
             skillsGrid.appendChild(skillIcon);
+            
+            // Force reflow to ensure animation triggers
+            void skillIcon.offsetWidth;
+            
+            // Remove animation class to trigger transition
+            setTimeout(() => {
+                skillIcon.classList.remove('skill-fade-in');
+            }, 10);
         });
     }
 
@@ -272,6 +397,8 @@ document.addEventListener('DOMContentLoaded', function() {
     loadProjects();
     initializeSkillsGrid();
     
-    // Set 'All' category as active by default
-    document.querySelector('.category-button[data-category="all"]').classList.add('active');
+    // Set 'All' category as active by default with a slight delay for visual appeal
+    setTimeout(() => {
+        document.querySelector('.category-button[data-category="all"]').classList.add('active');
+    }, 300);
 }); 

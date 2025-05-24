@@ -1,4 +1,4 @@
-// Project search function
+// Project search function with enhanced animations
 function simpleSearch() {
     let input = document.getElementById('myInput');
     let filter = input.value.toUpperCase();
@@ -7,20 +7,95 @@ function simpleSearch() {
     let noResults = document.getElementById('no-results');
     let foundItems = false;
     
-    for (let i = 0; i < items.length; i++) {
-        let nameAttr = items[i].getAttribute('data-name') || '';
-        let desc = items[i].querySelector('.desc p.description') || '';
+    // Extract search terms for tag matching
+    let searchTerms = filter.split(/[\s,]+/).filter(term => term.length > 0);
+    
+    // Update visual feedback on search input
+    if (filter.length > 0) {
+        input.classList.add('active-search');
+    } else {
+        input.classList.remove('active-search');
+    }
+    
+    // If there are tag matches, highlight them
+    let tagMatches = [];
+    if (searchTerms.length > 0) {
+        const allTags = document.querySelectorAll('.tag');
+        allTags.forEach(tag => {
+            const tagName = tag.textContent.split(' ')[0].toUpperCase();
+            
+            // Check if any search term matches this tag
+            const isMatched = searchTerms.some(term => tagName.includes(term));
+            
+            if (isMatched) {
+                tag.classList.add('search-highlight');
+                tagMatches.push(tag.getAttribute('data-tag'));
+            } else {
+                tag.classList.remove('search-highlight');
+            }
+        });
+    } else {
+        // Clear all tag highlights if search is empty
+        document.querySelectorAll('.tag.search-highlight').forEach(tag => {
+            tag.classList.remove('search-highlight');
+        });
+    }
+    
+    // Create a staggered animation effect
+    Array.from(items).forEach((item, index) => {
+        let nameAttr = item.getAttribute('data-name') || '';
+        let desc = item.querySelector('.desc p.description') || '';
         let descText = desc ? desc.textContent || desc.innerText : '';
+        let itemTags = (item.getAttribute('data-tags') || '').split(',');
         
-        if (nameAttr.toUpperCase().indexOf(filter) > -1 || descText.toUpperCase().indexOf(filter) > -1) {
-            items[i].classList.remove('hidden');
-            items[i].classList.add('visible');
+        // Match by name, description, or matching highlighted tags
+        const nameMatch = nameAttr.toUpperCase().indexOf(filter) > -1;
+        const descMatch = descText.toUpperCase().indexOf(filter) > -1;
+        const tagMatch = tagMatches.length > 0 && tagMatches.some(tag => itemTags.includes(tag));
+        
+        if (nameMatch || descMatch || tagMatch || (filter === '' && !activeTags.size)) {
+            // Set animation delay based on index for staggered effect
+            const delay = Math.min(index * 30, 300); // Cap at 300ms
+            item.style.transitionDelay = `${delay}ms`;
+            
+            // Smoothly show the item
+            if (item.classList.contains('hidden')) {
+                // First move to visible but opacity 0
+                item.classList.remove('hidden');
+                item.classList.add('visible', 'animating-in');
+                
+                // Force reflow before starting animation
+                void item.offsetWidth;
+                
+                // Then animate opacity and transform
+                setTimeout(() => {
+                    item.classList.remove('animating-in');
+                }, 10);
+            }
+            
+            // Add a highlight effect for matches
+            if (filter.length > 0) {
+                item.classList.add('search-match');
+            } else {
+                item.classList.remove('search-match');
+            }
+            
             foundItems = true;
         } else {
-            items[i].classList.add('hidden');
-            items[i].classList.remove('visible');
+            // Smoothly hide the item
+            if (!item.classList.contains('hidden')) {
+                // Animate out
+                item.classList.add('animating-out');
+                
+                // After animation completes, hide the item
+                setTimeout(() => {
+                    item.classList.add('hidden');
+                    item.classList.remove('visible', 'animating-out', 'search-match');
+                    item.style.transitionDelay = '0ms';
+                }, 300); // Match the CSS transition duration
+            }
         }
-    }
+    });
     
     // Show "no results" message if no items found
     if (!foundItems && filter !== '') {
@@ -30,11 +105,33 @@ function simpleSearch() {
             noResults.className = 'no-results-message';
             noResults.innerHTML = 'No projects found matching "<span></span>". Try a different search term.';
             gallery.appendChild(noResults);
+            
+            // Apply enter animation to no results message
+            noResults.style.opacity = '0';
+            noResults.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                noResults.style.opacity = '1';
+                noResults.style.transform = 'translateY(0)';
+            }, 10);
+        } else if (noResults.style.display === 'none') {
+            // Animate the no results message back in
+            noResults.style.display = 'flex';
+            noResults.style.opacity = '0';
+            noResults.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                noResults.style.opacity = '1';
+                noResults.style.transform = 'translateY(0)';
+            }, 10);
         }
+        
         noResults.querySelector('span').textContent = filter;
-        noResults.style.display = 'flex';
     } else if (noResults) {
-        noResults.style.display = 'none';
+        // Animate the no results message out
+        noResults.style.opacity = '0';
+        noResults.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            noResults.style.display = 'none';
+        }, 300);
     }
 }
 
@@ -93,26 +190,55 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Filter projects by tags
+    // Filter projects by tags with enhanced animations
     function filterProjectsByTags() {
         const gallery = document.querySelector('.scrollable-gallery');
         const items = gallery.querySelectorAll('.responsive');
         let foundItems = false;
         
-        items.forEach(item => {
+        // Create a staggered animation effect
+        Array.from(items).forEach((item, index) => {
             const itemTags = (item.getAttribute('data-tags') || '').split(',');
+            const matchesTags = activeTags.size === 0 || Array.from(activeTags).every(tag => itemTags.includes(tag));
             
-            if (activeTags.size === 0 || Array.from(activeTags).every(tag => itemTags.includes(tag))) {
-                item.classList.remove('hidden');
-                item.classList.add('visible');
+            // Set animation delay based on index for staggered effect
+            const delay = Math.min(index * 30, 300); // Cap at 300ms
+            item.style.transitionDelay = `${delay}ms`;
+            
+            if (matchesTags) {
+                // Smoothly show the item
+                if (item.classList.contains('hidden')) {
+                    // First move to visible but opacity 0
+                    item.classList.remove('hidden');
+                    item.classList.add('visible', 'animating-in');
+                    
+                    // Force reflow before starting animation
+                    void item.offsetWidth;
+                    
+                    // Then animate opacity and transform
+                    setTimeout(() => {
+                        item.classList.remove('animating-in');
+                    }, 10);
+                }
+                
                 foundItems = true;
             } else {
-                item.classList.add('hidden');
-                item.classList.remove('visible');
+                // Smoothly hide the item
+                if (!item.classList.contains('hidden')) {
+                    // Animate out
+                    item.classList.add('animating-out');
+                    
+                    // After animation completes, hide the item
+                    setTimeout(() => {
+                        item.classList.add('hidden');
+                        item.classList.remove('visible', 'animating-out');
+                        item.style.transitionDelay = '0ms';
+                    }, 300); // Match the CSS transition duration
+                }
             }
         });
         
-        // Update active filters display
+        // Update active filters display with animation
         updateActiveFilters();
         
         // Show "no results" message if no items found
@@ -124,10 +250,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 noResults.className = 'no-results-message';
                 noResults.innerHTML = 'No projects found with the selected tags. Try different filter options.';
                 gallery.appendChild(noResults);
+                
+                // Apply enter animation to no results message
+                noResults.style.opacity = '0';
+                noResults.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    noResults.style.opacity = '1';
+                    noResults.style.transform = 'translateY(0)';
+                }, 10);
+            } else if (noResults.style.display === 'none') {
+                // Animate the no results message back in
+                noResults.style.display = 'flex';
+                noResults.style.opacity = '0';
+                noResults.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    noResults.style.opacity = '1';
+                    noResults.style.transform = 'translateY(0)';
+                }, 10);
             }
-            noResults.style.display = 'flex';
         } else if (noResults) {
-            noResults.style.display = 'none';
+            // Animate the no results message out
+            noResults.style.opacity = '0';
+            noResults.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                noResults.style.display = 'none';
+            }, 300);
         }
     }
     

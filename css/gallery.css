@@ -60,16 +60,33 @@
 .responsive {
   display: block;
   box-sizing: border-box;
-  transition: width 0.3s ease, padding 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
 }
 
 /* Animation classes for search filtering */
 .responsive.hidden {
   display: none;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(20px);
 }
 
 .responsive.visible {
   display: block;
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.responsive.animating-in {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.responsive.animating-out {
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
 }
 
 /* Gallery styling with consistent borders */
@@ -680,6 +697,11 @@ h1 {
   flex: 0.7;
   margin: 0;
   position: relative;
+  transition: box-shadow 0.3s ease;
+}
+
+.search-container.search-focus {
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
 
 .search-input {
@@ -695,6 +717,10 @@ h1 {
   box-sizing: border-box;
   outline: none;
   height: 42px;
+}
+
+.search-input.active-search {
+  border-color: rgba(99, 102, 241, 0.6);
 }
 
 /* Move search icon to right side for cleaner look */
@@ -800,6 +826,7 @@ h1 {
   min-height: 100px;
   width: fit-content;
   max-width: 500px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 @keyframes fadeIn {
@@ -1096,6 +1123,7 @@ h1 {
   user-select: none;
   border: 1px solid;
   background-color: rgba(99, 102, 241, 0.05);
+  transition: all 0.3s ease;
 }
 
 .dark-mode .tag {
@@ -1152,6 +1180,7 @@ h1 {
   border-radius: 8px;
   background-color: rgba(99, 102, 241, 0.05);
   align-items: center;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .active-filters.hidden {
@@ -1171,6 +1200,7 @@ h1 {
   font-size: 0.8rem;
   background-color: rgba(99, 102, 241, 0.15);
   color: inherit;
+  transition: all 0.3s ease;
 }
 
 .filter-tag button {
@@ -1192,6 +1222,17 @@ h1 {
 
 .filter-tag button:hover {
   background-color: rgba(255, 255, 255, 0.2);
+}
+
+.filter-tag.new-tag {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+.filter-tag.removing {
+  opacity: 0;
+  transform: translateX(20px);
+  pointer-events: none;
 }
 
 .clear-all-filters {
@@ -1246,4 +1287,68 @@ h1 {
 /* Add fluid transitions for window resizing */
 .grid-container, .grid-content, .responsive, .scrollable-gallery {
   transition: all 0.3s ease-in-out;
+}
+
+/* Tag highlight effects */
+.tag.search-highlight {
+  transform: scale(1.05);
+  z-index: 1;
+}
+
+.dark-mode .tag.search-highlight {
+  background-color: rgba(130, 130, 220, 0.4);
+  border-color: rgba(130, 130, 220, 0.6);
+}
+
+.light-mode .tag.search-highlight {
+  background-color: rgba(99, 102, 241, 0.25);
+  border-color: rgba(99, 102, 241, 0.5);
+}
+
+.tag.tag-click {
+  animation: tag-pulse 0.3s ease;
+}
+
+@keyframes tag-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+/* Matched items highlight */
+.gallery.search-match {
+  position: relative;
+}
+
+.dark-mode .responsive.search-match .gallery {
+  box-shadow: 0 0 0 2px rgba(130, 130, 220, 0.4);
+}
+
+.light-mode .responsive.search-match .gallery {
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.4);
+}
+
+/* Filter tag animations */
+.filter-tag {
+  transition: all 0.3s ease;
+}
+
+.filter-tag.new-tag {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+.filter-tag.removing {
+  opacity: 0;
+  transform: translateX(20px);
+  pointer-events: none;
+}
+
+/* Active filters container animation */
+.active-filters {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.no-results-message {
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }

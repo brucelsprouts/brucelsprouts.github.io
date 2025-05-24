@@ -50,7 +50,7 @@
   border-radius: 20px;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease, transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
 }
 
 .dark-mode .category-button {
@@ -81,6 +81,20 @@
   font-weight: 500;
 }
 
+.category-button.category-click {
+  animation: button-pulse 0.3s ease;
+}
+
+.category-button.deactivating {
+  opacity: 0.7;
+}
+
+@keyframes button-pulse {
+  0% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-2px) scale(1.05); }
+  100% { transform: translateY(0) scale(1); }
+}
+
 /* Skills Grid */
 .skills-grid {
   display: flex;
@@ -98,7 +112,7 @@
   cursor: pointer;
   padding: 10px;
   border-radius: 8px;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease, transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
 }
 
 .dark-mode .skill-icon {
@@ -140,19 +154,56 @@
   font-weight: 500;
 }
 
+/* Animation classes for skills */
+.skill-fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.skill-animating-in {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.skill-animating-out {
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+}
+
+.skill-click {
+  animation: skill-pulse 0.3s ease;
+}
+
+@keyframes skill-pulse {
+  0% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-5px) scale(1.1); }
+  100% { transform: translateY(0) scale(1); }
+}
+
 /* Projects Display */
 .projects-display {
   margin-top: 20px;
   opacity: 0;
   max-height: 0;
   overflow: hidden;
-  transition: all 0.5s ease;
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .projects-display.active {
   opacity: 1;
   max-height: 1500px;
   padding: 20px 0;
+}
+
+.projects-display.activating {
+  animation: slide-up 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.projects-display.deactivating {
+  opacity: 0;
+  max-height: 0;
+  transform: translateY(30px);
 }
 
 .project-cards {
@@ -164,7 +215,7 @@
 .project-card {
   border-radius: 8px;
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.3s ease, transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
 }
 
 .dark-mode .project-card {
@@ -252,6 +303,24 @@
   font-size: 1.1rem;
   background-color: rgba(0, 0, 0, 0.03);
   border-radius: 12px;
+  transition: all 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Project card animations */
+.project-card.card-fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.project-card.card-fade-out {
+  opacity: 0;
+  transform: translateY(30px);
+  pointer-events: none;
+}
+
+/* Deactivation animation for skill icons */
+.skill-icon.deactivating {
+  opacity: 0.7;
 }
 
 /* Responsive adjustments */
@@ -287,4 +356,9 @@
   .project-cards {
     grid-template-columns: 1fr;
   }
+}
+
+@keyframes slide-up {
+  0% { transform: translateY(30px); }
+  100% { transform: translateY(0); }
 } 
