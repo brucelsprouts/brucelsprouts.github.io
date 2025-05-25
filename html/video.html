@@ -98,25 +98,21 @@
             <input type="text" class="search-input" name="q" id="myInput" onkeyup="simpleSearch()" placeholder="Search videos...">
         </div>
         <div class="sort-container">
-            <label for="sort-select">Sort by:</label>
             <select id="sort-select" class="sort-select" onchange="sortProjects(this.value)" aria-label="Sort videos by">
                 <option value="recent">Most Recent</option>
                 <option value="oldest">Oldest</option>
                 <option value="name">Name</option>
             </select>
         </div>
-    </div>
-
-    <div class="tags-container">
-        <div class="tags-header">
             <button class="tags-toggle" id="tags-toggle" aria-label="Toggle tags visibility">
-                Techniques & Software
+            Filters
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="6 9 12 15 18 9"></polyline>
                 </svg>
             </button>
         </div>
         
+    <div class="tags-container">
         <div class="tags-wrapper" id="tags-wrapper">
             <div class="tags-search">
                 <div class="tags-search-input-container">
@@ -132,23 +128,23 @@
             
             <div class="tags-list" id="tags-list">
                 <!-- Video Software -->
-                <div class="tag" data-tag="premiere">Premiere Pro <span class="tag-count">4</span></div>
-                <div class="tag" data-tag="after-effects">After Effects <span class="tag-count">3</span></div>
-                <div class="tag" data-tag="davinci">DaVinci Resolve <span class="tag-count">2</span></div>
-                <div class="tag" data-tag="photoshop">Photoshop <span class="tag-count">2</span></div>
+                <div class="tag" data-tag="premiere">Premiere Pro <span class="tag-count">0</span></div>
+                <div class="tag" data-tag="after-effects">After Effects <span class="tag-count">0</span></div>
+                <div class="tag" data-tag="davinci">DaVinci Resolve <span class="tag-count">0</span></div>
+                <div class="tag" data-tag="photoshop">Photoshop <span class="tag-count">0</span></div>
                 
                 <!-- Techniques -->
-                <div class="tag" data-tag="color-grading">Color Grading <span class="tag-count">3</span></div>
-                <div class="tag" data-tag="vfx">VFX <span class="tag-count">2</span></div>
-                <div class="tag" data-tag="motion-graphics">Motion Graphics <span class="tag-count">2</span></div>
-                <div class="tag" data-tag="sound-design">Sound Design <span class="tag-count">2</span></div>
+                <div class="tag" data-tag="color-grading">Color Grading <span class="tag-count">0</span></div>
+                <div class="tag" data-tag="vfx">VFX <span class="tag-count">0</span></div>
+                <div class="tag" data-tag="motion-graphics">Motion Graphics <span class="tag-count">0</span></div>
+                <div class="tag" data-tag="sound-design">Sound Design <span class="tag-count">0</span></div>
                 
                 <!-- Video Types -->
-                <div class="tag" data-tag="documentary">Documentary <span class="tag-count">1</span></div>
-                <div class="tag" data-tag="music-video">Music Video <span class="tag-count">2</span></div>
-                <div class="tag" data-tag="animation">Animation <span class="tag-count">1</span></div>
-                <div class="tag" data-tag="commercial">Commercial <span class="tag-count">2</span></div>
-                <div class="tag" data-tag="short-film">Short Film <span class="tag-count">1</span></div>
+                <div class="tag" data-tag="documentary">Documentary <span class="tag-count">0</span></div>
+                <div class="tag" data-tag="music-video">Music Video <span class="tag-count">0</span></div>
+                <div class="tag" data-tag="animation">Animation <span class="tag-count">0</span></div>
+                <div class="tag" data-tag="commercial">Commercial <span class="tag-count">0</span></div>
+                <div class="tag" data-tag="short-film">Short Film <span class="tag-count">0</span></div>
             </div>
         </div>
         
@@ -162,139 +158,7 @@
     <div class="grid-content">
         <div class="grid-container">
                 <div class="scrollable-gallery">
-                <!-- Projects -->
-                <div class="responsive" data-date="2023-07-01" data-name="Ignite Promo" data-tags="premiere,after-effects,commercial,motion-graphics,color-grading">
-                    <div class="gallery" data-category="promo">
-                            <div class="inner">
-                            <a href="../pages/video/ignitepromo.html" aria-label="View Ignite Promo project">
-                                    <div class="image-container">
-                                    <img src="../assets/images/video/ignitepromo.png" alt="Screenshot of Ignite Promo" width="600" height="400">
-                                    </div>
-                                </a>
-                                <div class="desc">
-                                <strong>Ignite Promo</strong>
-                                <p class="date">Jul 2023</p>
-                                <p class="description">A promotional video for Ignite Youth Club showcasing activities and events with dynamic motion graphics and color grading.</p>
-                                <div class="project-tags">
-                                    <span class="project-tag">Premiere Pro</span>
-                                    <span class="project-tag">After Effects</span>
-                                    <span class="project-tag">Motion Graphics</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="responsive" data-date="2023-04-01" data-name="Reel 2023" data-tags="premiere,after-effects,davinci,color-grading,sound-design">
-                    <div class="gallery" data-category="other">
-                            <div class="inner">
-                            <a href="../pages/video/reel2023.html" aria-label="View Reel 2023 project">
-                                    <div class="image-container">
-                                    <img src="../assets/images/video/reel2023.png" alt="Screenshot of Reel 2023" width="600" height="400">
-                                    </div>
-                                </a>
-                                <div class="desc">
-                                <strong>Reel 2023</strong>
-                                <p class="date">Apr 2023</p>
-                                <p class="description">A compilation of my best video work from 2023 with advanced color grading and custom sound design.</p>
-                                <div class="project-tags">
-                                    <span class="project-tag">Premiere Pro</span>
-                                    <span class="project-tag">DaVinci Resolve</span>
-                                    <span class="project-tag">Color Grading</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="responsive" data-date="2022-10-01" data-name="Music Video - Elevate" data-tags="premiere,after-effects,music-video,vfx,color-grading">
-                    <div class="gallery" data-category="music">
-                        <div class="inner">
-                            <a href="../pages/video/musicvideo.html" aria-label="View Music Video - Elevate project">
-                                <div class="image-container">
-                                    <img src="../assets/images/video/musicvideo.png" alt="Screenshot of Music Video - Elevate" width="600" height="400">
-                                </div>
-                            </a>
-                            <div class="desc">
-                                <strong>Music Video - Elevate</strong>
-                                <p class="date">Oct 2022</p>
-                                <p class="description">A music video featuring dynamic visual effects and synchronized motion graphics for the track "Elevate" by local artist.</p>
-                                <div class="project-tags">
-                                    <span class="project-tag">Premiere Pro</span>
-                                    <span class="project-tag">After Effects</span>
-                                    <span class="project-tag">VFX</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-                </div>
-
-                <div class="responsive" data-date="2022-08-01" data-name="Local Restaurant Commercial" data-tags="premiere,davinci,commercial,color-grading">
-                    <div class="gallery" data-category="commercial">
-                            <div class="inner">
-                            <a href="../pages/video/restaurant.html" aria-label="View Local Restaurant Commercial project">
-                                    <div class="image-container">
-                                    <img src="../assets/images/video/restaurant.png" alt="Screenshot of Local Restaurant Commercial" width="600" height="400">
-                                    </div>
-                                </a>
-                                <div class="desc">
-                                <strong>Local Restaurant Commercial</strong>
-                                <p class="date">Aug 2022</p>
-                                <p class="description">A 30-second commercial for a local restaurant featuring food cinematography and professional color grading.</p>
-                                <div class="project-tags">
-                                    <span class="project-tag">Premiere Pro</span>
-                                    <span class="project-tag">DaVinci Resolve</span>
-                                    <span class="project-tag">Commercial</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="responsive" data-date="2022-05-01" data-name="Documentary - Urban Growth" data-tags="premiere,documentary,sound-design">
-                    <div class="gallery" data-category="documentary">
-                            <div class="inner">
-                            <a href="../pages/video/documentary.html" aria-label="View Documentary - Urban Growth project">
-                                    <div class="image-container">
-                                    <img src="../assets/images/video/documentary.png" alt="Screenshot of Documentary - Urban Growth" width="600" height="400">
-                                    </div>
-                                </a>
-                                <div class="desc">
-                                <strong>Documentary - Urban Growth</strong>
-                                <p class="date">May 2022</p>
-                                <p class="description">A short documentary examining urban development in my city, featuring interviews with local planners and residents.</p>
-                                <div class="project-tags">
-                                    <span class="project-tag">Premiere Pro</span>
-                                    <span class="project-tag">Documentary</span>
-                                    <span class="project-tag">Sound Design</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-                <div class="responsive" data-date="2022-02-01" data-name="Animated Logo Reveal" data-tags="after-effects,photoshop,animation,motion-graphics,vfx">
-                    <div class="gallery" data-category="animation">
-                            <div class="inner">
-                            <a href="../pages/video/animatedlogo.html" aria-label="View Animated Logo Reveal project">
-                                    <div class="image-container">
-                                    <img src="../assets/images/video/animatedlogo.png" alt="Screenshot of Animated Logo Reveal" width="600" height="400">
-                                    </div>
-                                </a>
-                                <div class="desc">
-                                <strong>Animated Logo Reveal</strong>
-                                <p class="date">Feb 2022</p>
-                                <p class="description">A dynamic logo animation created for a tech startup, featuring particle effects and modern design elements.</p>
-                                <div class="project-tags">
-                                    <span class="project-tag">After Effects</span>
-                                    <span class="project-tag">Photoshop</span>
-                                    <span class="project-tag">Animation</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                <!-- Projects will be added here -->
             </div>
         </div>
     </div>

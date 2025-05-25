@@ -188,11 +188,12 @@
   max-height: 0;
   overflow: hidden;
   transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  will-change: opacity, max-height;
 }
 
 .projects-display.active {
   opacity: 1;
-  max-height: 1500px;
+  overflow: visible;
   padding: 20px 0;
 }
 
@@ -201,9 +202,7 @@
 }
 
 .projects-display.deactivating {
-  opacity: 0;
-  max-height: 0;
-  transform: translateY(30px);
+  overflow: hidden;
 }
 
 .project-cards {

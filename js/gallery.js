@@ -1,3 +1,6 @@
+// Make simpleSearch and activeTags available globally
+let activeTags = new Set();
+
 // Project search function with enhanced animations
 function simpleSearch() {
     let input = document.getElementById('myInput');
@@ -166,17 +169,34 @@ function sortProjects(sortBy) {
 // Tags system functionality
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize variables
-    let activeTags = new Set();
     const tagsWrapper = document.getElementById('tags-wrapper');
     const tagsToggle = document.getElementById('tags-toggle');
     const tagsList = document.getElementById('tags-list');
-    const activeFilters = document.getElementById('active-filters');
-    const clearFilters = document.getElementById('clear-filters');
-    const tagSearch = document.getElementById('tag-search');
+    
+    // Add a clear filters button to the tags list
+    if (tagsList && !document.getElementById('clear-tags')) {
+        const clearBtn = document.createElement('div');
+        clearBtn.id = 'clear-tags';
+        clearBtn.className = 'tag clear-tags-btn';
+        clearBtn.textContent = 'Clear all filters';
+        clearBtn.style.marginLeft = 'auto';
+        clearBtn.addEventListener('click', function() {
+            activeTags.clear();
+            document.querySelectorAll('.tag.active').forEach(tag => {
+                tag.classList.remove('active');
+            });
+            filterProjectsByTags();
+        });
+        
+        if (tagsList.firstChild) {
+            tagsList.appendChild(clearBtn);
+        }
+    }
     
     // Toggle tags visibility
     if (tagsToggle && tagsWrapper) {
-        tagsToggle.addEventListener('click', function() {
+        tagsToggle.addEventListener('click', function(e) {
+            e.preventDefault(); // Prevent any default action
             tagsWrapper.classList.toggle('collapsed');
             tagsToggle.classList.toggle('collapsed');
             // Store preference in localStorage
@@ -188,6 +208,26 @@ document.addEventListener('DOMContentLoaded', function() {
             tagsWrapper.classList.add('collapsed');
             tagsToggle.classList.add('collapsed');
         }
+    }
+    
+    // Add click event to tags
+    if (tagsList) {
+        const tags = tagsList.querySelectorAll('.tag:not(.clear-tags-btn)');
+        tags.forEach(tag => {
+            tag.addEventListener('click', function() {
+                const tagName = this.getAttribute('data-tag');
+                
+                if (this.classList.contains('active')) {
+                    this.classList.remove('active');
+                    activeTags.delete(tagName);
+                } else {
+                    this.classList.add('active');
+                    activeTags.add(tagName);
+                }
+                
+                filterProjectsByTags();
+            });
+        });
     }
     
     // Filter projects by tags with enhanced animations
@@ -238,9 +278,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        // Update active filters display with animation
-        updateActiveFilters();
-        
         // Show "no results" message if no items found
         let noResults = document.getElementById('no-results');
         if (!foundItems && activeTags.size > 0) {
@@ -276,90 +313,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 noResults.style.display = 'none';
             }, 300);
         }
-    }
-    
-    // Update active filters display
-    function updateActiveFilters() {
-        if (!activeFilters) return;
         
-        // Clear current filters
-        const filtersContainer = activeFilters.querySelector(':scope > *:first-child');
-        const buttonsToRemove = activeFilters.querySelectorAll('.filter-tag');
-        buttonsToRemove.forEach(btn => btn.remove());
-        
-        // Show or hide the active filters container
-        if (activeTags.size > 0) {
-            activeFilters.classList.remove('hidden');
-            
-            // Add new filter tags
-            activeTags.forEach(tag => {
-                const tagName = document.querySelector(`.tag[data-tag="${tag}"]`).textContent.split(' ')[0]; // Get name without count
-                
-                const filterTag = document.createElement('div');
-                filterTag.className = 'filter-tag';
-                filterTag.dataset.tag = tag;
-                filterTag.innerHTML = `${tagName} <button aria-label="Remove ${tagName} filter">×</button>`;
-                
-                // Add remove event
-                filterTag.querySelector('button').addEventListener('click', function() {
-                    activeTags.delete(tag);
-                    document.querySelector(`.tag[data-tag="${tag}"]`).classList.remove('active');
-                    filterProjectsByTags();
-                });
-                
-                activeFilters.insertBefore(filterTag, clearFilters);
-            });
-        } else {
-            activeFilters.classList.add('hidden');
+        // Update the Clear All button visibility based on if any filters are active
+        const clearBtn = document.getElementById('clear-tags');
+        if (clearBtn) {
+            if (activeTags.size > 0) {
+                clearBtn.classList.add('visible');
+            } else {
+                clearBtn.classList.remove('visible');
+            }
         }
-    }
-    
-    // Add click event to tags
-    if (tagsList) {
-        const tags = tagsList.querySelectorAll('.tag');
-        tags.forEach(tag => {
-            tag.addEventListener('click', function() {
-                const tagName = this.getAttribute('data-tag');
-                
-                if (this.classList.contains('active')) {
-                    this.classList.remove('active');
-                    activeTags.delete(tagName);
-                } else {
-                    this.classList.add('active');
-                    activeTags.add(tagName);
-                }
-                
-                filterProjectsByTags();
-            });
-        });
-    }
-    
-    // Clear all filters
-    if (clearFilters) {
-        clearFilters.addEventListener('click', function() {
-            activeTags.clear();
-            document.querySelectorAll('.tag.active').forEach(tag => {
-                tag.classList.remove('active');
-            });
-            filterProjectsByTags();
-        });
-    }
-    
-    // Tag search functionality
-    if (tagSearch) {
-        tagSearch.addEventListener('input', function() {
-            const searchTerm = this.value.toLowerCase();
-            const tags = document.querySelectorAll('.tag');
-            
-            tags.forEach(tag => {
-                const tagText = tag.textContent.toLowerCase();
-                if (tagText.includes(searchTerm)) {
-                    tag.style.display = '';
-                } else {
-                    tag.style.display = 'none';
-                }
-            });
-        });
     }
     
     // Mobile optimization - center dropdowns on small screens

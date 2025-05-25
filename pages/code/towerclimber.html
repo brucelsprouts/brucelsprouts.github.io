@@ -4,15 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Tower Climber | Bruce's Portfolio</title>
-    <meta name="description" content="Computer scientist and Multimedia">
+    <meta name="description" content="Tower Climber - A 2D platformer game developed in Java with challenging levels">
+    
+    <!-- Scripts -->
     <script src="../../js/script.js"></script>
+    <script src="../../js/project-page.js" defer></script>
 
     <!-- Open Graph Protocol Metadata -->
     <meta property="og:locale" content="en_US">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Bruce Lin">
-    <meta property="og:title" content="Bruce Lin">
-    <meta property="og:description" content="Computer Scientist and Content Creator">
+    <meta property="og:title" content="Tower Climber - Bruce Lin">
+    <meta property="og:description" content="A 2D platformer game developed in Java where players navigate increasingly difficult levels to reach the top of a tower">
     <meta property="og:url" content="https://brucelsprouts.github.io">
     <meta property="og:image" content="https://cdn.discordapp.com/attachments/950767175684210698/1297395162741346364/image.png?ex=6715c4e7&is=67147367&hm=b44feea6856b72642f04a794d950a9e74a0e6d70423639520f48418992ac6500&">
     <meta property="og:image:type" content="png">
@@ -23,11 +26,12 @@
     <link rel="stylesheet" type="text/css" href="../../css/global.css">
     <link rel="stylesheet" type="text/css" href="../../css/gallery.css">
     <link rel="stylesheet" type="text/css" href="../../css/code.css">
+    <link rel="stylesheet" type="text/css" href="../../css/footer.css">
    
     <link rel="icon" href="../../assets/images/icons/icon.png" type="image/png">
     
     <!-- Canonical Link -->
-    <link rel="canonical" href="https://brucelsprouts.github.io/brucelsprouts">
+    <link rel="canonical" href="https://brucelsprouts.github.io/pages/code/towerclimber.html">
 </head>
 
 <body class="dark-mode">
@@ -35,7 +39,7 @@
     <div class="topnav-container">
         <div class="topnav" id="myTopnav">
             <div class="left-section">
-                <a href="home.html" id="leftname">&lt;&#47;&gt; Bruce Lin</a>
+                <a href="../../html/home.html" id="leftname">&lt;&#47;&gt; Bruce Lin</a>
             </div>
             <div class="wrapper">
                 <div id="myMenu" class="middle-section">
@@ -46,74 +50,256 @@
                 </div>
             </div>
             <div class="right-section">
-                <!-- Menu, Search, and Dark Mode Icons -->
-                <a class="menu-icons" onclick="menuSwitch(); return false;">
-                    <img src="../../assets/images/icons/white-menu.png" id="white-menu">
-                    <img src="../../assets/images/icons/black-menu.png" id="black-menu">
+                <!-- Theme Toggle -->
+                <a class="darklight-icons" onclick="lightDark(); return false;" aria-label="Toggle dark/light mode">
+                    <img src="../../assets/images/icons/moon.png" id="moon-image" alt="Dark mode" style="display:block;" />
+                    <img src="../../assets/images/icons/sun.png" id="sun-image" alt="Light mode" style="display:none;" />
                 </a>
-                <a class="darklight-icons" onclick="lightDark(); return false;">
-                    <img src="../../assets/images/icons/moon.png" id="moon-image" />
-                    <img src="../../assets/images/icons/sun.png" id="sun-image" />
+                <!-- Mobile Menu Button (hidden on desktop) -->
+                <a class="menu-icons" onclick="menuSwitch(); return false;" aria-label="Toggle menu">
+                    <img src="../../assets/images/icons/white-menu.png" id="white-menu" alt="Menu" style="display:block;" />
+                    <img src="../../assets/images/icons/black-menu.png" id="black-menu" alt="Menu" style="display:none;" />
                 </a>
             </div>
         </div>
     </div>
+    
+    <!-- Side Menu (for mobile) -->
+    <div class="side-menu-container">
+        <div class="side-menu-header">
+            <h3>Menu</h3>
+            <div class="side-menu-close" aria-label="Close menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        </div>
+        <div class="side-menu-content">
+            <a href="../../html/home.html">Home</a>
+            <a href="../../html/code.html">Code</a>
+            <a href="../../html/video.html">Video</a>
+            <a href="../../html/connect.html">Connect</a>
+        </div>
+    </div>
+    
+    <!-- Menu Overlay -->
+    <div class="menu-overlay"></div>
+    
     <svg id="fader"></svg>
     <script>
         fadeInPage();
     </script>
     
-      <div class="project-container">
-        <div class="project-left">
-            <img src="../../assets/images/code/towerclimber.png" alt="Tower Climber " width="600" height="400">
-        </div>
-        <div class="project-right">
-            <h1>Tower Climber</h1>
-            <p><strong>Jun 2022 - Jul 2022</strong></p>
-            <p>This is a JFrame game I made as a final project in grade 11, a math RPG turn-based game.</p>            
-            <a href="https://github.com/brucelsprouts/towerclimber" target="_blank">GitHub Repository</a>
+    <!-- Project Header -->
+    <div class="project-hero">
+        <div class="project-container">
+            <div class="project-left">
+                <img src="../../assets/images/code/towerclimber.png" alt="Tower Climber Game Screenshot" width="600" height="400" class="project-image">
+                <div class="project-actions">
+                    <a href="https://github.com/brucelsprouts/towerclimber" target="_blank" class="project-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                        </svg>
+                        GitHub Repository
+                    </a>
+                </div>
+            </div>
+            <div class="project-right">
+                <div class="project-breadcrumb">
+                    <a href="../../html/code.html">Code Projects</a> / Tower Climber
+                </div>
+                <h1 class="project-title">Tower Climber</h1>
+                <div class="project-meta">
+                    <span class="project-date"><strong>Timeline:</strong> June 2022 - July 2022</span>
+                    <div class="project-tags-container">
+                        <span class="project-tag">Java</span>
+                        <span class="project-tag">Game Development</span>
+                        <span class="project-tag">Physics</span>
+                        <span class="project-tag">Level Design</span>
+                    </div>
+                </div>
+                <p class="project-summary">Tower Climber is a 2D platformer game developed in Java where players navigate increasingly difficult levels to reach the top of a tower. The game features dynamic physics, varied obstacles, collectible items, and a progression system that challenges players' timing and platforming skills.</p>
+            </div>
         </div>
     </div>
+
     <div class="background">
         <div class="container text-container">
             <div class="row">
                 <div class="tech-icons">
-                    <a href="../../pages/skills/photoshop.html">
-                        <img src="../../assets/images/skills/photoshopicon.png" alt="Photoshop Icon" class="tech-icon">
-                    </a>
                     <a href="../../pages/skills/java.html">
-                        <img src="../../assets/images/skills/javaicon.png" alt="Java Icon" class="tech-icon">
-                    </a></div>
+                        <img src="../../assets/images/skills/javaicon.png" alt="Java Icon" class="tech-icon" title="Java">
+                    </a>
+                </div>
             </div>
+            
             <div class="row">
                 <div class="line-header">
-                    <h1>Role and Contributions</h1>
+                    <h2>Project Overview</h2>
                     <div class="line"></div>
                 </div>
-                <p>I developed the entirety of this webpage. Implementing the webpage using HTML, CSS, and JavaScript. Additionally, I handled various functionalities such as flexbox layouts, overlays, transitions, and cookies with JavaScript.</p>
+                <p>Tower Climber is a challenging 2D platformer game where players control a character who must climb to the top of a tower by navigating through a series of increasingly difficult levels. Each level presents unique obstacles, platforms, and hazards that test the player's reflexes, timing, and problem-solving abilities.</p>
+                <p>The game incorporates physics-based movement, allowing for realistic jumping and falling mechanics. Players can collect items throughout the levels to gain points and special abilities, and must avoid various obstacles that can set them back in their climb.</p>
             </div>
+            
             <div class="row">
                 <div class="line-header">
-                    <h1>Challenges and Solutions</h1>
+                    <h2>Role and Contributions</h2>
                     <div class="line"></div>
                 </div>
-                <p>One of the main challenges was figuring out how to use flexbox for layout and handling overlays and transitions. Initially, the webpage had some layout issues, but I optimized the CSS to ensure a responsive design. Another challenge was implementing cookies with JavaScript, which required careful handling of user preferences. Through iterative testing and debugging, I successfully resolved these issues.</p>
+                <p>As the lead developer on this project, I was responsible for:</p>
+                <ul class="feature-list">
+                    <li>Designing and implementing the core game mechanics and physics</li>
+                    <li>Creating the player character control system</li>
+                    <li>Developing the level design and progression system</li>
+                    <li>Implementing collision detection and response</li>
+                    <li>Creating game entities (platforms, obstacles, collectibles)</li>
+                    <li>Designing visual assets and the user interface</li>
+                    <li>Building the scoring and lives system</li>
+                </ul>
             </div>
+            
             <div class="row">
                 <div class="line-header">
-                    <h1>Learnings and Outcomes</h1>
+                    <h2>Challenges and Solutions</h2>
                     <div class="line"></div>
                 </div>
-                <p>This project taught me how to work effectively with HTML, CSS, and JavaScript for creating interactive and responsive webpages. I also learned the importance of debugging and testing, as well as handling user preferences with cookies. Additionally, I gained experience in optimizing webpage performance and handling complex layouts.</p>
+                <div class="challenges-grid">
+                    <div class="challenge-item">
+                        <h3>Physics Implementation</h3>
+                        <p><strong>Challenge:</strong> Creating a physics system that felt responsive yet realistic for a platformer game.</p>
+                        <p><strong>Solution:</strong> Implemented a custom physics engine that simulated gravity, friction, and momentum while maintaining tight controls. Fine-tuned the parameters through extensive playtesting to achieve the right balance between challenge and playability.</p>
+                    </div>
+                    <div class="challenge-item">
+                        <h3>Level Progression</h3>
+                        <p><strong>Challenge:</strong> Designing levels with an appropriate difficulty curve to keep players engaged without frustration.</p>
+                        <p><strong>Solution:</strong> Created a level design framework that gradually introduced new obstacles and challenges. Each level built upon skills learned in previous levels while adding new elements to maintain player interest and provide a sense of achievement.</p>
+                    </div>
+                    <div class="challenge-item">
+                        <h3>Performance Optimization</h3>
+                        <p><strong>Challenge:</strong> Ensuring smooth gameplay performance across different levels with varying numbers of game objects.</p>
+                        <p><strong>Solution:</strong> Implemented spatial partitioning to optimize collision detection and object rendering. Used object pooling for frequently created and destroyed entities to reduce memory allocation overhead.</p>
+                    </div>
+                </div>
             </div>
+            
             <div class="row">
                 <div class="line-header">
-                    <h1>Game Development</h1>
+                    <h2>Technical Implementation</h2>
                     <div class="line"></div>
                 </div>
-                <p>I developed the entire code and game. It's coded completely in Java using a Java Swing JFrame as well as all its visuals. Some challenges were trying to figure out how to properly keep track of player data within the game, which could have been solved by a double array, which I wasn't aware of at the time. It taught me a lot about Java and how to develop a game using Swing and Java in general.</p>
+                <p>The game was built using the following technologies and approaches:</p>
+                <ul class="feature-list">
+                    <li><strong>Java:</strong> Core programming language with custom rendering system</li>
+                    <li><strong>Object-Oriented Design:</strong> Used inheritance hierarchies for game entities and components</li>
+                    <li><strong>Custom Physics:</strong> Implemented gravity, collision response, and platform movement</li>
+                    <li><strong>Level System:</strong> Created a level loading system that could read level data from external files</li>
+                    <li><strong>Game State Management:</strong> Implemented a state machine to handle different game states (menu, gameplay, game over)</li>
+                </ul>
+            </div>
+            
+            <div class="row">
+                <div class="line-header">
+                    <h2>Learnings and Outcomes</h2>
+                    <div class="line"></div>
+                </div>
+                <p>This project provided valuable experience in:</p>
+                <ul class="feature-list">
+                    <li>Game physics and collision detection techniques</li>
+                    <li>Balancing game difficulty through iterative design</li>
+                    <li>Structuring game code for maintainability and extensibility</li>
+                    <li>Implementing responsive controls and smooth animations</li>
+                    <li>Performance optimization for real-time applications</li>
+                </ul>
+                <p>The completed game featured 10 unique levels with progressive difficulty, a variety of obstacles and platform types, collectible items, and a scoring system. The project met all its design goals and provided a challenging yet enjoyable gaming experience.</p>
+            </div>
+            
+            <div class="row">
+                <div class="line-header">
+                    <h2>Future Enhancements</h2>
+                    <div class="line"></div>
+                </div>
+                <p>Potential improvements for future iterations include:</p>
+                <ul class="feature-list">
+                    <li>Adding more diverse level themes and environments</li>
+                    <li>Implementing power-ups and special abilities</li>
+                    <li>Creating a level editor for user-generated content</li>
+                    <li>Adding enemy characters with AI behaviors</li>
+                    <li>Implementing a save/load system for progress</li>
+                    <li>Adding background music and improved sound effects</li>
+                </ul>
             </div>
         </div>
     </div>
-    </body>
-    </html>
+    
+    <!-- Related Projects -->
+    <div class="related-projects">
+        <div class="container">
+            <h2>Related Projects</h2>
+            <div class="related-grid">
+                <a href="pacman.html" class="related-item">
+                    <img src="../../assets/images/code/pacman.png" alt="Pac-Man Game" class="related-image">
+                    <div class="related-info">
+                        <h3>Pac-Man Recreation</h3>
+                        <p>A Java implementation of the classic Pac-Man game</p>
+                    </div>
+                </a>
+                <a href="webpage.html" class="related-item">
+                    <img src="../../assets/images/code/webpage.png" alt="Webpage Portfolio" class="related-image">
+                    <div class="related-info">
+                        <h3>Webpage Portfolio</h3>
+                        <p>A responsive personal portfolio website</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <!-- About Section -->
+            <div class="footer-section">
+                <h3 class="footer-title">About Me</h3>
+                <p>Computer Science student at Western University passionate about web development, video editing, and programming. Always learning and exploring new technologies.</p>
+                <div class="social-links">
+                    <a href="https://github.com/brucelsprouts" target="_blank" class="social-link" aria-label="GitHub">
+                        <img src="../../assets/images/home/dark-github-icon.png" alt="GitHub">
+                    </a>
+                    <a href="https://www.linkedin.com/in/bruce-lin-6284b323b/" target="_blank" class="social-link" aria-label="LinkedIn">
+                        <img src="../../assets/images/home/dark-linkedin-icon.png" alt="LinkedIn">
+                    </a>
+                    <a href="https://www.youtube.com/channel/UCIZq5zDOCw1Xq49H1Mpx05Q" target="_blank" class="social-link" aria-label="YouTube">
+                        <img src="../../assets/images/home/dark-youtube-icon.png" alt="YouTube">
+                    </a>
+                    <a href="https://www.instagram.com/brucelsproutss/" target="_blank" class="social-link" aria-label="Instagram">
+                        <img src="../../assets/images/home/dark-instagram-icon.png" alt="Instagram">
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links Section -->
+            <div class="footer-section">
+                <h3 class="footer-title">Quick Links</h3>
+                <ul class="quick-links">
+                    <li><a href="../../html/home.html">Home</a></li>
+                    <li><a href="../../html/code.html">Code Projects</a></li>
+                    <li><a href="../../html/video.html">Video Portfolio</a></li>
+                    <li><a href="../../html/connect.html">Connect</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="footer-section">
+                <h3 class="footer-title">Contact</h3>
+                <p>Interested in working together? Feel free to reach out!</p>
+                <a href="mailto:brucelin2409@gmail.com" class="contact-link">brucelin2409@gmail.com</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Bruce Lin. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

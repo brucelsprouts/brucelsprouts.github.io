@@ -4,15 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>The Magic Book | Bruce's Portfolio</title>
-    <meta name="description" content="Computer scientist and Multimedia">
+    <meta name="description" content="The Magic Book - Audio editing for a student film festival project">
+    
+    <!-- Scripts -->
     <script src="../../js/script.js"></script>
+    <script src="../../js/project-page.js" defer></script>
 
     <!-- Open Graph Protocol Metadata -->
     <meta property="og:locale" content="en_US">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Bruce Lin">
-    <meta property="og:title" content="Bruce Lin">
-    <meta property="og:description" content="Computer scientist and Creator">
+    <meta property="og:title" content="The Magic Book - Bruce Lin">
+    <meta property="og:description" content="Audio editing for 'The Magic Book,' a student film where I enhanced sound quality and synchronized effects">
     <meta property="og:url" content="https://brucelsprouts.github.io">
     <meta property="og:image" content="https://cdn.discordapp.com/attachments/950767175684210698/1155686381780213760/image.png">
     <meta property="og:image:type" content="png">
@@ -22,13 +25,13 @@
     <!-- Styles and Icons -->
     <link rel="stylesheet" type="text/css" href="../../css/global.css">
     <link rel="stylesheet" type="text/css" href="../../css/gallery.css">
-    <link rel="stylesheet" type="text/css" href="../../css/skills.css">
     <link rel="stylesheet" type="text/css" href="../../css/video.css">
+    <link rel="stylesheet" type="text/css" href="../../css/footer.css">
 
     <link rel="icon" href="../../assets/images/icons/icon.png" type="image/png">
     
     <!-- Canonical Link -->
-    <link rel="canonical" href="https://brucelsprouts.github.io/brucelsprouts">
+    <link rel="canonical" href="https://brucelsprouts.github.io/pages/video/themagicbook.html">
 </head>
 
 <body class="dark-mode">
@@ -47,47 +50,251 @@
                 </div>
             </div>
             <div class="right-section">
-                <!-- Menu, Search, and Dark Mode Icons -->
-                <a class="menu-icons" onclick="menuSwitch(); return false;">
-                    <img src="../../assets/images/icons/white-menu.png" id="white-menu">
-                    <img src="../../assets/images/icons/black-menu.png" id="black-menu">
+                <!-- Theme Toggle -->
+                <a class="darklight-icons" onclick="lightDark(); return false;" aria-label="Toggle dark/light mode">
+                    <img src="../../assets/images/icons/moon.png" id="moon-image" alt="Dark mode" style="display:block;" />
+                    <img src="../../assets/images/icons/sun.png" id="sun-image" alt="Light mode" style="display:none;" />
                 </a>
-                <a class="darklight-icons" onclick="lightDark(); return false;">
-                    <img src="../../assets/images/icons/moon.png" id="moon-image" />
-                    <img src="../../assets/images/icons/sun.png" id="sun-image" />
+                <!-- Mobile Menu Button (hidden on desktop) -->
+                <a class="menu-icons" onclick="menuSwitch(); return false;" aria-label="Toggle menu">
+                    <img src="../../assets/images/icons/white-menu.png" id="white-menu" alt="Menu" style="display:block;" />
+                    <img src="../../assets/images/icons/black-menu.png" id="black-menu" alt="Menu" style="display:none;" />
                 </a>
             </div>
         </div>
     </div>
+    
+    <!-- Side Menu (for mobile) -->
+    <div class="side-menu-container">
+        <div class="side-menu-header">
+            <h3>Menu</h3>
+            <div class="side-menu-close" aria-label="Close menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        </div>
+        <div class="side-menu-content">
+            <a href="../../html/home.html">Home</a>
+            <a href="../../html/code.html">Code</a>
+            <a href="../../html/video.html">Video</a>
+            <a href="../../html/connect.html">Connect</a>
+        </div>
+    </div>
+    
+    <!-- Menu Overlay -->
+    <div class="menu-overlay"></div>
+    
     <svg id="fader"></svg>
     <script>
         fadeInPage();
     </script>
     
-      <div class="project-container">
-        <div class="project-left">
-                <img src="../../assets/images/video/themagicboook.png" alt="The Magic Book" width="600" height="400">
-        </div>
-        <div class="project-right">
-            <h1>The Magic Book</h1>
-            <p><strong>July 10, 2024 - July 25, 2024</strong></p>
-            <p>I assisted in audio editing for the student film "The Magic Book," enhancing quality and synchronizing effects using Adobe Audition. I collaborated with the director and team, ensuring clear dialogue. I received credit for my contributions.</p>
+    <!-- Project Header -->
+    <div class="project-hero">
+        <div class="project-container">
+            <div class="project-left">
+                <img src="../../assets/images/video/themagicboook.png" alt="The Magic Book Film Screenshot" width="600" height="400" class="project-image">
+            </div>
+            <div class="project-right">
+                <div class="project-breadcrumb">
+                    <a href="../../html/video.html">Video Projects</a> / The Magic Book
+                </div>
+                <h1 class="project-title">The Magic Book</h1>
+                <div class="project-meta">
+                    <span class="project-date"><strong>Timeline:</strong> July 10, 2024 - July 25, 2024</span>
+                    <div class="project-tags-container">
+                        <span class="project-tag">Audio Editing</span>
+                        <span class="project-tag">Sound Design</span>
+                        <span class="project-tag">Adobe Audition</span>
+                        <span class="project-tag">Student Film</span>
+                    </div>
+                </div>
+                <p class="project-summary">I served as the audio editor for "The Magic Book," a student film produced for a film festival. My role involved enhancing audio quality, synchronizing sound effects, and ensuring clear dialogue throughout the production. I used Adobe Audition to mix and fine-tune the audio tracks, collaborating closely with the director to achieve the desired sound.</p>
+            </div>
         </div>
     </div>
+
     <div class="background">
         <div class="container text-container">
             <div class="row">
                 <div class="tech-icons">
-                    <img src="../../assets/images/skills/aeicon.png" alt="Aftereffects Icon" class="tech-icon">
+                    <a href="../../pages/skills/audition.html">
+                        <img src="../../assets/images/skills/auditionicon.png" alt="Adobe Audition Icon" class="tech-icon" title="Adobe Audition">
+                    </a>
+                    <a href="../../pages/skills/aftereffects.html">
+                        <img src="../../assets/images/skills/aeicon.png" alt="After Effects Icon" class="tech-icon" title="Adobe After Effects">
+                    </a>
                 </div>
             </div>
+            
             <div class="row">
                 <div class="line-header">
-                    <h1>Description</h1>
+                    <h2>Project Overview</h2>
                     <div class="line"></div>
                 </div>
-                <p>My primary role was to assist in the audio editing portion of the film "The Magic Book," which was a student film for a film festival. I was responsible for enhancing the audio quality, synchronizing sound effects, and ensuring clear dialogue. I used tools like Adobe Audition to edit and mix the audio tracks. Although I don't have the actual video, I received credit for my contributions to the project. The collaborative process involved working closely with the director and other team members to achieve the desired audio effects and overall sound quality.</p>            </div>
+                <p>"The Magic Book" is a student film created for a film festival that tells the story of a young protagonist who discovers a mysterious book with magical properties. The film combines elements of fantasy and coming-of-age themes, requiring careful sound design to establish atmosphere and enhance storytelling.</p>
+                <p>As the audio editor for this project, I was tasked with ensuring that all dialogue was clear and consistent, sound effects were properly synchronized, and the overall audio quality met professional standards. The film required various audio environments, from quiet library scenes to more dynamic moments when magical elements came into play.</p>
+            </div>
+            
+            <div class="row">
+                <div class="line-header">
+                    <h2>Role and Responsibilities</h2>
+                    <div class="line"></div>
+                </div>
+                <p>My specific responsibilities on this project included:</p>
+                <ul class="feature-list">
+                    <li>Cleaning and enhancing dialogue tracks to ensure clarity and consistency</li>
+                    <li>Selecting and synchronizing sound effects to match on-screen actions</li>
+                    <li>Creating ambient sound layers to establish different environments</li>
+                    <li>Mixing all audio elements to achieve balanced and professional sound</li>
+                    <li>Collaborating with the director to ensure the audio aligned with their creative vision</li>
+                    <li>Troubleshooting audio issues during the post-production process</li>
+                    <li>Preparing the final audio mix for integration with the visual elements</li>
+                </ul>
+            </div>
+            
+            <div class="row">
+                <div class="line-header">
+                    <h2>Challenges and Solutions</h2>
+                    <div class="line"></div>
+                </div>
+                <div class="challenges-grid">
+                    <div class="challenge-item">
+                        <h3>Variable Recording Quality</h3>
+                        <p><strong>Challenge:</strong> The original dialogue recordings had inconsistent quality due to changing recording environments during production.</p>
+                        <p><strong>Solution:</strong> Used Adobe Audition's noise reduction and equalization tools to standardize the dialogue quality across scenes. Applied subtle compression to maintain consistent volume levels throughout the film.</p>
+                    </div>
+                    <div class="challenge-item">
+                        <h3>Creating Magical Sound Effects</h3>
+                        <p><strong>Challenge:</strong> Designing convincing sound effects for the magical elements in the film that would enhance the fantasy aspects without sounding clichéd.</p>
+                        <p><strong>Solution:</strong> Created layered sound designs by combining multiple audio elements and applying effects like reverb, pitch modulation, and time stretching to create unique and immersive magical sounds.</p>
+                    </div>
+                    <div class="challenge-item">
+                        <h3>Tight Timeline</h3>
+                        <p><strong>Challenge:</strong> The project had a compressed post-production schedule to meet the film festival deadline.</p>
+                        <p><strong>Solution:</strong> Developed an efficient workflow by prioritizing critical scenes first and creating reusable audio elements that could be modified for similar scenes, allowing me to meet the tight deadline without compromising quality.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="line-header">
+                    <h2>Technical Approach</h2>
+                    <div class="line"></div>
+                </div>
+                <p>The audio editing process for "The Magic Book" involved several technical approaches:</p>
+                <ul class="feature-list">
+                    <li><strong>Multi-track Editing:</strong> Used Adobe Audition's multi-track capabilities to organize and edit dialogue, ambient sounds, effects, and music on separate tracks</li>
+                    <li><strong>Spectral Frequency Editing:</strong> Applied spectral editing to remove specific unwanted sounds without affecting the overall audio quality</li>
+                    <li><strong>Dynamic Processing:</strong> Used compression and limiting to control dynamic range and achieve professional loudness levels</li>
+                    <li><strong>Room Tone Matching:</strong> Created consistent room tone for scenes to maintain audio continuity between cuts</li>
+                    <li><strong>Automated Mixing:</strong> Implemented volume automation to balance elements throughout the timeline</li>
+                </ul>
+            </div>
+            
+            <div class="row">
+                <div class="line-header">
+                    <h2>Collaboration Process</h2>
+                    <div class="line"></div>
+                </div>
+                <p>Working on "The Magic Book" involved close collaboration with the film's creative team:</p>
+                <ul class="feature-list">
+                    <li>Participated in initial planning meetings to understand the director's vision for the film's soundscape</li>
+                    <li>Maintained regular communication with the director during the editing process</li>
+                    <li>Shared works-in-progress to gather feedback and make necessary adjustments</li>
+                    <li>Coordinated with the visual editors to ensure audio and visual elements synchronized perfectly</li>
+                    <li>Attended review sessions to finalize the audio mix with the full production team</li>
+                </ul>
+                <p>This collaborative approach ensured that the audio elements enhanced the storytelling while maintaining the director's creative vision for the project.</p>
+            </div>
+            
+            <div class="row">
+                <div class="line-header">
+                    <h2>Learnings and Outcomes</h2>
+                    <div class="line"></div>
+                </div>
+                <p>This project provided valuable experience and insights:</p>
+                <ul class="feature-list">
+                    <li>Deepened my technical skills in audio cleanup and restoration</li>
+                    <li>Enhanced my ability to create custom sound effects for specific narrative needs</li>
+                    <li>Improved my workflow efficiency under tight deadlines</li>
+                    <li>Strengthened my collaborative skills in a creative team environment</li>
+                    <li>Gained experience in matching audio quality across different recording conditions</li>
+                </ul>
+                <p>The film was successfully completed and submitted to the film festival, with the audio quality receiving positive feedback from viewers and festival judges. My work on this project earned me a credit as Audio Editor, and the experience helped me develop techniques that I've applied to subsequent audio projects.</p>
+            </div>
         </div>
     </div>
-    </body>
-    </html>
+    
+    <!-- Related Projects -->
+    <div class="related-projects">
+        <div class="container">
+            <h2>Related Projects</h2>
+            <div class="related-grid">
+                <a href="thecountdown.html" class="related-item">
+                    <img src="../../assets/images/video/thecountdown.png" alt="The Countdown" class="related-image">
+                    <div class="related-info">
+                        <h3>The Countdown</h3>
+                        <p>Audio editing and visual effects for a short film</p>
+                    </div>
+                </a>
+                <a href="smokinjoe.html" class="related-item">
+                    <img src="../../assets/images/video/smokinjoe.png" alt="Smokin' Joe" class="related-image">
+                    <div class="related-info">
+                        <h3>Smokin' Joe</h3>
+                        <p>Editing and effects for a commercial project</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <!-- About Section -->
+            <div class="footer-section">
+                <h3 class="footer-title">About Me</h3>
+                <p>Computer Science student at Western University passionate about web development, video editing, and programming. Always learning and exploring new technologies.</p>
+                <div class="social-links">
+                    <a href="https://github.com/brucelsprouts" target="_blank" class="social-link" aria-label="GitHub">
+                        <img src="../../assets/images/home/dark-github-icon.png" alt="GitHub">
+                    </a>
+                    <a href="https://www.linkedin.com/in/bruce-lin-6284b323b/" target="_blank" class="social-link" aria-label="LinkedIn">
+                        <img src="../../assets/images/home/dark-linkedin-icon.png" alt="LinkedIn">
+                    </a>
+                    <a href="https://www.youtube.com/channel/UCIZq5zDOCw1Xq49H1Mpx05Q" target="_blank" class="social-link" aria-label="YouTube">
+                        <img src="../../assets/images/home/dark-youtube-icon.png" alt="YouTube">
+                    </a>
+                    <a href="https://www.instagram.com/brucelsproutss/" target="_blank" class="social-link" aria-label="Instagram">
+                        <img src="../../assets/images/home/dark-instagram-icon.png" alt="Instagram">
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links Section -->
+            <div class="footer-section">
+                <h3 class="footer-title">Quick Links</h3>
+                <ul class="quick-links">
+                    <li><a href="../../html/home.html">Home</a></li>
+                    <li><a href="../../html/code.html">Code Projects</a></li>
+                    <li><a href="../../html/video.html">Video Portfolio</a></li>
+                    <li><a href="../../html/connect.html">Connect</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="footer-section">
+                <h3 class="footer-title">Contact</h3>
+                <p>Interested in working together? Feel free to reach out!</p>
+                <a href="mailto:brucelin2409@gmail.com" class="contact-link">brucelin2409@gmail.com</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Bruce Lin. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -26,6 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Setup side menu
     setupSideMenu();
+    
+    // Set active nav link
+    setActiveNavLink();
 });
 
 // Update icon visibility when theme changes
@@ -226,6 +229,12 @@ function searchThing() {
 
 // Handle skill section animations on scroll
 document.addEventListener('DOMContentLoaded', function() {
+  // Call fadeInPage to handle initial page load fade effect
+  fadeInPage();
+  
+  // Setup fade transitions for links
+  setupLinkFade();
+  
   // Check if we're on a skill page
   const skillSections = document.querySelectorAll('.skill-page-content');
   if (skillSections.length > 0) {
@@ -258,3 +267,21 @@ document.addEventListener('DOMContentLoaded', function() {
     handleScrollAnimation();
   }
 });
+
+// Function to set active class on current page's navigation link
+function setActiveNavLink() {
+    const currentPath = window.location.pathname;
+    const navLinks = document.querySelectorAll('.middle-section a, .side-menu-content a');
+    
+    navLinks.forEach(link => {
+        const linkPath = link.getAttribute('href');
+        if (linkPath) {
+            // Check if the current path ends with the link's href
+            if (currentPath.endsWith(linkPath)) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        }
+    });
+}

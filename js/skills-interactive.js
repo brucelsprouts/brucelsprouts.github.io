@@ -332,23 +332,40 @@ document.addEventListener('DOMContentLoaded', function() {
             skillIcon.classList.add('active');
             activeSkill = skillConfig;
             
+            // First make the container visible but with height 0
+            projectsDisplay.style.opacity = '0';
+            projectsDisplay.style.maxHeight = '0';
+            projectsDisplay.classList.add('active');
+            
             // Render projects for this skill
             renderProjectCards(skillConfig);
             
-            // Show projects display with animation
-            projectsDisplay.classList.add('activating');
-            projectsDisplay.classList.add('active');
-            
-            // After initial activation, remove the animation class
-            setTimeout(() => {
-                projectsDisplay.classList.remove('activating');
-            }, 500);
+            // Then animate the container expanding
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    // Using requestAnimationFrame twice ensures browser has time to process
+                    projectsDisplay.classList.add('activating');
+                    projectsDisplay.style.opacity = '1';
+                    projectsDisplay.style.maxHeight = '1500px';
+                    
+                    // After initial activation, remove the animation class
+                    setTimeout(() => {
+                        projectsDisplay.classList.remove('activating');
+                        projectsDisplay.style.maxHeight = '';
+                        projectsDisplay.style.opacity = '';
+                    }, 500);
+                });
+            });
         } else {
             // Hide projects display with animation
             projectsDisplay.classList.add('deactivating');
+            projectsDisplay.style.opacity = '0';
+            projectsDisplay.style.maxHeight = '0';
             
             setTimeout(() => {
                 projectsDisplay.classList.remove('active', 'deactivating');
+                projectsDisplay.style.opacity = '';
+                projectsDisplay.style.maxHeight = '';
                 activeSkill = null;
             }, 500);
         }
