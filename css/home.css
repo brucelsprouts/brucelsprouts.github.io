@@ -1,10 +1,13 @@
- .home-content {
+@import url('../css/global.css');
+
+.home-content {
   margin-top: 41px;
- }
- /* icons */
+}
+/* icons */
 #github-icon, #youtube-icon, #instagram-icon, #tiktok-icon, #linkedin-icon, #linktree-icon {
     width: 24px;
     height: 24px; 
+    transition: var(--theme-transition);
   }
   .dark-mode #github-icon {
     content: url('../assets/images/home/dark-github-icon.png');
@@ -75,7 +78,7 @@
     gap: 12px;
   }
   .social-link {
-    transition: transform 0.1s ease-in-out;
+    transition: transform 0.1s ease-in-out, var(--theme-transition);
   }
   .social-link:hover {
     transform: scale(1.1);
@@ -132,6 +135,7 @@
   text-align: center;
   border-radius: 2px;
   margin-bottom: 1%;
+  transition: var(--theme-transition);
 }
 @media only screen and (max-width: 750px) {
   .gallery {
@@ -152,6 +156,7 @@
 .inner img {
   max-width: 100%;
   height: auto;
+  transition: var(--theme-transition);
 }
 .dark-mode .inner img {
   border-bottom: 1px solid #C8C8C8;
@@ -181,12 +186,14 @@
   height: 2px;
   background-color: #C8C8C8;
   margin-right: 20px; /* Ensures margin on the right */
+  transition: var(--theme-transition);
 }
 .light-mode .line-header .line {
   flex-grow: 1;
   height: 2px;
   background-color: #000000;
   margin-right: 20px; /* Ensures margin on the right */
+  transition: var(--theme-transition);
 }
 
 @media (max-width: 750px) {
@@ -354,7 +361,7 @@
   z-index: -1;
   opacity: 0.2; /* 50% transparency */
   filter: invert(0); /* Default color */
-  transition: transform 0.1s ease-out; /* Smooth transition */
+  transition: transform 0.1s ease-out, var(--theme-transition);
 }
 .light-mode .background-image {
   filter: invert(1); /* Change color to black */

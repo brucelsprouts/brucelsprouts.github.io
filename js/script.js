@@ -1,6 +1,9 @@
 function lightDark() {
     var element = document.body;
     
+    // Add the transitioning class to enable smooth transitions
+    element.classList.add('theme-transitioning');
+    
     // Toggle classes
     element.classList.toggle("dark-mode");
     element.classList.toggle("light-mode");
@@ -10,6 +13,11 @@ function lightDark() {
     
     // Update icons to match the current theme
     updateThemeIcons();
+    
+    // Remove the transitioning class after the transition is complete
+    setTimeout(() => {
+        element.classList.remove('theme-transitioning');
+    }, 300); // Match this to the transition duration in CSS
 }
 
 document.addEventListener('DOMContentLoaded', () => {

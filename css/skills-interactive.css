@@ -1,8 +1,10 @@
+@import url('../css/global.css');
+
 /* Interactive Skills Section */
 .skills-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 60px 20px;
+  padding: 4rem 1rem;
 }
 
 .skills-header {
@@ -45,12 +47,14 @@
 }
 
 .category-button {
-  padding: 8px 16px;
+  padding: 0.5rem 1.25rem;
+  margin: 0 0.5rem 0.5rem 0;
   border: none;
-  border-radius: 20px;
+  border-radius: 25px;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: all 0.3s ease, transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+  outline: none;
+  transition: var(--theme-transition), transform 0.3s ease;
 }
 
 .dark-mode .category-button {
@@ -105,14 +109,15 @@
 }
 
 .skill-icon {
+  padding: 1rem;
+  margin: 0.5rem;
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 90px;
   cursor: pointer;
-  padding: 10px;
-  border-radius: 8px;
-  transition: all 0.3s ease, transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: var(--theme-transition), transform 0.3s ease, opacity 0.3s ease;
 }
 
 .dark-mode .skill-icon {
@@ -212,9 +217,12 @@
 }
 
 .project-card {
-  border-radius: 8px;
-  overflow: hidden;
-  transition: all 0.3s ease, transform 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: var(--theme-transition), transform 0.3s ease, opacity 0.3s ease;
 }
 
 .dark-mode .project-card {

@@ -1,3 +1,6 @@
+/* Import global styles for theme transitions */
+@import url('../css/global.css');
+
 .video-container {
     position: relative;
     width: 100%;
