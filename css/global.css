@@ -3,7 +3,10 @@
 
 /* Global theme transition variable */
 :root {
-  --theme-transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  --theme-transition: background-color 0.4s cubic-bezier(0.19, 1, 0.22, 1), 
+                      color 0.4s cubic-bezier(0.19, 1, 0.22, 1), 
+                      border-color 0.4s cubic-bezier(0.19, 1, 0.22, 1), 
+                      box-shadow 0.4s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 /* body, text and connect ul */
@@ -144,7 +147,7 @@ body.light-mode .topnav a {
   height: 100%;
   text-decoration: none;
   font-size: 16px;
-  transition: var(--theme-transition), transform 0.2s;
+  transition: var(--theme-transition), transform 0.4s cubic-bezier(0.19, 1, 0.22, 1), box-shadow 0.4s cubic-bezier(0.19, 1, 0.22, 1);
   user-select: none; /* Disable text selection */
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none; /* Firefox */
@@ -152,13 +155,17 @@ body.light-mode .topnav a {
 }
 
 .dark-mode .topnav a:hover {
-  background-color: #201c1c;
+  background-color: rgba(32, 28, 28, 0.6);
   transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .light-mode .topnav a:hover {
-  background-color: #e8e4e4;
+  background-color: rgba(232, 228, 228, 0.6);
   transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 /* Navigation sections */
@@ -211,18 +218,19 @@ body.light-mode .topnav a {
   width: 100%;
   height: 2px;
   background-color: currentColor;
-  transform: translateY(3px);
+  transform: scaleX(0);
   opacity: 0;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.4s ease;
+  transform-origin: center;
 }
 
 .middle-section a:hover::after {
-  transform: translateY(0);
+  transform: scaleX(1);
   opacity: 1;
 }
 
 .middle-section a.active::after {
-  transform: translateY(0);
+  transform: scaleX(1);
   opacity: 1;
 }
 

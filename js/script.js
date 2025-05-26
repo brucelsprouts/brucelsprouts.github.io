@@ -17,7 +17,7 @@ function lightDark() {
     // Remove the transitioning class after the transition is complete
     setTimeout(() => {
         element.classList.remove('theme-transitioning');
-    }, 300); // Match this to the transition duration in CSS
+    }, 400); // Match this to the transition duration in CSS
 }
 
 document.addEventListener('DOMContentLoaded', () => {
