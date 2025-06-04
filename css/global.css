@@ -6,7 +6,9 @@
   --theme-transition: background-color 0.4s cubic-bezier(0.19, 1, 0.22, 1), 
                       color 0.4s cubic-bezier(0.19, 1, 0.22, 1), 
                       border-color 0.4s cubic-bezier(0.19, 1, 0.22, 1), 
-                      box-shadow 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+                      box-shadow 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+                      filter 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+                      opacity 0.4s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 /* body, text and connect ul */
@@ -39,6 +41,34 @@ body::-webkit-scrollbar {
   height: 0;
   background-color: transparent;
   display: none;
+}
+
+/* Global image transitions for dark/light mode */
+img {
+  transition: var(--theme-transition);
+}
+
+/* For images with dark/light variants */
+img.theme-aware-image {
+  transition: opacity 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.dark-mode img.light-mode-image,
+.light-mode img.dark-mode-image {
+  opacity: 0;
+  position: absolute;
+}
+
+.dark-mode img.dark-mode-image,
+.light-mode img.light-mode-image {
+  opacity: 1;
+  position: relative;
+}
+
+/* Image container for theme-aware images */
+.theme-aware-container {
+  position: relative;
+  display: inline-block;
 }
 
 h1, h2, h3, h4, h5, h6 {

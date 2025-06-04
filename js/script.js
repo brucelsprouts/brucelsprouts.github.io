@@ -14,6 +14,9 @@ function lightDark() {
     // Update icons to match the current theme
     updateThemeIcons();
     
+    // Update theme-aware image containers
+    updateThemeAwareImages();
+    
     // Remove the transitioning class after the transition is complete
     setTimeout(() => {
         element.classList.remove('theme-transitioning');
@@ -26,7 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.className = theme;
     
     // Ensure theme-related icons are correctly displayed
-    setTimeout(updateThemeIcons, 50); // Small delay to ensure DOM is fully loaded
+    setTimeout(() => {
+        updateThemeIcons();
+        setupThemeAwareImages();
+    }, 50); // Small delay to ensure DOM is fully loaded
     
     // Setup page transitions and animations
     setupLinkFade();
@@ -91,11 +97,71 @@ function updateThemeIcons() {
         }
     }
     
+    // Update all images with dark/light variants
+    // First approach: images with -dark and -light in filename
+    document.querySelectorAll('img[src*="-dark."], img[src*="-light."]').forEach(img => {
+        const currentSrc = img.getAttribute('src');
+        if (currentSrc) {
+            if (isDarkMode && currentSrc.includes('-light.')) {
+                img.src = currentSrc.replace('-light.', '-dark.');
+            } else if (!isDarkMode && currentSrc.includes('-dark.')) {
+                img.src = currentSrc.replace('-dark.', '-light.');
+            }
+        }
+    });
+    
     // Update background images or colors if needed
     const backgroundImage = document.getElementById('background-image');
     if (backgroundImage) {
-        // Handle background image changes if necessary
+        // Already handled by CSS filter
     }
+}
+
+// Update theme-aware image containers based on current theme
+function updateThemeAwareImages() {
+    const isDarkMode = document.body.classList.contains('dark-mode');
+    
+    document.querySelectorAll('.theme-aware-container').forEach(container => {
+        const darkImage = container.querySelector('.dark-mode-image');
+        const lightImage = container.querySelector('.light-mode-image');
+        
+        if (darkImage && lightImage) {
+            if (isDarkMode) {
+                darkImage.style.opacity = '1';
+                darkImage.style.position = 'relative';
+                lightImage.style.opacity = '0';
+                lightImage.style.position = 'absolute';
+            } else {
+                darkImage.style.opacity = '0';
+                darkImage.style.position = 'absolute';
+                lightImage.style.opacity = '1';
+                lightImage.style.position = 'relative';
+            }
+        }
+    });
+}
+
+// Function to set up theme-aware image pairs initially
+function setupThemeAwareImages() {
+    document.querySelectorAll('.theme-aware-container').forEach(container => {
+        const darkImage = container.querySelector('.dark-mode-image');
+        const lightImage = container.querySelector('.light-mode-image');
+        
+        if (darkImage && lightImage) {
+            // Ensure images have the same dimensions and styles
+            darkImage.style.width = '100%';
+            lightImage.style.width = '100%';
+            lightImage.style.top = '0';
+            lightImage.style.left = '0';
+            
+            // Set initial positions
+            lightImage.style.position = 'absolute';
+            darkImage.style.position = 'relative';
+            
+            // Apply initial visibility based on current theme
+            updateThemeAwareImages();
+        }
+    });
 }
 
 // Setup side menu functionality
