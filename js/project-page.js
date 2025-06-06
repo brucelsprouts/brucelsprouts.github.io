@@ -1,107 +1,56 @@
 /**
  * Project Page JavaScript
- * Handles animations, scrolling effects, and responsive elements for project detail pages
+ * Handles basic interactions for project detail pages
  */
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize page elements
-    initProjectPage();
-
-    // Animate elements on scroll
-    window.addEventListener('scroll', handleScrollAnimations);
-});
-
-/**
- * Initialize project page elements and animations
- */
-function initProjectPage() {
-    // Add animation classes to elements when page loads
-    animateElementsOnLoad();
-    
-    // Setup image zoom functionality
+    // Initialize image zoom functionality if needed
     setupImageZoom();
     
-    // Setup related projects hover effects
-    setupRelatedProjects();
-}
-
-/**
- * Apply load animations to page elements
- */
-function animateElementsOnLoad() {
-    // Project title animation
-    const projectTitle = document.querySelector('.project-title');
-    if (projectTitle) {
-        projectTitle.classList.add('animate-in');
-    }
-    
-    // Project content sections
-    const contentSections = document.querySelectorAll('.row');
-    contentSections.forEach((section, index) => {
-        // Add a delay based on the index to create a cascade effect
-        setTimeout(() => {
-            section.classList.add('fade-in');
-        }, 200 + (index * 100));
-    });
-    
-    // Project image
-    const projectImage = document.querySelector('.project-image');
-    if (projectImage) {
-        projectImage.classList.add('scale-in');
-    }
-}
-
-/**
- * Handle scroll-based animations
- */
-function handleScrollAnimations() {
-    // Get all elements that should animate on scroll
-    const animateElements = document.querySelectorAll('.animate-on-scroll:not(.animated)');
-    
-    animateElements.forEach(element => {
-        if (isElementInViewport(element)) {
-            element.classList.add('animated');
-        }
-    });
-    
-    // Update active section in navigation (if implemented)
-    updateActiveSection();
-}
-
-/**
- * Check if an element is in the viewport
- * @param {Element} element - The DOM element to check
- * @returns {boolean} - True if element is in viewport
- */
-function isElementInViewport(element) {
-    const rect = element.getBoundingClientRect();
-    return (
-        rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.8 &&
-        rect.bottom >= 0
-    );
-}
+    // Setup project card hover effects
+    setupProjectCards();
+});
 
 /**
  * Setup image zoom functionality for project images
  */
 function setupImageZoom() {
-    const projectImage = document.querySelector('.project-image');
+    const showcaseImage = document.querySelector('.showcase-image img');
     
-    if (projectImage) {
-        projectImage.addEventListener('click', function() {
+    if (showcaseImage) {
+        showcaseImage.addEventListener('click', function() {
             // Create modal for zoomed image
             const modal = document.createElement('div');
             modal.className = 'image-zoom-modal';
+            modal.style.position = 'fixed';
+            modal.style.top = '0';
+            modal.style.left = '0';
+            modal.style.width = '100%';
+            modal.style.height = '100%';
+            modal.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
+            modal.style.zIndex = '9999';
+            modal.style.display = 'flex';
+            modal.style.alignItems = 'center';
+            modal.style.justifyContent = 'center';
             
             // Create close button
             const closeButton = document.createElement('span');
             closeButton.className = 'close-modal';
             closeButton.innerHTML = '&times;';
+            closeButton.style.position = 'absolute';
+            closeButton.style.top = '20px';
+            closeButton.style.right = '30px';
+            closeButton.style.color = 'white';
+            closeButton.style.fontSize = '40px';
+            closeButton.style.fontWeight = 'bold';
+            closeButton.style.cursor = 'pointer';
             
             // Create zoomed image
             const zoomedImage = document.createElement('img');
             zoomedImage.src = this.src;
-            zoomedImage.className = 'zoomed-image';
+            zoomedImage.style.maxWidth = '90%';
+            zoomedImage.style.maxHeight = '90%';
+            zoomedImage.style.objectFit = 'contain';
             
             // Add elements to modal
             modal.appendChild(closeButton);
@@ -111,57 +60,28 @@ function setupImageZoom() {
             // Prevent scrolling on body
             document.body.style.overflow = 'hidden';
             
-            // Add animation class
-            setTimeout(() => {
-                modal.classList.add('show');
-            }, 10);
-            
             // Close modal on click
             modal.addEventListener('click', function() {
-                modal.classList.remove('show');
-                setTimeout(() => {
-                    document.body.removeChild(modal);
-                    document.body.style.overflow = '';
-                }, 300);
+                document.body.removeChild(modal);
+                document.body.style.overflow = '';
             });
         });
     }
 }
 
 /**
- * Setup hover effects for related projects
+ * Setup hover effects for project cards
  */
-function setupRelatedProjects() {
-    const relatedItems = document.querySelectorAll('.related-item');
+function setupProjectCards() {
+    const projectCards = document.querySelectorAll('.project-card');
     
-    relatedItems.forEach(item => {
-        item.addEventListener('mouseenter', function() {
-            this.classList.add('hover');
+    projectCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px)';
         });
         
-        item.addEventListener('mouseleave', function() {
-            this.classList.remove('hover');
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
         });
     });
-}
-
-/**
- * Update active section in navigation based on scroll position
- */
-function updateActiveSection() {
-    // Implementation for section highlighting if needed
-    const sections = document.querySelectorAll('.row');
-    let currentSection = null;
-    
-    sections.forEach(section => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top <= 100 && rect.bottom >= 100) {
-            currentSection = section;
-        }
-    });
-    
-    if (currentSection) {
-        // Highlight the current section if needed
-        currentSection.classList.add('active-section');
-    }
 } 

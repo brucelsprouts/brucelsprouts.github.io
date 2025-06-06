@@ -24,9 +24,8 @@
     
     <!-- Styles and Icons -->
     <link rel="stylesheet" type="text/css" href="../../css/global.css">
-    <link rel="stylesheet" type="text/css" href="../../css/gallery.css">
-    <link rel="stylesheet" type="text/css" href="../../css/code.css">
     <link rel="stylesheet" type="text/css" href="../../css/footer.css">
+    <link rel="stylesheet" type="text/css" href="../../css/project-page.css">
    
     <link rel="icon" href="../../assets/images/icons/icon.png" type="image/png">
     
@@ -91,166 +90,227 @@
         fadeInPage();
     </script>
     
-    <!-- Project Header -->
-    <div class="project-hero">
-        <div class="project-container">
-            <div class="project-left">
-                <img src="../../assets/images/code/webpage.png" alt="Webpage Portfolio Screenshot" width="600" height="400" class="project-image">
-                <div class="project-actions">
-                    <a href="https://github.com/brucelsprouts/brucelsprouts.github.io" target="_blank" class="project-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                        </svg>
-                        GitHub Repository
-                    </a>
-                    <a href="https://brucelsprouts.github.io" target="_blank" class="project-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <line x1="2" y1="12" x2="22" y2="12"></line>
-                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                        </svg>
-                        Live Website
-                    </a>
-                </div>
+    <!-- Project Header with Navigation -->
+    <div class="project-header">
+        <div class="container">
+            <div class="project-navigation">
+                <a href="../../html/code.html" class="back-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    Back to Projects
+                </a>
             </div>
-            <div class="project-right">
-                <div class="project-breadcrumb">
-                    <a href="../../html/code.html">Code Projects</a> / Webpage Portfolio
+            <h1 class="project-title">Webpage Portfolio</h1>
+            <div class="project-meta">
+                <div class="project-date">September 2023 - Present</div>
+                <div class="project-tags">
+                    <span class="tag">HTML</span>
+                    <span class="tag">CSS</span>
+                    <span class="tag">JavaScript</span>
+                    <span class="tag">Responsive Design</span>
                 </div>
-                <h1 class="project-title">Webpage Portfolio</h1>
-                <div class="project-meta">
-                    <span class="project-date"><strong>Timeline:</strong> September 2023 - Present (Ongoing)</span>
-                    <div class="project-tags-container">
-                        <span class="project-tag">HTML</span>
-                        <span class="project-tag">CSS</span>
-                        <span class="project-tag">JavaScript</span>
-                        <span class="project-tag">Responsive Design</span>
-                    </div>
-                </div>
-                <p class="project-summary">A personal portfolio website designed and developed from scratch to showcase my projects, skills, and professional background. The site features responsive design, dark/light mode, interactive elements, and accessibility considerations.</p>
             </div>
         </div>
     </div>
 
-    <div class="background">
-        <div class="container text-container">
-            <div class="row">
-                <div class="tech-icons">
-                    <a href="../../pages/skills/html.html">
-                        <img src="../../assets/images/skills/htmlicon.png" alt="HTML Icon" class="tech-icon" title="HTML">
-                    </a>
-                    <a href="../../pages/skills/css.html">
-                        <img src="../../assets/images/skills/cssicon.png" alt="CSS Icon" class="tech-icon" title="CSS">
-                    </a>
-                    <a href="../../pages/skills/javascript.html">
-                        <img src="../../assets/images/skills/jsicon.png" alt="JavaScript Icon" class="tech-icon" title="JavaScript">
-                    </a>
-                    <a href="../../pages/skills/photoshop.html">
-                        <img src="../../assets/images/skills/photoshopicon.png" alt="Photoshop Icon" class="tech-icon" title="Adobe Photoshop">
-                    </a>
+    <!-- Project Showcase -->
+    <div class="project-showcase">
+        <div class="container">
+            <div class="showcase-image">
+                <img src="../../assets/images/code/webpage.png" alt="Webpage Portfolio Screenshot" loading="lazy">
+            </div>
+            <div class="project-actions">
+                <a href="https://github.com/brucelsprouts/brucelsprouts.github.io" target="_blank" class="action-button github">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                    </svg>
+                    View Code
+                </a>
+                <a href="https://brucelsprouts.github.io" target="_blank" class="action-button website">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    Live Demo
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Overview -->
+    <div class="project-content">
+        <div class="container">
+            <div class="content-section">
+                <h2>Overview</h2>
+                <p>This portfolio website was built from the ground up to showcase my skills in web development. Created with HTML, CSS, and JavaScript, it serves as both a professional portfolio and a platform for implementing new techniques.</p>
+                <p>The site features responsive design, dark/light mode, smooth transitions, and organized content sections for my coding and multimedia work.</p>
+            </div>
+
+            <!-- Technologies Used -->
+            <div class="content-section">
+                <h2>Technologies Used</h2>
+                <div class="tech-stack">
+                    <div class="tech-item">
+                        <img src="../../assets/images/skills/htmlicon.png" alt="HTML" class="tech-icon">
+                        <span>HTML5</span>
+                    </div>
+                    <div class="tech-item">
+                        <img src="../../assets/images/skills/cssicon.png" alt="CSS" class="tech-icon">
+                        <span>CSS3</span>
+                    </div>
+                    <div class="tech-item">
+                        <img src="../../assets/images/skills/jsicon.png" alt="JavaScript" class="tech-icon">
+                        <span>JavaScript</span>
+                    </div>
+                    <div class="tech-item">
+                        <img src="../../assets/images/skills/photoshopicon.png" alt="Photoshop" class="tech-icon">
+                        <span>Photoshop</span>
+                    </div>
                 </div>
             </div>
-            
-            <div class="row">
-                <div class="line-header">
-                    <h2>Project Overview</h2>
-                    <div class="line"></div>
-                </div>
-                <p>This portfolio website represents my journey as a web developer and showcases my evolving skills in front-end development. Built from the ground up using HTML, CSS, and JavaScript, it serves as both a professional portfolio and a playground for implementing new web technologies and design concepts.</p>
-                <p>The site features responsive design for all screen sizes, interactive elements using JavaScript, theme switching between dark and light modes, and content organization that highlights both my coding and multimedia work.</p>
-            </div>
-            
-            <div class="row">
-                <div class="line-header">
-                    <h2>Role and Contributions</h2>
-                    <div class="line"></div>
-                </div>
-                <p>As the sole developer of this website, I was responsible for all aspects of its creation:</p>
-                <ul class="feature-list">
-                    <li>Designed the user interface with a focus on modern aesthetics and user experience</li>
-                    <li>Implemented responsive layouts using flexbox and CSS Grid</li>
-                    <li>Created interactive elements and animations with vanilla JavaScript</li>
-                    <li>Built a theme switching system that persists user preferences</li>
-                    <li>Designed and integrated custom graphics and icons</li>
-                    <li>Optimized performance and accessibility</li>
-                    <li>Implemented smooth page transitions and navigation</li>
-                </ul>
-            </div>
-            
-            <div class="row">
-                <div class="line-header">
-                    <h2>Challenges and Solutions</h2>
-                    <div class="line"></div>
-                </div>
-                <div class="challenges-grid">
-                    <div class="challenge-item">
+
+            <!-- Features -->
+            <div class="content-section">
+                <h2>Key Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                <line x1="8" y1="21" x2="16" y2="21"></line>
+                                <line x1="12" y1="17" x2="12" y2="21"></line>
+                            </svg>
+                        </div>
                         <h3>Responsive Design</h3>
-                        <p><strong>Challenge:</strong> Creating a layout that works seamlessly across all device sizes.</p>
-                        <p><strong>Solution:</strong> Implemented a mobile-first approach using flexbox and media queries to ensure the design adapts to different screen sizes. Tested extensively on various devices to ensure compatibility.</p>
+                        <p>Adapts to all screen sizes from mobile to desktop</p>
                     </div>
-                    <div class="challenge-item">
-                        <h3>Theme Switching</h3>
-                        <p><strong>Challenge:</strong> Implementing a dark/light mode that persists across page loads.</p>
-                        <p><strong>Solution:</strong> Used localStorage to save user preferences and created a comprehensive CSS variable system to manage theme colors. This allowed for a smooth transition between themes while maintaining visual consistency.</p>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                        </div>
+                        <h3>Dark/Light Mode</h3>
+                        <p>Theme switching with saved user preferences</p>
                     </div>
-                    <div class="challenge-item">
-                        <h3>Performance Optimization</h3>
-                        <p><strong>Challenge:</strong> Ensuring fast load times despite rich visual elements.</p>
-                        <p><strong>Solution:</strong> Optimized images, implemented lazy loading, minimized JavaScript execution time, and used efficient CSS selectors to improve overall performance.</p>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="23 4 23 10 17 10"></polyline>
+                                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                            </svg>
+                        </div>
+                        <h3>Page Transitions</h3>
+                        <p>Smooth animations between pages</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                            </svg>
+                        </div>
+                        <h3>Custom Design</h3>
+                        <p>Modern, clean aesthetic with custom graphics</p>
                     </div>
                 </div>
             </div>
-            
-            <div class="row">
-                <div class="line-header">
-                    <h2>Learnings and Outcomes</h2>
-                    <div class="line"></div>
+
+            <!-- Development Process -->
+            <div class="content-section">
+                <h2>Development Process</h2>
+                <div class="process-timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h3>Planning & Design</h3>
+                            <p>Started with wireframes and mockups to establish the structure and visual direction</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h3>Core Development</h3>
+                            <p>Built HTML structure and CSS styling from scratch with responsive design principles</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h3>Interactive Elements</h3>
+                            <p>Added JavaScript for theme switching, navigation, and animations</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h3>Ongoing Updates</h3>
+                            <p>Continuously adding new projects and refining features</p>
+                        </div>
+                    </div>
                 </div>
-                <p>This project significantly improved my skills in:</p>
-                <ul class="feature-list">
-                    <li>Structuring complex web projects from scratch</li>
-                    <li>Writing clean, maintainable CSS using modern techniques</li>
-                    <li>Implementing JavaScript for interactive elements without relying on libraries</li>
-                    <li>Optimizing user experience across different devices</li>
-                    <li>Using version control (Git) effectively for ongoing development</li>
-                </ul>
-                <p>The portfolio has been instrumental in showcasing my work to potential collaborators and employers, while also serving as a platform for continuous learning and improvement in web development.</p>
             </div>
-            
-            <div class="row">
-                <div class="line-header">
-                    <h2>Future Enhancements</h2>
-                    <div class="line"></div>
+
+            <!-- Challenges & Solutions -->
+            <div class="content-section">
+                <h2>Challenges & Solutions</h2>
+                <div class="challenges">
+                    <div class="challenge-item">
+                        <h3>Responsive Design Implementation</h3>
+                        <p>Creating layouts that work across all device sizes</p>
+                        <div class="solution">
+                            <h4>Solution:</h4>
+                            <p>Used a mobile-first approach with flexbox and CSS Grid</p>
+                        </div>
+                    </div>
+                    <div class="challenge-item">
+                        <h3>Theme Switching System</h3>
+                        <p>Building a theme system that persists user preferences</p>
+                        <div class="solution">
+                            <h4>Solution:</h4>
+                            <p>Created a CSS variable system and used localStorage</p>
+                        </div>
+                    </div>
                 </div>
-                <p>As this is an ongoing project, I plan to implement several enhancements:</p>
-                <ul class="feature-list">
-                    <li>Add more interactive visualizations for skill representation</li>
-                    <li>Implement a blog system for sharing technical articles</li>
-                    <li>Integrate a contact form with backend validation</li>
-                    <li>Further optimize for accessibility and performance</li>
-                    <li>Explore integration with frontend frameworks for more complex features</li>
+            </div>
+
+            <!-- Future Plans -->
+            <div class="content-section">
+                <h2>Future Enhancements</h2>
+                <ul class="future-list">
+                    <li>Add interactive skill visualizations</li>
+                    <li>Implement a blog system</li>
+                    <li>Integrate a contact form with validation</li>
+                    <li>Optimize for accessibility</li>
                 </ul>
             </div>
         </div>
     </div>
-    
+
     <!-- Related Projects -->
     <div class="related-projects">
         <div class="container">
             <h2>Related Projects</h2>
-            <div class="related-grid">
-                <a href="pacman.html" class="related-item">
-                    <img src="../../assets/images/code/pacman.png" alt="Pac-Man Game" class="related-image">
-                    <div class="related-info">
+            <div class="projects-grid">
+                <a href="pacman.html" class="project-card">
+                    <div class="project-image">
+                        <img src="../../assets/images/code/pacman.png" alt="Pac-Man Game">
+                    </div>
+                    <div class="project-info">
                         <h3>Pac-Man Recreation</h3>
-                        <p>A Java implementation of the classic Pac-Man game</p>
+                        <p>Java implementation of the classic game</p>
                     </div>
                 </a>
-                <a href="towerclimber.html" class="related-item">
-                    <img src="../../assets/images/code/towerclimber.png" alt="Tower Climber Game" class="related-image">
-                    <div class="related-info">
+                <a href="towerclimber.html" class="project-card">
+                    <div class="project-image">
+                        <img src="../../assets/images/code/towerclimber.png" alt="Tower Climber Game">
+                    </div>
+                    <div class="project-info">
                         <h3>Tower Climber</h3>
-                        <p>A 2D platformer game developed in Java</p>
+                        <p>2D platformer game in Java</p>
                     </div>
                 </a>
             </div>
@@ -293,14 +353,32 @@
 
             <!-- Contact Section -->
             <div class="footer-section">
-                <h3 class="footer-title">Contact</h3>
-                <p>Interested in working together? Feel free to reach out!</p>
-                <a href="mailto:brucelin2409@gmail.com" class="contact-link">brucelin2409@gmail.com</a>
+                <h3 class="footer-title">Contact Me</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <img src="../../assets/images/icons/email-icon.png" alt="Email" class="contact-icon">
+                        <div class="contact-text">
+                            <a href="mailto:bruce700982@gmail.com">bruce700982@gmail.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <img src="../../assets/images/icons/phone-icon.png" alt="Phone" class="contact-icon">
+                        <div class="contact-text">+1 437 988 41012</div>
+                    </div>
+                    <div class="contact-item">
+                        <img src="../../assets/images/icons/location-icon.png" alt="Location" class="contact-icon">
+                        <div class="contact-text">London, Ontario, Canada</div>
+                    </div>
+                </div>
             </div>
         </div>
+
         <div class="footer-bottom">
-            <p>&copy; 2024 Bruce Lin. All rights reserved.</p>
+            <p class="copyright">&copy; 2024 Bruce Lin. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Scripts -->
+    <script src="../../js/toggle.js"></script>
 </body>
 </html>

@@ -24,9 +24,8 @@
     
     <!-- Styles and Icons -->
     <link rel="stylesheet" type="text/css" href="../../css/global.css">
-    <link rel="stylesheet" type="text/css" href="../../css/gallery.css">
-    <link rel="stylesheet" type="text/css" href="../../css/code.css">
     <link rel="stylesheet" type="text/css" href="../../css/footer.css">
+    <link rel="stylesheet" type="text/css" href="../../css/project-page.css">
    
     <link rel="icon" href="../../assets/images/icons/icon.png" type="image/png">
     
@@ -91,164 +90,211 @@
         fadeInPage();
     </script>
     
-    <!-- Project Header -->
-    <div class="project-hero">
-        <div class="project-container">
-            <div class="project-left">
-                <img src="../../assets/images/code/pacman.png" alt="Pac-Man Game Screenshot" width="600" height="400" class="project-image">
-                <div class="project-actions">
-                    <a href="https://github.com/brucelsprouts/pacman" target="_blank" class="project-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                        </svg>
-                        GitHub Repository
-                    </a>
-                </div>
+    <!-- Project Header with Navigation -->
+    <div class="project-header">
+        <div class="container">
+            <div class="project-navigation">
+                <a href="../../html/code.html" class="back-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    Back to Projects
+                </a>
             </div>
-            <div class="project-right">
-                <div class="project-breadcrumb">
-                    <a href="../../html/code.html">Code Projects</a> / Pac-Man Recreation
+            <h1 class="project-title">Pac-Man Recreation</h1>
+            <div class="project-meta">
+                <div class="project-date">May 2023 - June 2023</div>
+                <div class="project-tags">
+                    <span class="tag">Java</span>
+                    <span class="tag">Game Development</span>
+                    <span class="tag">Algorithm</span>
+                    <span class="tag">OOP</span>
                 </div>
-                <h1 class="project-title">Pac-Man Recreation</h1>
-                <div class="project-meta">
-                    <span class="project-date"><strong>Timeline:</strong> May 2023 - June 2023</span>
-                    <div class="project-tags-container">
-                        <span class="project-tag">Java</span>
-                        <span class="project-tag">Game Development</span>
-                        <span class="project-tag">Algorithm</span>
-                        <span class="project-tag">OOP</span>
-                    </div>
-                </div>
-                <p class="project-summary">A Java implementation of the classic Pac-Man arcade game featuring custom graphics, intelligent ghost AI behavior using pathfinding algorithms, and authentic gameplay mechanics. The project demonstrates object-oriented programming principles and game development concepts.</p>
             </div>
         </div>
     </div>
 
-    <div class="background">
-        <div class="container text-container">
-            <div class="row">
-                <div class="tech-icons">
-                    <a href="../../pages/skills/java.html">
-                        <img src="../../assets/images/skills/javaicon.png" alt="Java Icon" class="tech-icon" title="Java">
-                    </a>
+    <!-- Project Showcase -->
+    <div class="project-showcase">
+        <div class="container">
+            <div class="showcase-image">
+                <img src="../../assets/images/code/pacman.png" alt="Pac-Man Game Screenshot" loading="lazy">
+            </div>
+            <div class="project-actions">
+                <a href="https://github.com/brucelsprouts/pacman" target="_blank" class="action-button github">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                    </svg>
+                    View Code
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Overview -->
+    <div class="project-content">
+        <div class="container">
+            <div class="content-section">
+                <h2>Overview</h2>
+                <p>This project is a recreation of the iconic Pac-Man arcade game, developed using Java. The game features all the classic elements: a maze, Pac-Man character, ghosts with distinct behaviors, pellets, power pellets, and fruit bonuses.</p>
+                <p>The implementation focuses on reproducing the original gameplay experience while demonstrating object-oriented programming principles and game development concepts.</p>
+            </div>
+
+            <!-- Technologies Used -->
+            <div class="content-section">
+                <h2>Technologies Used</h2>
+                <div class="tech-stack">
+                    <div class="tech-item">
+                        <img src="../../assets/images/skills/javaicon.png" alt="Java" class="tech-icon">
+                        <span>Java</span>
+                    </div>
                 </div>
             </div>
-            
-            <div class="row">
-                <div class="line-header">
-                    <h2>Project Overview</h2>
-                    <div class="line"></div>
+
+            <!-- Features -->
+            <div class="content-section">
+                <h2>Key Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                            </svg>
+                        </div>
+                        <h3>Intelligent Ghost AI</h3>
+                        <p>Custom pathfinding algorithms for different ghost personalities</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+                                <line x1="7" y1="2" x2="7" y2="22"></line>
+                                <line x1="17" y1="2" x2="17" y2="22"></line>
+                                <line x1="2" y1="12" x2="22" y2="12"></line>
+                                <line x1="2" y1="7" x2="7" y2="7"></line>
+                                <line x1="2" y1="17" x2="7" y2="17"></line>
+                                <line x1="17" y1="17" x2="22" y2="17"></line>
+                                <line x1="17" y1="7" x2="22" y2="7"></line>
+                            </svg>
+                        </div>
+                        <h3>Maze Generation</h3>
+                        <p>Accurate recreation of classic Pac-Man maze layouts</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                            </svg>
+                        </div>
+                        <h3>Scoring System</h3>
+                        <p>Point tracking and level progression mechanics</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                        </div>
+                        <h3>Game States</h3>
+                        <p>Multiple game states with smooth transitions</p>
+                    </div>
                 </div>
-                <p>This project is a recreation of the iconic Pac-Man arcade game, developed using Java. The game features all the classic elements: a maze, Pac-Man character, ghosts with distinct behaviors, pellets, power pellets, and fruit bonuses. The implementation focuses on reproducing the original gameplay experience while demonstrating object-oriented programming principles and game development concepts.</p>
-                <p>The game includes a scoring system, multiple levels with increasing difficulty, and sound effects that enhance the gaming experience. The ghost AI implements custom pathfinding algorithms to create challenging gameplay that mimics the behavior of the original arcade ghosts.</p>
             </div>
-            
-            <div class="row">
-                <div class="line-header">
-                    <h2>Role and Contributions</h2>
-                    <div class="line"></div>
+
+            <!-- Development Process -->
+            <div class="content-section">
+                <h2>Development Process</h2>
+                <div class="process-timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h3>Game Architecture</h3>
+                            <p>Designed the core architecture using object-oriented principles for flexibility and maintainability</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h3>Ghost AI Implementation</h3>
+                            <p>Developed custom pathfinding algorithms for each ghost's unique behavior patterns</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h3>Game Mechanics</h3>
+                            <p>Implemented core gameplay elements like collision detection, scoring, and power-up systems</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h3>Visual and Sound Design</h3>
+                            <p>Created sprites and integrated sound effects for an authentic arcade experience</p>
+                        </div>
+                    </div>
                 </div>
-                <p>As the developer of this project, my responsibilities included:</p>
-                <ul class="feature-list">
-                    <li>Designing the game architecture using object-oriented principles</li>
-                    <li>Implementing the core game mechanics and controls</li>
-                    <li>Creating the maze generation and rendering system</li>
-                    <li>Developing intelligent ghost AI with different behavior patterns</li>
-                    <li>Implementing collision detection and game state management</li>
-                    <li>Designing and integrating the scoring system</li>
-                    <li>Creating the game's visual assets and UI</li>
-                </ul>
             </div>
-            
-            <div class="row">
-                <div class="line-header">
-                    <h2>Challenges and Solutions</h2>
-                    <div class="line"></div>
-                </div>
-                <div class="challenges-grid">
+
+            <!-- Challenges & Solutions -->
+            <div class="content-section">
+                <h2>Challenges & Solutions</h2>
+                <div class="challenges">
                     <div class="challenge-item">
                         <h3>Ghost AI Behavior</h3>
-                        <p><strong>Challenge:</strong> Implementing distinct personalities and behaviors for each ghost that mimicked the original game.</p>
-                        <p><strong>Solution:</strong> Developed a custom pathfinding algorithm with different targeting strategies for each ghost. Blinky directly targets Pac-Man, Pinky attempts to ambush, Inky uses a combined approach, and Clyde alternates between chasing and retreating.</p>
-                    </div>
-                    <div class="challenge-item">
-                        <h3>Collision Detection</h3>
-                        <p><strong>Challenge:</strong> Creating efficient collision detection in a maze environment.</p>
-                        <p><strong>Solution:</strong> Implemented a grid-based collision system that optimized performance by only checking collisions in the immediate vicinity of game entities. This approach ensured smooth gameplay even when multiple entities were moving simultaneously.</p>
+                        <p>Implementing distinct personalities for each ghost</p>
+                        <div class="solution">
+                            <h4>Solution:</h4>
+                            <p>Developed custom pathfinding algorithms with different targeting strategies for each ghost character</p>
+                        </div>
                     </div>
                     <div class="challenge-item">
                         <h3>Game State Management</h3>
-                        <p><strong>Challenge:</strong> Managing different game states (start screen, gameplay, level transitions, game over) seamlessly.</p>
-                        <p><strong>Solution:</strong> Created a state machine pattern that handled transitions between different game states, ensuring proper resource management and user experience continuity throughout the gameplay session.</p>
+                        <p>Managing transitions between different game states</p>
+                        <div class="solution">
+                            <h4>Solution:</h4>
+                            <p>Created a state machine pattern that handled transitions seamlessly throughout the gameplay</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            
-            <div class="row">
-                <div class="line-header">
-                    <h2>Technical Implementation</h2>
-                    <div class="line"></div>
-                </div>
-                <p>The game was developed using the following technologies and approaches:</p>
-                <ul class="feature-list">
-                    <li><strong>Java:</strong> Core programming language with Swing for the graphical user interface</li>
-                    <li><strong>Object-Oriented Design:</strong> Used inheritance and composition to create a flexible game entity system</li>
-                    <li><strong>Custom Game Loop:</strong> Implemented a fixed-time step game loop for consistent gameplay across different hardware</li>
-                    <li><strong>Pathfinding:</strong> Created modified A* and BFS algorithms for ghost movement and targeting</li>
-                    <li><strong>Sprite Animation:</strong> Designed a simple sprite animation system for character movements and effects</li>
-                </ul>
-            </div>
-            
-            <div class="row">
-                <div class="line-header">
-                    <h2>Learnings and Outcomes</h2>
-                    <div class="line"></div>
-                </div>
-                <p>This project significantly enhanced my skills in:</p>
-                <ul class="feature-list">
-                    <li>Game development principles and practices</li>
-                    <li>AI programming and pathfinding algorithms</li>
-                    <li>Object-oriented design patterns in real-world applications</li>
-                    <li>Performance optimization for real-time systems</li>
-                    <li>User experience design for interactive applications</li>
-                </ul>
-                <p>The project was completed successfully with all planned features implemented, resulting in a fully playable Pac-Man game that remains faithful to the original arcade experience while demonstrating modern programming techniques.</p>
-            </div>
-            
-            <div class="row">
-                <div class="line-header">
-                    <h2>Future Enhancements</h2>
-                    <div class="line"></div>
-                </div>
-                <p>Potential improvements for future iterations include:</p>
-                <ul class="feature-list">
+
+            <!-- Future Plans -->
+            <div class="content-section">
+                <h2>Future Enhancements</h2>
+                <ul class="future-list">
                     <li>Adding multiplayer capabilities</li>
                     <li>Implementing a level editor for custom mazes</li>
-                    <li>Creating additional game modes and challenges</li>
-                    <li>Enhancing graphics with more advanced visual effects</li>
-                    <li>Adding a global high score system</li>
+                    <li>Creating additional game modes</li>
+                    <li>Enhancing graphics with visual effects</li>
                 </ul>
             </div>
         </div>
     </div>
-    
+
     <!-- Related Projects -->
     <div class="related-projects">
         <div class="container">
             <h2>Related Projects</h2>
-            <div class="related-grid">
-                <a href="towerclimber.html" class="related-item">
-                    <img src="../../assets/images/code/towerclimber.png" alt="Tower Climber Game" class="related-image">
-                    <div class="related-info">
+            <div class="projects-grid">
+                <a href="towerclimber.html" class="project-card">
+                    <div class="project-image">
+                        <img src="../../assets/images/code/towerclimber.png" alt="Tower Climber Game">
+                    </div>
+                    <div class="project-info">
                         <h3>Tower Climber</h3>
-                        <p>A 2D platformer game developed in Java</p>
+                        <p>2D platformer game in Java</p>
                     </div>
                 </a>
-                <a href="webpage.html" class="related-item">
-                    <img src="../../assets/images/code/webpage.png" alt="Webpage Portfolio" class="related-image">
-                    <div class="related-info">
+                <a href="webpage.html" class="project-card">
+                    <div class="project-image">
+                        <img src="../../assets/images/code/webpage.png" alt="Webpage Portfolio">
+                    </div>
+                    <div class="project-info">
                         <h3>Webpage Portfolio</h3>
-                        <p>A responsive personal portfolio website</p>
+                        <p>Personal portfolio website</p>
                     </div>
                 </a>
             </div>
@@ -291,14 +337,32 @@
 
             <!-- Contact Section -->
             <div class="footer-section">
-                <h3 class="footer-title">Contact</h3>
-                <p>Interested in working together? Feel free to reach out!</p>
-                <a href="mailto:brucelin2409@gmail.com" class="contact-link">brucelin2409@gmail.com</a>
+                <h3 class="footer-title">Contact Me</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <img src="../../assets/images/icons/email-icon.png" alt="Email" class="contact-icon">
+                        <div class="contact-text">
+                            <a href="mailto:bruce700982@gmail.com">bruce700982@gmail.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <img src="../../assets/images/icons/phone-icon.png" alt="Phone" class="contact-icon">
+                        <div class="contact-text">+1 437 988 41012</div>
+                    </div>
+                    <div class="contact-item">
+                        <img src="../../assets/images/icons/location-icon.png" alt="Location" class="contact-icon">
+                        <div class="contact-text">London, Ontario, Canada</div>
+                    </div>
+                </div>
             </div>
         </div>
+
         <div class="footer-bottom">
-            <p>&copy; 2024 Bruce Lin. All rights reserved.</p>
+            <p class="copyright">&copy; 2024 Bruce Lin. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Scripts -->
+    <script src="../../js/toggle.js"></script>
 </body>
 </html>
