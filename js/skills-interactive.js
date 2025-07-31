@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const skillsGrid = document.querySelector('.skills-grid');
     const projectsDisplay = document.querySelector('.projects-display');
     const projectCards = document.querySelector('.project-cards');
-    const categoryButtons = document.querySelectorAll('.category-button');
+    const categoryButtons = document.querySelectorAll('.skill-tag-filter');
     let allProjects = [];
     let activeSkill = null;
 
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to filter skills by category with animations
     function filterSkillsByCategory(category) {
-        const skillIcons = document.querySelectorAll('.skill-icon');
+        const skillIcons = document.querySelectorAll('.skill-item');
         
         // Apply staggered animations
         skillIcons.forEach((icon, index) => {
@@ -318,7 +318,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const wasActive = skillIcon.classList.contains('active');
         
         // Remove active class from all skill icons with animation
-        document.querySelectorAll('.skill-icon').forEach(icon => {
+        document.querySelectorAll('.skill-item').forEach(icon => {
             if (icon !== skillIcon && icon.classList.contains('active')) {
                 icon.classList.add('deactivating');
                 setTimeout(() => {
@@ -381,7 +381,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const skillConfig = skillsConfig[skill];
             
             const skillIcon = document.createElement('div');
-            skillIcon.className = 'skill-icon skill-fade-in';
+            skillIcon.className = 'skill-item skill-fade-in';
             skillIcon.dataset.skill = skill;
             skillIcon.dataset.category = skillConfig.category;
             
@@ -416,6 +416,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Set 'All' category as active by default with a slight delay for visual appeal
     setTimeout(() => {
-        document.querySelector('.category-button[data-category="all"]').classList.add('active');
+        document.querySelector('.skill-tag-filter[data-category="all"]').classList.add('active');
     }, 300);
 }); 

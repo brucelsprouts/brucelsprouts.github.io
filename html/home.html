@@ -11,6 +11,7 @@
     <script src="../js/script.js"></script>
     <script src="../js/home.js"></script>
     <script src="../js/skills-animation.js"></script>
+    <script src="../js/blog.js"></script>
     
     <!-- Open Graph Protocol Metadata -->
     <meta property="og:locale" content="en_US">
@@ -27,7 +28,6 @@
     <!-- Styles and Icons -->
     <link rel="stylesheet" type="text/css" href="../css/global.css">
     <link rel="stylesheet" type="text/css" href="../css/home.css">
-    <link rel="stylesheet" type="text/css" href="../css/skills-interactive.css">
     <link rel="stylesheet" type="text/css" href="../css/footer.css">
 
     <link rel="icon" href="../assets/images/icons/icon.png" type="image/png">
@@ -142,14 +142,14 @@
                     <p>Click on a skill to see related projects</p>
                 </div>
                 
-                <div class="skill-categories">
-                    <button class="category-button" data-category="all">All</button>
-                    <button class="category-button" data-category="programming">Programming</button>
-                    <button class="category-button" data-category="framework">Frameworks</button>
-                    <button class="category-button" data-category="design">Design</button>
-                    <button class="category-button" data-category="tech">Technologies</button>
-                    <button class="category-button" data-category="web">Web</button>
-                    <button class="category-button" data-category="tool">Tools</button>
+                <div class="skill-tag-filters">
+                    <button class="skill-tag-filter active" data-category="all">All Skills</button>
+                    <button class="skill-tag-filter" data-category="programming">Programming</button>
+                    <button class="skill-tag-filter" data-category="framework">Frameworks</button>
+                    <button class="skill-tag-filter" data-category="design">Design</button>
+                    <button class="skill-tag-filter" data-category="tech">Technologies</button>
+                    <button class="skill-tag-filter" data-category="web">Web</button>
+                    <button class="skill-tag-filter" data-category="tool">Tools</button>
                 </div>
                 
                 <div class="skills-grid">
@@ -169,87 +169,194 @@
             <div class="section-heading">
                 <h1>Blog Updates</h1>
             </div>
+            
+            <!-- Blog Controls -->
+            <div class="blog-controls">
+                <div class="search-container">
+                    <div class="search-box">
+                        <img src="../assets/images/icons/black-search.png" alt="Search" class="search-icon dark-mode-image" id="search-icon-dark">
+                        <img src="../assets/images/icons/white-search.png" alt="Search" class="search-icon light-mode-image" id="search-icon-light">
+                        <input type="text" id="blog-search" placeholder="Search blog posts..." class="search-input">
+                        <button class="clear-search" id="clear-search" aria-label="Clear search">×</button>
+                    </div>
+                </div>
+                
+                <div class="tag-filters">
+                    <button class="tag-filter active" data-tag="all">All Posts</button>
+                    <button class="tag-filter" data-tag="projects">Projects</button>
+                    <button class="tag-filter" data-tag="updates">Updates</button>
+                    <button class="tag-filter" data-tag="coding">Coding</button>
+                    <button class="tag-filter" data-tag="video">Video</button>
+                    <button class="tag-filter" data-tag="school">School</button>
+                </div>
+            </div>
+            
             <div class="blog-container-wrapper">
                 <div class="blog-progress-bar"></div>
-                <div class="blog-container">
-                    <article class="blog-card">
+                <div class="blog-container" id="blog-container">
+                    <article class="blog-card" data-tags="projects,updates" data-search="project updates nixie counter portfolio">
                         <div class="blog-content">
-                            <h3>Project Updates</h3>
+                            <div class="blog-header">
+                                <h3>Project Updates</h3>
+                                <div class="blog-tags">
+                                    <span class="tag projects">Projects</span>
+                                    <span class="tag updates">Updates</span>
+                                </div>
+                            </div>
                             <p class="date">Published on: <span>October 23, 2024</span></p>
                             <p class="summary">Finished up the Nixie counter for the most part. The only thing left to do on it is to simplify the URL, which I'm not sure how to do yet, so I'll leave it be for the meanwhile as I work on my portfolio again because some peers have inspired me to improve it. This shouldn't take as long, but once it's done I'll get to working on the simple Unity Nextbot game, and afterwards that bigger game idea that I had.</p>
                         </div>
                     </article>
-                    <article class="blog-card">
+                    
+                    <article class="blog-card" data-tags="projects,coding" data-search="nixie counter github profile views finished">
                         <div class="blog-content">
-                            <h3>Finished Nixie Counter</h3>
+                            <div class="blog-header">
+                                <h3>Finished Nixie Counter</h3>
+                                <div class="blog-tags">
+                                    <span class="tag projects">Projects</span>
+                                    <span class="tag coding">Coding</span>
+                                </div>
+                            </div>
                             <p class="date">Published on: <span>May 8, 2025</span></p>
                             <p class="summary">Finally finished my Nixie counter for GitHub profiles that tracks profile views. My only issue with it now is that it doesn't update often because of GitHub's image caching. There are some other smaller things I would like to change, such as digit control and a cleaner URL when using its markdown, but that's for the future since I have other projects that I should be working on. I will be on vacation for a week or so starting on the 10th, so in the meantime, I'll try to work on some smaller projects that I'm not too sure about yet until I have the time to actually start working on the Nextbot game. Maybe I'll just work on the issues I had with the Nixie counter that I mentioned earlier.</p>
                         </div>
                     </article>
-                    <article class="blog-card">
+                    
+                    <article class="blog-card" data-tags="projects,coding" data-search="oracle server minecraft hosting">
                         <div class="blog-content">
-                            <h3>Oracle Server Success & Next Steps</h3>
+                            <div class="blog-header">
+                                <h3>Oracle Server Success & Next Steps</h3>
+                                <div class="blog-tags">
+                                    <span class="tag projects">Projects</span>
+                                    <span class="tag coding">Coding</span>
+                                </div>
+                            </div>
                             <p class="date">Published on: <span>April 29, 2025</span></p>
                             <p class="summary">Just got the Oracle server up and running, hosting a modded Minecraft server on the server to test it as well as get used to its Linux interface. The server is on my domain MC.brucelsprouts.com, and as for the future of Oracle, I first plan on making this GitHub README.md extension that is a Nixie themed profile counter.</p>
                         </div>
                     </article>
-                    <article class="blog-card">
+                    
+                    <article class="blog-card" data-tags="projects,coding" data-search="future projects nixie counter oracle server games">
                         <div class="blog-content">
-                            <h3>Future Projects</h3>
+                            <div class="blog-header">
+                                <h3>Future Projects</h3>
+                                <div class="blog-tags">
+                                    <span class="tag projects">Projects</span>
+                                    <span class="tag coding">Coding</span>
+                                </div>
+                            </div>
                             <p class="date">Published on: <span>April, 20, 2025</span></p>
                             <p class="summary">Been working on coding a lot recently. Still got a few changes to make to this portfolio and the README.md for my GitHub profile. I'm planning on making a viewer counter with a Nixie-style look. Since I need my own server to do this, I've already gotten an Oracle one, which is currently in the process of being set up. In the meantime, for the next few days, I'll be working on some video editing while I wait for the Oracle server so I can build the custom Nixie counter. After that project's done, I plan on making a few small games—one being a Nextbot-like game in Unity, and the other a multiplayer indie horror game, kind of like some of the recent popular ones.</p>
                         </div>
                     </article>
-                    <article class="blog-card">
+                    
+                    <article class="blog-card" data-tags="updates,coding" data-search="delay proxy server react node.js">
                         <div class="blog-content">
-                            <h3>Delay...</h3>
+                            <div class="blog-header">
+                                <h3>Delay...</h3>
+                                <div class="blog-tags">
+                                    <span class="tag updates">Updates</span>
+                                    <span class="tag coding">Coding</span>
+                                </div>
+                            </div>
                             <p class="date">Published on: <span>January 9, 2025</span></p>
                             <p class="summary">Well, I did kind of finish the site, I just have to figure out how to do a proxy server and then it should be done, so I'm gonna take a break from that and start working on something else until I figure out how to do that. In the meantime, I've been learning more about React and Node.js to improve my web development skills. I'm particularly interested in building more interactive web applications that provide a better user experience. I also plan to enhance this portfolio site with more features in the coming weeks, so stay tuned for updates.</p>
                         </div>
                     </article>
-                    <article class="blog-card">
+                    
+                    <article class="blog-card" data-tags="projects,coding,video" data-search="anime streaming site react node.js express">
                         <div class="blog-content">
-                            <h3>Streaming site</h3>
+                            <div class="blog-header">
+                                <h3>Streaming site</h3>
+                                <div class="blog-tags">
+                                    <span class="tag projects">Projects</span>
+                                    <span class="tag coding">Coding</span>
+                                    <span class="tag video">Video</span>
+                                </div>
+                            </div>
                             <p class="date">Published on: <span>December 29, 2024</span></p>
                             <p class="summary">Don't have the longest time to do this, but I'm gonna try making an anime streaming site for the last week of this winter break that I left before I go into my second sem. (happy birthday me!) I'm planning to use React for the frontend and Node.js with Express for the backend. The site will include features like user authentication, search functionality, and of course, video streaming capabilities. I'm excited about this project because it combines my interests in web development and anime. It will also help me practice working with APIs and handling media content on the web.</p>
                         </div>
                     </article>
-                    <article class="blog-card">
+                    
+                    <article class="blog-card" data-tags="updates,video" data-search="edit chrome extension after effects plugin">
                         <div class="blog-content">
-                            <h3>Changes</h3>
+                            <div class="blog-header">
+                                <h3>Changes</h3>
+                                <div class="blog-tags">
+                                    <span class="tag updates">Updates</span>
+                                    <span class="tag video">Video</span>
+                                </div>
+                            </div>
                             <p class="date">Published on: <span>November 15, 2024</span></p>
                             <p class="summary">Almost done the edit, will upload it tomorrow, the day where the show also releases its new episode. Additionally, I'm now deciding between creating some chrome extension or the plug in for AE, either way, I'll probably wanna end up doing both of them as well as a lot more projects and LeetCode in the next while. The Chrome extension I'm considering would be a productivity tool to help me manage my time better while working online. For the AE plugin, I want to create something that can automate some of the repetitive tasks I often do in my editing workflow. I'm excited about both projects because they'll allow me to explore new programming areas while creating tools that I can actually use in my daily life.</p>
                         </div>
                     </article>
-                    <article class="blog-card">
+                    
+                    <article class="blog-card" data-tags="updates,video,school" data-search="arcane edit after effects plugin assignments">
                         <div class="blog-content">
-                            <h3>Progress</h3>
+                            <div class="blog-header">
+                                <h3>Progress</h3>
+                                <div class="blog-tags">
+                                    <span class="tag updates">Updates</span>
+                                    <span class="tag video">Video</span>
+                                    <span class="tag school">School</span>
+                                </div>
+                            </div>
                             <p class="date">Published on: <span>November 11, 2024</span></p>
                             <p class="summary">Managed to finish some assignments so now I have some free time, gonna start on an Arcane S2 edit then work on that AE plug in I mentioned before. Hopefully I can finish both of those in the next week or so, cuz I have some school work due in 2 weeks. I'm particularly excited about the Arcane edit because I've been waiting for Season 2 for so long, and the visual style of the show gives me so much to work with creatively. For the AE plugin, I'll be using JavaScript and the Adobe ExtendScript Toolkit. I've already drafted some ideas for the functionality, which will focus on automating color grading and text animations - two tasks that take up a lot of my editing time.</p>
                         </div>
                     </article>
-                    <article class="blog-card">
+                    
+                    <article class="blog-card" data-tags="updates,coding" data-search="mobile responsive css media queries navigation">
                         <div class="blog-content">
-                            <h3>Update</h3>
+                            <div class="blog-header">
+                                <h3>Update</h3>
+                                <div class="blog-tags">
+                                    <span class="tag updates">Updates</span>
+                                    <span class="tag coding">Coding</span>
+                                </div>
+                            </div>
                             <p class="date">Published on: <span>November 9, 2024</span></p>
                             <p class="summary">Finally fixed the page for mobile, gonna start working on some edits and smaller coding projects when i find more time after I finish up some more school work. Thinking of making some plug in for AE with jsx using Co-pilot so I can edit better, as well as a website for streaming videos. Mobile responsiveness has been a challenge, but I learned a lot about CSS media queries and flexible layouts. The biggest issue was with the navigation menu, which now collapses into a hamburger menu on smaller screens. For the AE plugin, I'll focus on automating repetitive tasks like creating lower thirds and applying consistent effects across multiple compositions. The streaming website will be a bigger project that will involve learning about video encoding, streaming protocols, and user authentication.</p>
                         </div>
                     </article>
-                    <!-- Additional blog entries to demonstrate scrolling -->
-                    <article class="blog-card">
+                    
+                    <article class="blog-card" data-tags="projects,coding" data-search="machine learning video editing portfolio template">
                         <div class="blog-content">
-                            <h3>New Project Ideas</h3>
+                            <div class="blog-header">
+                                <h3>New Project Ideas</h3>
+                                <div class="blog-tags">
+                                    <span class="tag projects">Projects</span>
+                                    <span class="tag coding">Coding</span>
+                                </div>
+                            </div>
                             <p class="date">Published on: <span>November 1, 2024</span></p>
                             <p class="summary">Been brainstorming some new project ideas - thinking about creating a small web app that uses machine learning to help with video editing workflows. Also considering making a portfolio theme template for other developers/creators. The machine learning app would analyze footage and suggest cuts, transitions, and pacing based on content type and target audience. I've been researching TensorFlow.js and how I might implement this in a browser-based tool without requiring users to install anything. For the portfolio template, I want to create something highly customizable that maintains good performance and accessibility standards. I'm planning to use CSS Grid and CSS Variables to make it easy for users to personalize without diving into code.</p>
                         </div>
                     </article>
-                    <article class="blog-card">
+                    
+                    <article class="blog-card" data-tags="school,coding" data-search="algorithms course graph traversal dijkstra java">
                         <div class="blog-content">
-                            <h3>Course Work</h3>
+                            <div class="blog-header">
+                                <h3>Course Work</h3>
+                                <div class="blog-tags">
+                                    <span class="tag school">School</span>
+                                    <span class="tag coding">Coding</span>
+                                </div>
+                            </div>
                             <p class="date">Published on: <span>October 25, 2024</span></p>
                             <p class="summary">The Algorithms course is getting more challenging, but I'm enjoying the problem-solving aspect. Just finished implementing a custom graph traversal algorithm that optimizes pathfinding for a school project. The algorithm uses a modified version of Dijkstra's algorithm with some heuristic improvements to better handle our specific use case. The project involved creating a navigation system for a virtual campus tour, where users can find optimal routes between buildings while accounting for factors like accessibility requirements, time constraints, and points of interest. I implemented it in Java and used JUnit for testing. The most challenging part was optimizing for performance with large datasets while maintaining accuracy in the pathfinding results.</p>
                         </div>
                     </article>
+                </div>
+                
+                <!-- No results message -->
+                <div class="no-results" id="no-results" style="display: none;">
+                    <div class="no-results-content">
+                        <h3>No posts found</h3>
+                        <p>Try adjusting your search terms or filter tags</p>
+                    </div>
                 </div>
             </div>
         </div>
