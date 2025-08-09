@@ -1,7 +1,7 @@
 @import url('../css/global.css');
 
 .home-content {
-  margin-top: 41px;
+  margin-block-start: max(var(--nav-height, 60px), 4rem);
 }
 /* icons */
 #github-icon, #youtube-icon, #instagram-icon, #tiktok-icon, #linkedin-icon, #linktree-icon {
