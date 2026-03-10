@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bruce L. | Developer Portfolio</title>
+
+  <!-- Google Fonts: Space Grotesk + Share Tech Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Three.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+
+  <!-- GSAP + ScrollTrigger CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ============================================================
+       LOADING SCREEN
+  ============================================================ -->
+  <div id="loader">
+    <!-- Scanline overlay inside loader -->
+    <div class="scanlines"></div>
+
+    <!-- Three.js canvas for 3D rotating shape -->
+    <canvas id="loader-canvas"></canvas>
+
+    <!-- Glitching number rain -->
+    <div id="number-rain" aria-hidden="true"></div>
+
+    <!-- Symbol block shapes (ASCII-style) -->
+    <div class="symbol-block top-left" aria-hidden="true"></div>
+    <div class="symbol-block bottom-right" aria-hidden="true"></div>
+
+    <!-- Progress readout -->
+    <div id="loader-progress">
+      <span id="loader-label">INITIALIZING SYSTEM</span>
+      <span id="loader-percent">0</span>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MAIN SITE (hidden until load complete)
+  ============================================================ -->
+  <div id="site-wrapper" style="opacity:0; visibility:hidden;">
+
+    <!-- ── NAVIGATION ── -->
+    <nav id="nav">
+      <div class="nav-inner">
+        <a href="#hero" class="nav-logo" aria-label="Home">BL<span class="accent">.</span></a>
+
+        <!-- Desktop links -->
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#history">History</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <!-- Hamburger (mobile) -->
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile drawer -->
+    <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+      <ul>
+        <li><a href="#skills" class="drawer-link">Skills</a></li>
+        <li><a href="#history" class="drawer-link">History</a></li>
+        <li><a href="#projects" class="drawer-link">Projects</a></li>
+        <li><a href="#contact" class="drawer-link">Contact</a></li>
+      </ul>
+    </div>
+
+    <!-- ── HERO ── -->
+    <section id="hero">
+      <canvas id="hero-canvas" aria-hidden="true"></canvas>
+      <div class="scanlines" aria-hidden="true"></div>
+
+      <!-- Cursor glow follower -->
+      <div id="cursor-glow" aria-hidden="true"></div>
+
+      <div class="hero-content">
+        <p class="hero-eyebrow glitch-text" data-text="// SYSTEM READY">// SYSTEM READY</p>
+        <h1 class="hero-name glitch-text" data-text="Bruce L.">Bruce L.</h1>
+        <p class="hero-tagline">Full-Stack Developer &amp; Creative Technologist</p>
+        <div class="hero-cta">
+          <a href="#projects" class="btn-primary">View Projects</a>
+          <a href="#contact" class="btn-outline">Get In Touch</a>
+        </div>
+      </div>
+
+      <!-- Corner HUD decorations -->
+      <div class="hud-corner top-left" aria-hidden="true">
+        <span>LAT: 37.7749° N</span>
+        <span>LON: 122.4194° W</span>
+      </div>
+      <div class="hud-corner bottom-right" aria-hidden="true">
+        <span>STATUS: ONLINE</span>
+        <span>BUILD: v2.6.0</span>
+      </div>
+    </section>
+
+    <!-- ── SKILLS ── -->
+    <section id="skills">
+      <div class="scanlines faint" aria-hidden="true"></div>
+      <div class="section-inner">
+        <div class="section-header">
+          <span class="section-tag">// MODULE_02</span>
+          <h2 class="section-title">Skills &amp; Stack</h2>
+          <p class="section-sub">Technologies I've worked with, unlocked through iteration.</p>
+        </div>
+
+        <!-- ASCII background decoration -->
+        <div class="ascii-bg" aria-hidden="true"></div>
+
+        <div class="skills-grid" id="skills-grid">
+          <!-- Skills are injected by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ── HISTORY ── -->
+    <section id="history">
+      <div class="section-inner">
+        <div class="section-header">
+          <span class="section-tag">// MODULE_03</span>
+          <h2 class="section-title">History</h2>
+          <p class="section-sub">Key nodes in the timeline.</p>
+        </div>
+
+        <div class="timeline" id="timeline">
+          <!-- Timeline entries injected by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PROJECTS ── -->
+    <section id="projects">
+      <div class="scanlines faint" aria-hidden="true"></div>
+      <div class="section-inner">
+        <div class="section-header">
+          <span class="section-tag">// MODULE_04</span>
+          <h2 class="section-title">Projects</h2>
+          <p class="section-sub">Selected works — filtered and searchable.</p>
+        </div>
+
+        <!-- Search + filter bar -->
+        <div class="projects-controls">
+          <div class="search-wrap">
+            <span class="search-icon">&#8981;</span>
+            <input type="text" id="project-search" placeholder="Search projects..." autocomplete="off" aria-label="Search projects" />
+          </div>
+          <div class="filter-btns" role="group" aria-label="Filter projects">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="coding">Coding</button>
+            <button class="filter-btn" data-filter="3d">3D</button>
+            <button class="filter-btn" data-filter="video">Video</button>
+            <button class="filter-btn" data-filter="tools">Tools</button>
+          </div>
+        </div>
+
+        <div class="projects-grid" id="projects-grid">
+          <!-- Project cards injected by JS -->
+        </div>
+
+        <p class="no-results" id="no-results" style="display:none;">No projects match your search.</p>
+      </div>
+    </section>
+
+    <!-- ── CONTACT ── -->
+    <section id="contact">
+      <div class="section-inner">
+        <div class="section-header">
+          <span class="section-tag">// MODULE_05</span>
+          <h2 class="section-title">Connect</h2>
+          <p class="section-sub">Open to opportunities, collaborations, and conversations.</p>
+        </div>
+
+        <div class="contact-layout">
+          <!-- Contact form -->
+          <form class="contact-form" id="contact-form" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" placeholder="Your name" required autocomplete="name" />
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="your@email.com" required autocomplete="email" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input type="text" id="subject" name="subject" placeholder="What's this about?" />
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+            </div>
+            <button type="submit" class="btn-primary form-submit">
+              <span class="btn-label">Send Message</span>
+              <span class="btn-sending" style="display:none;">Transmitting...</span>
+            </button>
+            <p class="form-status" id="form-status" aria-live="polite"></p>
+          </form>
+
+          <!-- Social links -->
+          <div class="contact-links">
+            <h3 class="contact-links-title">Find me at</h3>
+            <ul class="social-list">
+              <li>
+                <a href="https://github.com/brucelsprouts" target="_blank" rel="noopener noreferrer" class="social-link">
+                  <span class="social-icon">&#60;/&#62;</span>
+                  <span>GitHub</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="social-link">
+                  <span class="social-icon">&#9642;</span>
+                  <span>LinkedIn</span>
+                </a>
+              </li>
+              <li>
+                <a href="mailto:hello@example.com" class="social-link">
+                  <span class="social-icon">&#9993;</span>
+                  <span>Email</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── FOOTER ── -->
+    <footer id="footer">
+      <div class="footer-inner">
+        <span class="footer-copy">&copy; 2026 Bruce L. — Designed &amp; Built by Bruce L.</span>
+        <span class="footer-tag">// EOF</span>
+      </div>
+    </footer>
+
+  </div><!-- /site-wrapper -->
+
+  <!-- Main script — loads after DOM + CDN scripts are ready -->
+  <script src="js/main.js" defer></script>
+</body>
+</html>
