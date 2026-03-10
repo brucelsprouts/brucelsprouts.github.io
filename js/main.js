@@ -171,7 +171,7 @@ const loader = {
     this.animateProgress();
   },
 
-  /* -- Three.js loader scene: wireframe icosahedron on grid -- */
+  /* -- Three.js loader scene: complex nested polyhedron + node lattice -- */
   initThree() {
     const canvas = document.getElementById('loader-canvas');
     if (!canvas || typeof THREE === 'undefined') return;
@@ -184,32 +184,71 @@ const loader = {
     const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
     camera.position.set(0, 0, 5);
 
-    // Wireframe icosahedron
-    const geoIco = new THREE.IcosahedronGeometry(1.4, 1);
+    // 1. Outer wireframe icosahedron — main structural cage
+    const geoIco = new THREE.IcosahedronGeometry(1.6, 1);
     const matIco = new THREE.MeshBasicMaterial({
-      color: 0xffffff,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.18,
+      color: 0xffffff, wireframe: true, transparent: true, opacity: 0.18,
     });
     const ico = new THREE.Mesh(geoIco, matIco);
     scene.add(ico);
 
-    // Inner solid for depth
+    // 2. Inner solid — hides back-faces for depth illusion
     const matSolid = new THREE.MeshBasicMaterial({
-      color: 0x000000,
-      transparent: true,
-      opacity: 0.85,
+      color: 0x000000, transparent: true, opacity: 0.88,
     });
-    const inner = new THREE.Mesh(new THREE.IcosahedronGeometry(1.35, 1), matSolid);
+    const inner = new THREE.Mesh(new THREE.IcosahedronGeometry(1.55, 1), matSolid);
     scene.add(inner);
 
-    // Horizontal grid
-    const gridHelper = new THREE.GridHelper(12, 18, 0x222222, 0x111111);
-    gridHelper.position.y = -2.5;
+    // 3. Nested octahedron — counter-rotates inside the outer cage
+    const matOct = new THREE.MeshBasicMaterial({
+      color: 0xffffff, wireframe: true, transparent: true, opacity: 0.32,
+    });
+    const oct = new THREE.Mesh(new THREE.OctahedronGeometry(0.85, 0), matOct);
+    scene.add(oct);
+
+    // 4. Fibonacci-distributed node network with connecting edge lattice
+    const nodeCount = 22;
+    const npos = [];
+    for (let i = 0; i < nodeCount; i++) {
+      const phi   = Math.acos(1 - 2 * (i + 0.5) / nodeCount);
+      const theta = Math.PI * (1 + Math.sqrt(5)) * i;
+      const r = 1.68 + (i % 3) * 0.17;
+      npos.push(
+        r * Math.sin(phi) * Math.cos(theta),
+        r * Math.cos(phi),
+        r * Math.sin(phi) * Math.sin(theta)
+      );
+    }
+    const edgePts = [];
+    for (let i = 0; i < nodeCount; i++) {
+      for (let j = i + 1; j < nodeCount; j++) {
+        const dx = npos[i*3]   - npos[j*3];
+        const dy = npos[i*3+1] - npos[j*3+1];
+        const dz = npos[i*3+2] - npos[j*3+2];
+        if (Math.sqrt(dx*dx + dy*dy + dz*dz) < 1.3) {
+          edgePts.push(npos[i*3], npos[i*3+1], npos[i*3+2],
+                       npos[j*3], npos[j*3+1], npos[j*3+2]);
+        }
+      }
+    }
+    const edgeGeo = new THREE.BufferGeometry();
+    edgeGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(edgePts), 3));
+    const edgeMat = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.13 });
+    const edges = new THREE.LineSegments(edgeGeo, edgeMat);
+    scene.add(edges);
+
+    const nodeGeo = new THREE.BufferGeometry();
+    nodeGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(npos), 3));
+    const nodeMat = new THREE.PointsMaterial({ color: 0xffffff, size: 0.045, transparent: true, opacity: 0.65 });
+    const nodePts = new THREE.Points(nodeGeo, nodeMat);
+    scene.add(nodePts);
+
+    // 5. Ground grid
+    const gridHelper = new THREE.GridHelper(14, 20, 0x1a1a1a, 0x0d0d0d);
+    gridHelper.position.y = -2.8;
     scene.add(gridHelper);
 
-    // Particle points cloud (floating nodes)
+    // 6. Background particle field
     const ptCount = 120;
     const ptPositions = new Float32Array(ptCount * 3);
     for (let i = 0; i < ptCount; i++) {
@@ -219,18 +258,18 @@ const loader = {
     }
     const ptGeo = new THREE.BufferGeometry();
     ptGeo.setAttribute('position', new THREE.BufferAttribute(ptPositions, 3));
-    const ptMat = new THREE.PointsMaterial({ color: 0xffffff, size: 0.025, transparent: true, opacity: 0.4 });
+    const ptMat = new THREE.PointsMaterial({ color: 0xffffff, size: 0.025, transparent: true, opacity: 0.35 });
     const particles = new THREE.Points(ptGeo, ptMat);
     scene.add(particles);
 
-    // Store refs — including materials so exit() can tween their opacity
+    // Store all refs — materials tweened in exit(), spinMultiplier scaled in anim loop
     this.threeScene = {
-      renderer, scene, camera, ico, inner, particles,
-      matIco, matSolid, ptMat,
-      spinMultiplier: 1,  // tweened upward during dissolve
+      renderer, scene, camera,
+      ico, inner, oct, edges, nodePts, particles,
+      matIco, matSolid, matOct, edgeMat, nodeMat, ptMat,
+      spinMultiplier: 1,
     };
 
-    // Handle resize
     window.addEventListener('resize', () => {
       const w = window.innerWidth, h = window.innerHeight;
       camera.aspect = w / h;
@@ -238,13 +277,24 @@ const loader = {
       renderer.setSize(w, h);
     });
 
-    // Animation loop — uses spinMultiplier so exit can accelerate the spin
+    // Animation loop — spinMultiplier accelerated during dissolve, breathing pulse adds life
     const animate = () => {
       this.animFrame = requestAnimationFrame(animate);
       const m = this.threeScene.spinMultiplier;
-      ico.rotation.x   += 0.004 * m;
-      ico.rotation.y   += 0.006 * m;
+      const t = Date.now() * 0.001;
+      ico.rotation.x += 0.0035 * m;
+      ico.rotation.y += 0.0055 * m;
       inner.rotation.copy(ico.rotation);
+      // Octahedron counter-rotates for layered depth
+      oct.rotation.x -= 0.005 * m;
+      oct.rotation.y += 0.008 * m;
+      // Node lattice co-rotates with outer cage
+      edges.rotation.copy(ico.rotation);
+      nodePts.rotation.copy(ico.rotation);
+      // Breathing pulse — subtle scale oscillation
+      const pulse = 1 + Math.sin(t * 0.7) * 0.028;
+      ico.scale.setScalar(pulse);
+      inner.scale.setScalar(pulse);
       particles.rotation.y += 0.0008 * m;
       renderer.render(scene, camera);
     };
@@ -374,6 +424,9 @@ const loader = {
       }, 0.2);
       tl.to(this.threeScene.matIco,   { opacity: 0, duration: 0.45 }, 0.7);
       tl.to(this.threeScene.matSolid, { opacity: 0, duration: 0.45 }, 0.7);
+      tl.to(this.threeScene.matOct,   { opacity: 0, duration: 0.45 }, 0.7);
+      tl.to(this.threeScene.edgeMat,  { opacity: 0, duration: 0.45 }, 0.7);
+      tl.to(this.threeScene.nodeMat,  { opacity: 0, duration: 0.45 }, 0.7);
       tl.to(this.threeScene.ptMat,    { opacity: 0, duration: 0.45 }, 0.7);
       tl.to('#loader-canvas', { opacity: 0, duration: 0.35 }, 0.85);
     }
@@ -559,10 +612,16 @@ const heroScene = {
     this.particles.rotation.y += 0.0006;
     this.particles.rotation.x += 0.0002;
 
-    // Rotate complex geometry with cursor-influenced micro-parallax
+    // Rotate complex geometry with cursor micro-parallax and breathing scale
     if (this.shapes) {
+      const breathe = Date.now() * 0.001;
       this.shapes.octahedron.rotation.y  += 0.003  + this.mouse.x * 0.0008;
       this.shapes.octahedron.rotation.x  += 0.001  + this.mouse.y * 0.0008;
+      // Breathing pulse — slow sinusoidal scale oscillation
+      const pulse = 1 + Math.sin(breathe * 0.5) * 0.025;
+      this.shapes.octahedron.scale.setScalar(pulse);
+      const ringPulse = 1 + Math.sin(breathe * 0.35 + 1.2) * 0.012;
+      this.shapes.ring1.scale.setScalar(ringPulse);
       this.shapes.ring1.rotation.z       += 0.002;
       this.shapes.ring2.rotation.y       += 0.0015;
       this.shapes.icoShell.rotation.y    += 0.0005;
@@ -585,17 +644,38 @@ const heroScene = {
 ============================================================ */
 const heroAnimations = {
   play() {
+    const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#';
+
+    // Set initial states BEFORE the timeline runs
+    gsap.set(['.hero-eyebrow', '.hero-name', '.hero-tagline', '.hero-cta'], { opacity: 0, y: 24 });
+    gsap.set('.hud-corner', { opacity: 0 });
+
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-    tl.to('.hero-eyebrow', { opacity: 1, y: 0, duration: 0.7, delay: 0.1 })
-      .to('.hero-name',    { opacity: 1, y: 0, duration: 0.8 }, '-=0.3')
-      .to('.hero-tagline', { opacity: 1, y: 0, duration: 0.7 }, '-=0.4')
-      .to('.hero-cta',     { opacity: 1, y: 0, duration: 0.6 }, '-=0.3')
-      .to('.hud-corner',   { opacity: 1, duration: 0.5 },        '-=0.2');
+    // Eyebrow fades in first
+    tl.to('.hero-eyebrow', { opacity: 1, y: 0, duration: 0.7 }, 0.15);
 
-    // Set initial states
-    gsap.set(['.hero-eyebrow', '.hero-name', '.hero-tagline', '.hero-cta'], { y: 30 });
-    gsap.set('.hud-corner', { opacity: 0 });
+    // Hero name: simultaneous scramble-reveal + fade-in
+    tl.add(() => {
+      const nameEl = document.querySelector('.hero-name');
+      if (!nameEl) return;
+      const original = nameEl.getAttribute('data-text') || nameEl.textContent;
+      let frame = 0, maxFrames = 22;
+      const iv = setInterval(() => {
+        frame++;
+        nameEl.textContent = original.split('').map((ch, i) => {
+          if (ch === ' ' || ch === '.') return ch;
+          return frame / maxFrames > i / original.length
+            ? ch : CHARS[randInt(0, CHARS.length - 1)];
+        }).join('');
+        if (frame >= maxFrames) { clearInterval(iv); nameEl.textContent = original; }
+      }, 55);
+    }, 0.6);
+
+    tl.to('.hero-name',    { opacity: 1, y: 0, duration: 1.1 }, 0.6);
+    tl.to('.hero-tagline', { opacity: 1, y: 0, duration: 0.8 }, 1.2);
+    tl.to('.hero-cta',     { opacity: 1, y: 0, duration: 0.7 }, 1.7);
+    tl.to('.hud-corner',   { opacity: 1, duration: 0.6 },        2.0);
   },
 };
 
@@ -899,9 +979,24 @@ const projects = {
           delay: (i % 3) * 0.08,
           ease: 'power3.out',
           onStart() {
-            // Mini glitch flash
+            // Mini glitch flash on card entry
             card.style.filter = 'brightness(2)';
             setTimeout(() => { card.style.filter = ''; }, 80);
+            // Scramble the project title on card reveal
+            const titleEl = card.querySelector('.project-title');
+            if (titleEl) {
+              const orig = titleEl.textContent;
+              const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@!';
+              let frame = 0, maxFrames = 10;
+              const iv = setInterval(() => {
+                frame++;
+                titleEl.textContent = orig.split('').map((ch, i) =>
+                  ch === ' ' ? ' ' : frame / maxFrames > i / orig.length
+                    ? ch : CHARS[randInt(0, CHARS.length - 1)]
+                ).join('');
+                if (frame >= maxFrames) { clearInterval(iv); titleEl.textContent = orig; }
+              }, 45);
+            }
           },
         });
       } else {
@@ -1166,6 +1261,30 @@ const scrollAnimations = {
       });
     });
 
+    // ── Section titles scramble in on first reveal ──
+    document.querySelectorAll('.section-title').forEach(el => {
+      const original = el.textContent;
+      const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ01#!';
+      ScrollTrigger.create({
+        trigger: el,
+        start:   'top 88%',
+        once:    true,
+        onEnter: () => {
+          let frame = 0;
+          const maxFrames = 20;
+          const iv = setInterval(() => {
+            frame++;
+            el.textContent = original.split('').map((ch, i) => {
+              if (ch === ' ' || ch === '&' || ch === '/') return ch;
+              return frame / maxFrames > i / original.length
+                ? ch : CHARS[randInt(0, CHARS.length - 1)];
+            }).join('');
+            if (frame >= maxFrames) { clearInterval(iv); el.textContent = original; }
+          }, 50);
+        },
+      });
+    });
+
     // ── Contact section fade-in ──
     gsap.from('#contact .contact-layout', {
       scrollTrigger: {
@@ -1213,35 +1332,105 @@ const scrollAnimations = {
 ============================================================ */
 const glitchEffects = {
   init() {
-    // Full-screen scanline sweep at random intervals
+    // Occasional full-screen scanline sweep
     setInterval(() => {
-      if (Math.random() < 0.15) {
-        const flash = document.createElement('div');
-        flash.style.cssText = `
-          position: fixed;
-          inset: 0;
-          z-index: 9998;
-          pointer-events: none;
-          background: repeating-linear-gradient(
-            to bottom,
-            transparent 0px, transparent 2px,
-            rgba(255,255,255,0.015) 2px, rgba(255,255,255,0.015) 3px
-          );
-          opacity: 0;
-        `;
-        document.body.appendChild(flash);
-
-        if (typeof gsap !== 'undefined') {
-          gsap.to(flash, {
-            opacity: 1, duration: 0.05,
-            yoyo: true, repeat: 3,
-            onComplete: () => flash.remove(),
-          });
-        } else {
-          setTimeout(() => flash.remove(), 200);
-        }
-      }
+      if (Math.random() < 0.15) { this._scanFlash(); }
     }, 4000);
+
+    // VHS-style horizontal noise lines — subtle, atmospheric
+    setInterval(() => {
+      if (Math.random() < 0.28) { this._vhsLines(); }
+    }, 2200);
+
+    // Brief pixel-shift block — rare, striking
+    setInterval(() => {
+      if (Math.random() < 0.12) { this._pixelShift(); }
+    }, 5500);
+  },
+
+  _scanFlash() {
+    const flash = document.createElement('div');
+    flash.style.cssText = `
+      position: fixed;
+      inset: 0;
+      z-index: 9998;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px, transparent 2px,
+        rgba(255,255,255,0.015) 2px, rgba(255,255,255,0.015) 3px
+      );
+      opacity: 0;
+    `;
+    flash.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(flash);
+
+    if (typeof gsap !== 'undefined') {
+      gsap.to(flash, {
+        opacity: 1, duration: 0.05,
+        yoyo: true, repeat: 3,
+        onComplete: () => flash.remove(),
+      });
+    } else {
+      setTimeout(() => flash.remove(), 200);
+    }
+  },
+
+  // Short horizontal VHS noise strips at random Y positions
+  _vhsLines() {
+    const count = randInt(1, 3);
+    for (let i = 0; i < count; i++) {
+      const line = document.createElement('div');
+      line.style.cssText = `
+        position: fixed;
+        left: 0; right: 0;
+        top: ${randFloat(5, 92)}vh;
+        height: ${randFloat(1, 4)}px;
+        background: rgba(255,255,255,${randFloat(0.02, 0.07).toFixed(3)});
+        pointer-events: none;
+        z-index: 9994;
+        will-change: opacity;
+      `;
+      line.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(line);
+      if (typeof gsap !== 'undefined') {
+        gsap.to(line, {
+          opacity: 0,
+          duration: randFloat(0.06, 0.28),
+          ease: 'steps(1)',
+          onComplete: () => line.remove(),
+        });
+      } else {
+        setTimeout(() => line.remove(), 300);
+      }
+    }
+  },
+
+  // Brief horizontal block with lateral offset — simulates VHS tape dropout
+  _pixelShift() {
+    const shiftX = randFloat(-18, 18);
+    const block   = document.createElement('div');
+    block.style.cssText = `
+      position: fixed;
+      left: 0; right: 0;
+      top: ${randFloat(8, 88)}vh;
+      height: ${randFloat(3, 10)}px;
+      background: rgba(255,255,255,0.04);
+      pointer-events: none;
+      z-index: 9993;
+      transform: translateX(${shiftX}px);
+    `;
+    block.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(block);
+    if (typeof gsap !== 'undefined') {
+      gsap.to(block, {
+        opacity: 0, x: shiftX + randFloat(-6, 6),
+        duration: 0.12, ease: 'steps(2)',
+        onComplete: () => block.remove(),
+      });
+    } else {
+      setTimeout(() => block.remove(), 120);
+    }
   },
 };
 
@@ -1508,6 +1697,216 @@ const hackScroll = {
 };
 
 /* ============================================================
+   18. CLICK RIPPLE — radial burst of ASCII chars + expanding
+   rings on every click, giving a "digital pool ripple" feel.
+============================================================ */
+const clickRipple = {
+  CHARS: '01!@#%^*<>[]{}|~;:,./?',
+
+  init() {
+    document.addEventListener('click', (e) => {
+      // Skip clicks inside form controls to avoid disrupting input
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
+      this._spawn(e.clientX, e.clientY);
+    });
+  },
+
+  _spawn(x, y) {
+    const wrap = document.createElement('div');
+    wrap.setAttribute('aria-hidden', 'true');
+    wrap.style.cssText = `
+      position: fixed;
+      left: ${x}px;
+      top: ${y}px;
+      width: 0; height: 0;
+      pointer-events: none;
+      z-index: 9500;
+    `;
+    document.body.appendChild(wrap);
+
+    // Three concentric expanding border-rings
+    for (let r = 0; r < 3; r++) {
+      const ring = document.createElement('div');
+      const targetSize = 42 + r * 38;
+      ring.style.cssText = `
+        position: absolute;
+        border: 1px solid rgba(255,255,255,${(0.45 - r * 0.12).toFixed(2)});
+        border-radius: 50%;
+        top: 0; left: 0;
+        width: 4px; height: 4px;
+        transform: translate(-50%, -50%);
+      `;
+      wrap.appendChild(ring);
+      if (typeof gsap !== 'undefined') {
+        gsap.to(ring, {
+          width: `${targetSize}px`,
+          height: `${targetSize}px`,
+          opacity: 0,
+          duration: 0.55 + r * 0.1,
+          delay: r * 0.06,
+          ease: 'power2.out',
+        });
+      }
+    }
+
+    // ASCII chars fly outward radially
+    const charCount = 10;
+    for (let i = 0; i < charCount; i++) {
+      const ch = document.createElement('span');
+      ch.textContent = this.CHARS[randInt(0, this.CHARS.length - 1)];
+      ch.style.cssText = `
+        position: absolute;
+        font-family: var(--ff-mono);
+        font-size: ${randFloat(9, 14)}px;
+        color: rgba(255,255,255,0.28);
+        top: 0; left: 0;
+        transform: translate(-50%, -50%);
+        white-space: nowrap;
+        user-select: none;
+      `;
+      wrap.appendChild(ch);
+      if (typeof gsap !== 'undefined') {
+        const angle = (i / charCount) * Math.PI * 2;
+        const dist  = randFloat(35, 85);
+        gsap.to(ch, {
+          x: Math.cos(angle) * dist,
+          y: Math.sin(angle) * dist,
+          opacity: 0,
+          scale: randFloat(0.5, 1.4),
+          duration: randFloat(0.45, 0.8),
+          delay: randFloat(0, 0.08),
+          ease: 'power2.out',
+        });
+      }
+    }
+    setTimeout(() => wrap.remove(), 950);
+  },
+};
+
+/* ============================================================
+   19. HOVER GLITCH — brief character scramble on hover over
+   interactive text elements, giving dynamic "hacked" feedback.
+============================================================ */
+const hoverGlitch = {
+  CHARS: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@!',
+
+  init() {
+    if (window.matchMedia('(hover: none)').matches) return;
+
+    const sel = '.skill-name, .project-title, .nav-links a, .timeline-title';
+    document.addEventListener('mouseover', (e) => {
+      const el = e.target.closest(sel);
+      if (!el || el.dataset.glitching) return;
+      this._glitch(el);
+    });
+  },
+
+  _glitch(el) {
+    const original = el.textContent.trim();
+    if (!original || original.length > 45) return;
+
+    el.dataset.glitching = '1';
+    let frame = 0;
+    const maxFrames = 7;
+    const iv = setInterval(() => {
+      frame++;
+      el.textContent = original.split('').map((ch, i) => {
+        if (ch === ' ' || ch === '/' || ch === '.') return ch;
+        return frame / maxFrames > i / original.length
+          ? ch : this.CHARS[randInt(0, this.CHARS.length - 1)];
+      }).join('');
+      if (frame >= maxFrames) {
+        clearInterval(iv);
+        el.textContent = original;
+        delete el.dataset.glitching;
+      }
+    }, 38);
+  },
+};
+
+/* ============================================================
+   20. EASTER EGG — hidden interactions:
+   · Konami code (↑↑↓↓←→←→BA): SYSTEM_OVERLOAD animation
+   · Five rapid clicks on nav logo: ACCESS_GRANTED message
+============================================================ */
+const easterEgg = {
+  KONAMI: ['ArrowUp','ArrowUp','ArrowDown','ArrowDown',
+           'ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'],
+  _seq:        [],
+  _clickCount: 0,
+  _clickTimer: null,
+  _active:     false,
+
+  init() {
+    // Konami key sequence detector
+    document.addEventListener('keydown', (e) => {
+      this._seq.push(e.key);
+      if (this._seq.length > this.KONAMI.length) this._seq.shift();
+      if (this._seq.join(',') === this.KONAMI.join(',')) {
+        this._seq = [];
+        this._fire('KONAMI');
+      }
+    });
+
+    // Five rapid clicks on logo within 1.5 s
+    const logo = document.querySelector('.nav-logo');
+    if (logo) {
+      logo.addEventListener('click', () => {
+        this._clickCount++;
+        clearTimeout(this._clickTimer);
+        this._clickTimer = setTimeout(() => { this._clickCount = 0; }, 1500);
+        if (this._clickCount >= 5) { this._clickCount = 0; this._fire('RAPID'); }
+      });
+    }
+  },
+
+  _fire(type) {
+    if (this._active) return;
+    this._active = true;
+    const overlay = document.getElementById('easter-overlay');
+    if (!overlay) { this._active = false; return; }
+
+    const msgs = {
+      KONAMI: '> KONAMI_SEQUENCE_DETECTED\n> ACCESS_LEVEL: ADMINISTRATOR\n> UNLOCKING_HIDDEN_LAYER...',
+      RAPID:  '> PERSISTENCE.exe DETECTED\n> EASTER_EGG_UNLOCKED\n> WELCOME_TO_THE_VOID',
+    };
+    overlay.textContent = this._asciiBox(msgs[type] || msgs.RAPID);
+
+    if (typeof gsap !== 'undefined') {
+      const tl = gsap.timeline({
+        onComplete: () => {
+          overlay.textContent = '';
+          gsap.set(overlay, { opacity: 0 });
+          this._active = false;
+        },
+      });
+      // Flicker-in
+      tl.to(overlay, { opacity: 1, duration: 0.04 });
+      tl.to(overlay, { opacity: 0, duration: 0.04 }, 0.07);
+      tl.to(overlay, { opacity: 1, duration: 0.06 }, 0.13);
+      tl.to(overlay, { opacity: 0, duration: 0.04 }, 0.50);
+      tl.to(overlay, { opacity: 1, duration: 0.04 }, 0.56);
+      // Hold 2.2 s then fade
+      tl.to(overlay, { opacity: 0, duration: 0.5, delay: 2.2 });
+    } else {
+      overlay.style.opacity = '1';
+      setTimeout(() => {
+        overlay.textContent = '';
+        overlay.style.opacity = '0';
+        this._active = false;
+      }, 3200);
+    }
+  },
+
+  _asciiBox(text) {
+    const lines = text.split('\n');
+    const w = Math.max(...lines.map(l => l.length));
+    const bar = '+' + '-'.repeat(w + 2) + '+';
+    return [bar, ...lines.map(l => `| ${l.padEnd(w)} |`), bar].join('\n');
+  },
+};
+
+/* ============================================================
    14. BOOT SEQUENCE — wait for GSAP + Three.js then start
 ============================================================ */
 function waitForLibraries(callback, maxWait = 5000) {
@@ -1564,6 +1963,15 @@ function boot() {
 
   // Floating "system" phrases on scroll
   hackScroll.init();
+
+  // Click ripple — digital pool ripple of ASCII chars on every click
+  clickRipple.init();
+
+  // Hover glitch — brief char scramble on hover over interactive elements
+  hoverGlitch.init();
+
+  // Easter egg — Konami code and rapid logo-click hidden interactions
+  easterEgg.init();
 
   // Fire the loader last — its exit callback triggers hero animations
   loader.init();

@@ -308,12 +308,12 @@ section {
   text-align: right;
 }
 
-/* Loader progress */
+/* Loader progress — centered over the 3D shape */
 #loader-progress {
   position: absolute;
-  bottom: 48px;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   text-align: center;
   pointer-events: none;
   z-index: 10;
@@ -1377,4 +1377,44 @@ section {
   89%            { transform: translateY(-50%) skewY(-3deg);  opacity: 0.4; }
   91%            { transform: translateY(-50%) skewY(0deg);   opacity: 0.9; }
   93%            { transform: translateY(-50%) skewY(1.5deg); opacity: 0.5; }
+}
+
+/* ── 21. CLICK RIPPLE ── */
+/* Rings and char bursts are fully JS-driven; this contains pointer-event safety */
+.click-ripple-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  top: 0; left: 0;
+  width: 4px; height: 4px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* ── 22. EASTER EGG OVERLAY ── */
+#easter-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 19999;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--ff-mono);
+  font-size: clamp(0.65rem, 1.4vw, 0.95rem);
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.92);
+  text-align: center;
+  white-space: pre;
+  line-height: 2;
+  opacity: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  text-shadow: 0 0 28px rgba(255, 255, 255, 0.45), 0 0 55px rgba(255, 255, 255, 0.18);
+}
+
+/* ── 23. RESPONSIVE: hide easter overlay on very small screens ── */
+@media (max-width: 400px) {
+  #easter-overlay { font-size: 0.55rem; }
 }
