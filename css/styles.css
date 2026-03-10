@@ -1207,3 +1207,174 @@ section {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ── 16. CUSTOM CURSOR ── */
+
+/* Hide the large glow since the new system replaces it */
+#cursor-glow { display: none; }
+
+/* Main cursor dot — snaps immediately to pointer */
+#cursor-dot {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10001;
+  transform: translate(-50%, -50%);
+  transition: width 0.18s ease, height 0.18s ease, background 0.18s ease, opacity 0.18s ease;
+  will-change: left, top;
+  mix-blend-mode: difference;
+}
+
+/* Outer lagged ring */
+#cursor-ring {
+  position: fixed;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, border-width 0.25s ease;
+  will-change: left, top;
+}
+
+/* Corner-bracket accent on ring */
+#cursor-ring::before,
+#cursor-ring::after {
+  content: '';
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-color: rgba(255, 255, 255, 0.7);
+  border-style: solid;
+}
+#cursor-ring::before {
+  top: -1px; left: -1px;
+  border-width: 1px 0 0 1px;
+}
+#cursor-ring::after {
+  bottom: -1px; right: -1px;
+  border-width: 0 1px 1px 0;
+}
+
+/* Hover state */
+#cursor-ring.hovering {
+  width: 54px;
+  height: 54px;
+  border-color: rgba(255, 255, 255, 0.9);
+}
+#cursor-dot.hovering {
+  width: 4px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* Click pulse */
+#cursor-ring.clicking {
+  width: 28px;
+  height: 28px;
+  border-color: rgba(255, 255, 255, 1);
+}
+
+@media (hover: none) {
+  body         { cursor: auto; }
+  #cursor-dot,
+  #cursor-ring { display: none; }
+}
+
+/* ── 17. SCROLL SIDE LABELS ── */
+.scroll-side-label {
+  position: fixed;
+  top: 50%;
+  font-family: var(--ff-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.15);
+  pointer-events: none;
+  z-index: 400;
+  opacity: 0;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  white-space: nowrap;
+  user-select: none;
+  will-change: opacity;
+}
+
+.scroll-side-label--left {
+  left: clamp(8px, 1.5vw, 20px);
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.scroll-side-label--right {
+  right: clamp(8px, 1.5vw, 20px);
+  transform: translateY(-50%);
+}
+
+@media (max-width: 900px) {
+  .scroll-side-label { display: none; }
+}
+
+/* ── 18. ASCII FLASH OVERLAY ── */
+.ascii-flash-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  font-family: var(--ff-mono);
+  font-size: 10px;
+  line-height: 1.45;
+  color: #fff;
+  white-space: pre;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+}
+
+/* ── 19. SCAN SWEEP LINE ── */
+.scan-sweep-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255, 255, 255, 0.12) 20%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.12) 80%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 20;
+  top: 0;
+  will-change: top, opacity;
+}
+
+/* ── 20. SIDE SCROLL TEXT GLITCH ── */
+/* Momentary highlighted side label glitch on active */
+.scroll-side-label.active {
+  color: rgba(255, 255, 255, 0.35);
+  animation: label-glitch 3s infinite steps(1);
+}
+
+@keyframes label-glitch {
+  0%, 88%, 100% { transform: translateY(-50%) rotate(180deg) skewY(0deg);   opacity: 1;   }
+  89%            { transform: translateY(-50%) rotate(180deg) skewY(-3deg);  opacity: 0.4; }
+  91%            { transform: translateY(-50%) rotate(180deg) skewY(0deg);   opacity: 0.9; }
+  93%            { transform: translateY(-50%) rotate(180deg) skewY(1.5deg); opacity: 0.5; }
+}
+.scroll-side-label--right.active {
+  animation-name: label-glitch-right;
+}
+@keyframes label-glitch-right {
+  0%, 88%, 100% { transform: translateY(-50%) skewY(0deg);   opacity: 1;   }
+  89%            { transform: translateY(-50%) skewY(-3deg);  opacity: 0.4; }
+  91%            { transform: translateY(-50%) skewY(0deg);   opacity: 0.9; }
+  93%            { transform: translateY(-50%) skewY(1.5deg); opacity: 0.5; }
+}

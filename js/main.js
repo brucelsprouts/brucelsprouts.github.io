@@ -223,8 +223,12 @@ const loader = {
     const particles = new THREE.Points(ptGeo, ptMat);
     scene.add(particles);
 
-    // Store refs
-    this.threeScene = { renderer, scene, camera, ico, particles };
+    // Store refs — including materials so exit() can tween their opacity
+    this.threeScene = {
+      renderer, scene, camera, ico, inner, particles,
+      matIco, matSolid, ptMat,
+      spinMultiplier: 1,  // tweened upward during dissolve
+    };
 
     // Handle resize
     window.addEventListener('resize', () => {
@@ -234,13 +238,14 @@ const loader = {
       renderer.setSize(w, h);
     });
 
-    // Animation loop
+    // Animation loop — uses spinMultiplier so exit can accelerate the spin
     const animate = () => {
       this.animFrame = requestAnimationFrame(animate);
-      ico.rotation.x += 0.004;
-      ico.rotation.y += 0.006;
+      const m = this.threeScene.spinMultiplier;
+      ico.rotation.x   += 0.004 * m;
+      ico.rotation.y   += 0.006 * m;
       inner.rotation.copy(ico.rotation);
-      particles.rotation.y += 0.0008;
+      particles.rotation.y += 0.0008 * m;
       renderer.render(scene, camera);
     };
     animate();
@@ -278,6 +283,125 @@ const loader = {
         }
       });
     }, 100);
+  },
+
+  /* -- Progressively corrupt a symbol-block's characters before it fades -- */
+  _erodeBlock(el) {
+    const chars = el.textContent.split('');
+    // Collect indices of non-newline characters
+    const mutable = [];
+    chars.forEach((c, i) => { if (c !== '\n') mutable.push(i); });
+
+    // Shuffle indices (Fisher-Yates)
+    for (let i = mutable.length - 1; i > 0; i--) {
+      const j = randInt(0, i);
+      [mutable[i], mutable[j]] = [mutable[j], mutable[i]];
+    }
+
+    let step = 0;
+    const batchSize = Math.ceil(mutable.length / 14);
+    const iv = setInterval(() => {
+      for (let b = 0; b < batchSize && step < mutable.length; b++, step++) {
+        chars[mutable[step]] = Math.random() < 0.45
+          ? ' '
+          : String.fromCharCode(randInt(33, 47)); // punctuation noise
+      }
+      el.textContent = chars.join('');
+      if (step >= mutable.length) clearInterval(iv);
+    }, 35);
+  },
+
+  /* -- Creative dissolve: scatter, corrupt, spin-up, then fade -- */
+  exit() {
+    clearInterval(this._glitchInterval);
+
+    if (typeof gsap === 'undefined') {
+      // Graceful fallback: instant hide
+      document.getElementById('loader').style.display = 'none';
+      const sw = document.getElementById('site-wrapper');
+      sw.style.opacity = '1'; sw.style.visibility = 'visible';
+      heroAnimations.play();
+      this.cleanup();
+      return;
+    }
+
+    // Phase 0 — Scramble the percent counter immediately
+    let scrambles = 0;
+    const scrambleIv = setInterval(() => {
+      if (this.percentEl) {
+        this.percentEl.style.filter = `skewX(${randFloat(-6, 6)}deg)`;
+        this.percentEl.textContent  = randInt(0, 999).toString().padStart(3, '0');
+      }
+      if (++scrambles > 14) clearInterval(scrambleIv);
+    }, 55);
+
+    // Phase 1 — Erode ASCII symbol blocks
+    setTimeout(() => {
+      document.querySelectorAll('.symbol-block').forEach(el => this._erodeBlock(el));
+    }, 80);
+
+    const tl = gsap.timeline({ onComplete: () => this.cleanup() });
+
+    // Counter split-fade
+    tl.to('#loader-label',   { opacity: 0, y: -8,  duration: 0.25 }, 0.1);
+    tl.to('#loader-percent', { opacity: 0, duration: 0.35, ease: 'power2.in',
+      onStart: () => {
+        if (this.percentEl) this.percentEl.style.filter = '';
+      }
+    }, 0.6);
+
+    // Scatter every rain number outward — each flies a random direction
+    tl.to('.rain-num', {
+      x:        () => randFloat(-700, 700),
+      y:        () => randFloat(-600, 600),
+      opacity:  0,
+      scale:    () => randFloat(0.05, 1.8),
+      rotation: () => randInt(-200, 200),
+      duration: () => randFloat(0.45, 0.85),
+      stagger:  { amount: 0.4, from: 'random' },
+      ease:     'power2.in',
+    }, 0.05);
+
+    // Symbol blocks fade after erosion
+    tl.to('.symbol-block', { opacity: 0, duration: 0.4, stagger: 0.08, ease: 'power2.in' }, 0.25);
+
+    // 3D shape — spin accelerates then canvas fades
+    if (this.threeScene) {
+      tl.to(this.threeScene, {
+        spinMultiplier: 12,
+        duration: 0.7,
+        ease: 'power2.in',
+      }, 0.2);
+      tl.to(this.threeScene.matIco,   { opacity: 0, duration: 0.45 }, 0.7);
+      tl.to(this.threeScene.matSolid, { opacity: 0, duration: 0.45 }, 0.7);
+      tl.to(this.threeScene.ptMat,    { opacity: 0, duration: 0.45 }, 0.7);
+      tl.to('#loader-canvas', { opacity: 0, duration: 0.35 }, 0.85);
+    }
+
+    // Scanline burst sequence — rapid flicker then gone
+    tl.to('#loader .scanlines', { opacity: 0.9, duration: 0.04 }, 0.65);
+    tl.to('#loader .scanlines', { opacity: 0,   duration: 0.06 }, 0.70);
+    tl.to('#loader .scanlines', { opacity: 0.7, duration: 0.04 }, 0.76);
+    tl.to('#loader .scanlines', { opacity: 0.4, duration: 0.04 }, 0.82);
+    tl.to('#loader .scanlines', { opacity: 0,   duration: 0.1  }, 0.87);
+
+    // Loader background dissolves (black fades to transparent, revealing site behind)
+    tl.to('#loader', {
+      backgroundColor: 'rgba(0,0,0,0)',
+      duration: 0.55,
+      ease: 'power1.in',
+    }, 0.88);
+
+    // Site fades in underneath
+    tl.to('#site-wrapper', {
+      opacity:    1,
+      visibility: 'visible',
+      duration:   0.5,
+      ease:       'power2.out',
+    }, 0.9);
+
+    // Hero text animations fire as site becomes fully visible
+    tl.call(() => heroAnimations.play(), null, 1.1);
   },
 
   /* -- Animate the % counter up to 100 then exit -- */
@@ -319,40 +443,7 @@ const loader = {
     requestAnimationFrame(tick);
   },
 
-  /* -- Fade the loader out and reveal the site -- */
-  exit() {
-    clearInterval(this._glitchInterval);
-
-    const tl = gsap.timeline({ onComplete: () => this.cleanup() });
-
-    // Fade out the progress counter
-    tl.to('#loader-percent', { opacity: 0, duration: 0.2 });
-    tl.to('#loader-label',   { opacity: 0, duration: 0.2 }, '<');
-
-    // Scanline flash
-    tl.to('#loader .scanlines', { opacity: 0, duration: 0.1 });
-    tl.to('#loader .scanlines', { opacity: 1, duration: 0.05 });
-    tl.to('#loader .scanlines', { opacity: 0, duration: 0.15 });
-
-    // Slide loader up and out
-    tl.to('#loader', {
-      yPercent: -100,
-      duration: 0.7,
-      ease: 'power3.in',
-    }, '+=0.1');
-
-    // Reveal site simultaneously
-    tl.to('#site-wrapper', {
-      opacity: 1,
-      visibility: 'visible',
-      duration: 0.6,
-      ease: 'power2.out',
-    }, '-=0.4');
-
-    // Trigger hero animations after reveal
-    tl.call(() => heroAnimations.play(), null, '-=0.2');
-  },
-
+  /* -- Remove loader DOM and dispose Three.js resources -- */
   cleanup() {
     // Remove loader DOM to free memory
     if (this.threeScene) {
@@ -409,16 +500,40 @@ const heroScene = {
     this.particles = new THREE.Points(geo, mat);
     this.scene.add(this.particles);
 
-    // Thin wireframe torus knot — background accent
-    const tkGeo = new THREE.TorusKnotGeometry(2.2, 0.06, 80, 10);
-    const tkMat = new THREE.MeshBasicMaterial({
-      color: 0xffffff,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.025,
+    // ── UPGRADED GEOMETRY COMPOSITION ──
+    // 1. Central wireframe octahedron — angular, structural focal shape
+    const octGeo = new THREE.OctahedronGeometry(1.7, 0);
+    const octMat = new THREE.MeshBasicMaterial({
+      color: 0xffffff, wireframe: true, transparent: true, opacity: 0.065,
     });
-    this.torusKnot = new THREE.Mesh(tkGeo, tkMat);
-    this.scene.add(this.torusKnot);
+    const octahedron = new THREE.Mesh(octGeo, octMat);
+    this.scene.add(octahedron);
+
+    // 2. Orbital ring 1 — flat torus tilted 18°
+    const r1Geo = new THREE.TorusGeometry(2.5, 0.007, 2, 90);
+    const r1Mat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.1 });
+    const ring1 = new THREE.Mesh(r1Geo, r1Mat);
+    ring1.rotation.x = Math.PI * 0.18;
+    this.scene.add(ring1);
+
+    // 3. Orbital ring 2 — larger, cross-tilted for depth
+    const r2Geo = new THREE.TorusGeometry(3.3, 0.005, 2, 90);
+    const r2Mat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.05 });
+    const ring2 = new THREE.Mesh(r2Geo, r2Mat);
+    ring2.rotation.x = Math.PI * 0.42;
+    ring2.rotation.z = Math.PI * 0.15;
+    this.scene.add(ring2);
+
+    // 4. Outer icosahedron shell — very faint structural cage
+    const icoGeo  = new THREE.IcosahedronGeometry(4.2, 1);
+    const icoMat  = new THREE.MeshBasicMaterial({
+      color: 0xffffff, wireframe: true, transparent: true, opacity: 0.014,
+    });
+    const icoShell = new THREE.Mesh(icoGeo, icoMat);
+    this.scene.add(icoShell);
+
+    // Store shape refs for animate()
+    this.shapes = { octahedron, ring1, ring2, icoShell };
 
     this.animate();
 
@@ -444,10 +559,14 @@ const heroScene = {
     this.particles.rotation.y += 0.0006;
     this.particles.rotation.x += 0.0002;
 
-    // Very slow torus knot spin
-    if (this.torusKnot) {
-      this.torusKnot.rotation.x += 0.0008;
-      this.torusKnot.rotation.y += 0.0012;
+    // Rotate complex geometry with cursor-influenced micro-parallax
+    if (this.shapes) {
+      this.shapes.octahedron.rotation.y  += 0.003  + this.mouse.x * 0.0008;
+      this.shapes.octahedron.rotation.x  += 0.001  + this.mouse.y * 0.0008;
+      this.shapes.ring1.rotation.z       += 0.002;
+      this.shapes.ring2.rotation.y       += 0.0015;
+      this.shapes.icoShell.rotation.y    += 0.0005;
+      this.shapes.icoShell.rotation.x    += 0.0003;
     }
 
     this.renderer.render(this.scene, this.camera);
@@ -535,31 +654,94 @@ const nav = {
 };
 
 /* ============================================================
-   7. CURSOR GLOW
+   7. CURSOR — dot (immediate) + lagged ring + ambient glow
+   Works by:
+    · #cursor-dot  snaps each mousemove frame via style
+    · #cursor-ring lerps toward the target in rAF loop (~12% per frame)
+    · Hover state expands the ring and shrinks the dot
+    · Mousedown pulses the ring inward then back
 ============================================================ */
 const cursor = {
-  init() {
-    const glow = document.getElementById('cursor-glow');
-    if (!glow || window.matchMedia('(hover: none)').matches) return;
+  dot:       null,
+  ring:      null,
+  target:    { x: 0, y: 0 },
+  ringPos:   { x: 0, y: 0 },
+  _raf:      null,
+  _enabled:  false,
 
-    window.addEventListener('mousemove', e => {
-      glow.style.left = `${e.clientX}px`;
-      glow.style.top  = `${e.clientY}px`;
+  init() {
+    // No custom cursor on touch devices
+    if (window.matchMedia('(hover: none)').matches) return;
+
+    this.dot  = document.getElementById('cursor-dot');
+    this.ring = document.getElementById('cursor-ring');
+    if (!this.dot || !this.ring) return;
+
+    this._enabled = true;
+
+    // Hide cursor elements until first mouse move (avoid top-left flash)
+    this.dot.style.opacity  = '0';
+    this.ring.style.opacity = '0';
+
+    window.addEventListener('mousemove', (e) => {
+      const x = e.clientX, y = e.clientY;
+      this.target.x = x;
+      this.target.y = y;
+
+      // Dot snaps immediately
+      this.dot.style.left = `${x}px`;
+      this.dot.style.top  = `${y}px`;
+
+      // First move — reveal
+      if (this.dot.style.opacity === '0') {
+        this.dot.style.opacity  = '1';
+        this.ring.style.opacity = '1';
+        this.ringPos.x = x;
+        this.ringPos.y = y;
+      }
     }, { passive: true });
 
-    // Expand on clickable elements
-    document.querySelectorAll('a, button, input, textarea, .project-card, .skill-card').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        glow.style.width  = '480px';
-        glow.style.height = '480px';
-        glow.style.background = 'radial-gradient(circle, rgba(255,255,255,0.07) 0%, transparent 70%)';
-      });
-      el.addEventListener('mouseleave', () => {
-        glow.style.width  = '320px';
-        glow.style.height = '320px';
-        glow.style.background = 'radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%)';
-      });
+    // Lerp ring toward target in animation loop
+    this._startLoop();
+
+    // Hover expansion over interactive elements
+    const hoverSel = 'a, button, input, textarea, select, .project-card, .skill-card, .filter-btn';
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.closest(hoverSel)) {
+        this.dot .classList.add('hovering');
+        this.ring.classList.add('hovering');
+      }
     });
+    document.addEventListener('mouseout', (e) => {
+      if (e.target.closest(hoverSel)) {
+        this.dot .classList.remove('hovering');
+        this.ring.classList.remove('hovering');
+      }
+    });
+
+    // Click pulse
+    document.addEventListener('mousedown', () => {
+      this.ring.classList.add('clicking');
+    });
+    document.addEventListener('mouseup', () => {
+      this.ring.classList.remove('clicking');
+    });
+  },
+
+  _startLoop() {
+    const tick = () => {
+      this._raf = requestAnimationFrame(tick);
+      if (!this._enabled) return;
+
+      // Exponential lerp — smooth lag without overshoot
+      const lf = 0.13;
+      this.ringPos.x += (this.target.x - this.ringPos.x) * lf;
+      this.ringPos.y += (this.target.y - this.ringPos.y) * lf;
+
+      this.ring.style.left = `${this.ringPos.x}px`;
+      this.ring.style.top  = `${this.ringPos.y}px`;
+    };
+    tick();
   },
 };
 
@@ -887,7 +1069,7 @@ const contact = {
 };
 
 /* ============================================================
-   12. SCROLL ANIMATIONS — section headers + contact
+   12. SCROLL ANIMATIONS — section headers + contact + scramble reveals
 ============================================================ */
 const scrollAnimations = {
   init() {
@@ -895,7 +1077,7 @@ const scrollAnimations = {
 
     gsap.registerPlugin(ScrollTrigger);
 
-    // Section headers (except hero which has its own animation)
+    // ── Section headers ──
     document.querySelectorAll('.section-header').forEach(header => {
       gsap.from(header, {
         scrollTrigger: {
@@ -910,7 +1092,81 @@ const scrollAnimations = {
       });
     });
 
-    // Contact section fade-in
+    // ── Skill card text scramble on entry ──
+    // Each skill name glitches through random chars before settling
+    document.querySelectorAll('.skill-card').forEach(card => {
+      const nameEl = card.querySelector('.skill-name');
+      if (!nameEl) return;
+      const original = nameEl.textContent;
+      const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@!';
+
+      ScrollTrigger.create({
+        trigger: card,
+        start:   'top 90%',
+        once:    true,
+        onEnter: () => {
+          let frame = 0;
+          const maxFrames = 14;
+          const iv = setInterval(() => {
+            frame++;
+            nameEl.textContent = original
+              .split('')
+              .map((ch, i) => {
+                if (ch === ' ') return ' ';
+                return frame / maxFrames > i / original.length
+                  ? ch
+                  : CHARS[randInt(0, CHARS.length - 1)];
+              })
+              .join('');
+            if (frame >= maxFrames) {
+              clearInterval(iv);
+              nameEl.textContent = original;
+            }
+          }, 45);
+        },
+      });
+    });
+
+    // ── Timeline item text scramble on entry ──
+    document.querySelectorAll('.timeline-title').forEach(el => {
+      const original = el.textContent;
+      const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ01';
+      ScrollTrigger.create({
+        trigger: el,
+        start:   'top 88%',
+        once:    true,
+        onEnter: () => {
+          let frame = 0;
+          const maxFrames = 12;
+          const iv = setInterval(() => {
+            frame++;
+            el.textContent = original
+              .split('')
+              .map((ch, i) => {
+                if (ch === ' ') return ' ';
+                return frame / maxFrames > i / original.length
+                  ? ch
+                  : CHARS[randInt(0, CHARS.length - 1)];
+              })
+              .join('');
+            if (frame >= maxFrames) { clearInterval(iv); el.textContent = original; }
+          }, 40);
+        },
+      });
+    });
+
+    // ── Section tag line reveals (section-tag monospace labels) ──
+    document.querySelectorAll('.section-tag').forEach(el => {
+      gsap.from(el, {
+        scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none reverse' },
+        opacity: 0,
+        x: -20,
+        duration: 0.5,
+        ease: 'power2.out',
+      });
+    });
+
+    // ── Contact section fade-in ──
     gsap.from('#contact .contact-layout', {
       scrollTrigger: {
         trigger: '#contact',
@@ -923,7 +1179,7 @@ const scrollAnimations = {
       ease: 'power3.out',
     });
 
-    // Contact social links stagger
+    // ── Social links stagger ──
     gsap.from('.social-link', {
       scrollTrigger: {
         trigger: '.social-list',
@@ -937,12 +1193,12 @@ const scrollAnimations = {
       ease: 'power3.out',
     });
 
-    // Timeline line draw illusion via scaleY
+    // ── Timeline vertical line draw ──
     gsap.from('.timeline::before', {
       scrollTrigger: {
         trigger: '#history',
         start: 'top 70%',
-        end: 'bottom 30%',
+        end:   'bottom 30%',
         scrub: 1,
       },
       scaleY: 0,
@@ -953,11 +1209,11 @@ const scrollAnimations = {
 };
 
 /* ============================================================
-   13. GLITCH SCANLINE FLICKER — occasional random flicker
+   13. GLITCH SCANLINE FLICKER — occasional ambient random flicker
 ============================================================ */
 const glitchEffects = {
   init() {
-    // Occasionally flash a full-screen scanline sweep
+    // Full-screen scanline sweep at random intervals
     setInterval(() => {
       if (Math.random() < 0.15) {
         const flash = document.createElement('div');
@@ -990,6 +1246,268 @@ const glitchEffects = {
 };
 
 /* ============================================================
+   14. SIDE LABELS — thin vertical HUD text on viewport edges
+   Each section maps to a set of left/right monospace labels.
+   They typewriter-in on section enter, fade out on leave.
+============================================================ */
+const sideLabels = {
+  leftEl:  null,
+  rightEl: null,
+  _typeTimers: [],
+
+  // Per-section label pairs
+  MAP: {
+    hero:     { l: '// HERO_ONLINE',       r: 'STATUS·ACTIVE'     },
+    skills:   { l: '// MODULE_02',          r: 'SCANNING·MODULES'  },
+    history:  { l: '// TIMELINE_NODE',      r: 'RETRIEVING·DATA'   },
+    projects: { l: '// PROJECT_MATRIX',     r: 'ACCESSING·FILES'   },
+    contact:  { l: '// ESTABLISH_LINK',     r: 'AWAITING·INPUT'    },
+  },
+
+  init() {
+    if (typeof ScrollTrigger === 'undefined' || typeof gsap === 'undefined') return;
+
+    this.leftEl  = this._create('left');
+    this.rightEl = this._create('right');
+    document.body.appendChild(this.leftEl);
+    document.body.appendChild(this.rightEl);
+
+    Object.entries(this.MAP).forEach(([id, labels]) => {
+      const section = document.getElementById(id);
+      if (!section) return;
+
+      ScrollTrigger.create({
+        trigger: section,
+        start:   'top 55%',
+        end:     'bottom 45%',
+        onEnter:      () => this._show(labels.l, labels.r),
+        onLeave:      () => this._hide(),
+        onEnterBack:  () => this._show(labels.l, labels.r),
+        onLeaveBack:  () => this._hide(),
+      });
+    });
+  },
+
+  _create(side) {
+    const el = document.createElement('div');
+    el.className   = `scroll-side-label scroll-side-label--${side}`;
+    el.setAttribute('aria-hidden', 'true');
+    return el;
+  },
+
+  _show(leftText, rightText) {
+    this._clearTimers();
+    gsap.to([this.leftEl, this.rightEl], { opacity: 1, duration: 0.3 });
+    this.leftEl .classList.add('active');
+    this.rightEl.classList.add('active');
+    this._type(this.leftEl,  leftText);
+    this._type(this.rightEl, rightText);
+  },
+
+  _hide() {
+    this._clearTimers();
+    gsap.to([this.leftEl, this.rightEl], {
+      opacity: 0, duration: 0.25,
+      onComplete: () => {
+        this.leftEl .textContent = '';
+        this.rightEl.textContent = '';
+        this.leftEl .classList.remove('active');
+        this.rightEl.classList.remove('active');
+      },
+    });
+  },
+
+  _type(el, text) {
+    el.textContent = '';
+    let i = 0;
+    const step = () => {
+      if (i >= text.length) { el.textContent = text; return; }
+      // One-frame glitch char chance
+      const ch = Math.random() < 0.18
+        ? String.fromCharCode(randInt(33, 90))
+        : text[i];
+      el.textContent = text.slice(0, i) + ch;
+      i++;
+      this._typeTimers.push(setTimeout(step, 38 + randInt(0, 25)));
+    };
+    step();
+  },
+
+  _clearTimers() {
+    this._typeTimers.forEach(clearTimeout);
+    this._typeTimers = [];
+  },
+};
+
+/* ============================================================
+   15. SECTION FLASH — brief ASCII overlay on first section entry
+   Gives the "being decoded / hacked" impression as sections appear.
+============================================================ */
+const sectionFlash = {
+  CHARS: '01 +|#~=.:[]{}<>!?/@',
+
+  init() {
+    if (typeof ScrollTrigger === 'undefined') return;
+
+    document.querySelectorAll('section[id]').forEach(section => {
+      let done = false;
+      ScrollTrigger.create({
+        trigger: section,
+        start:   'top 78%',
+        onEnter: () => {
+          if (done) return;
+          done = true;
+          this._flash(section);
+        },
+      });
+    });
+  },
+
+  _flash(section) {
+    const overlay = document.createElement('div');
+    overlay.className = 'ascii-flash-overlay';
+
+    // Generate random ASCII block
+    const rows = 10, cols = 55;
+    let content = '';
+    for (let r = 0; r < rows; r++) {
+      let line = '';
+      for (let c = 0; c < cols; c++) {
+        line += this.CHARS[randInt(0, this.CHARS.length - 1)];
+      }
+      content += line + '\n';
+    }
+    overlay.textContent = content;
+    section.appendChild(overlay);
+
+    if (typeof gsap !== 'undefined') {
+      gsap.fromTo(overlay,
+        { opacity: 0 },
+        {
+          opacity: 0.1,
+          duration: 0.08,
+          yoyo: true,
+          repeat: 5,
+          ease: 'steps(1)',
+          onComplete: () => overlay.remove(),
+        }
+      );
+    } else {
+      setTimeout(() => overlay.remove(), 400);
+    }
+  },
+};
+
+/* ============================================================
+   16. SCAN SWEEP — horizontal light line that sweeps through
+   each section on first scroll-in, reinforcing the HUD "scan" feel.
+============================================================ */
+const scanSweep = {
+  init() {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+    document.querySelectorAll('section[id]').forEach(section => {
+      let swept = false;
+      ScrollTrigger.create({
+        trigger: section,
+        start:   'top 75%',
+        onEnter: () => {
+          if (swept) return;
+          swept = true;
+          this._sweep(section);
+        },
+      });
+    });
+  },
+
+  _sweep(section) {
+    const line = document.createElement('div');
+    line.className = 'scan-sweep-line';
+    section.appendChild(line);
+
+    gsap.fromTo(line,
+      { top: '0%',   opacity: 0.7 },
+      { top: '100%', opacity: 0,
+        duration: 1.0,
+        ease: 'power1.inOut',
+        onComplete: () => line.remove(),
+      }
+    );
+  },
+};
+
+/* ============================================================
+   17. HACK-STYLE SCROLL TEXT — side floating labels that appear
+   momentarily at the scroll position as the user passes sections,
+   giving the impression of a system "rendering" the page data.
+============================================================ */
+const hackScroll = {
+  PHRASES: [
+    '> LOADING_ASSET...',
+    '> DECRYPT_SEQUENCE',
+    '> MODULE_ONLINE',
+    '> RENDERING_DATA',
+    '> SYNC_COMPLETE',
+    '> ACCESS_GRANTED',
+    '> INIT_SUBSYSTEM',
+    '> BUFFER_FLUSH',
+  ],
+  _last: -1,
+
+  init() {
+    if (typeof gsap === 'undefined') return;
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        if (Math.random() < 0.3) this._spawnPhrase();
+        ticking = false;
+      });
+    }, { passive: true });
+  },
+
+  _spawnPhrase() {
+    // Pick a phrase (not the same as last)
+    let idx;
+    do { idx = randInt(0, this.PHRASES.length - 1); } while (idx === this._last);
+    this._last = idx;
+
+    const el = document.createElement('div');
+    const onLeft = Math.random() < 0.5;
+
+    el.style.cssText = `
+      position: fixed;
+      top: ${randFloat(20, 75)}vh;
+      ${onLeft ? 'left: clamp(8px, 2vw, 32px)' : 'right: clamp(8px, 2vw, 32px)'};
+      font-family: var(--ff-mono, monospace);
+      font-size: 0.58rem;
+      letter-spacing: 0.18em;
+      color: rgba(255,255,255,0.18);
+      pointer-events: none;
+      z-index: 300;
+      opacity: 0;
+      white-space: nowrap;
+      user-select: none;
+    `;
+    el.setAttribute('aria-hidden', 'true');
+    el.textContent = this.PHRASES[idx];
+    document.body.appendChild(el);
+
+    gsap.to(el, {
+      opacity: 1, duration: 0.15,
+      onComplete: () => {
+        gsap.to(el, {
+          opacity: 0, duration: 0.4, delay: 0.6,
+          onComplete: () => el.remove(),
+        });
+      },
+    });
+  },
+};
+
+/* ============================================================
    14. BOOT SEQUENCE — wait for GSAP + Three.js then start
 ============================================================ */
 function waitForLibraries(callback, maxWait = 5000) {
@@ -1017,7 +1535,7 @@ function boot() {
   // Init Three.js hero scene early (canvas is hidden under loader)
   heroScene.init();
 
-  // Cursor glow
+  // Custom cursor (dot + ring)
   cursor.init();
 
   // Navigation
@@ -1032,8 +1550,20 @@ function boot() {
   // Scroll animations (ScrollTrigger)
   scrollAnimations.init();
 
-  // Ambient full-page glitch flicker
+  // Ambient full-page scanline glitch flicker
   glitchEffects.init();
+
+  // Side HUD labels that track active section
+  sideLabels.init();
+
+  // ASCII flash overlay on first section entry
+  sectionFlash.init();
+
+  // Scan sweep line through each section
+  scanSweep.init();
+
+  // Floating "system" phrases on scroll
+  hackScroll.init();
 
   // Fire the loader last — its exit callback triggers hero animations
   loader.init();
