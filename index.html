@@ -34,6 +34,18 @@
     <!-- Glitching number rain -->
     <div id="number-rain" aria-hidden="true"></div>
 
+    <!-- Falling binary stream columns -->
+    <div id="binary-cascade" aria-hidden="true"></div>
+
+    <!-- Hex data panels in corners -->
+    <div id="hex-panels" aria-hidden="true"></div>
+
+    <!-- Scrolling error / system message feed -->
+    <div id="error-feed" aria-hidden="true"></div>
+
+    <!-- Random glitch corruption block flashes -->
+    <div id="glitch-overlay" aria-hidden="true"></div>
+
     <!-- Symbol block shapes (ASCII-style) -->
     <div class="symbol-block top-left" aria-hidden="true"></div>
     <div class="symbol-block bottom-right" aria-hidden="true"></div>
@@ -107,6 +119,64 @@
         <span>STATUS: ONLINE</span>
         <span>BUILD: v2.6.0</span>
       </div>
+
+      <!-- NODE ACQUIRE — hidden aim trainer minigame trigger -->
+      <button id="node-acq-trigger" aria-label="Launch NODE ACQUIRE minigame">
+        <span class="trigger-icon">⌖</span>
+        <span class="trigger-label">NODE&nbsp;ACQ</span>
+      </button>
+
+      <!-- NODE ACQUIRE overlay (hidden until triggered) -->
+      <div id="node-acq-overlay" aria-hidden="true">
+        <!-- Scanline texture -->
+        <div class="naq-scanlines"></div>
+
+        <!-- Top HUD bar -->
+        <div id="naq-hud-top">
+          <div class="naq-stat"><span class="naq-stat-label">SCORE</span><span id="naq-score">00000</span></div>
+          <div class="naq-stat"><span class="naq-stat-label">COMBO</span><span id="naq-combo">×1</span></div>
+          <div class="naq-stat"><span class="naq-stat-label">TIME</span><span id="naq-timer">30</span></div>
+        </div>
+
+        <!-- Start screen -->
+        <div id="naq-start-screen" class="naq-screen">
+          <div class="naq-screen-inner">
+            <div class="naq-screen-title">NODE ACQUIRE</div>
+            <p class="naq-screen-sub">Orbital nodes are decaying. Lock on and eliminate them<br>before they collapse. Speed bonuses. Combo chains. 30 seconds.</p>
+            <button id="naq-start-btn" class="naq-action-btn">[ INITIATE SEQUENCE ]</button>
+            <button id="naq-close-start" class="naq-close-btn">✕ ABORT MISSION</button>
+          </div>
+        </div>
+
+        <!-- End screen -->
+        <div id="naq-end-screen" class="naq-screen">
+          <div class="naq-screen-inner">
+            <div class="naq-screen-label">MISSION COMPLETE</div>
+            <div id="naq-final-grade" class="naq-grade"></div>
+            <div id="naq-final-score" class="naq-big-score">00000</div>
+            <div id="naq-final-stats" class="naq-end-stats"></div>
+            <button id="naq-retry-btn" class="naq-action-btn">[ RE-ENGAGE ]</button>
+            <button id="naq-close-end" class="naq-close-btn">✕ EXIT</button>
+          </div>
+        </div>
+
+        <!-- Target field -->
+        <div id="naq-field"></div>
+
+        <!-- Combo / hit feedback -->
+        <div id="naq-hit-feed"></div>
+
+        <!-- Reticle crosshair (follows mouse, replaces cursor during play) -->
+        <div id="naq-reticle" aria-hidden="true">
+          <div class="rct-h rct-h-l"></div>
+          <div class="rct-h rct-h-r"></div>
+          <div class="rct-v rct-v-t"></div>
+          <div class="rct-v rct-v-b"></div>
+          <div class="rct-ring"></div>
+          <div class="rct-dot"></div>
+        </div>
+      </div>
+
     </section>
 
     <!-- ── SKILLS ── -->

@@ -168,6 +168,9 @@ const loader = {
 
     this.initThree();
     this.spawnNumbers();
+    this.spawnHexPanels();
+    this.spawnErrorFeed();
+    this.spawnGlitchBlocks();
     this.animateProgress();
   },
 
@@ -335,6 +338,139 @@ const loader = {
     }, 100);
   },
 
+  /* ── Rapidly updating hex address panels in screen corners ── */
+  spawnHexPanels() {
+    const container = document.getElementById('hex-panels');
+    if (!container) return;
+    this._hexIntervals = [];
+
+    const positions = [
+      { top: '12%',    right: '3%',  textAlign: 'right' },
+      { top: '18%',    left:  '3%',  textAlign: 'left'  },
+      { bottom: '16%', right: '3%',  textAlign: 'right' },
+      { bottom: '20%', left:  '3%',  textAlign: 'left'  },
+    ];
+
+    positions.forEach((pos, idx) => {
+      const panel = document.createElement('div');
+      panel.className = 'hex-panel';
+      Object.assign(panel.style, pos);
+
+      const hex = () => Math.floor(Math.random() * 0xFFFF)
+        .toString(16).toUpperCase().padStart(4, '0');
+      const byte = () => Math.floor(Math.random() * 0xFF)
+        .toString(16).toUpperCase().padStart(2, '0');
+
+      const generate = () => {
+        const lines = randInt(5, 10);
+        return Array.from({ length: lines }, () =>
+          `0x${hex()}  ` + Array.from({ length: randInt(4, 8) }, byte).join(' ')
+        ).join('\n');
+      };
+
+      panel.textContent = generate();
+      container.appendChild(panel);
+
+      const iv = setInterval(() => {
+        if (!panel.isConnected) { clearInterval(iv); return; }
+        // Stagger updates — not all panels refresh at the same time
+        if (Math.random() < 0.7 || idx % 2 === 0) panel.textContent = generate();
+      }, randInt(60, 210));
+      this._hexIntervals.push(iv);
+    });
+  },
+
+  /* ── Scrolling error / system message feed at the bottom ── */
+  spawnErrorFeed() {
+    const container = document.getElementById('error-feed');
+    if (!container || typeof gsap === 'undefined') return;
+
+    const messages = [
+      { text: 'ERR  PACKET LOSS 47% — RETRYING . . .', cls: 'crit' },
+      { text: 'WARN  BUFFER OVERFLOW AT 0xDEADBEEF',   cls: 'warn' },
+      { text: 'INFO  HANDSHAKE ATTEMPT 3 / 5',          cls: 'info' },
+      { text: 'CRIT  SEGMENT FAULT 0x00000003',         cls: 'crit' },
+      { text: 'SYS   REROUTING VIA NODE 94.17.203.41',  cls: 'info' },
+      { text: 'WARN  ENCRYPTION KEY MISMATCH — FORCING',cls: 'warn' },
+      { text: 'ERR   TIMEOUT EXCEEDED  8192 ms',        cls: 'crit' },
+      { text: 'INFO  TUNNEL OK — LATENCY 1204 ms',      cls: 'info' },
+      { text: 'WARN  FIREWALL SCAN DETECTED SPOOFING',  cls: 'warn' },
+      { text: 'ERR   AUTH REJECTED — BRUTEFORCE ON',    cls: 'crit' },
+      { text: '>>>   INJECTING PAYLOAD ██████░░ 78%',   cls: 'info' },
+      { text: 'WARN  STACK TRACE CORRUPTED 0xC000003A', cls: 'warn' },
+      { text: 'CRIT  KERNEL PANIC — RECOVERY ACTIVE',   cls: 'crit' },
+      { text: '>>>   ACCESS LEVEL : ESCALATING . . .',  cls: 'info' },
+      { text: 'INFO  NODE HASH 3F:2A:9B:41 ACCEPTED',   cls: 'info' },
+      { text: 'ERR   FRAGMENTED PACKET DROP × 23',      cls: 'warn' },
+      { text: 'SYS   MEMORY INTEGRITY CHECK FAILED',    cls: 'crit' },
+      { text: '>>>   BYPASSING LAYER 3 FIREWALL . . .',  cls: 'info' },
+    ];
+
+    let lines = [];
+    let idx   = randInt(0, messages.length - 1);
+
+    const push = () => {
+      if (!container.isConnected) return;
+
+      // Shift existing lines up by one slot (20 px each)
+      lines.forEach((l, i) => { l.style.bottom = `${(i + 1) * 22}px`; });
+
+      const msg  = messages[idx % messages.length];
+      idx++;
+      const ts   = `[${Date.now().toString().slice(-6)}]  `;
+      const line = document.createElement('div');
+      line.className     = `error-line ${msg.cls}`;
+      line.textContent   = ts + msg.text;
+      line.style.bottom  = '0px';
+      container.appendChild(line);
+      lines.push(line);
+
+      if (lines.length > 4) {
+        const old = lines.shift();
+        gsap.to(old, { opacity: 0, duration: 0.28, onComplete: () => old.remove() });
+      }
+    };
+
+    // Initial burst so feed looks populated immediately
+    push(); push(); push();
+    this._errorInterval = setInterval(push, randInt(380, 820));
+  },
+
+  /* ── Random white corruption-block flashes across the loader ── */
+  spawnGlitchBlocks() {
+    const container = document.getElementById('glitch-overlay');
+    if (!container) return;
+
+    const flash = () => {
+      if (!container.isConnected) return;
+
+      const count = randInt(1, 4);
+      for (let i = 0; i < count; i++) {
+        const block = document.createElement('div');
+        block.className = 'glitch-block';
+        // Occasionally a wide thin scan-line, occasionally a squat rectangle
+        const wide = Math.random() < 0.6;
+        block.style.cssText = [
+          `left:${randFloat(0, 88)}%`,
+          `top:${randFloat(2, 97)}%`,
+          `width:${wide ? randFloat(60, 320) : randFloat(8, 60)}px`,
+          `height:${wide ? randFloat(1, 4)   : randFloat(4, 20)}px`,
+          `background:rgba(255,255,255,${randFloat(0.04, 0.22)})`,
+        ].join(';');
+        container.appendChild(block);
+        setTimeout(() => block.remove(), randInt(30, 160));
+      }
+
+      // Cluster rapid bursts with occasional quiet gaps
+      const delay = Math.random() < 0.25
+        ? randInt(20, 80)     // tight burst
+        : randInt(150, 700);  // breathing room
+      this._glitchBlockTimer = setTimeout(flash, delay);
+    };
+
+    flash();
+  },
+
   /* -- Progressively corrupt a symbol-block's characters before it fades -- */
   _erodeBlock(el) {
     const chars = el.textContent.split('');
@@ -364,6 +500,9 @@ const loader = {
   /* -- Creative exit: shape shatters + zoom-through tunnel into hero -- */
   exit() {
     clearInterval(this._glitchInterval);
+    clearInterval(this._errorInterval);
+    (this._hexIntervals || []).forEach(iv => clearInterval(iv));
+    clearTimeout(this._glitchBlockTimer);
 
     if (typeof gsap === 'undefined') {
       document.getElementById('loader').style.display = 'none';
@@ -500,6 +639,9 @@ const loader = {
 
   /* -- Remove loader DOM and dispose Three.js resources -- */
   cleanup() {
+    clearInterval(this._errorInterval);
+    clearTimeout(this._glitchBlockTimer);
+    (this._hexIntervals || []).forEach(iv => clearInterval(iv));
     // Remove loader DOM to free memory
     if (this.threeScene) {
       cancelAnimationFrame(this.animFrame);
@@ -564,8 +706,8 @@ const heroScene = {
       { r: 1.55, tx:  Math.PI * 0.12, tz:  Math.PI * 0.03, a0: 0,              spd: 0.0088 },
       { r: 2.20, tx:  Math.PI * 0.24, tz:  Math.PI * 0.07, a0: Math.PI * 0.7,  spd: 0.0052 },
       { r: 4, tx:  Math.PI * 0.04, tz:  Math.PI * 0.9, a0: Math.PI * -0.35,    spd: 0.0008 },
-      { r: 3.40, tx:  Math.PI * 0.08, tz:  Math.PI * 0.16, a0: Math.PI * 1.35, spd: 0.0028 },
-      { r: 2, tx:  Math.PI * 0.04, tz:  Math.PI * 0.7, a0: Math.PI * 0.67, spd: 0.0028 },
+      { r: 3.40, tx:  Math.PI * 0.08, tz:  Math.PI * 0.16, a0: Math.PI * 1.65, spd: 0.0028 },
+      { r: 2.5, tx:  Math.PI * 0.04, tz:  Math.PI * 0.7, a0: Math.PI * 3.67, spd: 0.00067 },
     ];
 
     this._planets = orbitDefs.map(def => {
@@ -2061,6 +2203,533 @@ function waitForLibraries(callback, maxWait = 5000) {
   check();
 }
 
+/* ============================================================
+   NODE ACQUIRE — Aim trainer easter egg
+   Hidden in hero; activated via subtle HUD button.
+   Tap / click decaying orbital nodes before they collapse.
+   Scoring: base 100 pts + speed bonus, chain combo multiplier.
+   30-second mission with grade S/A/B/C/D reveal at end.
+============================================================ */
+const nodeAcquire = {
+  score:    0,
+  combo:    0,
+  maxCombo: 0,
+  hits:     0,
+  misses:   0,
+  timeLeft: 30,
+  running:  false,
+
+  _timer:       null,
+  _targets:     [],      // array of { el, timer, spawnTime, lifespan, x, y, type }
+  _lastX:       null,   // centre of last hit — used for proximity spawn
+  _lastY:       null,
+  _overlay:     null,
+  _field:       null,
+  _scoreEl:     null,
+  _comboEl:     null,
+  _timerEl:     null,
+
+  init() {
+    const hero = document.getElementById('hero');
+    if (!hero) return;
+
+    // Trigger button
+    const btn = document.getElementById('node-acq-trigger');
+    if (btn) btn.addEventListener('click', () => this.open());
+
+    this._overlay  = document.getElementById('node-acq-overlay');
+    this._field    = document.getElementById('naq-field');
+    this._scoreEl  = document.getElementById('naq-score');
+    this._comboEl  = document.getElementById('naq-combo');
+    this._timerEl  = document.getElementById('naq-timer');
+    this._reticle  = document.getElementById('naq-reticle');
+    if (!this._overlay) return;
+
+    // Reticle tracking
+    this._onMouseMove = (e) => {
+      if (!this._reticle) return;
+      const rect = this._overlay.getBoundingClientRect();
+      this._reticle.style.left = (e.clientX - rect.left) + 'px';
+      this._reticle.style.top  = (e.clientY - rect.top)  + 'px';
+    };
+    this._onReticleClick = () => {
+      if (!this._reticle) return;
+      this._reticle.classList.remove('rct-fire');
+      void this._reticle.offsetWidth; // reflow to restart animation
+      this._reticle.classList.add('rct-fire');
+    };
+
+    document.getElementById('naq-start-btn').addEventListener('click',  () => this.start());
+    document.getElementById('naq-close-start').addEventListener('click', () => this.close());
+    document.getElementById('naq-retry-btn').addEventListener('click',  () => this.start());
+    document.getElementById('naq-close-end').addEventListener('click',  () => this.close());
+  },
+
+  open() {
+    if (!this._overlay) return;
+    this._overlay.style.display = 'block';
+    this._overlay.classList.add('naq-active');
+    // Kill both JS cursor elements via CSS class (works even across z-index layers)
+    document.body.classList.add('naq-playing');
+    // Show reticle
+    if (this._reticle) {
+      this._reticle.style.display = 'block';
+      this._overlay.addEventListener('mousemove', this._onMouseMove);
+      this._overlay.addEventListener('click',     this._onReticleClick);
+    }
+    document.getElementById('naq-start-screen').classList.add('naq-visible');
+    document.getElementById('naq-end-screen').classList.remove('naq-visible');
+    const hc = document.querySelector('.hero-content');
+    if (hc) hc.style.visibility = 'hidden';
+    if (typeof gsap !== 'undefined') {
+      gsap.fromTo(this._overlay, { opacity: 0 }, { opacity: 1, duration: 0.38, ease: 'power2.out' });
+    }
+  },
+
+  start() {
+    this.score = 0; this.combo = 0; this.maxCombo = 0;
+    this.hits  = 0; this.misses = 0; this.timeLeft = 30;
+    this.running = true;
+
+    document.getElementById('naq-start-screen').classList.remove('naq-visible');
+    document.getElementById('naq-end-screen').classList.remove('naq-visible');
+    this._updateHUD();
+    if (this._timerEl) this._timerEl.classList.remove('naq-urgency');
+
+    clearInterval(this._timer);
+    this._timer = setInterval(() => {
+      this.timeLeft--;
+      if (this._timerEl) {
+        this._timerEl.textContent = String(this.timeLeft).padStart(2, '0');
+        if (this.timeLeft <= 7) this._timerEl.classList.add('naq-urgency');
+      }
+      if (this.timeLeft <= 0) {
+        clearInterval(this._timer);
+        this._killAllTargets();
+        this.running = false;
+        setTimeout(() => this.end(), 320);
+      }
+    }, 1000);
+
+    // Spawn 8 initial targets (staggered circles + sliders)
+    for (let i = 0; i < 8; i++) {
+      setTimeout(() => {
+        if (!this.running) return;
+        (i === 2 || i === 5) ? this._spawnSlider() : this._spawnOne();
+      }, i * 110);
+    }
+  },
+
+  _multi() {
+    if (this.combo >= 10) return 5;
+    if (this.combo >= 6)  return 3;
+    if (this.combo >= 3)  return 2;
+    return 1;
+  },
+
+  _updateHUD() {
+    if (this._scoreEl) this._scoreEl.textContent = String(this.score).padStart(5, '0');
+    if (this._comboEl) {
+      const m = this._multi();
+      this._comboEl.textContent = '×' + m;
+      this._comboEl.style.color = m >= 5 ? 'rgba(255,200,80,1)'
+        : m >= 3 ? 'rgba(160,255,160,1)' : '#fff';
+    }
+  },
+
+  _spawnOne() {
+    if (!this.running || !this._field) return;
+
+    const isMobile = window.innerWidth < 768;
+    const size     = isMobile ? randInt(90, 118) : randInt(98, 130);
+    const lifespan = this.timeLeft > 18 ? 2300
+      : this.timeLeft > 10 ? 1800
+      : this.timeLeft > 5  ? 1400 : 1100;
+
+    const fw  = this._field.offsetWidth  || window.innerWidth;
+    const fh  = this._field.offsetHeight || window.innerHeight;
+    const pad = size * 0.8;
+    const cxMin = fw * 0.29, cxMax = fw * 0.71;
+    const cyMin = fh * 0.30, cyMax = fh * 0.70;
+
+    // Avoid overlaps; bias toward last hit position for flow
+    let x, y, tries = 0;
+    do {
+      if (this._lastX != null && tries < 18) {
+        const sp = 230;
+        x = Math.max(pad, Math.min(fw - pad, this._lastX + randFloat(-sp, sp)));
+        y = Math.max(pad + 66, Math.min(fh - pad - 34, this._lastY + randFloat(-sp, sp)));
+      } else {
+        x = randFloat(pad, fw - pad);
+        y = randFloat(pad + 66, fh - pad - 34);
+      }
+      tries++;
+      const inCenter = x > cxMin && x < cxMax && y > cyMin && y < cyMax;
+      const tooClose = this._targets.some(t => {
+        const cx = (t.x != null ? t.x : t.sx) || 0;
+        const cy = (t.y != null ? t.y : t.sy) || 0;
+        const dx = cx - x, dy = cy - y;
+        return Math.sqrt(dx*dx + dy*dy) < size * 1.5;
+      });
+      if (!inCenter && !tooClose) break;
+    } while (tries < 50);
+
+    const el = document.createElement('div');
+    el.className = 'naq-target';
+    el.style.width  = size + 'px';
+    el.style.height = size + 'px';
+    el.style.left   = x + 'px';
+    el.style.top    = y + 'px';
+    el.innerHTML = [
+      `<div class="naq-target-ring" style="animation-duration:${lifespan}ms"></div>`,
+      `<div class="naq-target-pulse"></div>`,
+      `<div class="naq-target-cross"></div>`,
+      `<div class="naq-target-dot"></div>`,
+    ].join('');
+
+    const data = { el, timer: null, spawnTime: Date.now(), lifespan, x, y, type: 'circle' };
+    this._targets.push(data);
+
+    const onHit = (e) => { e.stopPropagation(); this._hit(data); };
+    el.addEventListener('click', onHit);
+    el.addEventListener('touchstart', (ev) => { ev.preventDefault(); onHit(ev); }, { passive: false });
+
+    this._field.appendChild(el);
+    data.timer = setTimeout(() => this._miss(data), lifespan);
+  },
+
+  _spawnSlider() {
+    if (!this.running || !this._field) return;
+
+    const fw  = this._field.offsetWidth  || window.innerWidth;
+    const fh  = this._field.offsetHeight || window.innerHeight;
+    const pad = 90;
+
+    // Bias start near last hit for flow continuity
+    const bx  = this._lastX != null ? this._lastX : fw / 2;
+    const by  = this._lastY != null ? this._lastY : fh / 2;
+    const sp  = 220;
+    const sx  = Math.max(pad, Math.min(fw - pad,        bx + randFloat(-sp, sp)));
+    const sy  = Math.max(pad + 66, Math.min(fh - pad - 34, by + randFloat(-sp, sp)));
+
+    // End point: random direction, 160–280 px away
+    const angle      = randFloat(0, Math.PI * 2);
+    const len        = randFloat(160, 280);
+    const ex         = Math.max(pad, Math.min(fw - pad,        sx + Math.cos(angle) * len));
+    const ey         = Math.max(pad + 66, Math.min(fh - pad - 34, sy + Math.sin(angle) * len));
+    const actualLen  = Math.hypot(ex - sx, ey - sy);
+    const actualAngle = Math.atan2(ey - sy, ex - sx) * 180 / Math.PI;
+    const lifespan   = this.timeLeft > 15 ? 3200 : this.timeLeft > 7 ? 2500 : 2000;
+    const headSize   = 100;
+
+    // Track line
+    const trackEl = document.createElement('div');
+    trackEl.className = 'naq-slider-track';
+    trackEl.style.cssText = `left:${sx}px; top:${sy - 3}px; width:${actualLen}px; transform:rotate(${actualAngle}deg);`;
+    const fillEl = document.createElement('div');
+    fillEl.className = 'naq-slider-fill';
+    trackEl.appendChild(fillEl);
+    this._field.appendChild(trackEl);
+
+    // Head circle (clickable)
+    const headEl = document.createElement('div');
+    headEl.className = 'naq-target naq-slider-head';
+    headEl.style.width  = headSize + 'px';
+    headEl.style.height = headSize + 'px';
+    headEl.style.left   = sx + 'px';
+    headEl.style.top    = sy + 'px';
+    headEl.innerHTML = [
+      `<div class="naq-target-ring" style="animation-duration:${lifespan}ms"></div>`,
+      `<div class="naq-target-cross"></div>`,
+      `<div class="naq-target-dot"></div>`,
+    ].join('');
+    this._field.appendChild(headEl);
+
+    // Tail circle (destination)
+    const tailEl = document.createElement('div');
+    tailEl.className = 'naq-slider-tail';
+    tailEl.style.left = ex + 'px';
+    tailEl.style.top  = ey + 'px';
+    this._field.appendChild(tailEl);
+
+    const data = {
+      el: headEl, trackEl, fillEl, endEl: tailEl,
+      type: 'slider',
+      sx, sy, ex, ey, actualLen,
+      lifespan, spawnTime: Date.now(), timer: null,
+      active: false, _onMove: null, _onUp: null,
+      x: sx, y: sy,  // for overlap detection in _spawnOne
+    };
+    this._targets.push(data);
+
+    const cleanListeners = () => {
+      if (data._onMove) { this._overlay.removeEventListener('mousemove', data._onMove); data._onMove = null; }
+      if (data._onUp)   { this._overlay.removeEventListener('mouseup',   data._onUp);   data._onUp   = null; }
+    };
+
+    const onMove = (e) => {
+      if (!data.active || !this._targets.includes(data)) return;
+      const rect = this._overlay.getBoundingClientRect();
+      const mx = e.clientX - rect.left;
+      const my = e.clientY - rect.top;
+      const dx = ex - sx, dy = ey - sy;
+      const t  = Math.max(0, Math.min(1,
+        ((mx - sx) * dx + (my - sy) * dy) / (actualLen * actualLen)
+      ));
+      fillEl.style.width = (t * 100) + '%';
+      if (t >= 0.88) { cleanListeners(); this._hitSlider(data); }
+    };
+
+    const onUp = () => {
+      if (!this._targets.includes(data)) return;
+      cleanListeners();
+      data.active = false;
+      this._miss(data);
+    };
+
+    data._onMove = onMove;
+    data._onUp   = onUp;
+
+    headEl.addEventListener('mousedown', (e) => {
+      e.stopPropagation();
+      if (!this.running) return;
+      data.active = true;
+      headEl.classList.add('naq-slider-active');
+      this._overlay.addEventListener('mousemove', onMove);
+      this._overlay.addEventListener('mouseup',   onUp);
+    });
+
+    data.timer = setTimeout(() => {
+      if (!this._targets.includes(data)) return;
+      cleanListeners();
+      this._miss(data);
+    }, lifespan);
+  },
+
+  _hitSlider(data) {
+    if (!this._targets.includes(data)) return;
+    clearTimeout(data.timer);
+    this._targets = this._targets.filter(t => t !== data);
+
+    this._lastX = data.ex;
+    this._lastY = data.ey;
+    this.combo++;
+    this.hits++;
+    if (this.combo > this.maxCombo) this.maxCombo = this.combo;
+    const m      = this._multi();
+    const points = 160 * m;
+    this.score  += points;
+    this._updateHUD();
+
+    this._burst(data.ex, data.ey, m > 3 ? 5 : m > 1 ? 3 : 2);
+    this._scorePop(data.ex, data.ey, '+' + points);
+
+    if (this.combo === 3)  this._comboFlash('CHAIN ×2');
+    if (this.combo === 6)  this._comboFlash('CHAIN ×3 — HOT');
+    if (this.combo === 10) this._comboFlash('MAX CHAIN ×5 !!!');
+
+    const elems = [data.el, data.trackEl, data.endEl].filter(Boolean);
+    const spawnNext = () => Math.random() < 0.3 ? this._spawnSlider() : this._spawnOne();
+    if (typeof gsap !== 'undefined') {
+      gsap.to(elems, {
+        scale: 0, opacity: 0, duration: 0.18, ease: 'power2.in',
+        onComplete: () => { elems.forEach(e => e.remove()); if (this.running) spawnNext(); },
+      });
+    } else {
+      elems.forEach(e => e.remove());
+      if (this.running) spawnNext();
+    }
+  },
+
+  _hit(data) {
+    if (!this._targets.includes(data)) return;
+    clearTimeout(data.timer);
+    this._targets = this._targets.filter(t => t !== data);
+
+    const elapsed = (Date.now() - data.spawnTime) / 1000;
+    const ratio   = elapsed / (data.lifespan / 1000);
+    const bonus   = ratio < 0.20 ? 100 : ratio < 0.45 ? 55 : ratio < 0.70 ? 20 : 0;
+
+    this.combo++;
+    this.hits++;
+    if (this.combo > this.maxCombo) this.maxCombo = this.combo;
+    this._lastX = data.x;
+    this._lastY = data.y;
+    const m      = this._multi();
+    const points = (100 + bonus) * m;
+    this.score  += points;
+    this._updateHUD();
+
+    this._burst(data.x, data.y, m > 3 ? 4 : m > 1 ? 3 : 2);
+    this._scorePop(data.x, data.y, '+' + points);
+
+    if (this.combo === 3)  this._comboFlash('CHAIN ×2');
+    if (this.combo === 6)  this._comboFlash('CHAIN ×3 — HOT');
+    if (this.combo === 10) this._comboFlash('MAX CHAIN ×5 !!!');
+
+    const spawnNext = () => Math.random() < 0.28 ? this._spawnSlider() : this._spawnOne();
+    if (typeof gsap !== 'undefined') {
+      gsap.to(data.el, {
+        scale: 0, opacity: 0, duration: 0.16, ease: 'power2.in',
+        onComplete: () => { data.el.remove(); spawnNext(); },
+      });
+    } else {
+      data.el.remove();
+      spawnNext();
+    }
+  },
+
+  _miss(data) {
+    if (!this._targets.includes(data)) return;
+    this._targets = this._targets.filter(t => t !== data);
+    this.misses++;
+    const prevCombo = this.combo;
+    this.combo = 0;
+    this._updateHUD();
+    if (prevCombo >= 3) this._comboFlash('CHAIN BROKEN');
+
+    // Clean up slider listeners if this was a slider
+    if (data._onMove) this._overlay.removeEventListener('mousemove', data._onMove);
+    if (data._onUp)   this._overlay.removeEventListener('mouseup',   data._onUp);
+    const extraEls = [data.trackEl, data.endEl].filter(Boolean);
+    if (typeof gsap !== 'undefined') {
+      const ring = data.el.querySelector('.naq-target-ring');
+      if (ring) gsap.to(ring, { borderColor: 'rgba(255,70,70,0.9)', duration: 0.12 });
+      gsap.to([data.el, ...extraEls], {
+        scale: 1.4, opacity: 0, duration: 0.32, ease: 'power1.out',
+        onComplete: () => {
+          data.el.remove(); extraEls.forEach(e => e.remove());
+          if (this.running) this._spawnOne();
+        },
+      });
+    } else {
+      data.el.remove(); extraEls.forEach(e => e.remove());
+      if (this.running) this._spawnOne();
+    }
+  },
+
+  _killAllTargets() {
+    this._targets.forEach(t => {
+      clearTimeout(t.timer);
+      if (t._onMove) this._overlay.removeEventListener('mousemove', t._onMove);
+      if (t._onUp)   this._overlay.removeEventListener('mouseup',   t._onUp);
+      t.el.remove();
+      if (t.trackEl) t.trackEl.remove();
+      if (t.endEl)   t.endEl.remove();
+    });
+    this._targets = [];
+  },
+
+  _burst(x, y, count) {
+    for (let i = 0; i < count; i++) {
+      const b = document.createElement('div');
+      b.className = 'naq-burst';
+      b.style.left            = x + 'px';
+      b.style.top             = y + 'px';
+      b.style.animationDelay  = (i * 0.07) + 's';
+      this._field.appendChild(b);
+      setTimeout(() => b.remove(), 520 + i * 80);
+    }
+  },
+
+  _scorePop(x, y, text) {
+    const el = document.createElement('div');
+    el.className   = 'naq-score-pop';
+    el.textContent = text;
+    el.style.left  = x + 'px';
+    el.style.top   = y + 'px';
+    this._field.appendChild(el);
+    setTimeout(() => el.remove(), 760);
+  },
+
+  _comboFlash(text) {
+    const feed = document.getElementById('naq-hit-feed');
+    if (!feed) return;
+    feed.innerHTML = '';
+    const el = document.createElement('div');
+    el.className   = 'naq-combo-flash';
+    el.textContent = text;
+    feed.appendChild(el);
+    setTimeout(() => { if (feed.contains(el)) el.remove(); }, 680);
+  },
+
+  end() {
+    this._killAllTargets();
+    clearInterval(this._timer);
+    this.running = false;
+
+    const acc   = (this.hits + this.misses) > 0
+      ? Math.round(this.hits / (this.hits + this.misses) * 100) : 0;
+    const grade = this.score >= 15000 ? 'S'
+      : this.score >= 9000  ? 'A'
+      : this.score >= 5000  ? 'B'
+      : this.score >= 2000  ? 'C' : 'D';
+    const maxM  = this.maxCombo >= 10 ? 5
+      : this.maxCombo >= 6 ? 3
+      : this.maxCombo >= 3 ? 2 : 1;
+
+    const gradeEl = document.getElementById('naq-final-grade');
+    if (gradeEl) { gradeEl.textContent = grade; gradeEl.className = 'naq-grade ' + grade; }
+
+    const statEl = document.getElementById('naq-final-stats');
+    if (statEl) {
+      statEl.innerHTML =
+        `HITS &nbsp;&nbsp;&nbsp; ${this.hits}   MISSES &nbsp; ${this.misses}<br>` +
+        `ACC &nbsp;&nbsp;&nbsp;&nbsp; ${acc}%<br>` +
+        `MAX COMBO &nbsp; ×${maxM}`;
+    }
+
+    const scoreEl = document.getElementById('naq-final-score');
+    if (scoreEl) {
+      const target = { v: 0 };
+      const final  = this.score;
+      if (typeof gsap !== 'undefined') {
+        gsap.to(target, {
+          v: final, duration: 1.3, ease: 'power2.out',
+          onUpdate() { scoreEl.textContent = String(Math.round(target.v)).padStart(5, '0'); },
+        });
+      } else {
+        scoreEl.textContent = String(final).padStart(5, '0');
+      }
+    }
+
+    document.getElementById('naq-end-screen').classList.add('naq-visible');
+  },
+
+  close() {
+    this._killAllTargets();
+    clearInterval(this._timer);
+    this.running = false;
+    // Hide reticle and remove listeners
+    if (this._reticle) {
+      this._reticle.style.display = 'none';
+      this._overlay.removeEventListener('mousemove', this._onMouseMove);
+      this._overlay.removeEventListener('click',     this._onReticleClick);
+    }
+    // Restore JS cursor
+    document.body.classList.remove('naq-playing');
+    document.getElementById('naq-start-screen').classList.remove('naq-visible');
+    document.getElementById('naq-end-screen').classList.remove('naq-visible');
+
+    const hc = document.querySelector('.hero-content');
+    if (!this._overlay) return;
+    if (typeof gsap !== 'undefined') {
+      gsap.to(this._overlay, {
+        opacity: 0, duration: 0.3, ease: 'power2.in',
+        onComplete: () => {
+          this._overlay.style.display = 'none';
+          this._overlay.classList.remove('naq-active');
+          if (hc) hc.style.visibility = '';
+        },
+      });
+    } else {
+      this._overlay.style.display = 'none';
+      this._overlay.classList.remove('naq-active');
+      if (hc) hc.style.visibility = '';
+    }
+  },
+};
+
 function boot() {
   // Register GSAP plugin if available
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
@@ -2108,6 +2777,9 @@ function boot() {
 
   // Easter egg — Konami code and rapid logo-click hidden interactions
   easterEgg.init();
+
+  // NODE ACQUIRE — hidden aim trainer minigame in hero
+  nodeAcquire.init();
 
   // Fire the loader last — its exit callback triggers hero animations
   loader.init();
