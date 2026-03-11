@@ -1,51 +1,58 @@
 # brucelsprouts.github.io
 
-Personal portfolio site — live at **[brucelsprouts.github.io](https://brucelsprouts.github.io)**
+Personal portfolio site — live at **[brucelsprouts.com](https://brucelsprouts.com)**
 
 ---
 
 ## About
 
-Hey, I'm **Bruce L.** — a Full-Stack Developer & Creative Technologist based in [City, Country].
-
-I build [brief description of what you make — e.g. "fast, accessible web apps and creative tools that live at the intersection of design and engineering"].
+Hey, I'm **Bruce Lin** — a B.Sc. Computer Science student at Western University, Ontario. I build things at the intersection of code and creativity: web tools, Blender renders, desktop apps, and the occasional video edit.
 
 ---
 
 ## Stack
 
-- **Frontend:** HTML · CSS · JavaScript · [React / Vue / etc.]
-- **Backend:** [Node.js / Python / etc.]
-- **3D / Creative:** Three.js · GSAP
-- **Tools:** [VS Code · Git · Figma · etc.]
+- **Frontend:** HTML · CSS · JavaScript
+- **Site libraries:** Three.js · GSAP
+- **Creative:** Blender · After Effects · Photoshop
+- **Languages:** Java · Python
+- **Tools:** Git · Unix/Linux
 
 ---
 
 ## Site Features
 
-- Custom WebGL solar-system hero built with Three.js
-- GSAP-driven loader with shatter/warp transition
-- Scroll-triggered animations and section reveals
-- Fully responsive with no external UI frameworks
+- Three.js solar system hero with orbiting planets
+- GSAP-powered loader, scroll animations, and section reveals
+- Project modal with inline YouTube embeds and image gallery
+- Skills grid with hover tooltips
+- Filterable + searchable project cards
+- Working contact form via Formspree
+- Low performance mode (disables all decorative effects)
+- Hidden NODE ACQUIRE aim-trainer easter egg
+- Fully responsive — no UI frameworks
 
 ---
 
 ## Projects
 
-| Project | Description | Link |
-|---------|-------------|------|
-| [Project Name] | [Short description] | [GitHub / Live] |
-| [Project Name] | [Short description] | [GitHub / Live] |
-| [Project Name] | [Short description] | [GitHub / Live] |
+| Project | Description | Links |
+|---------|-------------|-------|
+| **Get Jinxed — 4K Arcane Edit** | Personal AMV edit of Jinx from Arcane S2, magazine cut-out collage style | [YouTube](https://youtu.be/l32I3pNtN_c) |
+| **Coffee & Donut** | Classic Blender learning project — modelling, lighting, shading fundamentals | — |
+| **XPWaste** | Pomodoro focus timer for OSRS players, ships as a standalone Windows exe | [GitHub](https://github.com/brucelsprouts/xpwaste) |
+| **Nixie Counter** | Retro Nixie-tube visitor counter served as a dynamic PNG from Oracle Cloud | [GitHub](https://github.com/brucelsprouts/nixiecounter) |
+| **Portfolio v2** | This site | [GitHub](https://github.com/brucelsprouts/brucelsprouts.github.io) · [Live](https://brucelsprouts.com) |
+| **Portfolio v1** | First attempt — left unfinished, scrapped to start fresh | [GitHub](https://github.com/brucelsprouts/brucelsprouts.github.io-1.0) · [Live](https://brucelsprouts.github.io/brucelsprouts.github.io-1.0/) |
 
 ---
 
 ## Contact
 
-- **Email:** [your@email.com]
-- **LinkedIn:** [linkedin.com/in/yourhandle]
-- **GitHub:** [github.com/brucelsprouts]
+- **Email:** email@brucelsprouts.com
+- **LinkedIn:** [linkedin.com/in/bruce-lin-6284b323b](https://www.linkedin.com/in/bruce-lin-6284b323b/)
+- **GitHub:** [github.com/brucelsprouts](https://github.com/brucelsprouts)
 
 ---
 
-*Built from scratch — no templates.*
+*Direction, design, and coding by me — built with AI assistance.*

@@ -16,113 +16,115 @@
 ============================================================ */
 const DATA = {
   skills: [
-    { name: 'JavaScript',  icon: '⬡', level: 'Advanced'      },
-    { name: 'TypeScript',  icon: '⬡', level: 'Advanced'      },
-    { name: 'React',       icon: '⬡', level: 'Advanced'      },
-    { name: 'Node.js',     icon: '⬡', level: 'Advanced'      },
-    { name: 'Python',      icon: '⬡', level: 'Intermediate'  },
-    { name: 'Three.js',    icon: '⬡', level: 'Intermediate'  },
-    { name: 'CSS / SASS',  icon: '⬡', level: 'Advanced'      },
-    { name: 'SQL',         icon: '⬡', level: 'Intermediate'  },
-    { name: 'Git',         icon: '⬡', level: 'Advanced'      },
-    { name: 'Docker',      icon: '⬡', level: 'Intermediate'  },
-    { name: 'Blender',     icon: '⬡', level: 'Learning'      },
-    { name: 'Figma',       icon: '⬡', level: 'Intermediate'  },
+    // Web / Front-end
+    { name: 'HTML',          icon: '⬡', desc: 'Solid foundation in semantic markup. Built multiple personal projects and this portfolio from scratch.' },
+    { name: 'CSS',           icon: '⬡', desc: 'Comfortable with layouts, animations, custom properties, and responsive design — no frameworks needed.' },
+    { name: 'JavaScript',    icon: '⬡', desc: 'Front-end scripting: DOM manipulation, fetch/async, canvas, and Three.js for interactive experiences.' },
+    // Languages
+    { name: 'Java',          icon: '⬡', desc: 'Primary language for CS coursework at Western — OOP, data structures, algorithms, and system design.' },
+    { name: 'Python',        icon: '⬡', desc: 'Used in university projects and personal scripts; comfortable with core syntax and standard libraries.' },
+    // Systems
+    { name: 'Git',           icon: '⬡', desc: 'Daily driver for version control — branching, committing, and managing personal projects and repositories on GitHub.' },
+    { name: 'Unix / Linux',  icon: '⬡', desc: 'Comfortable in the terminal: shell scripting, file system navigation, and course lab environments.' },
+    // Creative
+    { name: 'Blender',       icon: '⬡', desc: 'Just getting started — learning 3D modelling, lighting, and rendering. Still early but enjoying the process.' },
+    { name: 'After Effects', icon: '⬡', desc: 'Used professionally during a video editing internship at AMG. Motion graphics, cuts, and transitions.' },
+    { name: 'Photoshop',     icon: '⬡', desc: 'Image editing, compositing, and asset creation for web and creative projects.' },
   ],
 
   timeline: [
     {
-      date: '2026 — Present',
-      title: 'Full-Stack Developer',
-      org: 'Freelance',
-      desc: 'Building web applications, developer tools, and interactive 3D experiences for clients across multiple industries.',
-    },
-    {
-      date: '2024 — 2026',
+      date: '2023 — Present',
       title: 'B.Sc. Computer Science',
-      org: 'University',
-      desc: 'Studied algorithms, data structures, software engineering, and computer graphics. Graduated with honors.',
+      org: 'Western University',
+      desc: 'CS student in London, Ontario. Coursework in algorithms, data structures, software engineering, and computer systems.',
     },
     {
-      date: '2023',
-      title: 'Frontend Developer Intern',
-      org: 'Tech Startup',
-      desc: 'Developed React components, optimised performance bottlenecks, and shipped features used by 50k+ users.',
+      date: 'Summer 2024',
+      title: 'Video Editing Intern',
+      org: 'AMG',
+      desc: 'Short-term summer internship producing video content — editing footage, motion graphics, and post-production in After Effects.',
     },
     {
-      date: '2022',
-      title: 'First Open-Source Contribution',
-      org: 'GitHub',
-      desc: 'Merged first PR into a popular open-source project. Became hooked on collaboration and building in public.',
-    },
-    {
-      date: '2020',
-      title: 'Started Coding',
-      org: 'Self-taught',
-      desc: 'Wrote first lines of HTML and CSS. Built a terrible website. Never looked back.',
+      date: 'May 2021 — Sep 2023',
+      title: 'Freelance English Tutor',
+      org: 'Ignite Youth Club',
+      desc: 'Remote tutoring over two years. Helped students strengthen reading, writing, and communication skills.',
     },
   ],
 
   projects: [
     {
       id: 1,
-      title: 'Cyber Dashboard UI',
-      category: 'coding',
-      desc: 'Dark-mode analytics dashboard with real-time charts, WebSocket data feeds, and a fully accessible component library.',
-      stack: ['React', 'TypeScript', 'D3.js', 'WebSockets'],
-      demo: '#',
-      github: '#',
-      thumb: null,   // set to image path when available e.g. 'assets/images/project1.jpg'
+      title: 'Get Jinxed — 4K Arcane Edit',
+      category: 'video',
+      desc: 'Personal YouTube edit of Jinx from Arcane Season 2, cut to "Get Jinxed". Styled after magazine cut-out collages — overlapping panels, clipped shapes, and photo layers composited over the footage for a uniquely styled visual.',
+      stack: ['After Effects', 'Photoshop', 'YouTube'],
+      youtube: 'https://www.youtube.com/embed/l32I3pNtN_c?rel=0',
+      github: null,
+      demo: 'https://youtu.be/l32I3pNtN_c',
+      thumb: 'assets/images/projects/jinx-edit-1.svg',
+      images: null,
     },
     {
       id: 2,
-      title: 'Low-Poly World Generator',
-      category: '3d',
-      desc: 'Procedural terrain and biome generator built entirely in Three.js. Export to GLB/OBJ.',
-      stack: ['Three.js', 'JavaScript', 'WebGL'],
-      demo: '#',
-      github: '#',
-      thumb: null,
+      title: 'Coffee & Donut',
+      category: 'blender',
+      desc: 'The classic Blender learning project — a coffee cup with liquid and an iced donut. Focused on modelling, lighting, shading, and render fundamentals.',
+      stack: ['Blender'],
+      youtube: null,
+      github: null,
+      demo: null,
+      thumb: 'assets/images/projects/donut-1.svg',
+      images: ['assets/images/projects/donut-1.svg', 'assets/images/projects/donut-2.svg'],
     },
     {
       id: 3,
-      title: 'Motion Reel Editor',
-      category: 'video',
-      desc: 'Browser-based video editor for assembling motion reels with transitions, text overlays, and audio sync.',
-      stack: ['FFmpeg WASM', 'React', 'Web Audio API'],
-      demo: '#',
-      github: '#',
-      thumb: null,
+      title: 'XPWaste',
+      category: 'coding',
+      desc: 'A desktop Pomodoro focus timer built for Old School RuneScape players. Tracks active study time, logs session history, supports custom notification sounds, and ships as a standalone Windows executable. OSRS and normal mode themes included.',
+      stack: ['Python', 'Tkinter', 'PyInstaller'],
+      youtube: null,
+      github: 'https://github.com/brucelsprouts/xpwaste',
+      demo: null,
+      thumb: 'assets/images/projects/xpwaste-1.svg',
+      images: ['assets/images/projects/xpwaste-1.svg', 'assets/images/projects/xpwaste-2.svg'],
     },
     {
       id: 4,
-      title: 'Dev CLI Toolkit',
-      category: 'tools',
-      desc: 'Collection of CLI utilities for scaffolding, migrations, environment management, and code quality checks.',
-      stack: ['Node.js', 'Commander.js', 'Bash'],
+      title: 'Nixie Counter',
+      category: 'coding',
+      desc: 'A retro Nixie-tube-style visitor counter served as a dynamically generated image from an Oracle cloud server. Embed it in any GitHub README or web page — it increments and renders in real time with configurable digit count and base value.',
+      stack: ['PHP', 'Oracle Cloud', 'GitHub Profile'],
+      youtube: null,
+      github: 'https://github.com/brucelsprouts/nixiecounter',
       demo: null,
-      github: '#',
-      thumb: null,
+      thumb: 'assets/images/projects/nixiecounter-1.svg',
+      images: ['assets/images/projects/nixiecounter-1.svg'],
     },
     {
       id: 5,
-      title: 'Portfolio OS Theme',
+      title: 'Portfolio v2',
       category: 'coding',
-      desc: 'OS-inspired portfolio concept with draggable windows, a fake terminal, and a functioning file system.',
-      stack: ['Vanilla JS', 'CSS Grid', 'IndexedDB'],
-      demo: '#',
-      github: '#',
-      thumb: null,
+      desc: 'Cyber-tech themed personal portfolio. Three.js solar system hero, GSAP scroll animations, a hidden aim-trainer minigame, and low-performance mode. Direction, design, and coding by me — built with AI assistance. If you\'re seeing this, you\'re already here.',
+      stack: ['HTML', 'CSS', 'JavaScript', 'Three.js', 'GSAP'],
+      youtube: null,
+      github: 'https://github.com/brucelsprouts/brucelsprouts.github.io',
+      demo: null,
+      thumb: 'assets/images/projects/portfolio-v2-1.svg',
+      images: ['assets/images/projects/portfolio-v2-1.svg', 'assets/images/projects/portfolio-v2-2.svg'],
     },
     {
       id: 6,
-      title: 'Shader Experiments',
-      category: '3d',
-      desc: 'Collection of GLSL fragment shaders: noise fields, raymarched geometry, and procedural textures.',
-      stack: ['GLSL', 'Three.js', 'WebGL'],
-      demo: '#',
-      github: '#',
-      thumb: null,
+      title: 'Portfolio v1',
+      category: 'coding',
+      desc: 'First attempt at a personal portfolio. Left unfinished — missing assets, inconsistent styling, and nothing really felt cohesive. Decided to scrap it and start fresh rather than patch something that wasn\'t working.',
+      stack: ['HTML', 'CSS', 'JavaScript'],
+      youtube: null,
+      github: 'https://github.com/brucelsprouts/brucelsprouts.github.io-1.0',
+      demo: 'https://brucelsprouts.github.io/brucelsprouts.github.io-1.0/',
+      thumb: 'assets/images/projects/portfolio-v1-1.svg',
+      images: ['assets/images/projects/portfolio-v1-1.svg'],
     },
   ],
 };
@@ -757,6 +759,7 @@ const heroScene = {
     if (!heroEl || typeof gsap === 'undefined') return;
 
     const container = document.createElement('div');
+    container.className = 'hero-fx-overlay';
     container.setAttribute('aria-hidden', 'true');
     container.style.cssText = 'position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden;';
     heroEl.appendChild(container);
@@ -814,6 +817,7 @@ const heroScene = {
     if (!heroEl || typeof gsap === 'undefined') return;
 
     const container = document.createElement('div');
+    container.className = 'hero-fx-overlay';
     container.setAttribute('aria-hidden', 'true');
     container.style.cssText = 'position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden;';
     heroEl.appendChild(container);
@@ -894,6 +898,7 @@ const heroScene = {
   },
 
   animate() {
+    if (this._paused) return;
     requestAnimationFrame(() => this.animate());
     const t = Date.now() * 0.001;
 
@@ -936,6 +941,9 @@ const heroScene = {
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(w, h);
   },
+
+  pause()  { this._paused = true; },
+  resume() { if (this._paused) { this._paused = false; this.animate(); } },
 };
 
 /* ============================================================
@@ -1003,15 +1011,33 @@ const nav = {
       document.body.style.overflow = isOpen ? 'hidden' : '';
     });
 
-    // Close drawer on link click
-    drawerLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        burger.classList.remove('open');
-        burger.setAttribute('aria-expanded', false);
-        drawer.classList.remove('open');
-        drawer.setAttribute('aria-hidden', true);
-        document.body.style.overflow = '';
-      });
+    // Close drawer helper
+    const closeDrawer = () => {
+      burger.classList.remove('open');
+      burger.setAttribute('aria-expanded', false);
+      drawer.classList.remove('open');
+      drawer.setAttribute('aria-hidden', true);
+      document.body.style.overflow = '';
+    };
+
+    // Close on link click
+    drawerLinks.forEach(link => link.addEventListener('click', closeDrawer));
+
+    // Close button
+    const closeBtn = document.getElementById('drawer-close');
+    if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+
+    // Close on backdrop click (tap outside the list area)
+    drawer.addEventListener('click', e => {
+      if (e.target === drawer) closeDrawer();
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && drawer.classList.contains('open')) {
+        closeDrawer();
+        burger.blur();
+      }
     });
 
     // Active nav link on scroll (IntersectionObserver)
@@ -1139,7 +1165,7 @@ const skills = {
       card.innerHTML = `
         <span class="skill-icon">${skill.icon}</span>
         <span class="skill-name">${skill.name}</span>
-        <span class="skill-level">${skill.level}</span>
+        ${skill.desc ? `<div class="skill-tooltip">${skill.desc}</div>` : ''}
       `;
       grid.appendChild(card);
     });
@@ -1324,13 +1350,17 @@ const projects = {
       .join('');
 
     // Action buttons
+    const demoLabel = project.category === 'video' ? 'Watch on YouTube' : 'View Live';
     const linksHtml = [
-      project.demo   ? `<a href="${project.demo}"   class="project-link primary"    target="_blank" rel="noopener noreferrer">Live Demo</a>`   : '',
+      project.demo   ? `<a href="${project.demo}"   class="project-link primary"    target="_blank" rel="noopener noreferrer">${demoLabel}</a>`   : '',
       project.github ? `<a href="${project.github}" class="project-link secondary"  target="_blank" rel="noopener noreferrer">GitHub</a>` : '',
     ].filter(Boolean).join('');
 
     card.innerHTML = `
-      <div class="project-thumb">${thumbHtml}</div>
+      <div class="project-thumb">
+        ${thumbHtml}
+        <span class="card-expand-hint" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.5 10.5H1.5V7.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><line x1="10.5" y1="1.5" x2="7" y2="5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="1.5" y1="10.5" x2="5" y2="7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
+      </div>
       <div class="project-body">
         <p class="project-category monospace">${project.category}</p>
         <h3 class="project-title">${project.title}</h3>
@@ -1339,6 +1369,12 @@ const projects = {
         <div class="project-links">${linksHtml}</div>
       </div>
     `;
+
+    // Open modal on card click (but not when clicking a link)
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('.project-link')) return;
+      projectModal.open(project);
+    });
 
     return card;
   },
@@ -1384,19 +1420,111 @@ const projects = {
   },
 
   bindScrollAnimations() {
-    // Initial scroll-trigger set up is handled in renderAll per card.
-    // Section header animation
-    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-      gsap.from('#projects .section-header', {
-        scrollTrigger: { trigger: '#projects', start: 'top 80%' },
-        opacity: 0, y: 30, duration: 0.7, ease: 'power3.out',
-      });
+    // Section header is handled by the global .section-header ScrollTrigger in initScrollAnimations
+  },
+};
+
+/* ============================================================
+   11. PROJECT MODAL — click a card to view details inline
+============================================================ */
+const projectModal = {
+  _el:     null,
+  _slides: [],
+  _idx:    0,
+
+  init() {
+    this._el = document.getElementById('project-modal');
+    if (!this._el) return;
+
+    document.getElementById('modal-close')
+      .addEventListener('click', () => this.close());
+    document.getElementById('modal-backdrop')
+      .addEventListener('click', () => this.close());
+
+    document.addEventListener('keydown', (e) => {
+      if (!this._el.classList.contains('open')) return;
+      if (e.key === 'Escape')     this.close();
+      if (e.key === 'ArrowLeft')  this._step(-1);
+      if (e.key === 'ArrowRight') this._step(1);
+    });
+  },
+
+  open(project) {
+    // Populate text info
+    document.getElementById('modal-category').textContent = project.category;
+    document.getElementById('modal-title').textContent    = project.title;
+    document.getElementById('modal-desc').textContent     = project.desc;
+
+    // Stack tags
+    document.getElementById('modal-stack').innerHTML =
+      project.stack.map(s => `<span class="stack-tag">${s}</span>`).join('');
+
+    // Links
+    const demoLabel = project.category === 'video' ? 'Watch on YouTube' : 'View Live';
+    document.getElementById('modal-links').innerHTML = [
+      project.demo   ? `<a href="${project.demo}"   class="project-link primary"  target="_blank" rel="noopener noreferrer">${demoLabel}</a>` : '',
+      project.github ? `<a href="${project.github}" class="project-link secondary" target="_blank" rel="noopener noreferrer">GitHub</a>` : '',
+    ].filter(Boolean).join('');
+
+    // Build slides: YouTube embed first (if any), then images
+    this._slides = [];
+    if (project.youtube) this._slides.push({ type: 'youtube', src: project.youtube });
+    if (project.images)  project.images.forEach(src => this._slides.push({ type: 'image', src }));
+    this._idx = 0;
+    this._renderMedia();
+
+    this._el.classList.add('open');
+    this._el.removeAttribute('aria-hidden');
+    document.body.style.overflow = 'hidden';
+  },
+
+  close() {
+    this._el.classList.remove('open');
+    this._el.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    // Clear media so iframes stop playing
+    document.getElementById('modal-media').innerHTML = '';
+  },
+
+  _step(dir) {
+    if (!this._slides.length) return;
+    this._idx = (this._idx + dir + this._slides.length) % this._slides.length;
+    this._renderMedia();
+  },
+
+  _renderMedia() {
+    const mediaEl = document.getElementById('modal-media');
+    if (!this._slides.length) { mediaEl.innerHTML = ''; return; }
+
+    const slide = this._slides[this._idx];
+    const multi = this._slides.length > 1;
+
+    let html;
+    if (slide.type === 'youtube') {
+      // 16:9 embed — single slide or first slide
+      html = `<div class="video-wrap"><iframe src="${slide.src}&autoplay=0" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>`;
+    } else {
+      const navHtml = multi
+        ? `<button class="gallery-nav prev" aria-label="Previous">&#8592;</button>
+           <button class="gallery-nav next" aria-label="Next">&#8594;</button>
+           <span class="gallery-counter">${this._idx + 1} / ${this._slides.length}</span>`
+        : '';
+      html = `<div class="img-gallery"><img class="gallery-img" src="${slide.src}" alt="" />${navHtml}</div>`;
+    }
+
+    mediaEl.innerHTML = html;
+
+    if (multi) {
+      const prev = mediaEl.querySelector('.prev');
+      const next = mediaEl.querySelector('.next');
+      if (prev) prev.addEventListener('click', () => this._step(-1));
+      if (next) next.addEventListener('click', () => this._step(1));
     }
   },
 };
 
 /* ============================================================
-   11. CONTACT FORM
+   12. CONTACT FORM
 ============================================================ */
 const contact = {
   init() {
@@ -1404,7 +1532,7 @@ const contact = {
     const status = document.getElementById('form-status');
     if (!form) return;
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       if (!this.validate(form)) return;
 
@@ -1412,21 +1540,35 @@ const contact = {
       const sending  = form.querySelector('.btn-sending');
       const submitBtn = form.querySelector('.form-submit');
 
-      // Simulate sending
-      label.style.display  = 'none';
+      label.style.display   = 'none';
       sending.style.display = 'inline';
-      submitBtn.disabled   = true;
+      submitBtn.disabled    = true;
 
-      setTimeout(() => {
+      try {
+        const res = await fetch('https://formspree.io/f/xlgpbwdn', {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: new FormData(form),
+        });
+
+        if (res.ok) {
+          status.textContent = 'Message sent.';
+          status.className   = 'form-status success';
+          form.reset();
+        } else {
+          const data = await res.json();
+          status.textContent = 'Failed to send — ' + (data?.errors?.[0]?.message ?? 'please try again.');
+          status.className   = 'form-status error';
+        }
+      } catch {
+        status.textContent = 'Network error — please try again.';
+        status.className   = 'form-status error';
+      } finally {
         label.style.display   = 'inline';
-        sending.style.display  = 'none';
+        sending.style.display = 'none';
         submitBtn.disabled    = false;
-        status.textContent    = '// Message transmitted successfully.';
-        status.className      = 'form-status success';
-        form.reset();
-        // Clear after 5s
-        setTimeout(() => { status.textContent = ''; status.className = 'form-status'; }, 5000);
-      }, 1600);
+        setTimeout(() => { status.textContent = ''; status.className = 'form-status'; }, 6000);
+      }
     });
   },
 
@@ -1636,20 +1778,22 @@ const scrollAnimations = {
 const glitchEffects = {
   init() {
     // Occasional full-screen scanline sweep
-    setInterval(() => {
+    this._iv1 = setInterval(() => {
       if (Math.random() < 0.15) { this._scanFlash(); }
     }, 4000);
 
     // VHS-style horizontal noise lines — subtle, atmospheric
-    setInterval(() => {
+    this._iv2 = setInterval(() => {
       if (Math.random() < 0.28) { this._vhsLines(); }
     }, 2200);
 
     // Brief pixel-shift block — rare, striking
-    setInterval(() => {
+    this._iv3 = setInterval(() => {
       if (Math.random() < 0.12) { this._pixelShift(); }
     }, 5500);
   },
+  pause()  { clearInterval(this._iv1); clearInterval(this._iv2); clearInterval(this._iv3); },
+  resume() { this.init(); },
 
   _scanFlash() {
     const flash = document.createElement('div');
@@ -1788,6 +1932,7 @@ const sideLabels = {
   },
 
   _show(leftText, rightText) {
+    if (document.body.classList.contains('low-perf')) return;
     this._clearTimers();
     gsap.to([this.leftEl, this.rightEl], { opacity: 1, duration: 0.3 });
     this.leftEl .classList.add('active');
@@ -1856,6 +2001,7 @@ const sectionFlash = {
   },
 
   _flash(section) {
+    if (document.body.classList.contains('low-perf')) return;
     const overlay = document.createElement('div');
     overlay.className = 'ascii-flash-overlay';
 
@@ -1913,6 +2059,7 @@ const scanSweep = {
   },
 
   _sweep(section) {
+    if (document.body.classList.contains('low-perf')) return;
     const line = document.createElement('div');
     line.className = 'scan-sweep-line';
     section.appendChild(line);
@@ -1961,6 +2108,7 @@ const hackScroll = {
   },
 
   _spawnPhrase() {
+    if (document.body.classList.contains('low-perf')) return;
     // Pick a phrase (not the same as last)
     let idx;
     do { idx = randInt(0, this.PHRASES.length - 1); } while (idx === this._last);
@@ -2015,6 +2163,7 @@ const clickRipple = {
   },
 
   _spawn(x, y) {
+    if (document.body.classList.contains('low-perf')) return;
     const wrap = document.createElement('div');
     wrap.setAttribute('aria-hidden', 'true');
     wrap.style.cssText = [
@@ -2080,6 +2229,7 @@ const hoverGlitch = {
   },
 
   _glitch(el) {
+    if (document.body.classList.contains('low-perf')) return;
     const original = el.textContent.trim();
     if (!original || original.length > 45) return;
 
@@ -2103,84 +2253,33 @@ const hoverGlitch = {
 };
 
 /* ============================================================
-   20. EASTER EGG — hidden interactions:
-   · Konami code (↑↑↓↓←→←→BA): SYSTEM_OVERLOAD animation
-   · Five rapid clicks on nav logo: ACCESS_GRANTED message
+   20. LOW PERFORMANCE MODE
+   Pauses/hides all decorative effects. Nav, content, projects,
+   contact form, and NODE ACQUIRE minigame stay fully functional.
 ============================================================ */
-const easterEgg = {
-  KONAMI: ['ArrowUp','ArrowUp','ArrowDown','ArrowDown',
-           'ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'],
-  _seq:        [],
-  _clickCount: 0,
-  _clickTimer: null,
-  _active:     false,
+const lowPerf = {
+  active: false,
 
   init() {
-    // Konami key sequence detector
-    document.addEventListener('keydown', (e) => {
-      this._seq.push(e.key);
-      if (this._seq.length > this.KONAMI.length) this._seq.shift();
-      if (this._seq.join(',') === this.KONAMI.join(',')) {
-        this._seq = [];
-        this._fire('KONAMI');
-      }
-    });
-
-    // Five rapid clicks on logo within 1.5 s
-    const logo = document.querySelector('.nav-logo');
-    if (logo) {
-      logo.addEventListener('click', () => {
-        this._clickCount++;
-        clearTimeout(this._clickTimer);
-        this._clickTimer = setTimeout(() => { this._clickCount = 0; }, 1500);
-        if (this._clickCount >= 5) { this._clickCount = 0; this._fire('RAPID'); }
-      });
-    }
+    const btn = document.getElementById('low-perf-btn');
+    if (!btn) return;
+    btn.addEventListener('click', () => this.toggle());
   },
 
-  _fire(type) {
-    if (this._active) return;
-    this._active = true;
-    const overlay = document.getElementById('easter-overlay');
-    if (!overlay) { this._active = false; return; }
-
-    const msgs = {
-      KONAMI: '> KONAMI_SEQUENCE_DETECTED\n> ACCESS_LEVEL: ADMINISTRATOR\n> UNLOCKING_HIDDEN_LAYER...',
-      RAPID:  '> PERSISTENCE.exe DETECTED\n> EASTER_EGG_UNLOCKED\n> WELCOME_TO_THE_VOID',
-    };
-    overlay.textContent = this._asciiBox(msgs[type] || msgs.RAPID);
-
-    if (typeof gsap !== 'undefined') {
-      const tl = gsap.timeline({
-        onComplete: () => {
-          overlay.textContent = '';
-          gsap.set(overlay, { opacity: 0 });
-          this._active = false;
-        },
-      });
-      // Flicker-in
-      tl.to(overlay, { opacity: 1, duration: 0.04 });
-      tl.to(overlay, { opacity: 0, duration: 0.04 }, 0.07);
-      tl.to(overlay, { opacity: 1, duration: 0.06 }, 0.13);
-      tl.to(overlay, { opacity: 0, duration: 0.04 }, 0.50);
-      tl.to(overlay, { opacity: 1, duration: 0.04 }, 0.56);
-      // Hold 2.2 s then fade
-      tl.to(overlay, { opacity: 0, duration: 0.5, delay: 2.2 });
+  toggle() {
+    this.active = !this.active;
+    document.body.classList.toggle('low-perf', this.active);
+    const btn = document.getElementById('low-perf-btn');
+    if (btn) btn.setAttribute('aria-pressed', String(this.active));
+    if (this.active) {
+      heroScene.pause();
+      cursor._enabled = false;
+      glitchEffects.pause();
     } else {
-      overlay.style.opacity = '1';
-      setTimeout(() => {
-        overlay.textContent = '';
-        overlay.style.opacity = '0';
-        this._active = false;
-      }, 3200);
+      heroScene.resume();
+      cursor._enabled = true;
+      glitchEffects.resume();
     }
-  },
-
-  _asciiBox(text) {
-    const lines = text.split('\n');
-    const w = Math.max(...lines.map(l => l.length));
-    const bar = '+' + '-'.repeat(w + 2) + '+';
-    return [bar, ...lines.map(l => `| ${l.padEnd(w)} |`), bar].join('\n');
   },
 };
 
@@ -2311,12 +2410,9 @@ const nodeAcquire = {
       }
     }, 1000);
 
-    // Spawn 8 initial targets (staggered circles + sliders)
+    // Spawn 8 initial targets (staggered)
     for (let i = 0; i < 8; i++) {
-      setTimeout(() => {
-        if (!this.running) return;
-        (i === 2 || i === 5) ? this._spawnSlider() : this._spawnOne();
-      }, i * 110);
+      setTimeout(() => { if (this.running) this._spawnOne(); }, i * 110);
     }
   },
 
@@ -2398,149 +2494,6 @@ const nodeAcquire = {
     data.timer = setTimeout(() => this._miss(data), lifespan);
   },
 
-  _spawnSlider() {
-    if (!this.running || !this._field) return;
-
-    const fw  = this._field.offsetWidth  || window.innerWidth;
-    const fh  = this._field.offsetHeight || window.innerHeight;
-    const pad = 90;
-
-    // Bias start near last hit for flow continuity
-    const bx  = this._lastX != null ? this._lastX : fw / 2;
-    const by  = this._lastY != null ? this._lastY : fh / 2;
-    const sp  = 220;
-    const sx  = Math.max(pad, Math.min(fw - pad,        bx + randFloat(-sp, sp)));
-    const sy  = Math.max(pad + 66, Math.min(fh - pad - 34, by + randFloat(-sp, sp)));
-
-    // End point: random direction, 160–280 px away
-    const angle      = randFloat(0, Math.PI * 2);
-    const len        = randFloat(160, 280);
-    const ex         = Math.max(pad, Math.min(fw - pad,        sx + Math.cos(angle) * len));
-    const ey         = Math.max(pad + 66, Math.min(fh - pad - 34, sy + Math.sin(angle) * len));
-    const actualLen  = Math.hypot(ex - sx, ey - sy);
-    const actualAngle = Math.atan2(ey - sy, ex - sx) * 180 / Math.PI;
-    const lifespan   = this.timeLeft > 15 ? 3200 : this.timeLeft > 7 ? 2500 : 2000;
-    const headSize   = 100;
-
-    // Track line
-    const trackEl = document.createElement('div');
-    trackEl.className = 'naq-slider-track';
-    trackEl.style.cssText = `left:${sx}px; top:${sy - 3}px; width:${actualLen}px; transform:rotate(${actualAngle}deg);`;
-    const fillEl = document.createElement('div');
-    fillEl.className = 'naq-slider-fill';
-    trackEl.appendChild(fillEl);
-    this._field.appendChild(trackEl);
-
-    // Head circle (clickable)
-    const headEl = document.createElement('div');
-    headEl.className = 'naq-target naq-slider-head';
-    headEl.style.width  = headSize + 'px';
-    headEl.style.height = headSize + 'px';
-    headEl.style.left   = sx + 'px';
-    headEl.style.top    = sy + 'px';
-    headEl.innerHTML = [
-      `<div class="naq-target-ring" style="animation-duration:${lifespan}ms"></div>`,
-      `<div class="naq-target-cross"></div>`,
-      `<div class="naq-target-dot"></div>`,
-    ].join('');
-    this._field.appendChild(headEl);
-
-    // Tail circle (destination)
-    const tailEl = document.createElement('div');
-    tailEl.className = 'naq-slider-tail';
-    tailEl.style.left = ex + 'px';
-    tailEl.style.top  = ey + 'px';
-    this._field.appendChild(tailEl);
-
-    const data = {
-      el: headEl, trackEl, fillEl, endEl: tailEl,
-      type: 'slider',
-      sx, sy, ex, ey, actualLen,
-      lifespan, spawnTime: Date.now(), timer: null,
-      active: false, _onMove: null, _onUp: null,
-      x: sx, y: sy,  // for overlap detection in _spawnOne
-    };
-    this._targets.push(data);
-
-    const cleanListeners = () => {
-      if (data._onMove) { this._overlay.removeEventListener('mousemove', data._onMove); data._onMove = null; }
-      if (data._onUp)   { this._overlay.removeEventListener('mouseup',   data._onUp);   data._onUp   = null; }
-    };
-
-    const onMove = (e) => {
-      if (!data.active || !this._targets.includes(data)) return;
-      const rect = this._overlay.getBoundingClientRect();
-      const mx = e.clientX - rect.left;
-      const my = e.clientY - rect.top;
-      const dx = ex - sx, dy = ey - sy;
-      const t  = Math.max(0, Math.min(1,
-        ((mx - sx) * dx + (my - sy) * dy) / (actualLen * actualLen)
-      ));
-      fillEl.style.width = (t * 100) + '%';
-      if (t >= 0.88) { cleanListeners(); this._hitSlider(data); }
-    };
-
-    const onUp = () => {
-      if (!this._targets.includes(data)) return;
-      cleanListeners();
-      data.active = false;
-      this._miss(data);
-    };
-
-    data._onMove = onMove;
-    data._onUp   = onUp;
-
-    headEl.addEventListener('mousedown', (e) => {
-      e.stopPropagation();
-      if (!this.running) return;
-      data.active = true;
-      headEl.classList.add('naq-slider-active');
-      this._overlay.addEventListener('mousemove', onMove);
-      this._overlay.addEventListener('mouseup',   onUp);
-    });
-
-    data.timer = setTimeout(() => {
-      if (!this._targets.includes(data)) return;
-      cleanListeners();
-      this._miss(data);
-    }, lifespan);
-  },
-
-  _hitSlider(data) {
-    if (!this._targets.includes(data)) return;
-    clearTimeout(data.timer);
-    this._targets = this._targets.filter(t => t !== data);
-
-    this._lastX = data.ex;
-    this._lastY = data.ey;
-    this.combo++;
-    this.hits++;
-    if (this.combo > this.maxCombo) this.maxCombo = this.combo;
-    const m      = this._multi();
-    const points = 160 * m;
-    this.score  += points;
-    this._updateHUD();
-
-    this._burst(data.ex, data.ey, m > 3 ? 5 : m > 1 ? 3 : 2);
-    this._scorePop(data.ex, data.ey, '+' + points);
-
-    if (this.combo === 3)  this._comboFlash('CHAIN ×2');
-    if (this.combo === 6)  this._comboFlash('CHAIN ×3 — HOT');
-    if (this.combo === 10) this._comboFlash('MAX CHAIN ×5 !!!');
-
-    const elems = [data.el, data.trackEl, data.endEl].filter(Boolean);
-    const spawnNext = () => Math.random() < 0.3 ? this._spawnSlider() : this._spawnOne();
-    if (typeof gsap !== 'undefined') {
-      gsap.to(elems, {
-        scale: 0, opacity: 0, duration: 0.18, ease: 'power2.in',
-        onComplete: () => { elems.forEach(e => e.remove()); if (this.running) spawnNext(); },
-      });
-    } else {
-      elems.forEach(e => e.remove());
-      if (this.running) spawnNext();
-    }
-  },
-
   _hit(data) {
     if (!this._targets.includes(data)) return;
     clearTimeout(data.timer);
@@ -2567,15 +2520,14 @@ const nodeAcquire = {
     if (this.combo === 6)  this._comboFlash('CHAIN ×3 — HOT');
     if (this.combo === 10) this._comboFlash('MAX CHAIN ×5 !!!');
 
-    const spawnNext = () => Math.random() < 0.28 ? this._spawnSlider() : this._spawnOne();
     if (typeof gsap !== 'undefined') {
       gsap.to(data.el, {
         scale: 0, opacity: 0, duration: 0.16, ease: 'power2.in',
-        onComplete: () => { data.el.remove(); spawnNext(); },
+        onComplete: () => { data.el.remove(); this._spawnOne(); },
       });
     } else {
       data.el.remove();
-      spawnNext();
+      this._spawnOne();
     }
   },
 
@@ -2588,35 +2540,21 @@ const nodeAcquire = {
     this._updateHUD();
     if (prevCombo >= 3) this._comboFlash('CHAIN BROKEN');
 
-    // Clean up slider listeners if this was a slider
-    if (data._onMove) this._overlay.removeEventListener('mousemove', data._onMove);
-    if (data._onUp)   this._overlay.removeEventListener('mouseup',   data._onUp);
-    const extraEls = [data.trackEl, data.endEl].filter(Boolean);
     if (typeof gsap !== 'undefined') {
       const ring = data.el.querySelector('.naq-target-ring');
       if (ring) gsap.to(ring, { borderColor: 'rgba(255,70,70,0.9)', duration: 0.12 });
-      gsap.to([data.el, ...extraEls], {
+      gsap.to(data.el, {
         scale: 1.4, opacity: 0, duration: 0.32, ease: 'power1.out',
-        onComplete: () => {
-          data.el.remove(); extraEls.forEach(e => e.remove());
-          if (this.running) this._spawnOne();
-        },
+        onComplete: () => { data.el.remove(); if (this.running) this._spawnOne(); },
       });
     } else {
-      data.el.remove(); extraEls.forEach(e => e.remove());
+      data.el.remove();
       if (this.running) this._spawnOne();
     }
   },
 
   _killAllTargets() {
-    this._targets.forEach(t => {
-      clearTimeout(t.timer);
-      if (t._onMove) this._overlay.removeEventListener('mousemove', t._onMove);
-      if (t._onUp)   this._overlay.removeEventListener('mouseup',   t._onUp);
-      t.el.remove();
-      if (t.trackEl) t.trackEl.remove();
-      if (t.endEl)   t.endEl.remove();
-    });
+    this._targets.forEach(t => { clearTimeout(t.timer); t.el.remove(); });
     this._targets = [];
   },
 
@@ -2749,6 +2687,7 @@ function boot() {
   skills.init();
   history.init();
   projects.init();
+  projectModal.init();
   contact.init();
 
   // Scroll animations (ScrollTrigger)
@@ -2775,8 +2714,8 @@ function boot() {
   // Hover glitch — brief char scramble on hover over interactive elements
   hoverGlitch.init();
 
-  // Easter egg — Konami code and rapid logo-click hidden interactions
-  easterEgg.init();
+  // Low performance mode toggle
+  lowPerf.init();
 
   // NODE ACQUIRE — hidden aim trainer minigame in hero
   nodeAcquire.init();
