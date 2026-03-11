@@ -325,9 +325,9 @@ const loader = {
       nums.forEach(n => {
         if (Math.random() < 0.35) {
           n.textContent = randInt(0, 999).toString().padStart(3, '0');
-          // Occasional horizontal jitter
+          // Occasional horizontal jitter only — no rotation/skew
           if (Math.random() < 0.1) {
-            n.style.transform = `translateX(${randFloat(-8, 8)}px) skewX(${randFloat(-4, 4)}deg)`;
+            n.style.transform = `translateX(${randFloat(-6, 6)}px)`;
             setTimeout(() => { n.style.transform = ''; }, 80);
           }
         }
@@ -361,12 +361,11 @@ const loader = {
     }, 35);
   },
 
-  /* -- Creative dissolve: scatter, corrupt, spin-up, then fade -- */
+  /* -- Creative exit: shape shatters + zoom-through tunnel into hero -- */
   exit() {
     clearInterval(this._glitchInterval);
 
     if (typeof gsap === 'undefined') {
-      // Graceful fallback: instant hide
       document.getElementById('loader').style.display = 'none';
       const sw = document.getElementById('site-wrapper');
       sw.style.opacity = '1'; sw.style.visibility = 'visible';
@@ -375,86 +374,89 @@ const loader = {
       return;
     }
 
-    // Phase 0 — Scramble the percent counter immediately
-    let scrambles = 0;
-    const scrambleIv = setInterval(() => {
-      if (this.percentEl) {
-        this.percentEl.style.filter = `skewX(${randFloat(-6, 6)}deg)`;
-        this.percentEl.textContent  = randInt(0, 999).toString().padStart(3, '0');
-      }
-      if (++scrambles > 14) clearInterval(scrambleIv);
-    }, 55);
-
-    // Phase 1 — Erode ASCII symbol blocks
+    // Erode ASCII symbol blocks in background
     setTimeout(() => {
       document.querySelectorAll('.symbol-block').forEach(el => this._erodeBlock(el));
-    }, 80);
+    }, 60);
 
     const tl = gsap.timeline({ onComplete: () => this.cleanup() });
 
-    // Counter split-fade
-    tl.to('#loader-label',   { opacity: 0, y: -8,  duration: 0.25 }, 0.1);
-    tl.to('#loader-percent', { opacity: 0, duration: 0.35, ease: 'power2.in',
-      onStart: () => {
-        if (this.percentEl) this.percentEl.style.filter = '';
-      }
-    }, 0.6);
+    // ── Phase A (0–0.3s): peripheral UI strips away ──
+    tl.to('#loader-label', { opacity: 0, y: -14, duration: 0.2 }, 0.0);
+    tl.to('.symbol-block', { opacity: 0, duration: 0.25, stagger: 0.06 }, 0.0);
 
-    // Scatter every rain number outward — each flies a random direction
-    tl.to('.rain-num', {
-      x:        () => randFloat(-700, 700),
-      y:        () => randFloat(-600, 600),
-      opacity:  0,
-      scale:    () => randFloat(0.05, 1.8),
-      rotation: () => randInt(-200, 200),
-      duration: () => randFloat(0.45, 0.85),
-      stagger:  { amount: 0.4, from: 'random' },
-      ease:     'power2.in',
-    }, 0.05);
-
-    // Symbol blocks fade after erosion
-    tl.to('.symbol-block', { opacity: 0, duration: 0.4, stagger: 0.08, ease: 'power2.in' }, 0.25);
-
-    // 3D shape — spin accelerates then canvas fades
-    if (this.threeScene) {
-      tl.to(this.threeScene, {
-        spinMultiplier: 12,
-        duration: 0.7,
-        ease: 'power2.in',
-      }, 0.2);
-      tl.to(this.threeScene.matIco,   { opacity: 0, duration: 0.45 }, 0.7);
-      tl.to(this.threeScene.matSolid, { opacity: 0, duration: 0.45 }, 0.7);
-      tl.to(this.threeScene.matOct,   { opacity: 0, duration: 0.45 }, 0.7);
-      tl.to(this.threeScene.edgeMat,  { opacity: 0, duration: 0.45 }, 0.7);
-      tl.to(this.threeScene.nodeMat,  { opacity: 0, duration: 0.45 }, 0.7);
-      tl.to(this.threeScene.ptMat,    { opacity: 0, duration: 0.45 }, 0.7);
-      tl.to('#loader-canvas', { opacity: 0, duration: 0.35 }, 0.85);
+    // Rain numbers — stream toward the center like being sucked into a portal
+    const cx = window.innerWidth  * 0.5;
+    const cy = window.innerHeight * 0.5;
+    const rainNums = this.rainEl ? this.rainEl.querySelectorAll('.rain-num') : [];
+    if (rainNums.length) {
+      gsap.to(rainNums, {
+        x: (i, el) => (cx - parseFloat(el.style.left || '50%') / 100 * window.innerWidth)  * randFloat(0.05, 0.18),
+        y: (i, el) => (cy - parseFloat(el.style.top  || '50%') / 100 * window.innerHeight) * randFloat(0.05, 0.18),
+        opacity: 0,
+        scale: 0,
+        duration: () => randFloat(0.35, 0.65),
+        stagger: { amount: 0.3, from: 'random' },
+        ease: 'power3.in',
+      });
     }
 
-    // Scanline burst sequence — rapid flicker then gone
-    tl.to('#loader .scanlines', { opacity: 0.9, duration: 0.04 }, 0.65);
-    tl.to('#loader .scanlines', { opacity: 0,   duration: 0.06 }, 0.70);
-    tl.to('#loader .scanlines', { opacity: 0.7, duration: 0.04 }, 0.76);
-    tl.to('#loader .scanlines', { opacity: 0.4, duration: 0.04 }, 0.82);
-    tl.to('#loader .scanlines', { opacity: 0,   duration: 0.1  }, 0.87);
+    // ── Phase B (0.25–0.7s): 3D shape explodes outward — shards fly to edges ──
+    if (this.threeScene) {
+      const ts = this.threeScene;
 
-    // Loader background dissolves (black fades to transparent, revealing site behind)
-    tl.to('#loader', {
-      backgroundColor: 'rgba(0,0,0,0)',
-      duration: 0.55,
-      ease: 'power1.in',
-    }, 0.88);
+      // Spin faster — spinning apart as it breaks
+      tl.to(ts, { spinMultiplier: 12, duration: 0.45, ease: 'power3.in' }, 0.22);
 
-    // Site fades in underneath
-    tl.to('#site-wrapper', {
-      opacity:    1,
-      visibility: 'visible',
-      duration:   0.5,
-      ease:       'power2.out',
-    }, 0.9);
+      // Outer cage shatters — flies outward and fades
+      tl.to(ts.ico.scale,  { x: 3.5, y: 3.5, z: 3.5, duration: 0.38, ease: 'power2.out' }, 0.28);
+      tl.to(ts.matIco,     { opacity: 0, duration: 0.38, ease: 'power1.in' }, 0.28);
+      tl.to(ts.inner.scale,{ x: 0, y: 0, z: 0, duration: 0.3, ease: 'power3.in' }, 0.28);
 
-    // Hero text animations fire as site becomes fully visible
-    tl.call(() => heroAnimations.play(), null, 1.1);
+      // Inner octahedron launches forward (zooms into camera)
+      tl.to(ts.oct.position, { z: 8, duration: 0.45, ease: 'power3.in' }, 0.30);
+      tl.to(ts.matOct, { opacity: 0, duration: 0.25, ease: 'power2.in' }, 0.42);
+
+      // Node edges scatter — different axes per group
+      tl.to(ts.edges.scale, { x: 4, y: 4, z: 4, duration: 0.4, ease: 'expo.out' }, 0.26);
+      tl.to(ts.edgeMat,     { opacity: 0, duration: 0.32, ease: 'power1.in' }, 0.30);
+      tl.to(ts.nodePts.scale,{ x: 5, y: 5, z: 5, duration: 0.42, ease: 'expo.out' }, 0.24);
+      tl.to(ts.nodeMat,     { opacity: 0, duration: 0.3, ease: 'power1.in' }, 0.32);
+
+      // Background particles scatter outward then vanish
+      tl.to(ts.particles.scale, { x: 3, y: 3, z: 3, duration: 0.55, ease: 'power2.out' }, 0.2);
+      tl.to(ts.ptMat,           { opacity: 0, duration: 0.4, ease: 'power1.in' }, 0.3);
+    }
+
+    // ── Phase C (0.32–0.72s): percent number zooms toward viewer then bursts ──
+    if (this.percentEl) this.percentEl.textContent = '100';
+    tl.to('#loader-percent', {
+      scale: 14,
+      opacity: 0,
+      duration: 0.42,
+      ease: 'power3.in',
+      transformOrigin: '50% 50%',
+    }, 0.32);
+
+    // ── Phase D (0.55–0.80s): hero warp arrive — zoom in from deep space ──
+    // Prime the canvas in an over-zoomed blurry state just before it becomes visible,
+    // then tween scale+blur back to normal so it feels like arriving at warp speed.
+    tl.set('#site-wrapper', { opacity: 1, visibility: 'visible' }, 0.58);
+    tl.set('#hero-canvas',  { scale: 2.6, filter: 'blur(18px)', opacity: 0 }, 0.58);
+    tl.to('#hero-canvas',   {
+      opacity: 1,
+      scale: 1,
+      filter: 'blur(0px)',
+      duration: 0.85,
+      ease: 'power3.out',
+      transformOrigin: '50% 50%',
+    }, 0.62);
+    tl.to('#loader-canvas', { opacity: 0, duration: 0.32, ease: 'power1.in' }, 0.60);
+    tl.to('#loader .scanlines', { opacity: 0, duration: 0.12 }, 0.58);
+    tl.to('#loader', { opacity: 0, duration: 0.4, ease: 'power1.in' }, 0.62);
+
+    // Hero text starts as scene settles
+    tl.call(() => heroAnimations.play(), null, 0.88);
   },
 
   /* -- Animate the % counter up to 100 then exit -- */
@@ -487,9 +489,9 @@ const loader = {
       if (rawT < 1) {
         requestAnimationFrame(tick);
       } else {
-        // Show 100 cleanly, then exit
+        // Show 100 cleanly, brief pause then exit
         if (this.percentEl) this.percentEl.textContent = '100';
-        setTimeout(() => this.exit(), 500);
+        setTimeout(() => this.exit(), 220);
       }
     };
 
@@ -512,120 +514,275 @@ const loader = {
 ============================================================ */
 const heroScene = {
   renderer: null,
-  scene: null,
-  camera: null,
-  particles: null,
-  mouse: { x: 0, y: 0 },
+  scene:    null,
+  camera:   null,
+  mouse:       { x: 0, y: 0 },
   targetMouse: { x: 0, y: 0 },
+  _tmp: null,   // reusable Vector3 for planet positioning
 
   init() {
     const canvas = document.getElementById('hero-canvas');
     if (!canvas || typeof THREE === 'undefined') return;
 
     const w = window.innerWidth, h = window.innerHeight;
+    const isMobile = w < 768;
 
-    this.renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: true });
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.renderer.setSize(w, h);
 
     this.scene  = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 100);
-    this.camera.position.z = 5;
+    this.camera = new THREE.PerspectiveCamera(55, w / h, 0.1, 200);
+    this.camera.position.z = 6;
+    this._tmp   = new THREE.Vector3();
 
-    // Sparse particle field
-    const isMobile = window.innerWidth < 768;
-    const count = isMobile ? 300 : 700;
-    const positions = new Float32Array(count * 3);
-    for (let i = 0; i < count; i++) {
-      positions[i * 3]     = randFloat(-8, 8);
-      positions[i * 3 + 1] = randFloat(-5, 5);
-      positions[i * 3 + 2] = randFloat(-6, 2);
+    // ── 1. Sparse star field ──
+    const starCount = isMobile ? 180 : 340;
+    const starPos   = new Float32Array(starCount * 3);
+    for (let i = 0; i < starCount; i++) {
+      starPos[i*3]   = randFloat(-18, 18);
+      starPos[i*3+1] = randFloat(-11, 11);
+      starPos[i*3+2] = randFloat(-6, 0);
     }
+    const starGeo = new THREE.BufferGeometry();
+    starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+    const starMat = new THREE.PointsMaterial({ color: 0xffffff, size: 0.02, transparent: true, opacity: 0.4 });
+    const stars   = new THREE.Points(starGeo, starMat);
+    this.scene.add(stars);
 
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    const mat = new THREE.PointsMaterial({
-      color: 0xffffff,
-      size: window.innerWidth < 768 ? 0.018 : 0.022,
-      transparent: true,
-      opacity: 0.35,
+    // ── 2. Central core — icosahedron wireframe (the "sun") ──
+    const coreGeo = new THREE.IcosahedronGeometry(0.85, 1);
+    const coreMat = new THREE.MeshBasicMaterial({
+      color: 0xffffff, wireframe: true, transparent: true, opacity: 0.22,
     });
-    this.particles = new THREE.Points(geo, mat);
-    this.scene.add(this.particles);
+    const core = new THREE.Mesh(coreGeo, coreMat);
+    this.scene.add(core);
 
-    // ── UPGRADED GEOMETRY COMPOSITION ──
-    // 1. Central wireframe octahedron — angular, structural focal shape
-    const octGeo = new THREE.OctahedronGeometry(1.7, 0);
-    const octMat = new THREE.MeshBasicMaterial({
-      color: 0xffffff, wireframe: true, transparent: true, opacity: 0.065,
+    // ── 3. Orbital paths + planets ──
+    // Each orbit: radius, tilt around X, tilt around Z, planet start angle, speed
+    const orbitDefs = [
+      { r: 1.55, tx:  Math.PI * 0.12, tz:  Math.PI * 0.03, a0: 0,              spd: 0.0088 },
+      { r: 2.20, tx:  Math.PI * 0.24, tz:  Math.PI * 0.07, a0: Math.PI * 0.7,  spd: 0.0052 },
+      { r: 4, tx:  Math.PI * 0.04, tz:  Math.PI * 0.9, a0: Math.PI * -0.35,    spd: 0.0008 },
+      { r: 3.40, tx:  Math.PI * 0.08, tz:  Math.PI * 0.16, a0: Math.PI * 1.35, spd: 0.0028 },
+      { r: 2, tx:  Math.PI * 0.04, tz:  Math.PI * 0.7, a0: Math.PI * 0.67, spd: 0.0028 },
+    ];
+
+    this._planets = orbitDefs.map(def => {
+      // Draw circular orbit path in its tilted plane
+      const pts = [];
+      for (let i = 0; i <= 128; i++) {
+        const a = (i / 128) * Math.PI * 2;
+        pts.push(new THREE.Vector3(Math.cos(a) * def.r, 0, Math.sin(a) * def.r));
+      }
+      const oGeo  = new THREE.BufferGeometry().setFromPoints(pts);
+      const oMat  = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.065 });
+      const orbit = new THREE.LineLoop(oGeo, oMat);
+      orbit.rotation.x = def.tx;
+      orbit.rotation.z = def.tz;
+      this.scene.add(orbit);
+
+      // Planet dot
+      const pGeo  = new THREE.SphereGeometry(0.055, 8, 8);
+      const pMat  = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.9 });
+      const planet = new THREE.Mesh(pGeo, pMat);
+      this.scene.add(planet);
+
+      return {
+        mesh:  planet,
+        r:     def.r,
+        euler: new THREE.Euler(def.tx, 0, def.tz),
+        angle: def.a0,
+        spd:   def.spd,
+      };
     });
-    const octahedron = new THREE.Mesh(octGeo, octMat);
-    this.scene.add(octahedron);
 
-    // 2. Orbital ring 1 — flat torus tilted 18°
-    const r1Geo = new THREE.TorusGeometry(2.5, 0.007, 2, 90);
-    const r1Mat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.1 });
-    const ring1 = new THREE.Mesh(r1Geo, r1Mat);
-    ring1.rotation.x = Math.PI * 0.18;
-    this.scene.add(ring1);
-
-    // 3. Orbital ring 2 — larger, cross-tilted for depth
-    const r2Geo = new THREE.TorusGeometry(3.3, 0.005, 2, 90);
-    const r2Mat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.05 });
-    const ring2 = new THREE.Mesh(r2Geo, r2Mat);
-    ring2.rotation.x = Math.PI * 0.42;
-    ring2.rotation.z = Math.PI * 0.15;
-    this.scene.add(ring2);
-
-    // 4. Outer icosahedron shell — very faint structural cage
-    const icoGeo  = new THREE.IcosahedronGeometry(4.2, 1);
-    const icoMat  = new THREE.MeshBasicMaterial({
-      color: 0xffffff, wireframe: true, transparent: true, opacity: 0.014,
-    });
-    const icoShell = new THREE.Mesh(icoGeo, icoMat);
-    this.scene.add(icoShell);
-
-    // Store shape refs for animate()
-    this.shapes = { octahedron, ring1, ring2, icoShell };
-
+    this.shapes = { core, stars };
     this.animate();
+    this._spawnFloatingNumbers();
+    this._spawnStarCoordinates();
 
-    window.addEventListener('resize', () => this.onResize());
+    window.addEventListener('resize',    () => this.onResize());
     window.addEventListener('mousemove', (e) => {
-      this.targetMouse.x = (e.clientX / window.innerWidth  - 0.5) * 2;
+      this.targetMouse.x =  (e.clientX / window.innerWidth  - 0.5) * 2;
       this.targetMouse.y = -(e.clientY / window.innerHeight - 0.5) * 2;
     });
   },
 
+  /* Spawn faintly drifting ASCII number fragments over the hero canvas */
+  _spawnFloatingNumbers() {
+    const heroEl = document.getElementById('hero');
+    if (!heroEl || typeof gsap === 'undefined') return;
+
+    const container = document.createElement('div');
+    container.setAttribute('aria-hidden', 'true');
+    container.style.cssText = 'position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden;';
+    heroEl.appendChild(container);
+
+    const fragments = [
+      '01001101', '3.14159', '0xFFFF', '1.61803',
+      '// NULL', '2.71828', '0b1010', '6.28318',
+      '> 9.81',  '0x00FF',  '1.41421', '360.00',
+      '// SYS',  '0.00001', '255:255', '> INIT',
+    ];
+
+    const count = window.innerWidth < 768 ? 7 : 13;
+    for (let i = 0; i < count; i++) {
+      const span   = document.createElement('span');
+      span.textContent = fragments[i % fragments.length];
+      const baseOpacity = randFloat(0.07, 0.14);
+      span.style.cssText = [
+        'position:absolute',
+        `left:${randFloat(4, 88)}%`,
+        `top:${randFloat(8, 88)}%`,
+        `font-family:var(--ff-mono)`,
+        `font-size:${randFloat(10, 13)}px`,
+        `color:rgba(255,255,255,${baseOpacity.toFixed(2)})`,
+        'letter-spacing:0.1em',
+        'user-select:none',
+        'white-space:nowrap',
+      ].join(';');
+      container.appendChild(span);
+
+      // Gentle independent drift
+      gsap.to(span, {
+        y:        randFloat(-22, 22),
+        x:        randFloat(-14, 14),
+        duration: randFloat(10, 22),
+        repeat:   -1,
+        yoyo:     true,
+        delay:    randFloat(0, 8),
+        ease:     'sine.inOut',
+      });
+      // Slow opacity breathe
+      gsap.to(span, {
+        opacity:  randFloat(0.03, baseOpacity * 1.6),
+        duration: randFloat(4, 9),
+        repeat:   -1,
+        yoyo:     true,
+        delay:    randFloat(0, 5),
+        ease:     'power1.inOut',
+      });
+    }
+  },
+
+  /* Spawn faint star-coordinate labels (dot/cross + RA-Dec text) around the edges */
+  _spawnStarCoordinates() {
+    const heroEl = document.getElementById('hero');
+    if (!heroEl || typeof gsap === 'undefined') return;
+
+    const container = document.createElement('div');
+    container.setAttribute('aria-hidden', 'true');
+    container.style.cssText = 'position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden;';
+    heroEl.appendChild(container);
+
+    const coords = [
+      "RA 14h 29m  Dec +02\u00b053'",  '\u03b1 047.3\u00b0 \u00b7 \u03b4 +12.4\u00b0',
+      '[134.6, \u221208.1]',           '\u03b1 312.8\u00b0 \u00b7 \u03b4 \u221244.2\u00b0',
+      "RA 06h 12m  Dec \u221217\u00b040'",  '[028.9, +61.3]',
+      '\u03b1 198.4\u00b0 \u00b7 \u03b4 +05.7\u00b0',  "RA 22h 55m  Dec +08\u00b019'",
+      '[267.1, \u221233.8]',           '\u03b1 083.6\u00b0 \u00b7 \u03b4 +22.0\u00b0',
+      "RA 18h 36m  Dec \u221229\u00b000'",  '[351.2, +47.5]',
+    ];
+
+    // Positions around the edges — avoid the centre where the solar system lives
+    const positions = [
+      [6, 10],  [80, 8],  [12, 78], [82, 75],
+      [38, 6],  [62, 88], [3, 42],  [90, 38],
+      [48, 3],  [20, 90], [72, 12], [88, 62],
+    ];
+
+    const count = window.innerWidth < 768 ? 5 : positions.length;
+
+    for (let i = 0; i < count; i++) {
+      const [lPct, tPct] = positions[i];
+      const baseOp   = randFloat(0.09, 0.18);
+      const useCross = (i % 3 === 1); // alternate dot vs crosshair marker
+
+      const wrap = document.createElement('div');
+      wrap.style.cssText = [
+        'position:absolute',
+        `left:${lPct}%`,
+        `top:${tPct}%`,
+        'display:flex',
+        'align-items:center',
+        'gap:5px',
+        `opacity:${baseOp.toFixed(2)}`,
+      ].join(';');
+
+      const marker = document.createElement('span');
+      if (useCross) {
+        marker.textContent = '+';
+        marker.style.cssText = 'font-family:var(--ff-mono);font-size:9px;color:#fff;line-height:1;flex-shrink:0;';
+      } else {
+        marker.style.cssText = 'display:inline-block;width:3px;height:3px;border-radius:50%;background:#fff;flex-shrink:0;margin-top:1px;';
+      }
+
+      const label = document.createElement('span');
+      label.textContent = coords[i % coords.length];
+      label.style.cssText = [
+        'font-family:var(--ff-mono)',
+        `font-size:${randFloat(8, 10).toFixed(1)}px`,
+        'color:#fff',
+        'letter-spacing:0.06em',
+        'white-space:nowrap',
+        'user-select:none',
+      ].join(';');
+
+      wrap.appendChild(marker);
+      wrap.appendChild(label);
+      container.appendChild(wrap);
+
+      // Slow independent drift
+      gsap.to(wrap, {
+        y: randFloat(-12, 12),
+        x: randFloat(-6, 6),
+        duration: randFloat(16, 32),
+        repeat: -1, yoyo: true,
+        delay: randFloat(0, 12),
+        ease: 'sine.inOut',
+      });
+      // Appear → hold → disappear cycle (start hidden)
+      gsap.set(wrap, { opacity: 0 });
+      gsap.timeline({ repeat: -1, delay: randFloat(0, 20) })
+        .to(wrap, { opacity: Math.min(baseOp * 2.2, 0.42), duration: randFloat(1.2, 2.5), ease: 'power2.in' })
+        .to(wrap, { opacity: 0, duration: randFloat(1.0, 2.0), ease: 'power2.out', delay: randFloat(4, 14) })
+        .to(wrap, { duration: randFloat(6, 18) }); // dark pause before next cycle
+    }
+  },
+
   animate() {
     requestAnimationFrame(() => this.animate());
+    const t = Date.now() * 0.001;
 
-    // Smooth camera parallax following mouse
-    this.mouse.x += (this.targetMouse.x - this.mouse.x) * 0.05;
-    this.mouse.y += (this.targetMouse.y - this.mouse.y) * 0.05;
+    // Smooth camera parallax
+    this.mouse.x += (this.targetMouse.x - this.mouse.x) * 0.04;
+    this.mouse.y += (this.targetMouse.y - this.mouse.y) * 0.04;
+    this.camera.position.x = this.mouse.x * 0.22;
+    this.camera.position.y = this.mouse.y * 0.14;
+    this.camera.lookAt(0, -0.20, 0); // offset centres system above nav bar
 
-    this.camera.position.x = this.mouse.x * 0.4;
-    this.camera.position.y = this.mouse.y * 0.25;
-    this.camera.lookAt(0, 0, 0);
-
-    // Slow rotation of particle cloud
-    this.particles.rotation.y += 0.0006;
-    this.particles.rotation.x += 0.0002;
-
-    // Rotate complex geometry with cursor micro-parallax and breathing scale
     if (this.shapes) {
-      const breathe = Date.now() * 0.001;
-      this.shapes.octahedron.rotation.y  += 0.003  + this.mouse.x * 0.0008;
-      this.shapes.octahedron.rotation.x  += 0.001  + this.mouse.y * 0.0008;
-      // Breathing pulse — slow sinusoidal scale oscillation
-      const pulse = 1 + Math.sin(breathe * 0.5) * 0.025;
-      this.shapes.octahedron.scale.setScalar(pulse);
-      const ringPulse = 1 + Math.sin(breathe * 0.35 + 1.2) * 0.012;
-      this.shapes.ring1.scale.setScalar(ringPulse);
-      this.shapes.ring1.rotation.z       += 0.002;
-      this.shapes.ring2.rotation.y       += 0.0015;
-      this.shapes.icoShell.rotation.y    += 0.0005;
-      this.shapes.icoShell.rotation.x    += 0.0003;
+      const { core, stars } = this.shapes;
+      core.rotation.y  += 0.0020;
+      core.rotation.x  += 0.0009;
+      const pulse = 1 + Math.sin(t * 0.42) * 0.022;
+      core.scale.setScalar(pulse);
+      stars.rotation.y += 0.00016;
+    }
+
+    // Advance each planet along its tilted orbit
+    if (this._planets && this._tmp) {
+      this._planets.forEach(p => {
+        p.angle += p.spd;
+        this._tmp.set(
+          Math.cos(p.angle) * p.r,
+          0,
+          Math.sin(p.angle) * p.r
+        );
+        this._tmp.applyEuler(p.euler);
+        p.mesh.position.copy(this._tmp);
+      });
     }
 
     this.renderer.render(this.scene, this.camera);
@@ -655,12 +812,12 @@ const heroAnimations = {
     // Eyebrow fades in first
     tl.to('.hero-eyebrow', { opacity: 1, y: 0, duration: 0.7 }, 0.15);
 
-    // Hero name: simultaneous scramble-reveal + fade-in
+    // Hero name: simultaneous scramble-reveal + fade-in (tightened to 16 frames × 45ms)
     tl.add(() => {
       const nameEl = document.querySelector('.hero-name');
       if (!nameEl) return;
       const original = nameEl.getAttribute('data-text') || nameEl.textContent;
-      let frame = 0, maxFrames = 22;
+      let frame = 0, maxFrames = 16;
       const iv = setInterval(() => {
         frame++;
         nameEl.textContent = original.split('').map((ch, i) => {
@@ -669,13 +826,13 @@ const heroAnimations = {
             ? ch : CHARS[randInt(0, CHARS.length - 1)];
         }).join('');
         if (frame >= maxFrames) { clearInterval(iv); nameEl.textContent = original; }
-      }, 55);
-    }, 0.6);
+      }, 45);
+    }, 0.5);
 
-    tl.to('.hero-name',    { opacity: 1, y: 0, duration: 1.1 }, 0.6);
-    tl.to('.hero-tagline', { opacity: 1, y: 0, duration: 0.8 }, 1.2);
-    tl.to('.hero-cta',     { opacity: 1, y: 0, duration: 0.7 }, 1.7);
-    tl.to('.hud-corner',   { opacity: 1, duration: 0.6 },        2.0);
+    tl.to('.hero-name',    { opacity: 1, y: 0, duration: 0.85 }, 0.5);
+    tl.to('.hero-tagline', { opacity: 1, y: 0, duration: 0.65 }, 1.0);
+    tl.to('.hero-cta',     { opacity: 1, y: 0, duration: 0.55 }, 1.45);
+    tl.to('.hud-corner',   { opacity: 1, duration: 0.5  },        1.75);
   },
 };
 
@@ -1290,7 +1447,7 @@ const scrollAnimations = {
       scrollTrigger: {
         trigger: '#contact',
         start: 'top 80%',
-        toggleActions: 'play none none reverse',
+        toggleActions: 'play none none none',
       },
       opacity: 0,
       y: 40,
@@ -1298,18 +1455,22 @@ const scrollAnimations = {
       ease: 'power3.out',
     });
 
-    // ── Social links stagger ──
-    gsap.from('.social-link', {
-      scrollTrigger: {
-        trigger: '.social-list',
-        start: 'top 88%',
-        toggleActions: 'play none none reverse',
+    // ── Social links stagger — use 'to' not 'from' to avoid stuck-invisible state ──
+    gsap.set('.social-link', { opacity: 0, x: 20 });
+    ScrollTrigger.create({
+      trigger: '#contact',
+      start: 'top 85%',
+      once: true,
+      onEnter: () => {
+        gsap.to('.social-link', {
+          opacity: 1,
+          x: 0,
+          stagger: 0.12,
+          duration: 0.55,
+          ease: 'power3.out',
+          delay: 0.2,
+        });
       },
-      opacity: 0,
-      x: 20,
-      stagger: 0.1,
-      duration: 0.5,
-      ease: 'power3.out',
     });
 
     // ── Timeline vertical line draw ──
@@ -1714,72 +1875,47 @@ const clickRipple = {
   _spawn(x, y) {
     const wrap = document.createElement('div');
     wrap.setAttribute('aria-hidden', 'true');
-    wrap.style.cssText = `
-      position: fixed;
-      left: ${x}px;
-      top: ${y}px;
-      width: 0; height: 0;
-      pointer-events: none;
-      z-index: 9500;
-    `;
+    wrap.style.cssText = [
+      'position:fixed',
+      `left:${x}px`,
+      `top:${y}px`,
+      'width:0;height:0',
+      'pointer-events:none',
+      'z-index:9500',
+    ].join(';');
     document.body.appendChild(wrap);
 
-    // Three concentric expanding border-rings
-    for (let r = 0; r < 3; r++) {
-      const ring = document.createElement('div');
-      const targetSize = 42 + r * 38;
-      ring.style.cssText = `
-        position: absolute;
-        border: 1px solid rgba(255,255,255,${(0.45 - r * 0.12).toFixed(2)});
-        border-radius: 50%;
-        top: 0; left: 0;
-        width: 4px; height: 4px;
-        transform: translate(-50%, -50%);
-      `;
-      wrap.appendChild(ring);
-      if (typeof gsap !== 'undefined') {
-        gsap.to(ring, {
-          width: `${targetSize}px`,
-          height: `${targetSize}px`,
-          opacity: 0,
-          duration: 0.55 + r * 0.1,
-          delay: r * 0.06,
-          ease: 'power2.out',
-        });
-      }
-    }
-
-    // ASCII chars fly outward radially
-    const charCount = 10;
+    // Text characters only — radial burst, no rings
+    const charCount = 14;
     for (let i = 0; i < charCount; i++) {
-      const ch = document.createElement('span');
+      const ch    = document.createElement('span');
       ch.textContent = this.CHARS[randInt(0, this.CHARS.length - 1)];
-      ch.style.cssText = `
-        position: absolute;
-        font-family: var(--ff-mono);
-        font-size: ${randFloat(9, 14)}px;
-        color: rgba(255,255,255,0.28);
-        top: 0; left: 0;
-        transform: translate(-50%, -50%);
-        white-space: nowrap;
-        user-select: none;
-      `;
+      const angle = (i / charCount) * Math.PI * 2 + randFloat(-0.2, 0.2);
+      const dist  = randFloat(38, 110);
+      ch.style.cssText = [
+        'position:absolute',
+        `font-family:var(--ff-mono)`,
+        `font-size:${randFloat(10, 15)}px`,
+        `color:rgba(255,255,255,${randFloat(0.3, 0.55).toFixed(2)})`,
+        'top:0;left:0',
+        'transform:translate(-50%,-50%)',
+        'white-space:nowrap',
+        'user-select:none',
+      ].join(';');
       wrap.appendChild(ch);
       if (typeof gsap !== 'undefined') {
-        const angle = (i / charCount) * Math.PI * 2;
-        const dist  = randFloat(35, 85);
         gsap.to(ch, {
-          x: Math.cos(angle) * dist,
-          y: Math.sin(angle) * dist,
-          opacity: 0,
-          scale: randFloat(0.5, 1.4),
-          duration: randFloat(0.45, 0.8),
-          delay: randFloat(0, 0.08),
-          ease: 'power2.out',
+          x:        Math.cos(angle) * dist,
+          y:        Math.sin(angle) * dist,
+          opacity:  0,
+          scale:    randFloat(0.6, 1.3),
+          duration: randFloat(0.5, 0.95),
+          delay:    randFloat(0, 0.06),
+          ease:     'power2.out',
         });
       }
     }
-    setTimeout(() => wrap.remove(), 950);
+    setTimeout(() => wrap.remove(), 1100);
   },
 };
 

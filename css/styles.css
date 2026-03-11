@@ -16,6 +16,7 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  scrollbar-width: none; /* Firefox — hide scrollbar */
 }
 
 body {
@@ -25,6 +26,7 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   cursor: none; /* custom cursor handled in JS */
+  -ms-overflow-style: none; /* IE 11 — hide scrollbar */
 }
 
 /* Restore default cursor on mobile */
@@ -110,9 +112,9 @@ button {
   background: repeating-linear-gradient(
     to bottom,
     transparent 0px,
-    transparent 5px,
-    rgba(0,0,0,0.06) 5px,
-    rgba(0,0,0,0.06) 6px
+    transparent 4px,
+    rgba(0,0,0,0.13) 4px,
+    rgba(0,0,0,0.13) 5px
   );
 }
 
@@ -171,6 +173,8 @@ section {
 .section-inner {
   width: min(1200px, 92vw);
   margin: 0 auto;
+  position: relative;
+  z-index: 2;
 }
 
 .section-header {
@@ -336,16 +340,16 @@ section {
   color: var(--clr-white);
   line-height: 1;
   text-shadow: 0 0 40px rgba(255,255,255,0.3);
-  animation: pct-glitch 0.15s infinite steps(1);
+  transform-origin: center center;
+  animation: pct-glitch 0.18s infinite steps(1);
 }
 
 @keyframes pct-glitch {
-  0%   { transform: skewX(0deg); }
-  20%  { transform: skewX(-1deg) translateX(2px); }
-  40%  { transform: skewX(0.5deg); }
-  60%  { transform: skewX(0deg) translateX(-1px); }
-  80%  { transform: skewX(0.8deg); }
-  100% { transform: skewX(0deg); }
+  0%   { transform: translateX(0);  }
+  25%  { transform: translateX(2px);  }
+  50%  { transform: translateX(0);    }
+  75%  { transform: translateX(-1px); }
+  100% { transform: translateX(0);    }
 }
 
 /* ── 5. NAVIGATION ── */
@@ -504,6 +508,7 @@ section {
   width: 100%;
   height: 100%;
   z-index: 0;
+  opacity: 0; /* faded in by loader exit crossfade */
 }
 
 .hero-content {
@@ -579,6 +584,47 @@ section {
 /* ── 7. SKILLS ── */
 #skills {
   background: var(--clr-surface);
+  position: relative;
+}
+
+/* No extra pseudo-element on grey sections — scanlines div handles the texture */
+
+/* Dot-matrix grid on black sections */
+#history::before,
+#contact::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: radial-gradient(
+    circle, rgba(255,255,255,0.05) 1px, transparent 1px
+  );
+  background-size: 32px 32px;
+}
+
+/* Corner HUD bracket — history top-left */
+#history::after {
+  content: '';
+  position: absolute;
+  top: 40px; left: 40px;
+  width: 60px; height: 60px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  border-left: 1px solid rgba(255,255,255,0.07);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Corner HUD bracket — contact bottom-right */
+#contact::after {
+  content: '';
+  position: absolute;
+  bottom: 40px; right: 40px;
+  width: 60px; height: 60px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  border-right: 1px solid rgba(255,255,255,0.07);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .ascii-bg {
@@ -658,6 +704,7 @@ section {
 /* ── 8. HISTORY / TIMELINE ── */
 #history {
   background: var(--clr-bg);
+  position: relative;
 }
 
 .timeline {
@@ -747,6 +794,7 @@ section {
 /* ── 9. PROJECTS ── */
 #projects {
   background: var(--clr-surface);
+  position: relative;
 }
 
 .projects-controls {
@@ -988,6 +1036,7 @@ section {
 /* ── 10. CONTACT ── */
 #contact {
   background: var(--clr-bg);
+  position: relative;
 }
 
 .contact-layout {
@@ -1175,22 +1224,11 @@ section {
   .timeline-item::before { left: -26px; }
 }
 
-/* ── 13. SCROLLBAR ── */
+/* ── 13. SCROLLBAR — hidden but scroll still works ── */
 ::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: #000;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  width: 0;
+  height: 0;
+  background: transparent;
 }
 
 /* ── 14. SELECTION ── */
