@@ -399,7 +399,14 @@
   <div id="cursor-dot"  aria-hidden="true"></div>
   <div id="cursor-ring" aria-hidden="true"></div>
 
-  <!-- Main script — loads after DOM + CDN scripts are ready -->
-  <script src="js/main.js?v=3" defer></script>
+  <!-- Main script — loads with cache-busting timestamp to ensure new projects appear immediately -->
+  <script>
+    (function() {
+      var script = document.createElement('script');
+      script.src = 'js/main.js?v=' + new Date().getTime(); // Force reload on every visit
+      script.defer = true;
+      document.body.appendChild(script);
+    })();
+  </script>
 </body>
 </html>
