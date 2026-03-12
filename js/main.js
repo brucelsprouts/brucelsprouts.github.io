@@ -137,6 +137,20 @@ const DATA = {
       images: ['assets/images/projects/portfolio-v2-1.png', 'assets/images/projects/portfolio-v2-2.png'],
       contain: true,
     },
+    {
+      id: 7,
+      title: 'Hallway',
+      category: 'blender',
+      date: '2026-03-12',
+      desc: 'Quick Blender study of a hallway built from repeating pillars with light entering from the left. A simple scene focused on practicing core rendering and lighting workflow while following a tutorial.',
+      stack: ['Blender'],
+      youtube: null,
+      github: null,
+      demo: null,
+      thumb: 'assets/images/projects/hallway-1.png',
+      images: ['assets/images/projects/hallway-1.png', 'assets/images/projects/hallway-2.png'],
+      contain: true,
+    },
   ],
 };
 

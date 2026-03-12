@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <rect width="800" height="450" fill="#080808"/>
+  <rect x="0" y="0" width="800" height="450" fill="url(#grid)" opacity="0.4"/>
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#111" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <text x="400" y="185" font-family="monospace" font-size="11" fill="#333" text-anchor="middle" letter-spacing="4">// 3D - RENDER</text>
+  <text x="400" y="225" font-family="monospace" font-size="20" fill="#555" text-anchor="middle" font-weight="bold">HALLWAY - RENDER</text>
+  <text x="400" y="265" font-family="monospace" font-size="10" fill="#2a2a2a" text-anchor="middle" letter-spacing="2">Replace: assets/images/projects/hallway-1.png</text>
+</svg>
