@@ -56,75 +56,86 @@ const DATA = {
   projects: [
     {
       id: 1,
-      title: 'Get Jinxed — 4K Arcane Edit',
-      category: 'video',
-      desc: 'Personal YouTube edit of Jinx from Arcane Season 2, cut to "Get Jinxed". Styled after magazine cut-out collages — overlapping panels, clipped shapes, and photo layers composited over the footage for a uniquely styled visual.',
-      stack: ['After Effects', 'Photoshop', 'YouTube'],
-      youtube: 'https://www.youtube.com/embed/l32I3pNtN_c?rel=0',
-      github: null,
-      demo: 'https://youtu.be/l32I3pNtN_c',
-      thumb: 'assets/images/projects/jinx-edit-1.svg',
-      images: null,
-    },
-    {
-      id: 2,
-      title: 'Coffee & Donut',
-      category: 'blender',
-      desc: 'The classic Blender learning project — a coffee cup with liquid and an iced donut. Focused on modelling, lighting, shading, and render fundamentals.',
-      stack: ['Blender'],
-      youtube: null,
-      github: null,
-      demo: null,
-      thumb: 'assets/images/projects/donut-1.svg',
-      images: ['assets/images/projects/donut-1.svg', 'assets/images/projects/donut-2.svg'],
-    },
-    {
-      id: 3,
-      title: 'XPWaste',
-      category: 'coding',
-      desc: 'A desktop Pomodoro focus timer built for Old School RuneScape players. Tracks active study time, logs session history, supports custom notification sounds, and ships as a standalone Windows executable. OSRS and normal mode themes included.',
-      stack: ['Python', 'Tkinter', 'PyInstaller'],
-      youtube: null,
-      github: 'https://github.com/brucelsprouts/xpwaste',
-      demo: null,
-      thumb: 'assets/images/projects/xpwaste-1.svg',
-      images: ['assets/images/projects/xpwaste-1.svg', 'assets/images/projects/xpwaste-2.svg'],
-    },
-    {
-      id: 4,
-      title: 'Nixie Counter',
-      category: 'coding',
-      desc: 'A retro Nixie-tube-style visitor counter served as a dynamically generated image from an Oracle cloud server. Embed it in any GitHub README or web page — it increments and renders in real time with configurable digit count and base value.',
-      stack: ['PHP', 'Oracle Cloud', 'GitHub Profile'],
-      youtube: null,
-      github: 'https://github.com/brucelsprouts/nixiecounter',
-      demo: null,
-      thumb: 'assets/images/projects/nixiecounter-1.svg',
-      images: ['assets/images/projects/nixiecounter-1.svg'],
-    },
-    {
-      id: 5,
-      title: 'Portfolio v2',
-      category: 'coding',
-      desc: 'Cyber-tech themed personal portfolio. Three.js solar system hero, GSAP scroll animations, a hidden aim-trainer minigame, and low-performance mode. Direction, design, and coding by me — built with AI assistance. If you\'re seeing this, you\'re already here.',
-      stack: ['HTML', 'CSS', 'JavaScript', 'Three.js', 'GSAP'],
-      youtube: null,
-      github: 'https://github.com/brucelsprouts/brucelsprouts.github.io',
-      demo: null,
-      thumb: 'assets/images/projects/portfolio-v2-1.svg',
-      images: ['assets/images/projects/portfolio-v2-1.svg', 'assets/images/projects/portfolio-v2-2.svg'],
-    },
-    {
-      id: 6,
       title: 'Portfolio v1',
       category: 'coding',
+      date: '2023-09-15',
       desc: 'First attempt at a personal portfolio. Left unfinished — missing assets, inconsistent styling, and nothing really felt cohesive. Decided to scrap it and start fresh rather than patch something that wasn\'t working.',
       stack: ['HTML', 'CSS', 'JavaScript'],
       youtube: null,
       github: 'https://github.com/brucelsprouts/brucelsprouts.github.io-1.0',
       demo: 'https://brucelsprouts.github.io/brucelsprouts.github.io-1.0/',
-      thumb: 'assets/images/projects/portfolio-v1-1.svg',
-      images: ['assets/images/projects/portfolio-v1-1.svg'],
+      thumb: 'assets/images/projects/portfolio-v1-1.png',
+      images: ['assets/images/projects/portfolio-v1-1.png', 'assets/images/projects/portfolio-v1-2.png'],
+      contain: true,
+    },
+    {
+      id: 2,
+      title: 'Get Jinxed — 4K Arcane Edit',
+      category: 'video',
+      date: '2024-11-16',
+      desc: 'Personal YouTube edit of Jinx from Arcane Season 2, cut to "Get Jinxed". Styled after magazine cut-out collages — overlapping panels, clipped shapes, and photo layers composited over the footage for a uniquely styled visual.',
+      stack: ['After Effects', 'Photoshop', 'YouTube'],
+      youtube: 'https://www.youtube.com/embed/l32I3pNtN_c?rel=0',
+      github: null,
+      demo: 'https://youtu.be/l32I3pNtN_c',
+      thumb: 'assets/images/projects/jinx-edit-1.png',
+      images: null,
+    },
+    {
+      id: 3,
+      title: 'Nixie Counter',
+      category: 'coding',
+      date: '2025-05-18',
+      desc: 'A retro Nixie-tube-style visitor counter served as a dynamically generated image from an Oracle cloud server. Embed it in any GitHub README or web page — it increments and renders in real time with configurable digit count and base value.',
+      stack: ['PHP', 'Oracle Cloud', 'GitHub Profile'],
+      youtube: null,
+      github: 'https://github.com/brucelsprouts/nixiecounter',
+      demo: null,
+      thumb: 'assets/images/projects/nixiecounter-1.png',
+      images: ['assets/images/projects/nixiecounter-1.png', 'assets/images/projects/nixiecounter-2.png'],
+      contain: true,
+    },
+    {
+      id: 4,
+      title: 'Coffee & Donut',
+      category: 'blender',
+      date: '2026-02-01',
+      desc: 'The classic Blender learning project — a coffee cup with liquid and an iced donut. Focused on modelling, lighting, shading, and render fundamentals.',
+      stack: ['Blender'],
+      youtube: null,
+      github: null,
+      demo: null,
+      thumb: 'assets/images/projects/donut-1.png',
+      images: ['assets/images/projects/donut-1.png', 'assets/images/projects/donut-2.png'],
+      contain: true,
+    },
+    {
+      id: 5,
+      title: 'XPWaste',
+      category: 'coding',
+      date: '2026-03-10',
+      desc: 'A desktop Pomodoro focus timer built for Old School RuneScape players. Tracks active study time, logs session history, supports custom notification sounds, and ships as a standalone Windows executable. OSRS and normal mode themes included.',
+      stack: ['Python', 'Tkinter', 'PyInstaller'],
+      youtube: null,
+      github: 'https://github.com/brucelsprouts/xpwaste',
+      demo: null,
+      thumb: 'assets/images/projects/xpwaste-1.png',
+      images: ['assets/images/projects/xpwaste-1.png', 'assets/images/projects/xpwaste-2.png'],
+      contain: true,
+    },
+    {
+      id: 6,
+      title: 'Portfolio v2',
+      category: 'coding',
+      date: '2026-03-11',
+      desc: 'Cyber-tech themed personal portfolio. Three.js solar system hero, GSAP scroll animations, a hidden aim-trainer minigame, and low-performance mode. Direction, design, and coding by me — built with AI assistance. If you\'re seeing this, you\'re already here.',
+      stack: ['HTML', 'CSS', 'JavaScript', 'Three.js', 'GSAP'],
+      youtube: null,
+      github: 'https://github.com/brucelsprouts/brucelsprouts.github.io',
+      demo: null,
+      thumb: 'assets/images/projects/portfolio-v2-1.png',
+      images: ['assets/images/projects/portfolio-v2-1.png', 'assets/images/projects/portfolio-v2-2.png'],
+      contain: true,
     },
   ],
 };
@@ -1263,12 +1274,14 @@ const history = {
 const projects = {
   all: [],
   currentFilter: 'all',
+  currentSort: 'date-desc',
   searchQuery: '',
 
   init() {
     this.all = DATA.projects;
     this.renderAll(this.all);
     this.bindFilter();
+    this.bindSort();
     this.bindSearch();
     this.bindScrollAnimations();
   },
@@ -1341,7 +1354,7 @@ const projects = {
 
     // Thumbnail
     const thumbHtml = project.thumb
-      ? `<img src="${project.thumb}" alt="${project.title} preview" loading="lazy" />`
+      ? `<img src="${project.thumb}" onerror="this.onerror=null;this.src='${project.thumb.replace('.png', '.svg')}';" alt="${project.title} preview" loading="lazy" />`
       : `<div class="project-thumb-placeholder">${project.title.charAt(0)}</div>`;
 
     // Tech stack tags
@@ -1356,8 +1369,12 @@ const projects = {
       project.github ? `<a href="${project.github}" class="project-link secondary"  target="_blank" rel="noopener noreferrer">GitHub</a>` : '',
     ].filter(Boolean).join('');
 
+    const thumbAttrs = project.thumb
+      ? ` class="project-thumb project-thumb--contain" style="background-image:url('${project.thumb.replace('.png', '.svg')}')"` 
+      : ` class="project-thumb"`;
+
     card.innerHTML = `
-      <div class="project-thumb">
+      <div${thumbAttrs}>
         ${thumbHtml}
         <span class="card-expand-hint" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.5 10.5H1.5V7.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><line x1="10.5" y1="1.5" x2="7" y2="5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="1.5" y1="10.5" x2="5" y2="7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
       </div>
@@ -1380,7 +1397,7 @@ const projects = {
   },
 
   filter() {
-    let list = this.all;
+    let list = [...this.all];
 
     if (this.currentFilter !== 'all') {
       list = list.filter(p => p.category === this.currentFilter);
@@ -1395,6 +1412,13 @@ const projects = {
       );
     }
 
+    switch (this.currentSort) {
+      case 'date-asc':  list.sort((a, b) => (a.date || '').localeCompare(b.date || '')); break;
+      case 'date-desc': list.sort((a, b) => (b.date || '').localeCompare(a.date || '')); break;
+      case 'alpha-asc': list.sort((a, b) => a.title.localeCompare(b.title)); break;
+      case 'alpha-desc':list.sort((a, b) => b.title.localeCompare(a.title)); break;
+    }
+
     this.renderAll(list);
   },
 
@@ -1405,6 +1429,18 @@ const projects = {
         btns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         this.currentFilter = btn.dataset.filter;
+        this.filter();
+      });
+    });
+  },
+
+  bindSort() {
+    const btns = document.querySelectorAll('.sort-btn');
+    btns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        btns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        this.currentSort = btn.dataset.sort;
         this.filter();
       });
     });
@@ -1469,7 +1505,7 @@ const projectModal = {
     // Build slides: YouTube embed first (if any), then images
     this._slides = [];
     if (project.youtube) this._slides.push({ type: 'youtube', src: project.youtube });
-    if (project.images)  project.images.forEach(src => this._slides.push({ type: 'image', src }));
+    if (project.images)  project.images.forEach(src => this._slides.push({ type: 'image', src, contain: !!project.contain }));
     this._idx = 0;
     this._renderMedia();
 
@@ -1479,6 +1515,7 @@ const projectModal = {
   },
 
   close() {
+    if (this._cleanupZoom) { this._cleanupZoom(); this._cleanupZoom = null; }
     this._el.classList.remove('open');
     this._el.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
@@ -1493,6 +1530,7 @@ const projectModal = {
   },
 
   _renderMedia() {
+    if (this._cleanupZoom) { this._cleanupZoom(); this._cleanupZoom = null; }
     const mediaEl = document.getElementById('modal-media');
     if (!this._slides.length) { mediaEl.innerHTML = ''; return; }
 
@@ -1501,18 +1539,28 @@ const projectModal = {
 
     let html;
     if (slide.type === 'youtube') {
-      // 16:9 embed — single slide or first slide
       html = `<div class="video-wrap"><iframe src="${slide.src}&autoplay=0" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>`;
     } else {
+      const svgSrc  = slide.src.includes('.png') ? slide.src.replace('.png', '.svg') : slide.src;
       const navHtml = multi
         ? `<button class="gallery-nav prev" aria-label="Previous">&#8592;</button>
            <button class="gallery-nav next" aria-label="Next">&#8594;</button>
            <span class="gallery-counter">${this._idx + 1} / ${this._slides.length}</span>`
         : '';
-      html = `<div class="img-gallery"><img class="gallery-img" src="${slide.src}" alt="" />${navHtml}</div>`;
+      html = `<div class="img-gallery" style="background-image:url('${svgSrc}')">
+        <img class="gallery-img" src="${slide.src}" onerror="this.onerror=null;this.src='${svgSrc}';" alt="" draggable="false" />
+        <div class="gallery-zoom-controls">
+          <button class="gallery-zoom-btn zoom-out" title="Zoom out">&#8722;</button>
+          <span class="gallery-zoom-label">1&times;</span>
+          <button class="gallery-zoom-btn zoom-in" title="Zoom in">&#43;</button>
+        </div>
+        ${navHtml}
+      </div>`;
     }
 
     mediaEl.innerHTML = html;
+
+    if (slide.type !== 'youtube') this._initZoom(mediaEl);
 
     if (multi) {
       const prev = mediaEl.querySelector('.prev');
@@ -1520,6 +1568,151 @@ const projectModal = {
       if (prev) prev.addEventListener('click', () => this._step(-1));
       if (next) next.addEventListener('click', () => this._step(1));
     }
+  },
+
+  _initZoom(mediaEl) {
+    const gallery  = mediaEl.querySelector('.img-gallery');
+    const img      = mediaEl.querySelector('.gallery-img');
+    const label    = mediaEl.querySelector('.gallery-zoom-label');
+    if (!gallery || !img) return;
+
+    // Rendered state (what the user sees)
+    let scale = 1, tx = 0, ty = 0;
+    // Target state (where we're animating toward)
+    let tScale = 1, tTx = 0, tTy = 0;
+    let dragging = false, startX = 0, startY = 0;
+    let velX = 0, velY = 0, lastTime = 0;
+    let rafId = null;
+    const MIN = 1, MAX = 4, LERP = 0.15, MOM = 80;
+
+    img.style.transition = 'none'; // JS owns all animation
+
+    const clampTrans = (s, x, y) => {
+      const mX = (gallery.clientWidth  * (s - 1)) / 2;
+      const mY = (gallery.clientHeight * (s - 1)) / 2;
+      return [Math.max(-mX, Math.min(mX, x)), Math.max(-mY, Math.min(mY, y))];
+    };
+
+    const applyTransform = () => {
+      img.style.transform = `translate(${tx}px,${ty}px) scale(${scale})`;
+    };
+
+    const updateLabel = () => {
+      if (label) label.textContent = `${tScale.toFixed(1)}\xD7`;
+    };
+
+    const tick = () => {
+      const ds = tScale - scale, dx = tTx - tx, dy = tTy - ty;
+      const done = Math.abs(ds) < 0.0005 && Math.abs(dx) < 0.05 && Math.abs(dy) < 0.05;
+      if (done) {
+        scale = tScale; tx = tTx; ty = tTy;
+        applyTransform();
+        gallery.classList.toggle('zoomed', scale > 1.02);
+        rafId = null;
+        return;
+      }
+      scale += ds * LERP;
+      tx    += dx * LERP;
+      ty    += dy * LERP;
+      applyTransform();
+      gallery.classList.toggle('zoomed', scale > 1.02);
+      rafId = requestAnimationFrame(tick);
+    };
+
+    const scheduleRaf = () => { if (!rafId) rafId = requestAnimationFrame(tick); };
+
+    const zoomTo = (newScale, pivotClientX, pivotClientY) => {
+      const prev = tScale;
+      tScale = Math.max(MIN, Math.min(MAX, newScale));
+      if (tScale <= MIN) {
+        tTx = 0; tTy = 0;
+      } else if (pivotClientX !== undefined) {
+        const rect  = gallery.getBoundingClientRect();
+        const px    = pivotClientX - rect.left - rect.width  / 2;
+        const py    = pivotClientY - rect.top  - rect.height / 2;
+        const ratio = tScale / Math.max(prev, 0.01);
+        tTx = (tTx - px) * ratio + px;
+        tTy = (tTy - py) * ratio + py;
+      }
+      [tTx, tTy] = clampTrans(tScale, tTx, tTy);
+      updateLabel();
+      scheduleRaf();
+    };
+
+    // Wheel — zoom toward cursor
+    const onWheel = (e) => {
+      e.preventDefault();
+      const factor = e.deltaMode === 1 ? 20 : 1;
+      const delta  = -e.deltaY * factor * 0.004;
+      zoomTo(tScale + delta, e.clientX, e.clientY);
+    };
+
+    // Double-click — toggle 2.5x / reset
+    const onDblClick = (e) => {
+      if (e.target.closest('button')) return;
+      tScale > 1.05 ? zoomTo(1) : zoomTo(2.5, e.clientX, e.clientY);
+    };
+
+    // Drag
+    const startDrag = (cx, cy) => {
+      if (tScale <= 1) return;
+      dragging = true;
+      startX = cx - tTx;
+      startY = cy - tTy;
+      velX = 0; velY = 0;
+      lastTime = performance.now();
+      if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+      gallery.classList.add('is-dragging');
+    };
+
+    const moveDrag = (cx, cy) => {
+      if (!dragging) return;
+      const now = performance.now();
+      const dt  = Math.max(1, now - lastTime);
+      const nx  = cx - startX;
+      const ny  = cy - startY;
+      const [cx2, cy2] = clampTrans(tScale, nx, ny);
+      velX = (cx2 - tTx) / dt;
+      velY = (cy2 - tTy) / dt;
+      tTx = cx2; tTy = cy2;
+      // instant update during drag — no lerp lag
+      scale = tScale; tx = tTx; ty = tTy;
+      applyTransform();
+      lastTime = now;
+    };
+
+    const endDrag = () => {
+      if (!dragging) return;
+      dragging = false;
+      gallery.classList.remove('is-dragging');
+      // momentum
+      const [cx, cy] = clampTrans(tScale, tTx + velX * MOM, tTy + velY * MOM);
+      tTx = cx; tTy = cy;
+      scheduleRaf();
+    };
+
+    const onMouseDown  = (e) => { if (e.button === 0 && !e.target.closest('button')) { e.preventDefault(); startDrag(e.clientX, e.clientY); } };
+    const onMouseMove  = (e) => moveDrag(e.clientX, e.clientY);
+    const onTouchStart = (e) => { if (e.touches.length === 1) startDrag(e.touches[0].clientX, e.touches[0].clientY); };
+    const onTouchMove  = (e) => { if (e.touches.length === 1 && dragging) { e.preventDefault(); moveDrag(e.touches[0].clientX, e.touches[0].clientY); } };
+
+    mediaEl.querySelector('.zoom-in') .addEventListener('click', () => zoomTo(tScale + 0.5));
+    mediaEl.querySelector('.zoom-out').addEventListener('click', () => zoomTo(tScale - 0.5));
+    gallery.addEventListener('wheel',      onWheel,     { passive: false });
+    gallery.addEventListener('dblclick',   onDblClick);
+    gallery.addEventListener('mousedown',  onMouseDown);
+    gallery.addEventListener('touchstart', onTouchStart, { passive: true });
+    gallery.addEventListener('touchmove',  onTouchMove,  { passive: false });
+    window .addEventListener('mousemove',  onMouseMove);
+    window .addEventListener('mouseup',    endDrag);
+    window .addEventListener('touchend',   endDrag);
+
+    this._cleanupZoom = () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseup',   endDrag);
+      window.removeEventListener('touchend',  endDrag);
+    };
   },
 };
 
