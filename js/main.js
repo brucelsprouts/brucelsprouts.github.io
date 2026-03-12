@@ -1279,10 +1279,10 @@ const projects = {
 
   init() {
     this.all = DATA.projects;
-    this.renderAll(this.all);
     this.bindFilter();
     this.bindSort();
     this.bindSearch();
+    this.filter();
     this.bindScrollAnimations();
   },
 
