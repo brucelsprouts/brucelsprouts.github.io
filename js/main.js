@@ -2498,6 +2498,31 @@ const lowPerf = {
 };
 
 /* ============================================================
+   21. TAB VISIBILITY HANDLER — Dynamic title & icon
+============================================================ */
+const pageIdle = {
+  originalTitle: document.title,
+  idleTitle: 'System Idle...',
+  favicon: document.querySelector('link[rel="icon"]'),
+  originalIcon: 'assets/favicon.svg',
+  idleIcon: 'assets/moon.svg',
+
+  init() {
+    if (!this.favicon) return;
+    
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        document.title = this.idleTitle;
+        this.favicon.href = this.idleIcon;
+      } else {
+        document.title = this.originalTitle;
+        this.favicon.href = this.originalIcon;
+      }
+    });
+  }
+};
+
+/* ============================================================
    14. BOOT SEQUENCE — wait for GSAP + Three.js then start
 ============================================================ */
 function waitForLibraries(callback, maxWait = 5000) {
@@ -2927,6 +2952,9 @@ function boot() {
 
   // Hover glitch — brief char scramble on hover over interactive elements
   hoverGlitch.init();
+
+  // Page idle — dynamic title and favicon on blur
+  pageIdle.init();
 
   // Low performance mode toggle
   lowPerf.init();
