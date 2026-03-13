@@ -64,8 +64,8 @@ const DATA = {
       youtube: null,
       github: 'https://github.com/brucelsprouts/brucelsprouts.github.io-1.0',
       demo: 'https://brucelsprouts.github.io/brucelsprouts.github.io-1.0/',
-      thumb: 'assets/images/projects/portfolio-v1-1.png',
-      images: ['assets/images/projects/portfolio-v1-1.png', 'assets/images/projects/portfolio-v1-2.png'],
+      thumb: 'assets/images/projects/portfolio-v1/portfolio-v1-1.png',
+      images: ['assets/images/projects/portfolio-v1/portfolio-v1-1.png', 'assets/images/projects/portfolio-v1/portfolio-v1-2.png'],
       contain: true,
     },
     {
@@ -78,7 +78,7 @@ const DATA = {
       youtube: 'https://www.youtube.com/embed/l32I3pNtN_c?rel=0',
       github: null,
       demo: 'https://youtu.be/l32I3pNtN_c',
-      thumb: 'assets/images/projects/jinx-edit-1.png',
+      thumb: 'assets/images/projects/jinx-edit/jinx-edit-1.png',
       images: null,
     },
     {
@@ -91,8 +91,8 @@ const DATA = {
       youtube: null,
       github: 'https://github.com/brucelsprouts/nixiecounter',
       demo: null,
-      thumb: 'assets/images/projects/nixiecounter-1.png',
-      images: ['assets/images/projects/nixiecounter-1.png', 'assets/images/projects/nixiecounter-2.png'],
+      thumb: 'assets/images/projects/nixiecounter/nixiecounter-1.png',
+      images: ['assets/images/projects/nixiecounter/nixiecounter-1.png', 'assets/images/projects/nixiecounter/nixiecounter-2.png'],
       contain: true,
     },
     {
@@ -105,8 +105,8 @@ const DATA = {
       youtube: null,
       github: null,
       demo: null,
-      thumb: 'assets/images/projects/donut-1.png',
-      images: ['assets/images/projects/donut-1.png', 'assets/images/projects/donut-2.png'],
+      thumb: 'assets/images/projects/donut/donut-1.png',
+      images: ['assets/images/projects/donut/donut-1.png', 'assets/images/projects/donut/donut-2.png'],
       contain: true,
     },
     {
@@ -119,8 +119,8 @@ const DATA = {
       youtube: null,
       github: 'https://github.com/brucelsprouts/xpwaste',
       demo: null,
-      thumb: 'assets/images/projects/xpwaste-1.png',
-      images: ['assets/images/projects/xpwaste-1.png', 'assets/images/projects/xpwaste-2.png'],
+      thumb: 'assets/images/projects/xpwaste/xpwaste-1.png',
+      images: ['assets/images/projects/xpwaste/xpwaste-1.png', 'assets/images/projects/xpwaste/xpwaste-2.png'],
       contain: true,
     },
     {
@@ -133,8 +133,8 @@ const DATA = {
       youtube: null,
       github: 'https://github.com/brucelsprouts/brucelsprouts.github.io',
       demo: null,
-      thumb: 'assets/images/projects/portfolio-v2-1.png',
-      images: ['assets/images/projects/portfolio-v2-1.png', 'assets/images/projects/portfolio-v2-2.png'],
+      thumb: 'assets/images/projects/portfolio-v2/portfolio-v2-1.png',
+      images: ['assets/images/projects/portfolio-v2/portfolio-v2-1.png', 'assets/images/projects/portfolio-v2/portfolio-v2-2.png'],
       contain: true,
     },
     {
@@ -147,8 +147,8 @@ const DATA = {
       youtube: null,
       github: null,
       demo: null,
-      thumb: 'assets/images/projects/hallway-1.png',
-      images: ['assets/images/projects/hallway-1.png', 'assets/images/projects/hallway-2.png'],
+      thumb: 'assets/images/projects/hallway/hallway-1.png',
+      images: ['assets/images/projects/hallway/hallway-1.png', 'assets/images/projects/hallway/hallway-2.png'],
       contain: true,
     },
   ],
@@ -1378,9 +1378,16 @@ const projects = {
 
     // Action buttons
     const demoLabel = project.category === 'video' ? 'Watch on YouTube' : 'View Live';
+    
+    // Blender projects: add "View Fullscreen" to open the first image
+    const blenderLink = (project.category === 'blender' && project.images && project.images.length > 0)
+      ? `<a href="${project.images[0]}" class="project-link secondary" target="_blank" rel="noopener noreferrer" title="View/Download Image">View Fullscreen</a>`
+      : '';
+
     const linksHtml = [
       project.demo   ? `<a href="${project.demo}"   class="project-link primary"    target="_blank" rel="noopener noreferrer">${demoLabel}</a>`   : '',
       project.github ? `<a href="${project.github}" class="project-link secondary"  target="_blank" rel="noopener noreferrer">GitHub</a>` : '',
+      blenderLink
     ].filter(Boolean).join('');
 
     const thumbAttrs = project.thumb
