@@ -2502,7 +2502,7 @@ const lowPerf = {
 ============================================================ */
 const pageIdle = {
   originalTitle: document.title,
-  idleTitle: 'System Idle...',
+  idleTitle: 'Bruce Lin | Idle',
   favicon: document.querySelector('link[rel="icon"]'),
   originalIcon: 'assets/favicon.svg',
   idleIcon: 'assets/moon.svg',
