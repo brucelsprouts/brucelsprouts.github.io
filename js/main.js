@@ -1518,9 +1518,13 @@ const projectModal = {
 
     // Links
     const demoLabel = project.category === 'video' ? 'Watch on YouTube' : 'View Live';
+    const modalBlenderFullscreen = (project.category === 'blender' && project.images && project.images.length > 0)
+      ? `<a href="${project.images[0]}" class="project-link secondary" target="_blank" rel="noopener noreferrer" title="View/Download Image">View Fullscreen</a>`
+      : '';
     document.getElementById('modal-links').innerHTML = [
       project.demo   ? `<a href="${project.demo}"   class="project-link primary"  target="_blank" rel="noopener noreferrer">${demoLabel}</a>` : '',
       project.github ? `<a href="${project.github}" class="project-link secondary" target="_blank" rel="noopener noreferrer">GitHub</a>` : '',
+      modalBlenderFullscreen,
     ].filter(Boolean).join('');
 
     // Build slides: YouTube embed first (if any), then images

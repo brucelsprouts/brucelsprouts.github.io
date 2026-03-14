@@ -38,11 +38,12 @@ Hey, I'm **Bruce Lin** — a B.Sc. Computer Science student at Western Universit
 
 | Project | Description | Links |
 |---------|-------------|-------|
-| **Get Jinxed — 4K Arcane Edit** | Personal AMV edit of Jinx from Arcane S2, magazine cut-out collage style | [YouTube](https://youtu.be/l32I3pNtN_c) |
-| **Coffee & Donut** | Classic Blender learning project — modelling, lighting, shading fundamentals | — |
-| **XPWaste** | Pomodoro focus timer for OSRS players, ships as a standalone Windows exe | [GitHub](https://github.com/brucelsprouts/xpwaste) |
-| **Nixie Counter** | Retro Nixie-tube visitor counter served as a dynamic PNG from Oracle Cloud | [GitHub](https://github.com/brucelsprouts/nixiecounter) |
 | **Portfolio v2** | This site | [GitHub](https://github.com/brucelsprouts/brucelsprouts.github.io) · [Live](https://brucelsprouts.com) |
+| **Hallway** | Quick Blender hallway study with repeating pillars and left-side lighting; focused on rendering and lighting workflow practice | — |
+| **XPWaste** | Pomodoro focus timer for OSRS players, ships as a standalone Windows exe | [GitHub](https://github.com/brucelsprouts/xpwaste) |
+| **Coffee & Donut** | Classic Blender learning project — modelling, lighting, shading fundamentals | — |
+| **Nixie Counter** | Retro Nixie-tube visitor counter served as a dynamic PNG from Oracle Cloud | [GitHub](https://github.com/brucelsprouts/nixiecounter) |
+| **Get Jinxed — 4K Arcane Edit** | Personal AMV edit of Jinx from Arcane S2, magazine cut-out collage style | [YouTube](https://youtu.be/l32I3pNtN_c) |
 | **Portfolio v1** | First attempt — left unfinished, scrapped to start fresh | [GitHub](https://github.com/brucelsprouts/brucelsprouts.github.io-1.0) · [Live](https://brucelsprouts.github.io/brucelsprouts.github.io-1.0/) |
 
 ---
