@@ -1865,8 +1865,16 @@ body.naq-playing #cursor-ring { display: none !important; }
   pointer-events: none;
 }
 
-.img-gallery.video-gallery::before {
-  display: none;
+.video-gallery {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  overflow: hidden;
+}
+
+.video-gallery::before {
+  display: none !important;
+  content: none !important;
 }
 
 .gallery-video {
@@ -1875,8 +1883,10 @@ body.naq-playing #cursor-ring { display: none !important; }
   display: block;
   object-fit: contain;
   position: relative;
-  z-index: 1;
+  z-index: 2;
   background: #000;
+  filter: none !important;
+  opacity: 1 !important;
 }
 
 .gallery-img {

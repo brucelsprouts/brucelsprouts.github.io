@@ -1600,7 +1600,7 @@ const projectModal = {
            <button class="gallery-nav next" aria-label="Next">&#8594;</button>
            <span class="gallery-counter">${this._idx + 1} / ${this._slides.length}</span>`
         : '';
-      html = `<div class="img-gallery video-gallery">
+      html = `<div class="video-gallery">
         <video class="gallery-video" src="${slide.src}" controls playsinline preload="metadata"></video>
         ${navHtml}
       </div>`;
