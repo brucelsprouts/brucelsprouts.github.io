@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none">
+  <rect width="1600" height="900" fill="#04070c"/>
+  <rect x="0" y="560" width="1600" height="340" fill="#02060a"/>
+  <path d="M0 545C170 520 310 575 465 552C625 528 760 500 920 536C1080 572 1225 590 1400 562C1490 548 1555 550 1600 560V900H0V545Z" fill="#0b1a2a"/>
+  <circle cx="1320" cy="180" r="56" fill="#d8e6f7" fill-opacity="0.9"/>
+  <rect x="782" y="470" width="36" height="120" rx="8" fill="#2c3f58"/>
+  <path d="M800 430L868 500H732L800 430Z" fill="#1b2f46"/>
+  <text x="70" y="90" fill="#b7c7da" font-family="monospace" font-size="34" letter-spacing="2">OCEAN BUOY - RENDER</text>
+</svg>

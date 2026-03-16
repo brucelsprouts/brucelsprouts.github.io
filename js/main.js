@@ -151,6 +151,27 @@ const DATA = {
       images: ['assets/images/projects/hallway/hallway-1.png', 'assets/images/projects/hallway/hallway-2.png'],
       contain: true,
     },
+    {
+      id: 8,
+      title: 'Ocean Buoy',
+      category: 'blender',
+      date: '2026-03-16',
+      desc: 'Dark ocean night scene where the camera rocks along the water, dips into the ocean, and rises back out shortly after. Mainly a Blender render project with some video post-processing to polish the final look. Media order: edited render image, edited render video, unedited video, and a solids/shaders breakdown render.',
+      stack: ['Blender', 'Video Post'],
+      youtube: null,
+      github: null,
+      demo: null,
+      thumb: 'assets/images/projects/ocean-buoy/ocean-buoy-1.png',
+      media: [
+        { type: 'image', src: 'assets/images/projects/ocean-buoy/ocean-buoy-1.png' },
+        { type: 'video', src: 'assets/videos/ocean-buoy/ocean-buoy-2.mp4' },
+        { type: 'video', src: 'assets/videos/ocean-buoy/ocean-buoy-3.mp4' },
+        { type: 'image', src: 'assets/images/projects/ocean-buoy/ocean-buoy-4.png' },
+      ],
+      images: ['assets/images/projects/ocean-buoy/ocean-buoy-1.png', 'assets/images/projects/ocean-buoy/ocean-buoy-4.png'],
+      videos: ['assets/videos/ocean-buoy/ocean-buoy-2.mp4', 'assets/videos/ocean-buoy/ocean-buoy-3.mp4'],
+      contain: true,
+    },
   ],
 };
 
@@ -1527,10 +1548,18 @@ const projectModal = {
       modalBlenderFullscreen,
     ].filter(Boolean).join('');
 
-    // Build slides: YouTube embed first (if any), then images
+    // Build slides: YouTube embed first (if any), then project media
     this._slides = [];
     if (project.youtube) this._slides.push({ type: 'youtube', src: project.youtube });
-    if (project.images)  project.images.forEach(src => this._slides.push({ type: 'image', src, contain: !!project.contain }));
+    if (project.media && project.media.length) {
+      project.media.forEach(item => {
+        if (!item || !item.type || !item.src) return;
+        this._slides.push({ type: item.type, src: item.src, contain: !!project.contain });
+      });
+    } else {
+      if (project.images) project.images.forEach(src => this._slides.push({ type: 'image', src, contain: !!project.contain }));
+      if (project.videos) project.videos.forEach(src => this._slides.push({ type: 'video', src }));
+    }
     this._idx = 0;
     this._renderMedia();
 
@@ -1565,6 +1594,16 @@ const projectModal = {
     let html;
     if (slide.type === 'youtube') {
       html = `<div class="video-wrap"><iframe src="${slide.src}&autoplay=0" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>`;
+    } else if (slide.type === 'video') {
+      const navHtml = multi
+        ? `<button class="gallery-nav prev" aria-label="Previous">&#8592;</button>
+           <button class="gallery-nav next" aria-label="Next">&#8594;</button>
+           <span class="gallery-counter">${this._idx + 1} / ${this._slides.length}</span>`
+        : '';
+      html = `<div class="img-gallery video-gallery">
+        <video class="gallery-video" src="${slide.src}" controls playsinline preload="metadata"></video>
+        ${navHtml}
+      </div>`;
     } else {
       const svgSrc  = slide.src.includes('.png') ? slide.src.replace('.png', '.svg') : slide.src;
       const navHtml = multi
@@ -1585,7 +1624,7 @@ const projectModal = {
 
     mediaEl.innerHTML = html;
 
-    if (slide.type !== 'youtube') this._initZoom(mediaEl);
+    if (slide.type === 'image') this._initZoom(mediaEl);
 
     if (multi) {
       const prev = mediaEl.querySelector('.prev');

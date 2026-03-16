@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none">
+  <rect width="1600" height="900" fill="#050505"/>
+  <rect x="0" y="560" width="1600" height="340" fill="#080808"/>
+  <path d="M0 540C120 505 260 600 430 565C620 526 780 510 940 542C1100 574 1240 592 1410 560C1495 544 1560 545 1600 555V900H0V540Z" fill="#141414"/>
+  <rect x="770" y="458" width="60" height="160" fill="#2f2f2f"/>
+  <rect x="770" y="458" width="60" height="160" fill="url(#wire)" fill-opacity="0.7"/>
+  <path d="M800 412L900 502H700L800 412Z" fill="#262626"/>
+  <text x="70" y="90" fill="#d0d0d0" font-family="monospace" font-size="34" letter-spacing="2">OCEAN BUOY - SOLIDS / SHADERS</text>
+  <defs>
+    <pattern id="wire" width="16" height="16" patternUnits="userSpaceOnUse">
+      <path d="M0 0H16M0 0V16" stroke="#7a7a7a" stroke-opacity="0.35"/>
+    </pattern>
+  </defs>
+</svg>
