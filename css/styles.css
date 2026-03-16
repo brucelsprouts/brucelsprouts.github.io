@@ -1865,16 +1865,15 @@ body.naq-playing #cursor-ring { display: none !important; }
   pointer-events: none;
 }
 
+.img-gallery.video-gallery::before {
+  display: none;
+}
+
 .video-gallery {
   position: relative;
   aspect-ratio: 16 / 9;
   background: #000;
   overflow: hidden;
-}
-
-.video-gallery::before {
-  display: none !important;
-  content: none !important;
 }
 
 .gallery-video {
@@ -1883,23 +1882,8 @@ body.naq-playing #cursor-ring { display: none !important; }
   display: block;
   object-fit: contain;
   position: relative;
-  z-index: 2;
+  z-index: 1;
   background: #000;
-  filter: none !important;
-  opacity: 1 !important;
-}
-
-.video-gallery .gallery-nav {
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-}
-
-.video-gallery .gallery-nav.prev {
-  left: 12px;
-}
-
-.video-gallery .gallery-nav.next {
-  right: 12px;
 }
 
 .gallery-img {
