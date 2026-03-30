@@ -1644,13 +1644,28 @@ body.naq-playing #cursor-ring { display: none !important; }
   z-index: 2;
 }
 
-.project-category {
+.project-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 8px;
   font-family: var(--ff-mono);
+  text-transform: uppercase;
+}
+
+.project-category {
   font-size: 0.62rem;
   letter-spacing: 0.18em;
   color: var(--clr-dim);
-  margin-bottom: 8px;
-  text-transform: uppercase;
+}
+
+.project-date {
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.42);
+  margin-left: 12px;
+  white-space: nowrap;
+  text-align: right;
 }
 
 .project-title {
@@ -1974,14 +1989,30 @@ body.naq-playing #cursor-ring { display: none !important; }
   padding: 22px 26px 28px;
 }
 
-.modal-category {
-  display: block;
+.modal-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 8px;
   font-family: var(--ff-mono);
+  text-transform: uppercase;
+}
+
+.modal-category {
+  display: inline;
   font-size: 0.6rem;
   letter-spacing: 0.22em;
   color: var(--clr-dim);
-  text-transform: uppercase;
-  margin-bottom: 8px;
+}
+
+.modal-date {
+  display: inline;
+  font-size: 0.56rem;
+  letter-spacing: 0.14em;
+  color: rgba(255,255,255,0.42);
+  margin-left: 12px;
+  white-space: nowrap;
+  text-align: right;
 }
 
 .modal-title {

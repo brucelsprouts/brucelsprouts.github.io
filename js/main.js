@@ -189,6 +189,18 @@ const randFloat = (min, max) => Math.random() * (max - min) + min;
 /** Clamp a value between lo and hi */
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
 
+/** Format YYYY-MM-DD project date for display */
+function formatProjectDate(dateStr) {
+  if (!dateStr) return 'Date N/A';
+  const d = new Date(`${dateStr}T00:00:00`);
+  if (Number.isNaN(d.getTime())) return dateStr;
+  return new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  }).format(d);
+}
+
 /** Generate a block of ASCII symbol art (repeated character grid) */
 function generateSymbolBlock(char, cols, rows) {
   return Array.from({ length: rows }, () => char.repeat(cols)).join('\n');
@@ -1398,6 +1410,8 @@ const projects = {
       .map(s => `<span class="stack-tag">${s}</span>`)
       .join('');
 
+    const dateLabel = formatProjectDate(project.date);
+
     // Action buttons
     const demoLabel = project.category === 'video' ? 'Watch on YouTube' : 'View Live';
     
@@ -1422,7 +1436,10 @@ const projects = {
         <span class="card-expand-hint" aria-hidden="true"><svg viewBox="0 0 12 12" fill="none"><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.5 10.5H1.5V7.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><line x1="10.5" y1="1.5" x2="7" y2="5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><line x1="1.5" y1="10.5" x2="5" y2="7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
       </div>
       <div class="project-body">
-        <p class="project-category monospace">${project.category}</p>
+        <p class="project-meta monospace">
+          <span class="project-category">${project.category}</span>
+          <span class="project-date">${dateLabel}</span>
+        </p>
         <h3 class="project-title">${project.title}</h3>
         <p class="project-desc">${project.desc}</p>
         <div class="project-stack">${stackHtml}</div>
@@ -1531,6 +1548,7 @@ const projectModal = {
   open(project) {
     // Populate text info
     document.getElementById('modal-category').textContent = project.category;
+    document.getElementById('modal-date').textContent     = formatProjectDate(project.date);
     document.getElementById('modal-title').textContent    = project.title;
     document.getElementById('modal-desc').textContent     = project.desc;
 
