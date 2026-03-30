@@ -26,6 +26,7 @@ const DATA = {
     // Systems
     { name: 'Git',           icon: '⬡', desc: 'Daily driver for version control — branching, committing, and managing personal projects and repositories on GitHub.' },
     { name: 'Unix / Linux',  icon: '⬡', desc: 'Comfortable in the terminal: shell scripting, file system navigation, and course lab environments.' },
+    { name: 'Claude Code',   icon: '⬡', desc: 'Proficient at creating projects using Claude Code, from planning and structure to implementation and iteration.' },
     // Creative
     { name: 'Blender',       icon: '⬡', desc: 'Just getting started — learning 3D modelling, lighting, and rendering. Still early but enjoying the process.' },
     { name: 'After Effects', icon: '⬡', desc: 'Used professionally during a video editing internship at AMG. Motion graphics, cuts, and transitions.' },
