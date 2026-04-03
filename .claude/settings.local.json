@@ -2,7 +2,13 @@
   "permissions": {
     "allow": [
       "WebSearch",
-      "WebFetch(domain:www.linkedin.com)"
+      "WebFetch(domain:www.linkedin.com)",
+      "WebFetch(domain:www.reddit.com)",
+      "Bash(where chrome:*)",
+      "Bash(where msedge:*)",
+      "Read(//c/Program Files/Google/Chrome/Application/**)",
+      "Read(//c/Program Files \\(x86\\)/Microsoft/Edge/Application/**)",
+      "Bash(\"C:/Program Files/Google/Chrome/Application/chrome.exe\" --headless=new --disable-gpu --print-to-pdf=\"C:/Users/bruce/Documents/GitHub/brucelsprouts.github.io/assets/Bruce_Lin_Resume.pdf\" --print-to-pdf-no-header \"file:///C:/Users/bruce/Documents/GitHub/brucelsprouts.github.io/resume.html\")"
     ]
   }
 }
