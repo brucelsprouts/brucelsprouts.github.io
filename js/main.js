@@ -173,6 +173,20 @@ const DATA = {
       videos: ['assets/videos/ocean-buoy/ocean-buoy-2.mp4', 'assets/videos/ocean-buoy/ocean-buoy-3.mp4'],
       contain: true,
     },
+    {
+      id: 9,
+      title: 'Earth',
+      category: 'blender',
+      date: '2026-04-02',
+      desc: 'Render of Earth built from UV spheres with a surface, atmosphere, and cloud layer. Compositing was also used for the horizon and glare pass to polish the final look.',
+      stack: ['Blender', 'Compositing'],
+      youtube: null,
+      github: null,
+      demo: null,
+      thumb: 'assets/images/projects/earth/earth-1.png',
+      images: ['assets/images/projects/earth/earth-1.png', 'assets/images/projects/earth/earth-2.png'],
+      contain: true,
+    },
   ],
 };
 
