@@ -5,6 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bruce Lin | Portfolio</title>
 
+  <!-- Standard meta -->
+  <meta name="description" content="Bruce Lin — CS student at Western University and front-end developer. Portfolio of web tools, desktop apps, Blender renders, and video edits." />
+
+  <!-- JSON-LD structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Bruce Lin",
+    "url": "https://brucelsprouts.com",
+    "jobTitle": "CS Student & Front-End Developer",
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "Western University"
+    },
+    "sameAs": [
+      "https://github.com/brucelsprouts"
+    ]
+  }
+  </script>
+
   <!-- Open Graph / social preview -->
   <meta property="og:type"        content="website" />
   <meta property="og:url"         content="https://brucelsprouts.com/" />
@@ -103,7 +124,7 @@
 
         <!-- Performance toggle + hamburger -->
         <div class="nav-actions">
-          <button id="low-perf-btn" class="low-perf-toggle" aria-label="Toggle low performance mode" aria-pressed="false" title="Low Performance Mode">⚡&nbsp;LITE</button>
+          <button id="low-perf-btn" class="low-perf-toggle" aria-label="Toggle low performance mode" aria-pressed="false">⚡&nbsp;LITE<span class="lite-tooltip"><strong>Low Performance Mode</strong> Disables 3D graphics and animations for smoother browsing on slower devices. All content stays fully accessible.</span></button>
           <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
             <span></span><span></span><span></span>
           </button>
@@ -159,6 +180,7 @@
       <button id="node-acq-trigger" aria-label="Launch NODE ACQUIRE minigame">
         <span class="trigger-icon">⌖</span>
         <span class="trigger-label">NODE&nbsp;ACQ</span>
+        <span class="naq-tooltip">Hidden minigame — click to play</span>
       </button>
 
       <!-- NODE ACQUIRE overlay (hidden until triggered) -->
@@ -294,6 +316,7 @@
             <button class="sort-btn" data-sort="alpha-asc">A&#8594;Z</button>
             <button class="sort-btn" data-sort="alpha-desc">Z&#8594;A</button>
           </div>
+          <span id="project-result-count" class="project-result-count monospace"></span>
         </div>
 
         <div class="projects-grid" id="projects-grid">
@@ -372,7 +395,7 @@
     <!-- ── FOOTER ── -->
     <footer id="footer">
       <div class="footer-inner">
-        <span class="footer-copy">&copy; 2026 Bruce L. — Designed &amp; Built by Bruce L.</span>
+        <span class="footer-copy">&copy; 2024&ndash;2026 Bruce L. — Designed &amp; Built by Bruce L.</span>
         <span class="footer-tag">// EOF</span>
       </div>
     </footer>
@@ -406,7 +429,7 @@
   <script>
     (function() {
       var script = document.createElement('script');
-      script.src = 'js/main.js?v=' + new Date().getTime(); // Force reload on every visit
+      script.src = 'js/main.js?v=2.6.0'; // Bump version string on each deploy to bust cache
       script.defer = true;
       document.body.appendChild(script);
     })();

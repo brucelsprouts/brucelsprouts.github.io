@@ -17,41 +17,20 @@
 const DATA = {
   skills: [
     // Web / Front-end
-    { name: 'HTML',          icon: '⬡', desc: 'Solid foundation in semantic markup. Built multiple personal projects and this portfolio from scratch.' },
-    { name: 'CSS',           icon: '⬡', desc: 'Comfortable with layouts, animations, custom properties, and responsive design — no frameworks needed.' },
-    { name: 'JavaScript',    icon: '⬡', desc: 'Front-end scripting: DOM manipulation, fetch/async, canvas, and Three.js for interactive experiences.' },
+    { name: 'HTML',          icon: 'assets/icons/html5.svg',                    desc: 'Solid foundation in semantic markup. Built multiple personal projects and this portfolio from scratch.' },
+    { name: 'CSS',           icon: 'assets/icons/css.svg',                     desc: 'Comfortable with layouts, animations, custom properties, and responsive design — no frameworks needed.' },
+    { name: 'JavaScript',    icon: 'assets/icons/javascript.svg',              desc: 'Front-end scripting: DOM manipulation, fetch/async, canvas, and Three.js for interactive experiences.' },
     // Languages
-    { name: 'Java',          icon: '⬡', desc: 'Primary language for CS coursework at Western — OOP, data structures, algorithms, and system design.' },
-    { name: 'Python',        icon: '⬡', desc: 'Used in university projects and personal scripts; comfortable with core syntax and standard libraries.' },
+    { name: 'Java',          icon: 'assets/icons/java-coffee-cup-logo.png',    desc: 'Primary language for CS coursework at Western — OOP, data structures, algorithms, and system design.' },
+    { name: 'Python',        icon: 'assets/icons/python.svg',                  desc: 'Used in university projects and personal scripts; comfortable with core syntax and standard libraries.' },
     // Systems
-    { name: 'Git',           icon: '⬡', desc: 'Daily driver for version control — branching, committing, and managing personal projects and repositories on GitHub.' },
-    { name: 'Unix / Linux',  icon: '⬡', desc: 'Comfortable in the terminal: shell scripting, file system navigation, and course lab environments.' },
-    { name: 'Claude Code',   icon: '⬡', desc: 'Proficient at creating projects using Claude Code, from planning and structure to implementation and iteration.' },
+    { name: 'Git',           icon: 'assets/icons/git.svg',                     desc: 'Daily driver for version control — branching, committing, and managing personal projects and repositories on GitHub.' },
+    { name: 'Unix / Linux',  icon: 'assets/icons/linux.svg',                   desc: 'Comfortable in the terminal: shell scripting, file system navigation, and course lab environments.' },
+    { name: 'Claude Code',   icon: 'assets/icons/claude.svg',                  desc: 'Proficient at creating projects using Claude Code, from planning and structure to implementation and iteration.' },
     // Creative
-    { name: 'Blender',       icon: '⬡', desc: 'Just getting started — learning 3D modelling, lighting, and rendering. Still early but enjoying the process.' },
-    { name: 'After Effects', icon: '⬡', desc: 'Used professionally during a video editing internship at AMG. Motion graphics, cuts, and transitions.' },
-    { name: 'Photoshop',     icon: '⬡', desc: 'Image editing, compositing, and asset creation for web and creative projects.' },
-  ],
-
-  timeline: [
-    {
-      date: '2023 — Present',
-      title: 'B.Sc. Computer Science',
-      org: 'Western University',
-      desc: 'CS student in London, Ontario. Coursework in algorithms, data structures, software engineering, and computer systems.',
-    },
-    {
-      date: 'Summer 2024',
-      title: 'Video Editing Intern',
-      org: 'AMG',
-      desc: 'Short-term summer internship producing video content — editing footage, motion graphics, and post-production in After Effects.',
-    },
-    {
-      date: 'May 2021 — Sep 2023',
-      title: 'Freelance English Tutor',
-      org: 'Ignite Youth Club',
-      desc: 'Remote tutoring over two years. Helped students strengthen reading, writing, and communication skills.',
-    },
+    { name: 'Blender',       icon: 'assets/icons/blender.svg',                 desc: 'Just getting started — learning 3D modelling, lighting, and rendering. Still early but enjoying the process.' },
+    { name: 'After Effects', icon: 'assets/icons/aftereffects.svg',            desc: 'Used professionally during a video editing internship at AMG. Motion graphics, cuts, and transitions.' },
+    { name: 'Photoshop',     icon: 'assets/icons/photoshop.svg',               desc: 'Image editing, compositing, and asset creation for web and creative projects.' },
   ],
 
   projects: [
@@ -115,7 +94,7 @@ const DATA = {
       title: 'XPWaste',
       category: 'coding',
       date: '2026-03-10',
-      desc: 'A desktop Pomodoro focus timer built for Old School RuneScape players. Tracks active study time, logs session history, supports custom notification sounds, and ships as a standalone Windows executable. OSRS and normal mode themes included.',
+      desc: 'Focus timer made for Old School RuneScape players who want to stay on task while grinding. Tracks study sessions, logs history, plays custom notification sounds, and ships as a standalone Windows exe. OSRS and normal mode themes included.',
       stack: ['Python', 'Tkinter', 'PyInstaller'],
       youtube: null,
       github: 'https://github.com/brucelsprouts/xpwaste',
@@ -227,6 +206,11 @@ function formatProjectDate(dateStr) {
     month: 'short',
     day: 'numeric',
   }).format(d);
+}
+
+/** Convert a project title to a URL-safe slug */
+function projectSlug(title) {
+  return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
 
 /** Generate a block of ASCII symbol art (repeated character grid) */
@@ -689,7 +673,7 @@ const loader = {
 
   /* -- Animate the % counter up to 100 then exit -- */
   animateProgress() {
-    const duration = 2800; // ms — feel of a real boot
+    const duration = 1000; // ms — snappy boot feel
     const start    = performance.now();
 
     const tick = (now) => {
@@ -1250,10 +1234,17 @@ const skills = {
       const card = document.createElement('div');
       card.className = 'skill-card';
       card.innerHTML = `
-        <span class="skill-icon">${skill.icon}</span>
+        <span class="skill-icon">
+          <img src="${skill.icon}" alt="${skill.name}" />
+          <span class="skill-icon-fb">⬡</span>
+        </span>
         <span class="skill-name">${skill.name}</span>
         ${skill.desc ? `<div class="skill-tooltip">${skill.desc}</div>` : ''}
       `;
+      const img = card.querySelector('.skill-icon img');
+      const fb  = card.querySelector('.skill-icon-fb');
+      img.addEventListener('load',  () => { fb.style.display = 'none'; });
+      img.addEventListener('error', () => { img.style.display = 'none'; fb.style.display = 'block'; });
       grid.appendChild(card);
     });
 
@@ -1303,46 +1294,6 @@ const skills = {
 /* ============================================================
    9. HISTORY / TIMELINE
 ============================================================ */
-const history = {
-  init() {
-    const container = document.getElementById('timeline');
-    if (!container) return;
-
-    DATA.timeline.forEach(item => {
-      const el = document.createElement('div');
-      el.className = 'timeline-item';
-      el.innerHTML = `
-        <p class="timeline-date monospace">${item.date}</p>
-        <h3 class="timeline-title">${item.title}</h3>
-        <p class="timeline-org monospace">${item.org}</p>
-        <p class="timeline-desc">${item.desc}</p>
-      `;
-      container.appendChild(el);
-    });
-
-    // Scroll animations
-    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-      const items = container.querySelectorAll('.timeline-item');
-      items.forEach((item, i) => {
-        gsap.to(item, {
-          scrollTrigger: {
-            trigger: item,
-            start: 'top 85%',
-            toggleActions: 'play none none reverse',
-          },
-          opacity: 1,
-          x: 0,
-          duration: 0.6,
-          delay: i * 0.08,
-          ease: 'power3.out',
-          onStart() {
-            item.classList.add('revealed');
-          },
-        });
-      });
-    }
-  },
-};
 
 /* ============================================================
    10. PROJECTS — render, filter, search
@@ -1366,6 +1317,15 @@ const projects = {
     const grid = document.getElementById('projects-grid');
     const noResults = document.getElementById('no-results');
     if (!grid) return;
+
+    // Update result count
+    const countEl = document.getElementById('project-result-count');
+    if (countEl) {
+      const total = this.all.length;
+      countEl.textContent = list.length === total
+        ? `${total} projects`
+        : `${list.length} / ${total}`;
+    }
 
     grid.innerHTML = '';
 
@@ -1427,6 +1387,9 @@ const projects = {
     card.dataset.category = project.category;
     card.dataset.title    = project.title.toLowerCase();
     card.dataset.desc     = project.desc.toLowerCase();
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-label', `View ${project.title} project details`);
 
     // Thumbnail
     const thumbHtml = project.thumb
@@ -1435,7 +1398,7 @@ const projects = {
 
     // Tech stack tags
     const stackHtml = project.stack
-      .map(s => `<span class="stack-tag">${s}</span>`)
+      .map(s => `<span class="stack-tag stack-tag--clickable" role="button" tabindex="0" data-tag="${s}">${s}</span>`)
       .join('');
 
     const dateLabel = formatProjectDate(project.date);
@@ -1478,7 +1441,30 @@ const projects = {
     // Open modal on card click (but not when clicking a link)
     card.addEventListener('click', (e) => {
       if (e.target.closest('.project-link')) return;
+      if (e.target.closest('.stack-tag--clickable')) return;
       projectModal.open(project);
+    });
+
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        projectModal.open(project);
+      }
+    });
+
+    // Clickable stack tags — filter by tag without opening modal
+    card.querySelectorAll('.stack-tag--clickable').forEach(tag => {
+      tag.addEventListener('click', (e) => {
+        e.stopPropagation();
+        projects.setTagSearch(tag.dataset.tag);
+      });
+      tag.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          e.stopPropagation();
+          projects.setTagSearch(tag.dataset.tag);
+        }
+      });
     });
 
     return card;
@@ -1546,6 +1532,22 @@ const projects = {
   bindScrollAnimations() {
     // Section header is handled by the global .section-header ScrollTrigger in initScrollAnimations
   },
+
+  setTagSearch(tag) {
+    const input = document.getElementById('project-search');
+    if (!input) return;
+    // Reset category filter to 'all'
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    filterBtns.forEach(b => b.classList.remove('active'));
+    document.querySelector('.filter-btn[data-filter="all"]').classList.add('active');
+    this.currentFilter = 'all';
+    // Set search and re-render
+    input.value = tag;
+    this.searchQuery = tag;
+    this.filter();
+    // Scroll to projects section
+    document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
+  },
 };
 
 /* ============================================================
@@ -1580,9 +1582,15 @@ const projectModal = {
     document.getElementById('modal-title').textContent    = project.title;
     document.getElementById('modal-desc').textContent     = project.desc;
 
-    // Stack tags
+    // Stack tags — clickable to search by tag
     document.getElementById('modal-stack').innerHTML =
-      project.stack.map(s => `<span class="stack-tag">${s}</span>`).join('');
+      project.stack.map(s => `<span class="stack-tag stack-tag--clickable" role="button" tabindex="0" data-tag="${s}">${s}</span>`).join('');
+    document.getElementById('modal-stack').querySelectorAll('.stack-tag--clickable').forEach(tag => {
+      tag.addEventListener('click', () => {
+        this.close();
+        projects.setTagSearch(tag.dataset.tag);
+      });
+    });
 
     // Links
     const demoLabel = project.category === 'video' ? 'Watch on YouTube' : 'View Live';
@@ -1613,6 +1621,7 @@ const projectModal = {
     this._el.classList.add('open');
     this._el.removeAttribute('aria-hidden');
     document.body.style.overflow = 'hidden';
+    history.replaceState(null, '', `#project-${projectSlug(project.title)}`);
   },
 
   close() {
@@ -1620,6 +1629,7 @@ const projectModal = {
     this._el.classList.remove('open');
     this._el.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    history.replaceState(null, '', location.pathname + location.search);
     // Clear media so iframes stop playing
     document.getElementById('modal-media').innerHTML = '';
   },
@@ -2568,6 +2578,12 @@ const lowPerf = {
     const btn = document.getElementById('low-perf-btn');
     if (!btn) return;
     btn.addEventListener('click', () => this.toggle());
+
+    // Auto-show tooltip briefly after page loads so users notice the feature
+    setTimeout(() => {
+      btn.classList.add('lite-hint-visible');
+      setTimeout(() => btn.classList.remove('lite-hint-visible'), 3500);
+    }, 2200);
   },
 
   toggle() {
@@ -2581,6 +2597,8 @@ const lowPerf = {
       glitchEffects.pause();
     } else {
       heroScene.resume();
+      cursor.ringPos.x = cursor.target.x;
+      cursor.ringPos.y = cursor.target.y;
       cursor._enabled = true;
       glitchEffects.resume();
     }
@@ -3014,7 +3032,6 @@ function boot() {
 
   // Populate sections (so content is ready when loader exits)
   skills.init();
-  history.init();
   projects.init();
   projectModal.init();
   contact.init();
@@ -3054,6 +3071,15 @@ function boot() {
 
   // Fire the loader last — its exit callback triggers hero animations
   loader.init();
+
+  // Deep-link: open project modal from URL hash on load (e.g. #project-clipstack)
+  (function checkDeepLink() {
+    const hash = location.hash;
+    if (!hash.startsWith('#project-')) return;
+    const slug = hash.slice('#project-'.length);
+    const match = DATA.projects.find(p => projectSlug(p.title) === slug);
+    if (match) projectModal.open(match);
+  })();
 }
 
 // Kick off when DOM is ready

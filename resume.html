@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bruce Lin — Resume</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 11px;
+      line-height: 1.5;
+      color: #1a1a1a;
+      background: #f0f0f0;
+    }
+
+    .page {
+      width: 215.9mm;
+      min-height: 279.4mm;
+      margin: 24px auto;
+      background: #fff;
+      padding: 18mm 18mm 16mm;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+    }
+
+    /* ── Header ── */
+    header {
+      border-bottom: 2px solid #1a1a1a;
+      padding-bottom: 10px;
+      margin-bottom: 14px;
+    }
+
+    .name {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+    }
+
+    .tagline {
+      font-size: 12px;
+      color: #444;
+      margin-top: 2px;
+    }
+
+    .contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 16px;
+      margin-top: 8px;
+      font-size: 10.5px;
+      color: #333;
+    }
+
+    .contact-row a {
+      color: #333;
+      text-decoration: none;
+    }
+
+    .contact-row a:hover { text-decoration: underline; }
+
+    .contact-row span::before {
+      content: '·';
+      margin-right: 4px;
+      color: #999;
+    }
+
+    .contact-row span:first-child::before { content: none; }
+
+    /* ── Sections ── */
+    section { margin-bottom: 14px; }
+
+    .section-title {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #555;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 3px;
+      margin-bottom: 9px;
+    }
+
+    /* ── Education / Experience entries ── */
+    .entry {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0 12px;
+      margin-bottom: 10px;
+    }
+
+    .entry:last-child { margin-bottom: 0; }
+
+    .entry-title {
+      font-weight: 700;
+      font-size: 11.5px;
+    }
+
+    .entry-sub {
+      font-size: 10.5px;
+      color: #444;
+      margin-top: 1px;
+    }
+
+    .entry-date {
+      font-size: 10px;
+      color: #666;
+      white-space: nowrap;
+      text-align: right;
+      padding-top: 2px;
+    }
+
+    .entry-body {
+      grid-column: 1 / -1;
+      margin-top: 4px;
+    }
+
+    .entry-body ul {
+      padding-left: 14px;
+      color: #333;
+    }
+
+    .entry-body ul li {
+      margin-bottom: 2px;
+    }
+
+    /* ── Projects ── */
+    .project-entry {
+      margin-bottom: 9px;
+    }
+
+    .project-entry:last-child { margin-bottom: 0; }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .project-title {
+      font-weight: 700;
+      font-size: 11.5px;
+    }
+
+    .project-links {
+      font-size: 10px;
+      color: #555;
+      white-space: nowrap;
+    }
+
+    .project-links a {
+      color: #333;
+      text-decoration: none;
+    }
+
+    .project-links a:hover { text-decoration: underline; }
+
+    .project-stack {
+      font-size: 10px;
+      color: #666;
+      margin-top: 1px;
+      margin-bottom: 3px;
+    }
+
+    .project-desc {
+      color: #333;
+      font-size: 10.5px;
+    }
+
+    /* ── Skills ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 4px 0;
+      font-size: 10.5px;
+    }
+
+    .skills-label {
+      font-weight: 600;
+      color: #444;
+    }
+
+    .skills-value {
+      color: #222;
+    }
+
+    /* ── Print ── */
+    @media print {
+      body { background: none; }
+      .page {
+        margin: 0;
+        box-shadow: none;
+        padding: 14mm 16mm 14mm;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── HEADER ── -->
+  <header>
+    <div class="name">Bruce Lin</div>
+    <div class="tagline">Front-End Developer &amp; Computer Science Student</div>
+    <div class="contact-row">
+      <span>email@brucelsprouts.com</span>
+      <span><a href="https://brucelsprouts.com">brucelsprouts.com</a></span>
+      <span><a href="https://github.com/brucelsprouts">github.com/brucelsprouts</a></span>
+      <span><a href="https://www.linkedin.com/in/bruce-lin-6284b323b/">linkedin.com/in/bruce-lin-6284b323b</a></span>
+    </div>
+  </header>
+
+  <!-- ── EDUCATION ── -->
+  <section>
+    <div class="section-title">Education</div>
+    <div class="entry">
+      <div>
+        <div class="entry-title">University of Western Ontario (Western University)</div>
+        <div class="entry-sub">Bachelor of Science — Computer Science &nbsp;·&nbsp; Year 3</div>
+      </div>
+      <div class="entry-date">London, ON &nbsp;·&nbsp; 2022 – Present</div>
+    </div>
+  </section>
+
+  <!-- ── EXPERIENCE ── -->
+  <section>
+    <div class="section-title">Experience</div>
+
+    <div class="entry">
+      <div>
+        <div class="entry-title">Video Editing Intern</div>
+        <div class="entry-sub">AMG</div>
+      </div>
+      <div class="entry-date">Summer 2024</div>
+      <div class="entry-body">
+        <ul>
+          <li>Produced and edited video content using After Effects and Premiere; applied motion graphics, transitions, and compositing to meet client-ready deliverables.</li>
+          <li>Managed project timelines across multiple concurrent video deliverables in a professional production environment.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div>
+        <div class="entry-title">English Tutor</div>
+        <div class="entry-sub">Ignite Youth Club</div>
+      </div>
+      <div class="entry-date">2021 – 2023</div>
+      <div class="entry-body">
+        <ul>
+          <li>Tutored students in English comprehension, writing, and communication skills in a structured youth program setting.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROJECTS ── -->
+  <section>
+    <div class="section-title">Projects</div>
+
+    <div class="project-entry">
+      <div class="project-header">
+        <span class="project-title">ClipStack</span>
+        <span class="project-links"><a href="https://github.com/brucelsprouts/clipstack">github.com/brucelsprouts/clipstack</a></span>
+      </div>
+      <div class="project-stack">Tauri · Rust · TypeScript</div>
+      <div class="project-desc">Cross-platform desktop clipboard manager. Supports pinned clips, image previews, full-text search, a global keyboard shortcut, and light/dark themes. Built with Tauri for a native binary with a web-based UI.</div>
+    </div>
+
+    <div class="project-entry">
+      <div class="project-header">
+        <span class="project-title">Portfolio v2 — brucelsprouts.com</span>
+        <span class="project-links"><a href="https://brucelsprouts.com">brucelsprouts.com</a> &nbsp;·&nbsp; <a href="https://github.com/brucelsprouts/brucelsprouts.github.io">GitHub</a></span>
+      </div>
+      <div class="project-stack">HTML · CSS · JavaScript · Three.js · GSAP</div>
+      <div class="project-desc">Cyber-tech themed personal portfolio built entirely from scratch with no CSS or JS frameworks. Features a Three.js particle hero, GSAP scroll animations, URL deep linking, a hidden aim-trainer minigame, and a low-performance mode for accessibility.</div>
+    </div>
+
+    <div class="project-entry">
+      <div class="project-header">
+        <span class="project-title">XPWaste</span>
+        <span class="project-links"><a href="https://github.com/brucelsprouts/xpwaste">github.com/brucelsprouts/xpwaste</a></span>
+      </div>
+      <div class="project-stack">Python · Tkinter · PyInstaller</div>
+      <div class="project-desc">Desktop focus timer with session history, custom notification sounds, and dual themes. Packaged as a standalone Windows executable via PyInstaller — no Python install required for end users.</div>
+    </div>
+
+    <div class="project-entry">
+      <div class="project-header">
+        <span class="project-title">Nixie Counter</span>
+        <span class="project-links"><a href="https://github.com/brucelsprouts/nixiecounter">github.com/brucelsprouts/nixiecounter</a></span>
+      </div>
+      <div class="project-stack">PHP · Oracle Cloud · SVG</div>
+      <div class="project-desc">Retro Nixie-tube visitor counter served as a dynamically generated SVG image from an Oracle Cloud server. Embeds directly into any GitHub README or webpage; increments and renders in real time with configurable digit count.</div>
+    </div>
+
+  </section>
+
+  <!-- ── SKILLS ── -->
+  <section>
+    <div class="section-title">Skills</div>
+    <div class="skills-grid">
+      <div class="skills-label">Languages</div>
+      <div class="skills-value">Java, Python, JavaScript, PHP, Rust (learning), HTML, CSS</div>
+
+      <div class="skills-label">Tools &amp; Platforms</div>
+      <div class="skills-value">Git, GitHub, Linux / Unix shell, Oracle Cloud, Tauri, PyInstaller</div>
+
+      <div class="skills-label">Libraries</div>
+      <div class="skills-value">Three.js, GSAP, Tkinter</div>
+
+      <div class="skills-label">Creative</div>
+      <div class="skills-value">After Effects, Photoshop, Blender (learning)</div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
