@@ -187,6 +187,20 @@ const DATA = {
       images: ['assets/images/projects/earth/earth-1.png', 'assets/images/projects/earth/earth-2.png'],
       contain: true,
     },
+    {
+      id: 10,
+      title: 'ClipStack',
+      category: 'coding',
+      date: '2026-04-03',
+      desc: 'A desktop clipboard manager built with Tauri. Supports pinning clips, image previews, searchable history, a global shortcut, and light/dark themes.',
+      stack: ['Tauri', 'Rust', 'TypeScript'],
+      youtube: null,
+      github: 'https://github.com/brucelsprouts/clipstack',
+      demo: null,
+      thumb: 'assets/images/projects/clipstack/clipstack-1.png',
+      images: ['assets/images/projects/clipstack/clipstack-1.png', 'assets/images/projects/clipstack/clipstack-2.png'],
+      contain: true,
+    },
   ],
 };
 
