@@ -45,6 +45,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
+  <script>
+    // Force fresh asset URLs each page load so newly added projects appear immediately.
+    window.__assetVersion = Date.now().toString();
+  </script>
+
   <!-- Three.js CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
 
@@ -52,7 +57,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
 
-  <link rel="stylesheet" href="css/styles.css?v=4" />
+  <link rel="stylesheet" id="site-stylesheet" href="css/styles.css" />
+  <script>
+    (function() {
+      var style = document.getElementById('site-stylesheet');
+      if (!style) return;
+      style.href = 'css/styles.css?v=' + encodeURIComponent(window.__assetVersion || Date.now().toString());
+    })();
+  </script>
 </head>
 <body>
 
@@ -425,11 +437,11 @@
   <div id="cursor-dot"  aria-hidden="true"></div>
   <div id="cursor-ring" aria-hidden="true"></div>
 
-  <!-- Main script — loads with cache-busting timestamp to ensure new projects appear immediately -->
+  <!-- Main script — loads with automatic cache-busting to prevent stale project data -->
   <script>
     (function() {
       var script = document.createElement('script');
-      script.src = 'js/main.js?v=2.6.0'; // Bump version string on each deploy to bust cache
+      script.src = 'js/main.js?v=' + encodeURIComponent(window.__assetVersion || Date.now().toString());
       script.defer = true;
       document.body.appendChild(script);
     })();

@@ -1594,8 +1594,8 @@ body.naq-playing #cursor-ring { display: none !important; }
 
 .project-card:hover {
   transform: translateY(-6px) rotate(0.3deg);
-  border-color: rgba(255,255,255,0.25);
-  box-shadow: 0 16px 48px rgba(0,0,0,0.6), 0 0 24px rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.12);
+  box-shadow: 0 0 12px rgba(255,255,255,0.08);
 }
 
 .project-card:hover::before { opacity: 1; }
