@@ -52,7 +52,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
 
-  <link rel="stylesheet" href="css/styles.css?v=4" />
+  <script>
+    (function() {
+      var css = document.createElement('link');
+      css.rel = 'stylesheet';
+      css.href = 'css/styles.css?v=' + Date.now();
+      document.head.appendChild(css);
+    })();
+  </script>
 </head>
 <body>
 
@@ -429,7 +436,7 @@
   <script>
     (function() {
       var script = document.createElement('script');
-      script.src = 'js/main.js?v=2.6.0'; // Bump version string on each deploy to bust cache
+      script.src = 'js/main.js?v=' + Date.now(); // Always fetch fresh script on load
       script.defer = true;
       document.body.appendChild(script);
     })();
