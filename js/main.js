@@ -180,6 +180,24 @@ const DATA = {
       images: ['assets/images/projects/clipstack/clipstack-1.png', 'assets/images/projects/clipstack/clipstack-2.png'],
       contain: true,
     },
+    {
+      id: 11,
+      title: 'Flora Discord Bot',
+      category: 'coding',
+      date: '2026-04-14',
+      desc: 'Simple Discord bot for friend servers with welcome/goodbye helper messages and a reaction role panel that assigns one color role at a time.',
+      stack: ['JavaScript', 'Node.js', 'Discord Bot'],
+      youtube: null,
+      github: 'https://github.com/brucelsprouts/flora',
+      demo: null,
+      thumb: 'assets/images/projects/flora/flora-1.png',
+      images: [
+        'assets/images/projects/flora/flora-1.png',
+        'assets/images/projects/flora/flora-2.png',
+        'assets/images/projects/flora/flora-3.png',
+      ],
+      contain: true,
+    },
   ],
 };
 
