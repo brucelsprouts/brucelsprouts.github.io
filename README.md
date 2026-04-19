@@ -34,19 +34,17 @@ Hey, I'm **Bruce Lin** — a B.Sc. Computer Science student at Western Universit
 
 ---
 
-## Projects
+## Highlighted Projects
 
-| Project | Description | Links |
-|---------|-------------|-------|
-| **Portfolio v2** | This site | [GitHub](https://github.com/brucelsprouts/brucelsprouts.github.io) · [Live](https://brucelsprouts.com) |
-| **Earth** | Blender Earth render built from UV spheres with surface, atmosphere, and cloud layers; compositing used for horizon and glare | — |
-| **Ocean Buoy** | Dark ocean night Blender piece with camera rocking, water dip, and return; includes polished post-processed video passes | — |
-| **Hallway** | Quick Blender hallway study with repeating pillars and left-side lighting; focused on rendering and lighting workflow practice | — |
-| **XPWaste** | Pomodoro focus timer for OSRS players, ships as a standalone Windows exe | [GitHub](https://github.com/brucelsprouts/xpwaste) |
-| **Coffee & Donut** | Classic Blender learning project — modelling, lighting, shading fundamentals | — |
-| **Nixie Counter** | Retro Nixie-tube visitor counter served as a dynamic PNG from Oracle Cloud | [GitHub](https://github.com/brucelsprouts/nixiecounter) |
-| **Get Jinxed — 4K Arcane Edit** | Personal AMV edit of Jinx from Arcane S2, magazine cut-out collage style | [YouTube](https://youtu.be/l32I3pNtN_c) |
-| **Portfolio v1** | First attempt — left unfinished, scrapped to start fresh | [GitHub](https://github.com/brucelsprouts/brucelsprouts.github.io-1.0) · [Live](https://brucelsprouts.github.io/brucelsprouts.github.io-1.0/) |
+A few picks across different areas — full list with search and filters at **[brucelsprouts.com](https://brucelsprouts.com)**.
+
+| Project | Category | Links |
+|---------|----------|-------|
+| **Portfolio v2** | Web / Coding | [GitHub](https://github.com/brucelsprouts/brucelsprouts.github.io) · [Live](https://brucelsprouts.com) |
+| **ClipStack** | Desktop App | [GitHub](https://github.com/brucelsprouts/clipstack) |
+| **XPWaste** | Desktop App | [GitHub](https://github.com/brucelsprouts/xpwaste) |
+| **Earth** | Blender | — |
+| **Get Jinxed — 4K Arcane Edit** | Video Edit | [YouTube](https://youtu.be/l32I3pNtN_c) |
 
 ---
 

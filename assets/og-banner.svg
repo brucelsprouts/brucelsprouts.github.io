@@ -68,18 +68,16 @@
   <text x="60" y="310" font-family="'Space Grotesk', 'Arial', sans-serif" font-size="110" font-weight="700" fill="#ffffff" letter-spacing="-2">Bruce Lin</text>
 
   <!-- Tagline -->
-  <text x="64" y="382" font-family="'Space Grotesk', 'Arial', sans-serif" font-size="30" font-weight="300" fill="#ffffff" fill-opacity="0.55" letter-spacing="0.5">Front-End Developer &amp; CS Student at Western</text>
+  <text x="64" y="382" font-family="'Space Grotesk', 'Arial', sans-serif" font-size="30" font-weight="300" fill="#ffffff" fill-opacity="0.55" letter-spacing="0.5">Developer &amp; CS Student at Western</text>
 
   <!-- Divider line -->
   <line x1="60" y1="430" x2="440" y2="430" stroke="#ffffff" stroke-opacity="0.18" stroke-width="1"/>
 
   <!-- Stack tags row -->
   <g font-family="'Share Tech Mono', 'Courier New', monospace" font-size="17" fill="#ffffff" fill-opacity="0.45" letter-spacing="1">
-    <text x="60"  y="465">HTML</text>
-    <text x="138" y="465">CSS</text>
-    <text x="200" y="465">JavaScript</text>
-    <text x="340" y="465">Three.js</text>
-    <text x="448" y="465">GSAP</text>
+    <text x="60"  y="465">Code</text>
+    <text x="138" y="465">Video</text>
+    <text x="218" y="465">Blender</text>
   </g>
 
   <!-- Bottom right URL label -->
