@@ -41,8 +41,8 @@ A few picks across different areas — full list with search and filters at **[b
 | Project | Category | Links |
 |---------|----------|-------|
 | **Portfolio v2** | Web / Coding | [GitHub](https://github.com/brucelsprouts/brucelsprouts.github.io) · [Live](https://brucelsprouts.com) |
+| **huh?** | Chrome Extension / Web App | [GitHub](https://github.com/brucelsprouts/huh-extension) · [Live](https://huh-extension.vercel.app/) |
 | **ClipStack** | Desktop App | [GitHub](https://github.com/brucelsprouts/clipstack) |
-| **XPWaste** | Desktop App | [GitHub](https://github.com/brucelsprouts/xpwaste) |
 | **Earth** | Blender | — |
 | **Get Jinxed — 4K Arcane Edit** | Video Edit | [YouTube](https://youtu.be/l32I3pNtN_c) |
 

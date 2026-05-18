@@ -198,6 +198,20 @@ const DATA = {
       ],
       contain: true,
     },
+    {
+      id: 12,
+      title: 'huh?',
+      category: 'coding',
+      date: '2026-05-17',
+      desc: 'Chrome extension and web app that explains dense text in plain English using Gemini. Highlight anything on the web, right-click, and get an ELI5 breakdown — hit "simpler" until it clicks. Supports multiple draggable cards, local history, and dark mode. No backend, no accounts — your API key stays in your browser.',
+      stack: ['JavaScript', 'Chrome Extension', 'Gemini API'],
+      youtube: null,
+      github: 'https://github.com/brucelsprouts/huh-extension',
+      demo: 'https://huh-extension.vercel.app/',
+      thumb: 'assets/images/projects/huh/huh-1.png',
+      images: ['assets/images/projects/huh/huh-1.png', 'assets/images/projects/huh/huh-2.png'],
+      contain: true,
+    },
   ],
 };
 
