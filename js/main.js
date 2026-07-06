@@ -212,6 +212,20 @@ const DATA = {
       images: ['assets/images/projects/huh/huh-1.png', 'assets/images/projects/huh/huh-2.png'],
       contain: true,
     },
+    {
+      id: 13,
+      title: 'dcheck',
+      category: 'coding',
+      date: '2026-07-05',
+      desc: 'A lightweight system tray app for Windows that logs connection drops. Left-click the tray icon to pull up a dark-themed canvas graph of your ping times. Connection timeouts get marked as red bars, and latency spikes show up in amber. Configurable ping target, checking frequency, clear logs, and launch-on-startup.',
+      stack: ['Electron', 'HTML5 Canvas', 'Vanilla CSS/JS'],
+      youtube: null,
+      github: 'https://github.com/brucelsprouts/dcheck',
+      demo: null,
+      thumb: 'assets/images/projects/dcheck/dcheck-1.png',
+      images: ['assets/images/projects/dcheck/dcheck-1.png'],
+      contain: true,
+    },
   ],
 };
 
