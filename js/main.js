@@ -226,6 +226,20 @@ const DATA = {
       images: ['assets/images/projects/dcheck/dcheck-1.png'],
       contain: true,
     },
+    {
+      id: 14,
+      title: 'brucekit',
+      category: 'coding',
+      date: '2026-07-21',
+      desc: 'A hotkey-triggered launcher for the tiny tools I kept wishing Windows already had. One shortcut opens a searchable HUD in the tray — OCR grab, colour picker with eyedropper, clipboard history, and a network dropout monitor. Every tool is a self-contained module with its own error boundary, so adding one is a drop-in folder and a broken one can\'t take the launcher down. Fully local: no backend, no accounts, no telemetry.',
+      stack: ['Rust', 'Tauri', 'React', 'TypeScript'],
+      youtube: null,
+      github: 'https://github.com/brucelsprouts/brucekit',
+      demo: null,
+      thumb: 'assets/images/projects/brucekit/brucekit-1.png',
+      images: ['assets/images/projects/brucekit/brucekit-1.png', 'assets/images/projects/brucekit/brucekit-2.png'],
+      contain: true,
+    },
   ],
 };
 

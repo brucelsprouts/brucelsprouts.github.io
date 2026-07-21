@@ -11,7 +11,16 @@
       "Bash(\"C:/Program Files/Google/Chrome/Application/chrome.exe\" --headless=new --disable-gpu --print-to-pdf=\"C:/Users/bruce/Documents/GitHub/brucelsprouts.github.io/assets/Bruce_Lin_Resume.pdf\" --print-to-pdf-no-header \"file:///C:/Users/bruce/Documents/GitHub/brucelsprouts.github.io/resume.html\")",
       "Bash(pip show:*)",
       "Bash(pip install:*)",
-      "Bash(python build_resume.py)"
+      "Bash(python build_resume.py)",
+      "Bash(git -C \"C:/Users/bruce/Documents/GitHub/brucelsprouts.github.io\" show --stat eda96f7 644c12f)",
+      "Bash(ls -lt \"C:/Users/bruce/Downloads\" 2>/dev/null | head -20; echo \"=== Pictures ===\"; ls -lt \"C:/Users/bruce/Pictures\" 2>/dev/null | head -20)",
+      "Read(//c/Users/bruce/Documents/GitHub/brucekit/**)",
+      "Bash(cat \"C:/Users/bruce/Documents/GitHub/brucekit/package.json\" 2>/dev/null)",
+      "Bash(git -C \"C:/Users/bruce/Documents/GitHub/brucekit\" log --reverse --format=\"%ad %s\" --date=short)",
+      "Bash(git -C \"C:/Users/bruce/Documents/GitHub/brucekit\" log -1 --format=\"%ad %s\" --date=short)",
+      "Bash(cp \"C:/Users/bruce/Downloads/1.png\" \"C:/Users/bruce/Documents/GitHub/brucelsprouts.github.io/assets/images/projects/brucekit/brucekit-1.png\")",
+      "Bash(cp \"C:/Users/bruce/Downloads/2.png\" \"C:/Users/bruce/Documents/GitHub/brucelsprouts.github.io/assets/images/projects/brucekit/brucekit-2.png\")",
+      "Bash(node --check \"C:/Users/bruce/Documents/GitHub/brucelsprouts.github.io/js/main.js\")"
     ]
   }
 }
