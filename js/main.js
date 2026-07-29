@@ -240,6 +240,20 @@ const DATA = {
       images: ['assets/images/projects/brucekit/brucekit-1.png', 'assets/images/projects/brucekit/brucekit-2.png'],
       contain: true,
     },
+    {
+      id: 15,
+      title: 'Brutalism',
+      category: 'blender',
+      date: '2026-07-26',
+      desc: 'An experiment to see how far Claude could drive Blender through an MCP connector. Given a single reference photo of a derelict brutalist housing block in freezing fog, the entire scene was generated from a Python script — no modelling by hand and no imported assets. Every mass is built as a solid and boolean-unioned into one watertight shell, with procedural weathering, an arcaded base, spalled slab edges with exposed rebar, and volumetric fog. Media order: final render, then the reference image it was built from.',
+      stack: ['Blender', 'Python', 'Claude Code', 'MCP'],
+      youtube: null,
+      github: null,
+      demo: null,
+      thumb: 'assets/images/projects/brutalism/brutalism-1.png',
+      images: ['assets/images/projects/brutalism/brutalism-1.png', 'assets/images/projects/brutalism/brutalism-2.png'],
+      contain: true,
+    },
   ],
 };
 
