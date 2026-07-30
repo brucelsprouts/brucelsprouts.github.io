@@ -72,35 +72,25 @@
        LOADING SCREEN
   ============================================================ -->
   <div id="loader">
-    <!-- Scanline overlay inside loader -->
-    <div class="scanlines"></div>
+    <!-- No scanline overlay: its 2px stripes beat against the ASCII glyph
+         grid and produce moiré, same reason the hero has none. -->
 
-    <!-- Three.js canvas for 3D rotating shape -->
+    <!-- Three.js canvas — ASCII draft render of the hero black hole -->
     <canvas id="loader-canvas"></canvas>
-
-    <!-- Glitching number rain -->
-    <div id="number-rain" aria-hidden="true"></div>
-
-    <!-- Falling binary stream columns -->
-    <div id="binary-cascade" aria-hidden="true"></div>
 
     <!-- Hex data panels in corners -->
     <div id="hex-panels" aria-hidden="true"></div>
 
-    <!-- Scrolling error / system message feed -->
+    <!-- Scrolling renderer build-log feed -->
     <div id="error-feed" aria-hidden="true"></div>
 
     <!-- Random glitch corruption block flashes -->
     <div id="glitch-overlay" aria-hidden="true"></div>
 
-    <!-- Symbol block shapes (ASCII-style) -->
-    <div class="symbol-block top-left" aria-hidden="true"></div>
-    <div class="symbol-block bottom-right" aria-hidden="true"></div>
-
-    <!-- Progress readout -->
+    <!-- Progress readout — percent drawn in ASCII block digits -->
     <div id="loader-progress">
-      <span id="loader-label">INITIALIZING SYSTEM</span>
-      <span id="loader-percent">0</span>
+      <span id="loader-label">INITIALIZING RENDERER</span>
+      <pre id="loader-percent">0</pre>
     </div>
   </div>
 
@@ -161,8 +151,9 @@
 
     <!-- ── HERO ── -->
     <section id="hero">
+      <!-- No scanline overlay here: its 2px stripes beat against the upscaled
+           shader canvas and produce moiré across the accretion disk. -->
       <canvas id="hero-canvas" aria-hidden="true"></canvas>
-      <div class="scanlines" aria-hidden="true"></div>
 
       <!-- Cursor glow follower -->
       <div id="cursor-glow" aria-hidden="true"></div>
@@ -188,69 +179,10 @@
         <span>BUILD: v2.6.0</span>
       </div>
 
-      <!-- NODE ACQUIRE — hidden aim trainer minigame trigger -->
-      <button id="node-acq-trigger" aria-label="Launch NODE ACQUIRE minigame">
-        <span class="trigger-icon">⌖</span>
-        <span class="trigger-label">NODE&nbsp;ACQ</span>
-        <span class="naq-tooltip">Hidden minigame — click to play</span>
-      </button>
-
-      <!-- NODE ACQUIRE overlay (hidden until triggered) -->
-      <div id="node-acq-overlay" aria-hidden="true">
-        <!-- Scanline texture -->
-        <div class="naq-scanlines"></div>
-
-        <!-- Top HUD bar -->
-        <div id="naq-hud-top">
-          <div class="naq-stat"><span class="naq-stat-label">SCORE</span><span id="naq-score">00000</span></div>
-          <div class="naq-stat"><span class="naq-stat-label">COMBO</span><span id="naq-combo">×1</span></div>
-          <div class="naq-stat"><span class="naq-stat-label">TIME</span><span id="naq-timer">30</span></div>
-        </div>
-
-        <!-- Start screen -->
-        <div id="naq-start-screen" class="naq-screen">
-          <div class="naq-screen-inner">
-            <div class="naq-screen-title">NODE ACQUIRE</div>
-            <p class="naq-screen-sub">Orbital nodes are decaying. Lock on and eliminate them<br>before they collapse. Speed bonuses. Combo chains. 30 seconds.</p>
-            <button id="naq-start-btn" class="naq-action-btn">[ INITIATE SEQUENCE ]</button>
-            <button id="naq-close-start" class="naq-close-btn">✕ ABORT MISSION</button>
-          </div>
-        </div>
-
-        <!-- End screen -->
-        <div id="naq-end-screen" class="naq-screen">
-          <div class="naq-screen-inner">
-            <div class="naq-screen-label">MISSION COMPLETE</div>
-            <div id="naq-final-grade" class="naq-grade"></div>
-            <div id="naq-final-score" class="naq-big-score">00000</div>
-            <div id="naq-final-stats" class="naq-end-stats"></div>
-            <button id="naq-retry-btn" class="naq-action-btn">[ RE-ENGAGE ]</button>
-            <button id="naq-close-end" class="naq-close-btn">✕ EXIT</button>
-          </div>
-        </div>
-
-        <!-- Target field -->
-        <div id="naq-field"></div>
-
-        <!-- Combo / hit feedback -->
-        <div id="naq-hit-feed"></div>
-
-        <!-- Reticle crosshair (follows mouse, replaces cursor during play) -->
-        <div id="naq-reticle" aria-hidden="true">
-          <div class="rct-h rct-h-l"></div>
-          <div class="rct-h rct-h-r"></div>
-          <div class="rct-v rct-v-t"></div>
-          <div class="rct-v rct-v-b"></div>
-          <div class="rct-ring"></div>
-          <div class="rct-dot"></div>
-        </div>
-      </div>
-
     </section>
 
     <!-- ── ABOUT ── -->
     <section id="about">
-      <div class="scanlines faint" aria-hidden="true"></div>
       <div class="section-inner">
         <div class="section-header">
           <span class="section-tag">// MODULE_01</span>
@@ -290,9 +222,6 @@
           <p class="section-sub">Technologies I work with.</p>
         </div>
 
-        <!-- ASCII background decoration -->
-        <div class="ascii-bg" aria-hidden="true"></div>
-
         <div class="skills-grid" id="skills-grid">
           <!-- Skills are injected by JS -->
         </div>
@@ -301,7 +230,6 @@
 
     <!-- ── PROJECTS ── -->
     <section id="projects">
-      <div class="scanlines faint" aria-hidden="true"></div>
       <div class="section-inner">
         <div class="section-header">
           <span class="section-tag">// MODULE_03</span>

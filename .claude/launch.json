@@ -4,8 +4,32 @@
     {
       "name": "static-site",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "8899"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8899"
+      ],
       "port": 8899
+    },
+    {
+      "name": "static-site-2",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8901"
+      ],
+      "port": 8901
+    },
+    {
+      "name": "static-site-3",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8903"
+      ],
+      "port": 8903
     }
   ]
 }

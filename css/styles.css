@@ -65,6 +65,24 @@ button {
   --clr-white:     #ffffff;
   --clr-glow:      rgba(200,200,200,0.15);
 
+  /* Surface + border ladder. Below the hero the whole page is monochrome, so
+     depth has to come from these three steps rather than from colour. Rung 1
+     is inert (tags, dividers), rung 2 is anything interactive at rest, rung 3
+     is hover/active/focus. Nothing outside this ladder should invent its own
+     alpha — that is what flattened the page before. */
+  --bd-1:          rgba(255,255,255,0.07);
+  --bd-2:          rgba(255,255,255,0.13);
+  --bd-3:          rgba(255,255,255,0.30);
+
+  --sf-1:          rgba(255,255,255,0.018);
+  --sf-2:          rgba(255,255,255,0.032);
+  --sf-3:          rgba(255,255,255,0.055);
+
+  /* One easing curve for every non-hero transition. */
+  --ease:          cubic-bezier(0.22, 0.61, 0.24, 1);
+  --t-fast:        0.18s var(--ease);
+  --t-mid:         0.28s var(--ease);
+
   --ff-mono:       'Share Tech Mono', monospace;
   --ff-sans:       'Space Grotesk', sans-serif;
 
@@ -91,31 +109,6 @@ button {
   font-family: var(--ff-mono);
   font-size: 0.8rem;
   letter-spacing: 0.06em;
-}
-
-/* Scanlines overlay */
-.scanlines {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 5;
-  background: repeating-linear-gradient(
-    to bottom,
-    transparent 0px,
-    transparent 3px,
-    rgba(0,0,0,0.18) 3px,
-    rgba(0,0,0,0.18) 4px
-  );
-}
-
-.scanlines.faint {
-  background: repeating-linear-gradient(
-    to bottom,
-    transparent 0px,
-    transparent 4px,
-    rgba(0,0,0,0.13) 4px,
-    rgba(0,0,0,0.13) 5px
-  );
 }
 
 /* Glitch text animation */
@@ -181,13 +174,25 @@ section {
   margin-bottom: clamp(40px, 6vw, 72px);
 }
 
+/* The module tag carries a hairline out to the full column width. It is the
+   one piece of structure every section shares, so it does the work the old
+   assorted corner brackets and ASCII fills were failing to do. */
 .section-tag {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 16px;
   font-family: var(--ff-mono);
   font-size: 0.72rem;
   letter-spacing: 0.15em;
   color: var(--clr-dim);
-  margin-bottom: 12px;
+  margin-bottom: 18px;
+}
+
+.section-tag::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, var(--bd-2), transparent);
 }
 
 .section-title {
@@ -202,6 +207,37 @@ section {
   color: var(--clr-dim);
   font-size: 1rem;
   max-width: 500px;
+}
+
+/* ── One background motif for everything below the hero ──
+   A single dot-matrix field, masked to fade at the top and bottom edges so the
+   four sections read as panels cut from the same material. This replaces the
+   old mix of scanline overlays, an ASCII fill on Skills only, and a lone
+   corner bracket on Contact — three motifs doing one motif's job. */
+#about::before,
+#skills::before,
+#projects::before,
+#contact::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: radial-gradient(
+    circle, rgba(255,255,255,0.05) 1px, transparent 1px
+  );
+  background-size: 32px 32px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+          mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+}
+
+/* Hairline seam between panels — including under the hero, so every boundary
+   on the page is the same single line. */
+#about,
+#skills,
+#projects,
+#contact {
+  border-top: 1px solid var(--bd-1);
 }
 
 /* Buttons */
@@ -283,57 +319,8 @@ section {
   height: 100%;
 }
 
-#number-rain {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-/* Individual glitching numbers — created in JS */
-.rain-num {
-  position: absolute;
-  font-family: var(--ff-mono);
-  font-size: clamp(10px, 1.5vw, 18px);
-  color: rgba(255,255,255,0.6);
-  user-select: none;
-  transition: none;
-  animation: num-flicker 0.8s infinite alternate;
-}
-
-@keyframes num-flicker {
-  0%   { opacity: 0.2; }
-  30%  { opacity: 0.9; }
-  60%  { opacity: 0.4; }
-  100% { opacity: 0.7; }
-}
-
-/* Symbol blocks */
-.symbol-block {
-  position: absolute;
-  font-family: var(--ff-mono);
-  font-size: 11px;
-  line-height: 1.4;
-  letter-spacing: 0.1em;
-  color: rgba(255,255,255,0.08);
-  white-space: pre;
-  pointer-events: none;
-  user-select: none;
-  max-width: 220px;
-}
-
-.symbol-block.top-left {
-  top: 60px;
-  left: 40px;
-}
-
-.symbol-block.bottom-right {
-  bottom: 80px;
-  right: 40px;
-  text-align: right;
-}
-
-/* Loader progress — centered over the 3D shape */
+/* Loader progress — dead center, over the draft's black-hole shadow
+   (the shadow is dark, so the readout sits inside it cleanly) */
 #loader-progress {
   position: absolute;
   top: 50%;
@@ -350,55 +337,21 @@ section {
   font-size: 0.7rem;
   letter-spacing: 0.2em;
   color: var(--clr-dim);
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
+/* Percent counter drawn in ASCII block digits (a <pre> of # cells) */
 #loader-percent {
   display: block;
+  margin: 0;
   font-family: var(--ff-mono);
-  font-size: clamp(3rem, 10vw, 8rem);
+  font-size: clamp(9px, 1.3vw, 14px);
   font-weight: var(--fw-bold);
-  color: var(--clr-white);
-  line-height: 1;
-  text-shadow: 0 0 40px rgba(255,255,255,0.3);
-  transform-origin: center center;
-  animation: pct-glitch 0.18s infinite steps(1);
-}
-
-@keyframes pct-glitch {
-  0%   { transform: translateX(0);  }
-  25%  { transform: translateX(2px);  }
-  50%  { transform: translateX(0);    }
-  75%  { transform: translateX(-1px); }
-  100% { transform: translateX(0);    }
-}
-
-/* ── Binary cascade columns ── */
-#binary-cascade {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 1;
-}
-
-.bin-col {
-  position: absolute;
-  top: 0;
-  font-family: var(--ff-mono);
-  font-size: 11px;
-  line-height: 1.6;
-  color: rgba(255,255,255,0.22);
+  line-height: 1.15;
+  letter-spacing: 0.05em;
   white-space: pre;
-  pointer-events: none;
-  user-select: none;
-  animation: bin-fall linear infinite;
-  will-change: transform, opacity;
-}
-
-@keyframes bin-fall {
-  from { transform: translateY(-110%); }
-  to   { transform: translateY(110vh); }
+  color: var(--clr-white);
+  text-shadow: 0 0 24px rgba(255,255,255,0.3);
 }
 
 /* ── Hex data panels ── */
@@ -454,9 +407,10 @@ section {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-.error-line.crit { color: rgba(255,120,120,0.65); }
-.error-line.warn { color: rgba(255,210,80,0.55); }
-.error-line.info { color: rgba(180,255,255,0.4); }
+/* Build-log tones — strictly monochrome, weight carries the hierarchy */
+.error-line.crit { color: rgba(255,255,255,0.85); }
+.error-line.warn { color: rgba(255,255,255,0.60); }
+.error-line.info { color: rgba(255,255,255,0.38); }
 
 /* ── Glitch corruption block overlay ── */
 #glitch-overlay {
@@ -466,6 +420,7 @@ section {
   z-index: 7;
   overflow: hidden;
 }
+
 
 .glitch-block {
   position: absolute;
@@ -737,6 +692,7 @@ section {
   color: var(--clr-dim);
   margin-bottom: 20px;
   opacity: 0; /* animated in */
+  text-shadow: 0 0 12px rgba(0,0,0,0.85);
 }
 
 .hero-name {
@@ -754,6 +710,7 @@ section {
   margin-bottom: 40px;
   font-weight: var(--fw-light);
   opacity: 0; /* animated in */
+  text-shadow: 0 0 14px rgba(0,0,0,0.9);
 }
 
 .hero-cta {
@@ -793,476 +750,10 @@ section {
   transition: opacity 0.3s ease;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   NODE ACQUIRE — Aim trainer minigame
-═══════════════════════════════════════════════════════════ */
-
-/* Trigger button — subtle HUD pip in bottom-left of hero */
-#node-acq-trigger {
-  position: absolute;
-  bottom: 34px;
-  left: clamp(20px, 4vw, 60px);
-  z-index: 20;
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.15);
-  color: rgba(255,255,255,0.35);
-  font-family: var(--ff-mono);
-  font-size: 0.58rem;
-  letter-spacing: 0.2em;
-  padding: 6px 11px;
-  cursor: none;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  transition: border-color 0.3s, color 0.3s, box-shadow 0.3s;
-}
-#node-acq-trigger:hover {
-  border-color: rgba(255,255,255,0.5);
-  color: rgba(255,255,255,0.85);
-  box-shadow: 0 0 14px rgba(255,255,255,0.06);
-}
-.naq-tooltip {
-  position: absolute;
-  bottom: calc(100% + 10px);
-  left: 0;
-  transform: translateY(4px);
-  background: rgba(10,10,10,0.92);
-  border: 1px solid rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.6);
-  font-family: var(--ff-mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.06em;
-  white-space: nowrap;
-  padding: 5px 10px;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-  z-index: 10;
-}
-#node-acq-trigger:hover .naq-tooltip {
-  opacity: 1;
-  transform: translateY(0);
-}
-.trigger-icon {
-  font-size: 0.88rem;
-  animation: trigger-pulse 2.4s ease-in-out infinite;
-}
-@keyframes trigger-pulse {
-  0%, 100% { opacity: 0.3; }
-  50%       { opacity: 0.85; }
-}
-
-/* Overlay — covers full hero */
-#node-acq-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 40;
-  background: rgba(0,0,0,0.78);
-  display: none;
-  overflow: hidden;
-  cursor: none; /* hide default — reticle takes over */
-}
-#node-acq-overlay.naq-active {
-  pointer-events: all;
-}
-
-/* Native crosshair on buttons/targets so they still feel clickable */
-.naq-target,
-.naq-action-btn,
-.naq-close-btn { cursor: none; }
-
-/* While the game overlay is active, fully suppress the JS cursor elements */
-body.naq-playing #cursor-dot,
-body.naq-playing #cursor-ring { display: none !important; }
-
-/* DOM reticle — follows mouse during active play */
-#naq-reticle {
-  position: absolute;
-  pointer-events: none;
-  z-index: 50;
-  width: 36px;
-  height: 36px;
-  transform: translate(-50%, -50%);
-  will-change: transform;
-  /* hidden on touch devices */
-}
-#naq-reticle .rct-h,
-#naq-reticle .rct-v {
-  position: absolute;
-  background: rgba(255,255,255,0.82);
-}
-/* Horizontal bar — two segments with gap in centre */
-#naq-reticle .rct-h-l { width: 10px; height: 1px; top: 50%; left: 0;    transform: translateY(-50%); }
-#naq-reticle .rct-h-r { width: 10px; height: 1px; top: 50%; right: 0;   transform: translateY(-50%); }
-#naq-reticle .rct-v-t { height: 10px; width: 1px; left: 50%; top: 0;    transform: translateX(-50%); }
-#naq-reticle .rct-v-b { height: 10px; width: 1px; left: 50%; bottom: 0; transform: translateX(-50%); }
-/* Outer circle */
-#naq-reticle .rct-ring {
-  position: absolute;
-  inset: 2px;
-  border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.45);
-}
-/* Centre dot */
-#naq-reticle .rct-dot {
-  position: absolute;
-  width: 3px; height: 3px;
-  background: #fff;
-  border-radius: 50%;
-  top: 50%; left: 50%;
-  transform: translate(-50%,-50%);
-  box-shadow: 0 0 5px rgba(255,255,255,0.7);
-}
-/* Squeeze on hit — added via JS */
-#naq-reticle.rct-fire {
-  animation: rct-fire 0.14s ease-out forwards;
-}
-@keyframes rct-fire {
-  0%   { transform: translate(-50%,-50%) scale(1.0); }
-  40%  { transform: translate(-50%,-50%) scale(0.6); }
-  100% { transform: translate(-50%,-50%) scale(1.0); }
-}
-.naq-scanlines {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-  background: repeating-linear-gradient(
-    to bottom,
-    transparent 0px, transparent 3px,
-    rgba(0,0,0,0.07) 3px, rgba(0,0,0,0.07) 4px
-  );
-}
-
-/* HUD top bar */
-#naq-hud-top {
-  position: absolute;
-  top: var(--nav-h);
-  left: 0;
-  right: 0;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(28px, 6vw, 80px);
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-  z-index: 10;
-  background: rgba(0,0,0,0.4);
-}
-.naq-stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1px;
-}
-.naq-stat-label {
-  font-family: var(--ff-mono);
-  font-size: 0.52rem;
-  letter-spacing: 0.22em;
-  color: rgba(255,255,255,0.3);
-}
-#naq-score, #naq-combo, #naq-timer {
-  font-family: var(--ff-mono);
-  font-size: clamp(1.3rem, 3vw, 1.8rem);
-  font-weight: 700;
-  color: #fff;
-  letter-spacing: 0.08em;
-  transition: color 0.12s;
-}
-#naq-timer.naq-urgency {
-  color: rgba(255,90,90,1);
-  animation: naq-timer-flash 0.45s steps(1) infinite;
-}
-@keyframes naq-timer-flash {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.3; }
-}
-
-/* Start / End screens */
-.naq-screen {
-  position: absolute;
-  inset: 0;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 20;
-}
-.naq-screen.naq-visible { display: flex; }
-
-.naq-screen-inner {
-  text-align: center;
-  padding: clamp(32px, 5vw, 52px) clamp(24px, 5vw, 48px);
-  border: 1px solid rgba(255,255,255,0.1);
-  background: rgba(0,0,0,0.65);
-  max-width: 460px;
-  width: 92%;
-  position: relative;
-}
-/* Corner brackets on panel */
-.naq-screen-inner::before,
-.naq-screen-inner::after {
-  content: '';
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  border-style: solid;
-  border-color: rgba(255,255,255,0.35);
-}
-.naq-screen-inner::before { top: -1px;    left: -1px;   border-width: 2px 0 0 2px; }
-.naq-screen-inner::after  { bottom: -1px; right: -1px;  border-width: 0 2px 2px 0; }
-
-.naq-screen-title,
-.naq-screen-label {
-  font-family: var(--ff-mono);
-  font-size: clamp(1.1rem, 3vw, 1.7rem);
-  letter-spacing: 0.28em;
-  color: #fff;
-  margin-bottom: 14px;
-}
-.naq-screen-sub {
-  font-family: var(--ff-mono);
-  font-size: 0.67rem;
-  line-height: 1.9;
-  color: rgba(255,255,255,0.42);
-  letter-spacing: 0.08em;
-  margin-bottom: 30px;
-}
-.naq-big-score {
-  font-family: var(--ff-mono);
-  font-size: clamp(2.6rem, 7vw, 4.5rem);
-  font-weight: 700;
-  color: #fff;
-  letter-spacing: 0.1em;
-  margin-bottom: 10px;
-  text-shadow: 0 0 30px rgba(255,255,255,0.35);
-}
-.naq-grade {
-  font-family: var(--ff-mono);
-  font-size: clamp(1.8rem, 5vw, 2.8rem);
-  letter-spacing: 0.3em;
-  margin-bottom: 8px;
-  font-weight: 700;
-}
-.naq-grade.S { color: #fff;                text-shadow: 0 0 22px rgba(255,255,255,0.9); }
-.naq-grade.A { color: rgba(180,255,180,1); text-shadow: 0 0 16px rgba(180,255,180,0.5); }
-.naq-grade.B { color: rgba(160,200,255,1); text-shadow: 0 0 12px rgba(160,200,255,0.45); }
-.naq-grade.C { color: rgba(255,215,100,1); text-shadow: 0 0 10px rgba(255,215,100,0.4); }
-.naq-grade.D { color: rgba(255,120,120,1); }
-
-.naq-end-stats {
-  font-family: var(--ff-mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.1em;
-  color: rgba(255,255,255,0.42);
-  margin-bottom: 26px;
-  line-height: 2.1;
-}
-.naq-action-btn {
-  display: block;
-  width: 100%;
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.35);
-  color: #fff;
-  font-family: var(--ff-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.22em;
-  padding: 13px 20px;
-  cursor: none;
-  margin-bottom: 12px;
-  transition: background 0.2s, box-shadow 0.2s;
-}
-.naq-action-btn:hover {
-  background: rgba(255,255,255,0.07);
-  box-shadow: 0 0 18px rgba(255,255,255,0.09);
-}
-.naq-close-btn {
-  background: transparent;
-  border: none;
-  color: rgba(255,255,255,0.3);
-  font-family: var(--ff-mono);
-  font-size: 0.58rem;
-  letter-spacing: 0.16em;
-  cursor: none;
-  padding: 6px;
-  transition: color 0.2s;
-}
-.naq-close-btn:hover { color: rgba(255,255,255,0.75); }
-
-/* Target field */
-#naq-field {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 5;
-}
-
-/* Individual target node */
-.naq-target {
-  position: absolute;
-  pointer-events: all;
-  cursor: none;
-  transform: translate(-50%, -50%) scale(0);
-  border-radius: 50%;
-  animation: naq-target-spawn 0.18s cubic-bezier(0.34,1.56,0.64,1) forwards;
-}
-@keyframes naq-target-spawn {
-  to { transform: translate(-50%, -50%) scale(1); }
-}
-.naq-target-ring {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 1.5px solid rgba(255,255,255,0.88);
-  animation: naq-ring-decay linear forwards;
-}
-@keyframes naq-ring-decay {
-  0%   { opacity: 1;   border-color: rgba(255,255,255,0.88); box-shadow: 0 0 8px rgba(255,255,255,0.25); }
-  65%  { opacity: 0.75; border-color: rgba(255,255,255,0.55); box-shadow: none; }
-  100% { opacity: 0.15; border-color: rgba(255,100,100,0.5);  }
-}
-/* Outer pulse ring */
-.naq-target-pulse {
-  position: absolute;
-  inset: -6px;
-  border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.18);
-  animation: naq-pulse-ring 1.2s ease-out infinite;
-}
-@keyframes naq-pulse-ring {
-  0%   { transform: scale(1);   opacity: 0.5; }
-  100% { transform: scale(1.5); opacity: 0; }
-}
-/* Crosshair lines */
-.naq-target-cross {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-.naq-target-cross::before,
-.naq-target-cross::after {
-  content: '';
-  position: absolute;
-  background: rgba(255,255,255,0.45);
-}
-.naq-target-cross::before { width: 1px; height: 34%; left: 50%; top: 33%; transform: translateX(-50%); }
-.naq-target-cross::after  { height: 1px; width: 34%; top: 50%; left: 33%; transform: translateY(-50%); }
-/* Center dot */
-.naq-target-dot {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: #fff;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 6px rgba(255,255,255,0.7);
-}
-
-/* Hit burst rings */
-.naq-burst {
-  position: absolute;
-  pointer-events: none;
-  border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.75);
-  transform: translate(-50%, -50%);
-  animation: naq-burst-out 0.42s ease-out forwards;
-}
-@keyframes naq-burst-out {
-  from { width: 8px;  height: 8px;  opacity: 0.9; }
-  to   { width: 88px; height: 88px; opacity: 0; }
-}
-
-/* Floating score popup */
-.naq-score-pop {
-  position: absolute;
-  pointer-events: none;
-  font-family: var(--ff-mono);
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: #fff;
-  letter-spacing: 0.1em;
-  transform: translate(-50%, -50%);
-  animation: naq-score-pop 0.72s ease-out forwards;
-  z-index: 30;
-  white-space: nowrap;
-}
-@keyframes naq-score-pop {
-  0%   { opacity: 1; transform: translate(-50%, -50%); }
-  100% { opacity: 0; transform: translate(-50%, calc(-50% - 44px)); }
-}
-
-/* Combo flash */
-#naq-hit-feed {
-  position: absolute;
-  top: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  pointer-events: none;
-  z-index: 25;
-  height: 42px;
-  overflow: hidden;
-}
-.naq-combo-flash {
-  font-family: var(--ff-mono);
-  font-size: clamp(0.85rem, 2.5vw, 1.2rem);
-  letter-spacing: 0.22em;
-  color: #fff;
-  animation: naq-combo-flash 0.62s ease-out forwards;
-}
-@keyframes naq-combo-flash {
-  0%   { opacity: 0; transform: scale(0.65) translateY(8px); }
-  28%  { opacity: 1; transform: scale(1.06) translateY(0); }
-  100% { opacity: 0; transform: scale(1) translateY(-6px); }
-}
-
 /* ── 7. SKILLS ── */
 #skills {
   background: var(--clr-bg);
   position: relative;
-}
-
-/* Dot-matrix grid on black sections */
-#skills::before,
-#contact::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background-image: radial-gradient(
-    circle, rgba(255,255,255,0.05) 1px, transparent 1px
-  );
-  background-size: 32px 32px;
-}
-
-/* Corner HUD bracket — contact bottom-right */
-#contact::after {
-  content: '';
-  position: absolute;
-  bottom: 40px; right: 40px;
-  width: 60px; height: 60px;
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-  border-right: 1px solid rgba(255,255,255,0.07);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.ascii-bg {
-  position: absolute;
-  top: 0; right: 0;
-  width: 40%;
-  height: 100%;
-  font-family: var(--ff-mono);
-  font-size: 11px;
-  line-height: 1.5;
-  color: rgba(255,255,255,0.025);
-  white-space: pre;
-  overflow: hidden;
-  pointer-events: none;
-  user-select: none;
-  padding: 40px;
 }
 
 .skills-grid {
@@ -1273,11 +764,11 @@ body.naq-playing #cursor-ring { display: none !important; }
 
 .skill-card {
   padding: 20px 16px;
-  border: 1px solid var(--clr-border);
+  border: 1px solid var(--bd-1);
   border-radius: var(--radius-sm);
-  background: rgba(255,255,255,0.02);
+  background: var(--sf-1);
   text-align: center;
-  transition: border-color var(--transition), background var(--transition), transform var(--transition);
+  transition: border-color var(--t-fast), background var(--t-fast), transform var(--t-fast);
   cursor: default;
   opacity: 0; /* animated in */
   transform: translateY(20px);
@@ -1285,22 +776,12 @@ body.naq-playing #cursor-ring { display: none !important; }
   overflow: visible;
 }
 
-.skill-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, transparent 60%);
-  opacity: 0;
-  transition: opacity var(--transition);
-}
-
+/* Skills are inert, so they step up only one rung and don't lift — the
+   Projects grid is what should read as clickable on this page. */
 .skill-card:hover {
-  border-color: rgba(255,255,255,0.3);
-  background: rgba(255,255,255,0.04);
-  transform: translateY(-4px);
+  border-color: var(--bd-2);
+  background: var(--sf-2);
 }
-
-.skill-card:hover::before { opacity: 1; }
 
 /* Skill tooltip */
 .skill-tooltip {
@@ -1401,7 +882,7 @@ body.naq-playing #cursor-ring { display: none !important; }
   display: flex;
   flex-direction: column;
   gap: 24px;
-  border-left: 1px solid var(--clr-border);
+  border-left: 1px solid var(--bd-1);
   padding-left: clamp(24px, 3vw, 40px);
 }
 
@@ -1430,7 +911,7 @@ body.naq-playing #cursor-ring { display: none !important; }
   }
   .about-currently {
     border-left: none;
-    border-top: 1px solid var(--clr-border);
+    border-top: 1px solid var(--bd-1);
     padding-left: 0;
     padding-top: 24px;
   }
@@ -1469,8 +950,8 @@ body.naq-playing #cursor-ring { display: none !important; }
 
 #project-search {
   width: 100%;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid var(--clr-border);
+  background: var(--sf-2);
+  border: 1px solid var(--bd-2);
   border-radius: var(--radius-sm);
   padding: 10px 14px 10px 40px;
   color: var(--clr-text);
@@ -1484,8 +965,8 @@ body.naq-playing #cursor-ring { display: none !important; }
 #project-search::placeholder { color: var(--clr-dim); }
 
 #project-search:focus {
-  border-color: rgba(255,255,255,0.3);
-  background: rgba(255,255,255,0.05);
+  border-color: var(--bd-3);
+  background: var(--sf-3);
 }
 
 .filter-btns {
@@ -1496,21 +977,21 @@ body.naq-playing #cursor-ring { display: none !important; }
 
 .filter-btn {
   padding: 8px 18px;
-  border: 1px solid var(--clr-border);
+  border: 1px solid var(--bd-1);
   border-radius: var(--radius-sm);
   font-family: var(--ff-mono);
   font-size: 0.72rem;
   letter-spacing: 0.1em;
   color: var(--clr-dim);
   background: transparent;
-  transition: all var(--transition);
+  transition: border-color var(--t-fast), color var(--t-fast), background var(--t-fast);
 }
 
 .filter-btn:hover,
 .filter-btn.active {
-  border-color: var(--clr-white);
+  border-color: var(--bd-3);
   color: var(--clr-white);
-  background: rgba(255,255,255,0.05);
+  background: var(--sf-3);
 }
 
 /* Sort buttons — identical visual language to filter-btn */
@@ -1540,7 +1021,7 @@ body.naq-playing #cursor-ring { display: none !important; }
 
 .sort-btn {
   padding: 8px 18px;
-  border: 1px solid var(--clr-border);
+  border: 1px solid var(--bd-1);
   border-radius: var(--radius-sm);
   font-family: var(--ff-mono);
   font-size: 0.72rem;
@@ -1548,18 +1029,14 @@ body.naq-playing #cursor-ring { display: none !important; }
   color: var(--clr-dim);
   background: transparent;
   cursor: pointer;
-  transition: all var(--transition);
+  transition: border-color var(--t-fast), color var(--t-fast), background var(--t-fast);
 }
 
 .sort-btn:hover,
 .sort-btn.active {
-  border-color: var(--clr-white);
+  border-color: var(--bd-3);
   color: var(--clr-white);
-  background: rgba(255,255,255,0.05);
-}
-
-.sort-btn.active {
-  box-shadow: 0 0 8px rgba(255,255,255,0.06);
+  background: var(--sf-3);
 }
 
 /* Projects grid */
@@ -1569,36 +1046,27 @@ body.naq-playing #cursor-ring { display: none !important; }
   gap: 24px;
 }
 
+/* Project cards are the one component on the page that lifts on hover — they
+   are also the only clickable surface in a grid, so the motion means
+   something. The old 0.3deg rotate is gone: a wobble undercuts the
+   instrument-panel feel the hero sets up. */
 .project-card {
-  background: rgba(255,255,255,0.02);
-  border: 1px solid var(--clr-border);
+  background: var(--sf-2);
+  border: 1px solid var(--bd-2);
   border-radius: var(--radius-md);
   overflow: hidden;
-  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+  transition: transform var(--t-mid), border-color var(--t-mid), background var(--t-mid);
   opacity: 0;           /* animated in */
   transform: translateY(30px);
   position: relative;
   cursor: pointer;
 }
 
-.project-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity var(--transition);
-  background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 50%);
-  pointer-events: none;
-  z-index: 1;
-}
-
 .project-card:hover {
-  transform: translateY(-6px) rotate(0.3deg);
-  border-color: rgba(255,255,255,0.12);
-  box-shadow: 0 0 12px rgba(255,255,255,0.08);
+  transform: translateY(-4px);
+  border-color: var(--bd-3);
+  background: var(--sf-3);
 }
-
-.project-card:hover::before { opacity: 1; }
 
 /* Thumb overlay icon */
 .project-thumb {
@@ -1735,8 +1203,8 @@ body.naq-playing #cursor-ring { display: none !important; }
 }
 
 .stack-tag {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--clr-border);
+  background: var(--sf-1);
+  border: 1px solid var(--bd-1);
   border-radius: 3px;
   padding: 3px 8px;
   font-family: var(--ff-mono);
@@ -2144,8 +1612,8 @@ body.naq-playing #cursor-ring { display: none !important; }
 
 .form-group input,
 .form-group textarea {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid var(--clr-border);
+  background: var(--sf-2);
+  border: 1px solid var(--bd-2);
   border-radius: var(--radius-sm);
   padding: 12px 16px;
   color: var(--clr-text);
@@ -2158,8 +1626,8 @@ body.naq-playing #cursor-ring { display: none !important; }
 
 .form-group input:focus,
 .form-group textarea:focus {
-  border-color: rgba(255,255,255,0.3);
-  background: rgba(255,255,255,0.05);
+  border-color: var(--bd-3);
+  background: var(--sf-3);
 }
 
 .form-group input.error,
@@ -2201,15 +1669,16 @@ body.naq-playing #cursor-ring { display: none !important; }
   align-items: center;
   gap: 14px;
   padding: 14px 16px;
-  border: 1px solid var(--clr-border);
+  border: 1px solid var(--bd-2);
   border-radius: var(--radius-sm);
+  background: var(--sf-2);
   font-size: 0.85rem;
-  transition: all var(--transition);
+  transition: border-color var(--t-fast), background var(--t-fast), transform var(--t-fast);
 }
 
 .social-link:hover {
-  border-color: rgba(255,255,255,0.3);
-  background: rgba(255,255,255,0.03);
+  border-color: var(--bd-3);
+  background: var(--sf-3);
   transform: translateX(4px);
 }
 
@@ -2224,7 +1693,7 @@ body.naq-playing #cursor-ring { display: none !important; }
 /* ── 11. FOOTER ── */
 #footer {
   background: var(--clr-surface);
-  border-top: 1px solid var(--clr-border);
+  border-top: 1px solid var(--bd-1);
   padding: 28px 0;
 }
 
@@ -2385,8 +1854,6 @@ body.low-perf .nav-sun-icon { animation: none; }
 
 /* ── body.low-perf: hide all purely decorative elements ── */
 body.low-perf #hero-canvas,
-body.low-perf .scanlines,
-body.low-perf .ascii-bg,
 body.low-perf #cursor-glow,
 body.low-perf #cursor-dot,
 body.low-perf #cursor-ring,
@@ -2394,8 +1861,10 @@ body.low-perf .hud-corner,
 body.low-perf .scroll-side-label,
 body.low-perf .hero-fx-overlay { display: none !important; }
 
-/* Dot-matrix pseudo-element decorations on black sections */
+/* Dot-matrix motif behind every section below the hero */
+body.low-perf #about::before,
 body.low-perf #skills::before,
+body.low-perf #projects::before,
 body.low-perf #contact::before { display: none !important; }
 
 /* Disable glitch-text CSS pseudo-animations */

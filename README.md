@@ -29,7 +29,6 @@ Hey, I'm **Bruce Lin** — a B.Sc. Computer Science student at Western Universit
 - Filterable + searchable project cards
 - Working contact form via Formspree
 - Low performance mode (disables all decorative effects)
-- Hidden NODE ACQUIRE aim-trainer easter egg
 - Fully responsive — no UI frameworks
 
 ---
