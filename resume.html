@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bruce Lin — Resume</title>
+  <title>Bruce Lin | Resume</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -163,7 +163,7 @@
   <!-- HEADER -->
   <header>
     <div class="name">Bruce Lin</div>
-    <div class="tagline">Computer Science Student &amp; Front-End Developer</div>
+    <div class="tagline">Computer Science Student &amp; Full-Stack Developer</div>
     <div class="contact-row">
       <span>(437) 988-4102</span>
       <span>email@brucelsprouts.com</span>
@@ -178,7 +178,7 @@
     <div class="section-title">Education</div>
     <div class="entry">
       <div>
-        <div class="entry-title">University of Western Ontario &mdash; Western University</div>
+        <div class="entry-title">Western University</div>
         <div class="entry-sub">Bachelor of Science, Computer Science &nbsp;&middot;&nbsp; Expected Graduation: Spring 2027</div>
       </div>
       <div class="entry-date">London, ON &nbsp;&middot;&nbsp; 2023 &ndash; Present</div>
@@ -190,13 +190,13 @@
     <div class="section-title">Technical Skills</div>
     <div class="skills-grid">
       <div class="skills-label">Languages</div>
-      <div class="skills-value">Java &middot; Python &middot; JavaScript &middot; TypeScript &middot; PHP &middot; Rust &middot; HTML &middot; CSS</div>
+      <div class="skills-value">TypeScript &middot; JavaScript &middot; Python &middot; Java &middot; Rust &middot; SQL &middot; PHP &middot; HTML &middot; CSS</div>
+
+      <div class="skills-label">Frameworks</div>
+      <div class="skills-value">React &middot; Next.js &middot; React Native (Expo) &middot; Tauri &middot; Tailwind CSS &middot; Three.js &middot; GSAP</div>
 
       <div class="skills-label">Tools &amp; Platforms</div>
-      <div class="skills-value">Git &middot; Linux / Unix &middot; Oracle Cloud &middot; Tauri &middot; Node.js</div>
-
-      <div class="skills-label">Libraries</div>
-      <div class="skills-value">Three.js &middot; GSAP &middot; Tkinter</div>
+      <div class="skills-value">Git &middot; Supabase &middot; Postgres &middot; Node.js &middot; Vercel &middot; Oracle Cloud &middot; Linux / Unix &middot; Claude Code</div>
 
       <div class="skills-label">Creative</div>
       <div class="skills-value">After Effects &middot; Photoshop &middot; Blender</div>
@@ -209,54 +209,55 @@
 
     <div class="project-entry">
       <div class="project-header">
-        <span class="project-title">ClipStack</span>
-        <span class="project-links"><a href="https://github.com/brucelsprouts/clipstack">github.com/brucelsprouts/clipstack</a></span>
+        <span class="project-title">Deckira</span>
+        <span class="project-links">In development</span>
       </div>
-      <div class="project-stack">Tauri &middot; Rust &middot; TypeScript</div>
+      <div class="project-stack">Tauri &middot; React &middot; TypeScript &middot; React Native (Expo) &middot; Supabase</div>
       <div class="project-body">
         <ul>
-          <li>Built a cross-platform desktop clipboard manager using Tauri, combining a Rust backend with a TypeScript/HTML frontend in a single native binary.</li>
-          <li>Implemented persistent clip history, image preview, full-text search, pinned clips, a global keyboard shortcut, and light/dark themes.</li>
+          <li>Building a spaced-repetition flashcard app on one shared TypeScript core, shipped as a Tauri desktop client, an Expo React Native mobile app, and a React web app.</li>
+          <li>Implemented FSRS review scheduling, offline-first local storage with cloud sync, media-rich cards, and Stripe subscription billing on a Supabase backend (Postgres, auth, edge functions).</li>
         </ul>
       </div>
     </div>
 
     <div class="project-entry">
       <div class="project-header">
-        <span class="project-title">Personal Portfolio &mdash; brucelsprouts.com</span>
+        <span class="project-title">Tempo</span>
+        <span class="project-links"><a href="https://github.com/brucelsprouts/tempo">github.com/brucelsprouts/tempo</a></span>
+      </div>
+      <div class="project-stack">Next.js &middot; TypeScript &middot; Supabase &middot; Tailwind CSS</div>
+      <div class="project-body">
+        <ul>
+          <li>Built a continuous-scroll calendar that removes month pagination, virtualising one unbroken column of week rows so any date range stays smooth.</li>
+          <li>Modelled recurring events as a single row with RFC 5545 rules and derived occurrences at render time, so an 80-year birthday costs one record instead of eighty.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="project-entry">
+      <div class="project-header">
+        <span class="project-title">Brucekit</span>
+        <span class="project-links"><a href="https://github.com/brucelsprouts/brucekit">github.com/brucelsprouts/brucekit</a></span>
+      </div>
+      <div class="project-stack">Tauri &middot; Rust &middot; React &middot; TypeScript</div>
+      <div class="project-body">
+        <ul>
+          <li>Built a keyboard-first Windows tray launcher that opens a searchable grid of utilities behind one global hotkey.</li>
+          <li>Consolidated three earlier standalone apps (clipboard history, focus timer, network monitor) into toggleable modules alongside on-device OCR capture and a screen colour picker; runs fully local with no backend or telemetry.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="project-entry">
+      <div class="project-header">
+        <span class="project-title">Personal Portfolio</span>
         <span class="project-links"><a href="https://brucelsprouts.com">brucelsprouts.com</a> &nbsp;&middot;&nbsp; <a href="https://github.com/brucelsprouts/brucelsprouts.github.io">GitHub</a></span>
       </div>
-      <div class="project-stack">HTML &middot; CSS &middot; JavaScript &middot; Three.js &middot; GSAP</div>
+      <div class="project-stack">JavaScript &middot; Three.js &middot; GSAP &middot; HTML &middot; CSS</div>
       <div class="project-body">
         <ul>
-          <li>Designed and built a cyber-tech themed portfolio from scratch with no CSS or JavaScript frameworks.</li>
-          <li>Integrated a Three.js 3D particle system, GSAP scroll animations, URL deep-linking, a hidden aim-trainer minigame, and a low-performance accessibility mode.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="project-entry">
-      <div class="project-header">
-        <span class="project-title">XPWaste</span>
-        <span class="project-links"><a href="https://github.com/brucelsprouts/xpwaste">github.com/brucelsprouts/xpwaste</a></span>
-      </div>
-      <div class="project-stack">Python &middot; Tkinter &middot; PyInstaller</div>
-      <div class="project-body">
-        <ul>
-          <li>Developed a desktop focus timer featuring session history logging, custom notification sounds, and dual themes; packaged as a standalone Windows executable requiring no Python install.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="project-entry">
-      <div class="project-header">
-        <span class="project-title">Nixie Counter</span>
-        <span class="project-links"><a href="https://github.com/brucelsprouts/nixiecounter">github.com/brucelsprouts/nixiecounter</a></span>
-      </div>
-      <div class="project-stack">PHP &middot; Oracle Cloud &middot; SVG</div>
-      <div class="project-body">
-        <ul>
-          <li>Deployed a server-side visitor counter on Oracle Cloud that generates and streams a real-time Nixie-tube SVG image; embeds in any GitHub README or webpage via a single URL.</li>
+          <li>Designed and built a cyber-tech portfolio from scratch with no CSS or JavaScript frameworks, integrating a Three.js particle system, GSAP scroll animations, URL deep-linking, and a low-performance accessibility mode.</li>
         </ul>
       </div>
     </div>
@@ -269,14 +270,28 @@
 
     <div class="entry">
       <div>
-        <div class="entry-title">Video Editing Intern</div>
-        <div class="entry-sub">AMG</div>
+        <div class="entry-title">Lead Developer &amp; Designer</div>
+        <div class="entry-sub">Toronto STEM Exploration Camp &nbsp;&middot;&nbsp; <a href="https://tsecamp.ca">tsecamp.ca</a></div>
       </div>
-      <div class="entry-date">Summer 2024</div>
+      <div class="entry-date">Apr &ndash; Aug 2026</div>
       <div class="entry-body">
         <ul>
-          <li>Edited and delivered video content using After Effects and Premiere; produced motion graphics, compositing, and transitions for client-ready deliverables.</li>
-          <li>Managed timelines across multiple concurrent projects in a professional production environment.</li>
+          <li>Designed, built, and deployed the camp&rsquo;s public website as sole developer using React, Vite, Tailwind CSS, and Vercel.</li>
+          <li>Created the camp logo and visual identity, then carried it through the full site design.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div>
+        <div class="entry-title">Freelance Video Editor</div>
+        <div class="entry-sub">AMG</div>
+      </div>
+      <div class="entry-date">Mar 2024 &ndash; Present</div>
+      <div class="entry-body">
+        <ul>
+          <li>Edit and deliver client video in After Effects and Premiere, producing motion graphics, compositing, and transitions to spec.</li>
+          <li>Started as an on-site summer intern in 2024 and continued remotely, managing timelines across multiple concurrent projects.</li>
         </ul>
       </div>
     </div>
@@ -289,7 +304,7 @@
       <div class="entry-date">2021 &ndash; 2023</div>
       <div class="entry-body">
         <ul>
-          <li>Tutored students in English comprehension and writing in a structured youth program; adapted teaching approach to individual learning needs.</li>
+          <li>Tutored students in English comprehension and writing, adapting instruction to individual learning needs.</li>
         </ul>
       </div>
     </div>

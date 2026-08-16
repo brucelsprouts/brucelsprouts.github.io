@@ -30,7 +30,7 @@ def make_styles():
                 textColor=BLACK, spaceAfter=0, spaceBefore=0)
 
     name_style = ParagraphStyle('Name',
-        fontName='Helvetica-Bold', fontSize=22, leading=26,
+        fontName='Helvetica-Bold', fontSize=20, leading=23,
         textColor=BLACK)
 
     tagline_style = ParagraphStyle('Tagline',
@@ -39,41 +39,41 @@ def make_styles():
 
     contact_style = ParagraphStyle('Contact',
         fontName='Helvetica', fontSize=9, leading=12,
-        textColor=DARK_GREY, spaceBefore=5)
+        textColor=DARK_GREY, spaceBefore=3)
 
     section_style = ParagraphStyle('Section',
         fontName='Helvetica-Bold', fontSize=8, leading=10,
-        textColor=MID_GREY, spaceBefore=10, spaceAfter=4,
+        textColor=MID_GREY, spaceBefore=6, spaceAfter=3,
         letterSpacing=1.5)
 
     entry_title_style = ParagraphStyle('EntryTitle',
-        fontName='Helvetica-Bold', fontSize=10.5, leading=13,
+        fontName='Helvetica-Bold', fontSize=10.5, leading=12.5,
         textColor=BLACK)
 
     entry_sub_style = ParagraphStyle('EntrySub',
-        fontName='Helvetica', fontSize=9.5, leading=12,
-        textColor=DARK_GREY, spaceBefore=1)
+        fontName='Helvetica', fontSize=9.5, leading=11.5,
+        textColor=DARK_GREY, spaceBefore=0)
 
     entry_date_style = ParagraphStyle('EntryDate',
         fontName='Helvetica', fontSize=9, leading=12,
         textColor=MID_GREY, alignment=TA_RIGHT)
 
     bullet_style = ParagraphStyle('Bullet',
-        fontName='Helvetica', fontSize=9.5, leading=13,
-        textColor=HexColor('#333333'), spaceBefore=2,
+        fontName='Helvetica', fontSize=9.5, leading=12,
+        textColor=HexColor('#333333'), spaceBefore=1,
         leftIndent=12, firstLineIndent=-12)
 
     skill_label_style = ParagraphStyle('SkillLabel',
-        fontName='Helvetica-Bold', fontSize=9.5, leading=13,
+        fontName='Helvetica-Bold', fontSize=9.5, leading=12,
         textColor=DARK_GREY)
 
     skill_val_style = ParagraphStyle('SkillVal',
-        fontName='Helvetica', fontSize=9.5, leading=13,
+        fontName='Helvetica', fontSize=9.5, leading=12,
         textColor=BLACK)
 
     proj_stack_style = ParagraphStyle('ProjStack',
         fontName='Helvetica', fontSize=8.5, leading=11,
-        textColor=MID_GREY, spaceBefore=1, spaceAfter=2)
+        textColor=MID_GREY, spaceBefore=0, spaceAfter=1)
 
     link_style = ParagraphStyle('Link',
         fontName='Helvetica', fontSize=8.5, leading=11,
@@ -97,7 +97,7 @@ def rule(thickness=0.6, color=RULE_GREY, space=3):
 
 def section(title):
     return [
-        Spacer(1, 6),
+        Spacer(1, 3),
         Paragraph(title.upper(), S['section']),
         rule(),
     ]
@@ -125,9 +125,8 @@ def entry_row(left_top, left_sub, right_text, bullets=None):
     items = [t]
     if bullets:
         for b in bullets:
-            items.append(Spacer(1, 1))
             items.append(bullet(b))
-        items.append(Spacer(1, 4))
+        items.append(Spacer(1, 3))
     return KeepTogether(items)
 
 def project_block(title, url_text, stack, bullets):
@@ -146,9 +145,8 @@ def project_block(title, url_text, stack, bullets):
 
     items = [t, Paragraph(stack, S['proj_stack'])]
     for b in bullets:
-        items.append(Spacer(1, 1))
         items.append(bullet(b))
-    items.append(Spacer(1, 5))
+    items.append(Spacer(1, 3))
     return KeepTogether(items)
 
 def skills_row(label, value):
@@ -171,15 +169,15 @@ def build():
         pagesize=letter,
         leftMargin=0.65*inch,
         rightMargin=0.65*inch,
-        topMargin=0.55*inch,
-        bottomMargin=0.55*inch,
+        topMargin=0.45*inch,
+        bottomMargin=0.45*inch,
     )
 
     story = []
 
     # ── HEADER ──────────────────────────────────────────────
     story.append(Paragraph('Bruce Lin', S['name']))
-    story.append(Paragraph('Computer Science Student &amp; Front-End Developer', S['tagline']))
+    story.append(Paragraph('Computer Science Student &amp; Full-Stack Developer', S['tagline']))
     story.append(Paragraph(
         '(437) 988-4102  \u00b7  email@brucelsprouts.com  \u00b7  '
         'brucelsprouts.com  \u00b7  github.com/brucelsprouts  \u00b7  '
@@ -191,7 +189,7 @@ def build():
     # ── EDUCATION ───────────────────────────────────────────
     story += section('Education')
     story.append(entry_row(
-        'University of Western Ontario \u2014 Western University',
+        'Western University',
         'Bachelor of Science, Computer Science  \u00b7  Expected Graduation: Spring 2027',
         'London, ON  \u00b7  2023\u2013Present',
     ))
@@ -200,15 +198,15 @@ def build():
     story += section('Technical Skills')
     story.append(skills_row(
         'Languages',
-        'Java  \u00b7  Python  \u00b7  JavaScript  \u00b7  TypeScript  \u00b7  PHP  \u00b7  Rust  \u00b7  HTML  \u00b7  CSS'
+        'TypeScript  \u00b7  JavaScript  \u00b7  Python  \u00b7  Java  \u00b7  Rust  \u00b7  SQL  \u00b7  PHP  \u00b7  HTML  \u00b7  CSS'
+    ))
+    story.append(skills_row(
+        'Frameworks',
+        'React  \u00b7  Next.js  \u00b7  React Native (Expo)  \u00b7  Tauri  \u00b7  Tailwind CSS  \u00b7  Three.js  \u00b7  GSAP'
     ))
     story.append(skills_row(
         'Tools & Platforms',
-        'Git  \u00b7  Linux / Unix  \u00b7  Oracle Cloud  \u00b7  Tauri  \u00b7  Node.js'
-    ))
-    story.append(skills_row(
-        'Libraries',
-        'Three.js  \u00b7  GSAP  \u00b7  Tkinter'
+        'Git  \u00b7  Supabase  \u00b7  Postgres  \u00b7  Node.js  \u00b7  Vercel  \u00b7  Oracle Cloud  \u00b7  Linux / Unix  \u00b7  Claude Code'
     ))
     story.append(skills_row(
         'Creative',
@@ -220,40 +218,41 @@ def build():
     story += section('Projects')
 
     story.append(project_block(
-        'ClipStack',
-        'github.com/brucelsprouts/clipstack',
-        'Tauri  \u00b7  Rust  \u00b7  TypeScript',
+        'Deckira',
+        'In development',
+        'Tauri  \u00b7  React  \u00b7  TypeScript  \u00b7  React Native (Expo)  \u00b7  Supabase',
         [
-            'Built a cross-platform desktop clipboard manager using Tauri, combining a Rust backend with a TypeScript/HTML frontend in a single native binary.',
-            'Implemented persistent clip history, image preview, full-text search, pinned clips, a global keyboard shortcut, and light/dark themes.',
+            'Building a spaced-repetition flashcard app on one shared TypeScript core, shipped as a Tauri desktop client, an Expo React Native mobile app, and a React web app.',
+            'Implemented FSRS review scheduling, offline-first local storage with cloud sync, media-rich cards, and Stripe subscription billing on a Supabase backend (Postgres, auth, edge functions).',
         ]
     ))
 
     story.append(project_block(
-        'Personal Portfolio \u2014 brucelsprouts.com',
+        'Tempo',
+        'github.com/brucelsprouts/tempo',
+        'Next.js  \u00b7  TypeScript  \u00b7  Supabase  \u00b7  Tailwind CSS',
+        [
+            'Built a continuous-scroll calendar that removes month pagination, virtualising one unbroken column of week rows so any date range stays smooth.',
+            'Modelled recurring events as a single row with RFC 5545 rules and derived occurrences at render time, so an 80-year birthday costs one record instead of eighty.',
+        ]
+    ))
+
+    story.append(project_block(
+        'Brucekit',
+        'github.com/brucelsprouts/brucekit',
+        'Tauri  \u00b7  Rust  \u00b7  React  \u00b7  TypeScript',
+        [
+            'Built a keyboard-first Windows tray launcher that opens a searchable grid of utilities behind one global hotkey.',
+            'Consolidated three earlier standalone apps (clipboard history, focus timer, network monitor) into toggleable modules alongside on-device OCR capture and a screen colour picker; runs fully local with no backend or telemetry.',
+        ]
+    ))
+
+    story.append(project_block(
+        'Personal Portfolio',
         'brucelsprouts.com  \u00b7  github.com/brucelsprouts/brucelsprouts.github.io',
-        'HTML  \u00b7  CSS  \u00b7  JavaScript  \u00b7  Three.js  \u00b7  GSAP',
+        'JavaScript  \u00b7  Three.js  \u00b7  GSAP  \u00b7  HTML  \u00b7  CSS',
         [
-            'Designed and built a cyber-tech themed portfolio from scratch with no CSS or JavaScript frameworks.',
-            'Integrated a Three.js 3D particle system, GSAP scroll animations, URL deep-linking, a hidden aim-trainer minigame, and a low-performance accessibility mode.',
-        ]
-    ))
-
-    story.append(project_block(
-        'XPWaste',
-        'github.com/brucelsprouts/xpwaste',
-        'Python  \u00b7  Tkinter  \u00b7  PyInstaller',
-        [
-            'Developed a desktop focus timer featuring session history logging, custom notification sounds, and dual themes; packaged as a standalone Windows executable requiring no Python install.',
-        ]
-    ))
-
-    story.append(project_block(
-        'Nixie Counter',
-        'github.com/brucelsprouts/nixiecounter',
-        'PHP  \u00b7  Node.js  \u00b7  Oracle Cloud  \u00b7  SVG',
-        [
-            'Deployed a server-side visitor counter on Oracle Cloud that generates and streams a real-time Nixie-tube SVG image; embeds in any GitHub README or webpage via a single URL.',
+            'Designed and built a cyber-tech portfolio from scratch with no CSS or JavaScript frameworks, integrating a Three.js particle system, GSAP scroll animations, URL deep-linking, and a low-performance accessibility mode.',
         ]
     ))
 
@@ -261,12 +260,22 @@ def build():
     story += section('Experience')
 
     story.append(entry_row(
-        'Video Editing Intern',
-        'AMG',
-        'Summer 2024',
+        'Lead Developer &amp; Designer',
+        'Toronto STEM Exploration Camp  \u00b7  tsecamp.ca',
+        'Apr\u2013Aug 2026',
         bullets=[
-            'Edited and delivered video content using After Effects and Premiere; produced motion graphics, compositing, and transitions for client-ready deliverables.',
-            'Managed timelines across multiple concurrent projects in a professional production environment.',
+            'Designed, built, and deployed the camp\u2019s public website as sole developer using React, Vite, Tailwind CSS, and Vercel.',
+            'Created the camp logo and visual identity, then carried it through the full site design.',
+        ]
+    ))
+
+    story.append(entry_row(
+        'Freelance Video Editor',
+        'AMG',
+        'Mar 2024\u2013Present',
+        bullets=[
+            'Edit and deliver client video in After Effects and Premiere, producing motion graphics, compositing, and transitions to spec.',
+            'Started as an on-site summer intern in 2024 and continued remotely, managing timelines across multiple concurrent projects.',
         ]
     ))
 
@@ -275,7 +284,7 @@ def build():
         'Ignite Youth Club',
         '2021\u20132023',
         bullets=[
-            'Tutored students in English comprehension and writing in a structured youth program; adapted teaching approach to individual learning needs.',
+            'Tutored students in English comprehension and writing, adapting instruction to individual learning needs.',
         ]
     ))
 
