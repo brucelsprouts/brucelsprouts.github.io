@@ -254,6 +254,24 @@ const DATA = {
       images: ['assets/images/projects/brutalism/brutalism-1.png', 'assets/images/projects/brutalism/brutalism-2.png'],
       contain: true,
     },
+    {
+      id: 16,
+      title: 'TSE Camp',
+      category: 'coding',
+      date: '2026-08-14',
+      desc: 'Logo, design, and build for Toronto STEM Exploration Camp, a free week-long STEM camp for youth aged 8 to 13 in North York, funded by the Government of Canada and run with VWAT Family Services. It had one job: tell a parent what the camp was, who it was for, and how to register, on a phone, in under a minute. Registration ran through the site, no backend, nothing to go down on a bad connection. All 30 spots filled. I also facilitated during the week, teaching and running experiments with the kids. Media order: landing page, disciplines, daily schedule.',
+      stack: ['React', 'Vite', 'Tailwind CSS', 'Vercel'],
+      youtube: null,
+      github: null,
+      demo: 'https://tsecamp.ca',
+      thumb: 'assets/images/projects/tsecamp/tsecamp-1.png',
+      images: [
+        'assets/images/projects/tsecamp/tsecamp-1.png',
+        'assets/images/projects/tsecamp/tsecamp-2.png',
+        'assets/images/projects/tsecamp/tsecamp-3.png',
+      ],
+      contain: true,
+    },
   ],
 };
 
