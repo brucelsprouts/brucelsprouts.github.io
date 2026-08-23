@@ -277,7 +277,7 @@ const DATA = {
       title: 'Deflect',
       category: 'coding',
       date: '2026-08-23',
-      desc: 'A working-memory trainer built like a pinball table. A grid of diagonal deflectors flashes up and then hides — you predict which socket the ball will exit from, then watch it run and find out. Tables scale from 4×4 with five deflectors up to 7×7 with twelve, and escalation tightens the memorize window and speeds the ball up as your streak climbs. Endless mode gives you three lives and no round limit. The whole board renders to a single canvas, and every sound is synthesized at runtime through the Web Audio API — oscillators, filtered noise, and a convolver reverb, no audio files anywhere. Two palettes: Terminal, monochrome with scanlines, and Cabinet, a warm amber arcade look. Settings persist locally, reduced motion is respected, and the whole setup can be driven from URL params. Media order: gameplay, main menu.',
+      desc: 'A working-memory trainer built like a pinball table. A grid of diagonal deflectors flashes up and then hides. You predict which socket the ball will exit from, then watch it run. Tables go from 4×4 with five deflectors up to 7×7 with twelve, and the memorize window shrinks as your streak climbs. Endless mode gives you three lives and no round limit. The board renders to a single canvas, and every sound is synthesized at runtime with the Web Audio API, so the game ships with no audio files. Two palettes: Terminal, monochrome with scanlines, and Cabinet, a warm amber arcade look. Media order: gameplay, main menu.',
       stack: ['TypeScript', 'Vite', 'HTML5 Canvas', 'Web Audio API'],
       youtube: null,
       github: null,
