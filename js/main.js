@@ -1365,7 +1365,13 @@ const heroScene = {
   _fpsStart: 0,
   _badWindows: 0,
   _startedAt: 0,
-  _static: false,   // prefers-reduced-motion → render one frame only
+  // prefers-reduced-motion → slow ambient drift, no cursor-steered camera.
+  // Not a freeze: halting the loop outright left a dead still frame that read
+  // as a broken image, and the disk's slow rotation is ambient rather than the
+  // sudden/parallax motion the preference is actually asking us to suppress.
+  // The LITE toggle remains the full opt-out.
+  _calm: false,
+  CALM_RATE: 0.25,   // time multiplier while reduced motion is requested
 
   init() {
     const canvas = document.getElementById('hero-canvas');
@@ -1373,7 +1379,7 @@ const heroScene = {
 
     const w = window.innerWidth, h = window.innerHeight;
     const isMobile = w < 768;
-    this._static = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this._calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     try {
       this.renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false });
@@ -1441,19 +1447,27 @@ const heroScene = {
     const elapsed = now - this._fpsStart;
     if (elapsed < 2000) return;
 
-    const fps    = (this._fpsFrames * 1000) / elapsed;
-    const usable = !document.hidden && elapsed < 4000 && this._fpsFrames > 40;
+    const fps = (this._fpsFrames * 1000) / elapsed;
+    // A window is trustworthy when the tab was visible throughout and the
+    // window closed near its 2s target. The frame-count floor only has to
+    // reject rAF throttling, so it must stay low: the old `> 40` demanded
+    // 20fps just to qualify, which meant a device rendering at 8fps could
+    // never produce a usable sample and so never stepped down — the machines
+    // that most needed the downgrade were the only ones excluded from it.
+    const usable = !document.hidden && elapsed < 4000 && this._fpsFrames >= 4;
     this._fpsFrames = 0;
     this._fpsStart  = now;
 
     if (!usable) return;
     this._badWindows = fps < 45 ? this._badWindows + 1 : 0;
-    if (this._badWindows >= 2) {
-      this._badWindows = 0;
-      this._tier--;
-      this.material.uniforms.uSteps.value = this.TIERS[this._tier][0];
-      this.onResize();
-    }
+    if (this._badWindows < 2) return;
+    this._badWindows = 0;
+    // Tier 0 renders every third frame, which reads worse than tier 1 on a
+    // merely slow GPU — it stays reserved for detected software rendering.
+    if (this._tier <= 1) return;
+    this._tier--;
+    this.material.uniforms.uSteps.value = this.TIERS[this._tier][0];
+    this.onResize();
   },
 
   /* Lowest top% a drifting label may use before it starts colliding with the
@@ -1658,6 +1672,11 @@ const heroScene = {
       this.onResize();
     }
 
+    // Reduced motion drops the cursor-steered camera entirely — that swing is
+    // the parallax the preference exists to suppress. The autonomous drift in
+    // the shader stays, just slowed by CALM_RATE.
+    if (this._calm) { this.targetMouse.x = 0; this.targetMouse.y = 0; }
+
     // Smooth camera parallax — two easing rates so roll/dolly trail the tilt
     this.mouse.x  += (this.targetMouse.x - this.mouse.x)  * 0.04;
     this.mouse.y  += (this.targetMouse.y - this.mouse.y)  * 0.04;
@@ -1667,19 +1686,18 @@ const heroScene = {
     // Emergency tier renders every third frame (~20fps) — the scene drifts
     // slowly enough that it still reads as smooth, at a third of the cost
     this._flip = (this._flip || 0) + 1;
-    if (!this._static && this._tier === 0 && (this._flip % 3) !== 0) {
+    if (this._tier === 0 && (this._flip % 3) !== 0) {
       requestAnimationFrame(() => this.animate());
       return;
     }
 
     const u = this.material.uniforms;
-    u.uTime.value = this._static ? 0 : now * 0.001;
+    u.uTime.value = now * 0.001 * (this._calm ? this.CALM_RATE : 1);
     u.uMouse.value.set(this.mouse.x, this.mouse.y);
     u.uMouse2.value.set(this.mouse2.x, this.mouse2.y);
 
     this.renderer.render(this.scene, this.camera);
 
-    if (this._static) return;   // reduced motion: one frame is enough
     this._watchFps(now);
     requestAnimationFrame(() => this.animate());
   },
@@ -1708,7 +1726,7 @@ const heroScene = {
     const aspect = w / h;
     this.material.uniforms.uFov.value = 0.62 * clamp(1.15 / aspect, 1.0, 1.9);
 
-    if (this._paused || this._static) this.renderer.render(this.scene, this.camera);
+    if (this._paused) this.renderer.render(this.scene, this.camera);
   },
 
   pause()  { this._paused = true; },
