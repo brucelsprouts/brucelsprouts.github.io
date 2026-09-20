@@ -270,6 +270,15 @@ def build():
     ))
 
     story.append(entry_row(
+        'Facilitator',
+        'Toronto STEM Exploration Camp',
+        'Aug 2026',
+        bullets=[
+            'Ran on-site STEM sessions for campers over the summer program, guiding group activities and keeping daily schedules on track.',
+        ]
+    ))
+
+    story.append(entry_row(
         'Freelance Video Editor',
         'AMG',
         'Mar 2024\u2013Present',
