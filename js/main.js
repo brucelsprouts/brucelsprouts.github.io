@@ -289,6 +289,24 @@ const DATA = {
       ],
       contain: true,
     },
+    {
+      id: 18,
+      title: 'Tempo',
+      category: 'coding',
+      date: '2026-09-20',
+      desc: 'A calendar that doesn\'t paginate. Months are alternating bands and a label in the gutter instead of a view you navigate to, so a year is one unbroken scroll of week rows. A recurring event is one stored row expanded at render time, so a birthday spanning eighty years is one row, not eighty. Because expansion is per occurrence, that row renders “Wedding — 12th anniversary” this year and “13th” the next. Monochrome and hairline-ruled, so category colour is the only thing colour means. One account, no sign-up, no tenancy. Media order: the continuous scroll, the entry editor, the list view on mobile.',
+      stack: ['Next.js', 'React', 'TypeScript', 'Supabase', 'Tailwind CSS'],
+      youtube: null,
+      github: 'https://github.com/brucelsprouts/tempo',
+      demo: null,
+      thumb: 'assets/images/projects/tempo/tempo-1.png',
+      images: [
+        'assets/images/projects/tempo/tempo-1.png',
+        'assets/images/projects/tempo/tempo-2.png',
+        'assets/images/projects/tempo/tempo-3.png',
+      ],
+      contain: true,
+    },
   ],
 };
 
