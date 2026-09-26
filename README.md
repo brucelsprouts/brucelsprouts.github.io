@@ -22,8 +22,8 @@ Hey, I'm **Bruce Lin** — a B.Sc. Computer Science student at Western Universit
 
 ## Site Features
 
-- Three.js solar system hero with orbiting planets
-- GSAP-powered loader, scroll animations, and section reveals
+- Three.js hero: a gravitationally lensed black hole that shatters like glass (click it to crack it yourself)
+- GSAP-powered scroll animations and section reveals
 - Project modal with inline YouTube embeds and image gallery
 - Skills grid with hover tooltips
 - Filterable + searchable project cards

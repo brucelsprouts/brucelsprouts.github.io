@@ -1,12 +1,12 @@
 /**
  * main.js — Cyber-tech Portfolio
- * Sections: Config · Data · Loader (Three.js + number rain) ·
- *           Hero (Three.js particles) · Nav · Skills ·
- *           History · Projects · Contact · Utilities
+ * Sections: Config · Data · Loader (disabled) · Hero adapter · Nav ·
+ *           Skills · History · Projects · Contact · Utilities
  *
  * Dependencies (loaded via CDN in index.html, injected before this script):
  *   - Three.js r128
  *   - GSAP 3.x + ScrollTrigger
+ *   - js/hero/*.js — the hero renderer (window.Hero)
  */
 
 'use strict';
@@ -346,6 +346,12 @@ function projectSlug(title) {
 function placeholderSrc(src) {
   return src.replace(/\.(png|jpe?g|webp)$/i, '.svg');
 }
+
+/* The loader is hidden, not deleted: the page now fades straight in and the
+   hero copy animates at boot. Its markup (#loader, display:none in CSS) and
+   this code are kept for a future redesign — flip this and remove the CSS
+   rule to bring it back. */
+const LOADER_ENABLED = false;
 
 /* ============================================================
    3. LOADER — ASCII-rendered recursive lattice
@@ -1065,698 +1071,52 @@ const loader = {
 };
 
 /* ============================================================
-   4. HERO — Three.js raymarched black hole (gravitational lensing)
+   4. HERO — adapter for the Fracture renderer (js/hero/*.js)
+   The black hole, its glass rifts and all rendering live in
+   window.Hero; this only wires it to the page.
 ============================================================ */
-
-/* Fullscreen-quad vertex shader — position is already in clip space */
-const HERO_VERT = `
-void main() {
-  gl_Position = vec4(position.xy, 0.0, 1.0);
-}
-`;
-
-/* Fragment shader.
-   Each pixel's ray is integrated through the Schwarzschild potential
-   (Newtonian-limit geodesic, r_s = 1) so the background starfield bends
-   around the hole and the far side of the accretion disk arcs over the top.
-   Everything stays greyscale to match the site palette. */
-const HERO_FRAG = `
-precision highp float;
-
-uniform vec2  uRes;
-uniform float uTime;
-uniform vec2  uMouse;
-uniform vec2  uMouse2;   // slower-eased cursor — drives roll/dolly so motion feels layered
-uniform int   uSteps;
-uniform float uCamDist;
-uniform float uFov;
-uniform float uYShift;
-uniform float uElev;
-
-const int   MAX_STEPS = 64;
-const float R_IN      = 2.70;   // inner disk edge (ISCO-ish)
-const float R_OUT     = 8.20;   // outer disk edge
-const float B_CRIT    = 2.598;  // critical impact parameter — photon ring
-
-/* ── hashes & noise ── */
-float hash13(vec3 p3) {
-  p3  = fract(p3 * 0.1031);
-  p3 += dot(p3, p3.yzx + 33.33);
-  return fract((p3.x + p3.y) * p3.z);
-}
-
-float vnoise(vec3 p) {
-  vec3 i = floor(p);
-  vec3 f = fract(p);
-  f = f * f * (3.0 - 2.0 * f);
-  float n000 = hash13(i + vec3(0.0, 0.0, 0.0));
-  float n100 = hash13(i + vec3(1.0, 0.0, 0.0));
-  float n010 = hash13(i + vec3(0.0, 1.0, 0.0));
-  float n110 = hash13(i + vec3(1.0, 1.0, 0.0));
-  float n001 = hash13(i + vec3(0.0, 0.0, 1.0));
-  float n101 = hash13(i + vec3(1.0, 0.0, 1.0));
-  float n011 = hash13(i + vec3(0.0, 1.0, 1.0));
-  float n111 = hash13(i + vec3(1.0, 1.0, 1.0));
-  return mix(
-    mix(mix(n000, n100, f.x), mix(n010, n110, f.x), f.y),
-    mix(mix(n001, n101, f.x), mix(n011, n111, f.x), f.y),
-    f.z
-  );
-}
-
-float fbm(vec3 p) {
-  float a = 0.5, s = 0.0;
-  for (int i = 0; i < 4; i++) {
-    s += a * vnoise(p);
-    p *= 2.04;
-    a *= 0.5;
-  }
-  return s;
-}
-
-/* ── background starfield, sampled in the (bent) ray direction ── */
-vec3 stars(vec3 dir) {
-  vec3 acc = vec3(0.0);
-  for (int i = 0; i < 3; i++) {
-    float sc = 80.0 + float(i) * 130.0;
-    vec3  p  = dir * sc;
-    vec3  id = floor(p);
-    vec3  f  = fract(p) - 0.5;
-    float h  = hash13(id + float(i) * 13.7);
-    if (h > 0.945 - float(i) * 0.005) {
-      vec3 off = (vec3(hash13(id + 1.7), hash13(id + 3.1), hash13(id + 5.3)) - 0.5) * 0.6;
-      float d  = length(f - off);
-      float tw = 0.72 + 0.28 * sin(uTime * 1.6 + h * 90.0);
-      float s  = smoothstep(0.085, 0.0, d) * (0.30 + 0.70 * fract(h * 137.0)) * tw;
-      // per-star temperature — some lean warm, some cool, like a real field
-      vec3 tint = mix(vec3(1.00, 0.87, 0.74), vec3(0.76, 0.87, 1.06), fract(h * 61.0));
-      vec3 sc   = mix(vec3(1.0), tint, 0.45);
-      acc += s * sc;
-      // occasional bright star gets a soft halo, so the field has depth
-      if (h > 0.992) acc += sc * smoothstep(0.30, 0.0, d) * 0.35 * tw;
-    }
-  }
-  return acc;
-}
-
-/* ── accretion disk emission at a point in the equatorial plane ── */
-float diskEmission(vec3 p) {
-  float r = length(p.xz);
-  if (r < R_IN || r > R_OUT) return 0.0;
-
-  float ang  = atan(p.z, p.x);
-  // Rotation = rigid drift + a *bounded* oscillating differential term. Pure
-  // Keplerian shear (t/r^1.5) winds the pattern unboundedly, degenerating into
-  // ever-tighter rings that alias on the pixel grid after ~30s. Bounding the
-  // differential keeps the filaments loose and coherent forever.
-  float wind = uTime * 0.25
-             + (11.0 + 9.0 * sin(uTime * 0.10)) * (inversesqrt(r * r * r) - 0.078);
-  float a    = ang + wind;
-  vec2  q    = vec2(cos(a), sin(a)) * r;
-
-  // Radial inflow — all structure drifts toward the horizon, so the disk reads
-  // as unstable accretion instead of stable rings (also breaks moiré: the fine
-  // pattern never sits still on the pixel grid long enough to alias).
-  float rIn = r + uTime * 0.35;
-
-  // All noise is sampled in the Cartesian frame q, never from the raw angle:
-  // atan jumps by 2π at ±π, and feeding that into a noise lookup puts a visible
-  // seam down the disk where the pattern restarts.
-  float n    = fbm(vec3(q * 0.80, rIn * 0.45));
-  float band = fbm(vec3(q * 2.10, rIn * 2.2 + uTime * 0.14));
-  // Fine filaments — finer scale, drifting inward with the flow
-  float fil  = fbm(vec3(q * 4.60, rIn * 4.5 + uTime * 0.10));
-  float dens = pow(clamp(n * 1.20 + band * 0.30 + fil * 0.26 - 0.30, 0.0, 1.0), 1.5);
-
-  // Spiral arms. An *integer* angular harmonic is seam-free: when a jumps by 2π
-  // the phase jumps by 4π, which sin() doesn't notice.
-  dens *= 0.80 + 0.40 * (0.5 + 0.5 * sin(2.0 * a + rIn * 1.6));
-
-  // Co-rotating hot spots: q is the shear-corrected frame, so a fixed point in q
-  // orbits at its radius' Keplerian rate. Pinpoints — at true scale anything
-  // bigger would be an implausibly enormous feature of the disk.
-  float hs = exp(-14.0 * length(q - vec2(3.1, 1.2)))
-           + 0.75 * exp(-12.0 * length(q + vec2(4.3, 2.1)));
-  dens *= 1.0 + hs * (0.90 + 0.30 * sin(uTime * 0.5));
-
-  // Gentle turbulent shimmer — the gas flickers instead of gliding
-  dens *= 1.0 + 0.07 * sin(uTime * 3.5 + a * 4.0 + r * 3.0);
-
-  float inner   = smoothstep(R_IN, R_IN + 1.0, r);
-  float outer   = 1.0 - smoothstep(R_OUT * 0.58, R_OUT, r);
-  float falloff = 1.0 / (0.55 + r * 0.30);
-
-  float e = dens * inner * outer * falloff * 3.0;
-
-  // Doomed embers — small star-like knots that spiral in from the rim and are
-  // reborn at the outer edge. Slow, compact, and duty-cycled (dark stretches
-  // between falls) so they stay in scale with the disk.
-  for (int k = 0; k < 3; k++) {
-    float fk = float(k);
-    float ph  = fract(uTime * (0.022 + fk * 0.009) + fk * 0.41);  // full cycle 0→1
-    float phA = ph / 0.62;                                        // fall happens in the
-    float act = 1.0 - step(1.0, phA);                             // first 62%; then dark
-    float rk = mix(R_OUT * 0.92, R_IN + 0.10, min(phA, 1.0) * min(phA, 1.0));
-    float ak = fk * 2.6 + uTime * 1.5 / pow(rk, 1.5);             // sub-Keplerian drift
-    vec2  pk = vec2(cos(ak), sin(ak)) * rk;
-    vec2  dv = p.xz - pk;
-    vec2  tg = vec2(-pk.y, pk.x) / rk;                            // unit tangent
-    float dl  = dot(dv, tg);
-    float dp2 = max(dot(dv, dv) - dl * dl, 0.0);
-    float ember = exp(-(dl * dl * 120.0 + dp2 * 400.0)) * 2.6;    // pinpoint, faint motion streak
-    e += ember * act
-       * smoothstep(0.03, 0.12, phA) * smoothstep(1.0, 0.90, min(phA, 1.0))
-       * (0.80 + 0.20 * sin(uTime * 2.2 + fk * 7.0));
-  }
-
-  return e;
-}
-
-/* ── relativistic beaming: the side rotating toward the camera is brighter ── */
-float doppler(vec3 p, vec3 camPos) {
-  float r = max(length(p.xz), R_IN);
-  vec3  v = normalize(cross(vec3(0.0, 1.0, 0.0), vec3(p.x, 0.0, p.z)));
-  float beta = clamp(0.52 / sqrt(r * 0.45), 0.0, 0.55);
-  float d = 1.0 / max(1.0 - beta * dot(v, normalize(camPos - p)), 0.25);
-  return clamp(pow(d, 2.4) * 0.42, 0.10, 2.6);
-}
-
-/* ── disk color: hot bluish-white gas near the ISCO cooling to warm amber at the
-   rim, with a Doppler hue shift — approaching side blue, receding side warm ── */
-vec3 diskTint(float r, float dop) {
-  vec3 c = mix(vec3(0.94, 0.98, 1.10), vec3(1.16, 0.94, 0.66), smoothstep(R_IN, R_OUT * 0.85, r));
-  c *= mix(vec3(1.08, 0.96, 0.80), vec3(0.90, 0.97, 1.14), clamp((dop - 0.5) / 1.6, 0.0, 1.0));
-  return c;
-}
-
-void main() {
-  vec2 suv = (gl_FragCoord.xy - 0.5 * uRes) / uRes.y;   // screen-space, for the scrim
-  vec2 uv  = suv;
-  uv.y -= uYShift;   // small offset so the shadow centres on the hero copy
-
-  // Cursor roll — eased slower than the tilt, so the frame lags with weight
-  float rl = uMouse2.x * 0.06;
-  uv = mat2(cos(rl), sin(rl), -sin(rl), cos(rl)) * uv;
-
-  /* Camera: near-equatorial so the disk reads edge-on. Slow autonomous drift +
-     breathing dolly keep it alive; the cursor adds tilt (fast ease) and a gentle
-     pull-in (slow ease) on top. */
-  float dist = uCamDist * (1.0 + 0.015 * sin(uTime * 0.07)) * (1.0 - 0.05 * length(uMouse2));
-  float az = uTime * 0.032 + uMouse.x * 0.30;
-  float el = uElev + 0.022 * sin(uTime * 0.11) + uMouse.y * 0.09;
-  vec3  camPos = vec3(sin(az) * cos(el), sin(el), cos(az) * cos(el)) * dist;
-
-  vec3 fwd   = normalize(-camPos);
-  vec3 right = normalize(cross(fwd, vec3(0.0, 1.0, 0.0)));
-  vec3 up    = cross(right, fwd);
-  vec3 rd    = normalize(fwd + right * uv.x * uFov + up * uv.y * uFov);
-
-  vec3  dir0 = rd;
-  vec3  pos  = camPos;
-  vec3  h    = cross(pos, rd);
-  float h2   = dot(h, h);           // conserved angular momentum²
-
-  // Impact parameter decides capture analytically (b < b_crit falls in) — the
-  // integrator's step budget can't resolve near-critical spirals on its own.
-  float b = length(cross(camPos, dir0));
-
-  // Coarse tiers take proportionally bigger strides, so every tier's rays travel
-  // about the same distance. Without this, a low step count simply runs out of
-  // reach before the disk and the cutoff terraces along step boundaries.
-  float budget = 44.0 / float(uSteps);
-
-  // Start each ray a random fraction of a step along: turns whatever quantisation
-  // remains into per-pixel noise instead of visible steps. Static, so it doesn't
-  // shimmer frame to frame, and free — it's one hash.
-  pos += rd * clamp(length(pos) * 0.10 * budget, 0.04, 1.5 * budget)
-            * hash13(vec3(gl_FragCoord.xy, 7.0));
-
-  vec3  col      = vec3(0.0);
-  float alpha    = 0.0;
-  bool  captured = false;
-
-  for (int i = 0; i < MAX_STEPS; i++) {
-    if (i >= uSteps) break;
-
-    float r = length(pos);
-    if (r < 1.02) { captured = true; break; }              // through the horizon
-    if (r > 46.0 && dot(rd, pos) > 0.0) break;             // escaped to infinity
-
-    float dt   = clamp(r * 0.10 * budget, 0.04, 1.5 * budget);   // finer near the hole, where deflection is strongest
-    vec3  npos = pos + rd * dt;
-
-    // Equatorial-plane crossing → sample the disk, composited front-to-back
-    if (pos.y * npos.y < 0.0 && alpha < 0.99) {
-      float t   = pos.y / (pos.y - npos.y);
-      vec3  hit = mix(pos, npos, t);
-      float e   = diskEmission(hit);
-      if (e > 0.0) {
-        float dop = doppler(hit, camPos);
-        e *= dop;
-        float a = clamp(e * 0.55, 0.0, 1.0);
-        col   += (1.0 - alpha) * e * diskTint(length(hit.xz), dop);
-        alpha += (1.0 - alpha) * a;
-      }
-    }
-
-    rd  += (-1.5 * h2 * pos / pow(r, 5.0)) * dt;           // gravitational deflection
-    pos  = npos;
-  }
-
-  captured = captured || b < B_CRIT;
-
-  // Captured rays end on the horizon: drop any gas they grazed on the way in, so
-  // the shadow stays a clean silhouette instead of arcs smearing across it.
-  if (captured) col = vec3(0.0);
-
-  /* Lensed background */
-  vec3 bg = vec3(0.0);
-  if (!captured) {
-    vec3 d = normalize(rd);
-    bg  = stars(d);
-    // Nebula wisps — two big soft layers, one cool one warm, drifting slowly.
-    // They ride the bent ray too, so they smear around the hole like the stars.
-    float neb1 = fbm(d * 1.8 + vec3(0.0, 0.0, uTime * 0.004));
-    float neb2 = fbm(d * 3.1 + vec3(5.2, 1.3, -uTime * 0.003));
-    bg += vec3(0.55, 0.65, 1.00) * pow(max(neb1 - 0.42, 0.0), 1.6) * 0.55
-        + vec3(1.00, 0.75, 0.55) * pow(max(neb2 - 0.48, 0.0), 1.6) * 0.35;
-    bg += 0.018 * fbm(d * 2.6) * vec3(0.90, 0.95, 1.05);   // faint dust wash
-  }
-  bg *= (1.0 - alpha);
-
-  /* Photon ring — rays grazing the critical impact parameter */
-  float ring = exp(-pow((b - B_CRIT) / 0.050, 2.0)) * 0.80;
-  ring *= smoothstep(B_CRIT - 0.03, B_CRIT + 0.04, b);
-
-  vec3 c3 = col * 0.85 + bg + ring * vec3(1.0, 0.97, 0.90);
-  c3 = c3 / (1.0 + c3 * 0.70);                             // soft tonemap
-  c3 *= 1.0 - 0.34 * dot(uv, uv);                          // vignette
-
-  // Soft elliptical scrim behind the hero copy — keeps the text legible where
-  // the name overhangs the photon ring onto the disk.
-  float scrim = 1.0 - smoothstep(0.30, 0.95, length(vec2(suv.x / 0.60, (suv.y + 0.02) / 0.26)));
-  c3 *= 1.0 - 0.38 * scrim;
-
-  c3 += (hash13(vec3(gl_FragCoord.xy, floor(uTime * 24.0))) - 0.5) * 0.014;  // grain
-
-  gl_FragColor = vec4(max(c3, 0.0), 1.0);
-}
-`;
-
-const heroScene = {
-  renderer: null,
-  scene:    null,
-  camera:   null,
-  material: null,
-  mouse:       { x: 0, y: 0 },   // fast ease — camera tilt
-  mouse2:      { x: 0, y: 0 },   // slow ease — roll + dolly lag behind the tilt
-  targetMouse: { x: 0, y: 0 },
-
-  // Quality tiers: [raymarch steps, render scale, max buffer width in px].
-  // The width cap matters most: on a 2560px monitor even a 0.30 scale is a
-  // 768px buffer, which a software rasteriser cannot shade in a frame.
-  // Tier 0 is the software-renderer / emergency tier — it also caps DPR at 1
-  // and renders every third frame, so unaccelerated browsers stay usable.
-  TIERS: [[14, 0.30, 480], [24, 0.50, 900], [34, 0.65, 1500], [44, 0.78, 2400]],
-  _tier: 3,
-  _fpsFrames: 0,
-  _fpsStart: 0,
-  _badWindows: 0,
-  _startedAt: 0,
-  // prefers-reduced-motion → slow ambient drift, no cursor-steered camera.
-  // Not a freeze: halting the loop outright left a dead still frame that read
-  // as a broken image, and the disk's slow rotation is ambient rather than the
-  // sudden/parallax motion the preference is actually asking us to suppress.
-  // The LITE toggle remains the full opt-out.
-  _calm: false,
-  CALM_RATE: 0.25,   // time multiplier while reduced motion is requested
+const hero = {
+  _ok: false,
 
   init() {
+    const heroEl = document.getElementById('hero');
     const canvas = document.getElementById('hero-canvas');
-    if (!canvas || typeof THREE === 'undefined') return;
+    if (!heroEl || !canvas) return;
 
-    const w = window.innerWidth, h = window.innerHeight;
-    const isMobile = w < 768;
-    this._calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    try {
-      this.renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: false });
-    } catch (err) {
-      return;   // no WebGL — hero falls back to the plain black background
-    }
-
-    // Software rasterizers (no hardware acceleration) can't afford a raymarched
-    // fullscreen shader at normal quality — start them on the emergency tier.
-    let softwareGL = false;
-    try {
-      const glc = this.renderer.getContext();
-      const dbg = glc.getExtension('WEBGL_debug_renderer_info');
-      const rs  = dbg ? String(glc.getParameter(dbg.UNMASKED_RENDERER_WEBGL)) : '';
-      softwareGL = /swiftshader|llvmpipe|software|basic render/i.test(rs);
-    } catch (err) { /* renderer string unavailable — assume hardware */ }
-    this._tier = softwareGL ? 0 : (isMobile ? 1 : 3);
-
-    this.scene  = new THREE.Scene();
-    this.camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-
-    this.material = new THREE.ShaderMaterial({
-      vertexShader:   HERO_VERT,
-      fragmentShader: HERO_FRAG,
-      depthTest:  false,
-      depthWrite: false,
-      uniforms: {
-        uRes:     { value: new THREE.Vector2(w, h) },
-        uTime:    { value: 0 },
-        uMouse:   { value: new THREE.Vector2(0, 0) },
-        uMouse2:  { value: new THREE.Vector2(0, 0) },
-        uSteps:   { value: this.TIERS[this._tier][0] },
-        uCamDist: { value: 13.0 },
-        uFov:     { value: 0.62 },
-        uYShift:  { value: 0.02 },
-        uElev:    { value: 0.10 },
-      },
-    });
-
-    this.scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), this.material));
-
-    this.onResize();
-    this._fpsStart  = performance.now();
-    this._startedAt = this._fpsStart;
-    this.animate();
-
-    this._spawnFloatingNumbers();
-    this._spawnStarCoordinates();
-
-    window.addEventListener('resize', () => this.onResize());
-    window.addEventListener('mousemove', (e) => {
-      this.targetMouse.x =  (e.clientX / window.innerWidth  - 0.5) * 2;
-      this.targetMouse.y = -(e.clientY / window.innerHeight - 0.5) * 2;
-    });
-  },
-
-  /* Drop a quality tier when the frame budget is genuinely being missed.
-     Samples are discarded while the loader is still running (the page is busiest
-     then) and whenever the tab is backgrounded — rAF throttling there would
-     otherwise degrade the scene permanently. Two bad windows in a row are
-     required before stepping down. */
-  _watchFps(now) {
-    if (this._tier === 0 || now - this._startedAt < 5000) return;
-    this._fpsFrames++;
-    const elapsed = now - this._fpsStart;
-    if (elapsed < 2000) return;
-
-    const fps = (this._fpsFrames * 1000) / elapsed;
-    // A window is trustworthy when the tab was visible throughout and the
-    // window closed near its 2s target. The frame-count floor only has to
-    // reject rAF throttling, so it must stay low: the old `> 40` demanded
-    // 20fps just to qualify, which meant a device rendering at 8fps could
-    // never produce a usable sample and so never stepped down — the machines
-    // that most needed the downgrade were the only ones excluded from it.
-    const usable = !document.hidden && elapsed < 4000 && this._fpsFrames >= 4;
-    this._fpsFrames = 0;
-    this._fpsStart  = now;
-
-    if (!usable) return;
-    this._badWindows = fps < 45 ? this._badWindows + 1 : 0;
-    if (this._badWindows < 2) return;
-    this._badWindows = 0;
-    // Tier 0 renders every third frame, which reads worse than tier 1 on a
-    // merely slow GPU — it stays reserved for detected software rendering.
-    if (this._tier <= 1) return;
-    this._tier--;
-    this.material.uniforms.uSteps.value = this.TIERS[this._tier][0];
-    this.onResize();
-  },
-
-  /* Lowest top% a drifting label may use before it starts colliding with the
-     fixed nav bar. The +26px covers the vertical drift they animate through. */
-  _navSafeMinPct() {
-    const heroEl = document.getElementById('hero');
-    const navEl  = document.getElementById('nav');
-    const heroH  = (heroEl && heroEl.getBoundingClientRect().height) || window.innerHeight;
-    const navH   = (navEl  && navEl.getBoundingClientRect().height)  || 64;
-    return Math.min(((navH + 26) / heroH) * 100, 87);
-  },
-
-  /* Remap a 0-100 top percentage into the band below the nav, so labels never
-     sit behind the nav links and make them hard to read. Remapping (rather than
-     clamping) keeps them spread out instead of stacking into a row along the
-     exclusion line. */
-  _safeTopPct(pct) {
-    const minTop = this._navSafeMinPct();
-    const BOTTOM = 92;   // leave room for the bottom HUD corner
-    return minTop + (clamp(pct, 0, 100) / 100) * (BOTTOM - minTop);
-  },
-
-  /* Spawn faintly drifting ASCII number fragments over the hero canvas */
-  _spawnFloatingNumbers() {
-    const heroEl = document.getElementById('hero');
-    if (!heroEl || typeof gsap === 'undefined') return;
-
-    const container = document.createElement('div');
-    container.className = 'hero-fx-overlay';
-    container.setAttribute('aria-hidden', 'true');
-    container.style.cssText = 'position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden;';
-    heroEl.appendChild(container);
-
-    const fragments = [
-      '01001101', '3.14159', '0xFFFF', '1.61803',
-      '// NULL', '2.71828', '0b1010', '6.28318',
-      '> 9.81',  '0x00FF',  '1.41421', '360.00',
-      '// SYS',  '0.00001', '255:255', '> INIT',
-    ];
-
-    /* Keep fragments off the hole. The shadow's radius works out to
-       ~0.329 * viewport height (b_crit 2.598 at camDist 13, fov 0.62),
-       centred at 50% / 48% (uYShift nudges it up slightly). Rejection-
-       sample around it, with a ring fallback on very tall viewports
-       where the exclusion zone can swallow the safe area. */
-    const pickOutsideShadow = () => {
-      const W = window.innerWidth, H = window.innerHeight;
-      const cx = 50, cy = 48;
-      const rPx = 0.329 * H * 1.15;              // +15% margin off the rim
-      const rx  = (rPx / W) * 100;
-      const ry  = (rPx / H) * 100;
-      // Candidates are pushed below the nav *before* the shadow test, so a
-      // fragment can never satisfy one constraint by violating the other.
-      const minTop = this._navSafeMinPct();
-      for (let k = 0; k < 40; k++) {
-        const l = randFloat(4, 88), t = this._safeTopPct(randFloat(8, 88));
-        const dx = (l - cx) / rx, dy = (t - cy) / ry;
-        if (dx * dx + dy * dy >= 1) return [l, t];
-      }
-      const a = randFloat(0, Math.PI * 2);
-      return [
-        clamp(cx + Math.cos(a) * rx * 1.2, 3, 92),
-        clamp(cy + Math.sin(a) * ry * 1.2, minTop, 92),
-      ];
-    };
-
-    const count = window.innerWidth < 768 ? 7 : 13;
-    for (let i = 0; i < count; i++) {
-      const span   = document.createElement('span');
-      span.textContent = fragments[i % fragments.length];
-      const baseOpacity = randFloat(0.07, 0.14);
-      const [lPct, tPct] = pickOutsideShadow();
-      span.style.cssText = [
-        'position:absolute',
-        `left:${lPct}%`,
-        `top:${tPct}%`,
-        `font-family:var(--ff-mono)`,
-        `font-size:${randFloat(10, 13)}px`,
-        `color:rgba(255,255,255,${baseOpacity.toFixed(2)})`,
-        'letter-spacing:0.1em',
-        'user-select:none',
-        'white-space:nowrap',
-      ].join(';');
-      container.appendChild(span);
-
-      // Gentle independent drift
-      gsap.to(span, {
-        y:        randFloat(-22, 22),
-        x:        randFloat(-14, 14),
-        duration: randFloat(10, 22),
-        repeat:   -1,
-        yoyo:     true,
-        delay:    randFloat(0, 8),
-        ease:     'sine.inOut',
-      });
-      // Slow opacity breathe
-      gsap.to(span, {
-        opacity:  randFloat(0.03, baseOpacity * 1.6),
-        duration: randFloat(4, 9),
-        repeat:   -1,
-        yoyo:     true,
-        delay:    randFloat(0, 5),
-        ease:     'power1.inOut',
-      });
-    }
-  },
-
-  /* Spawn faint telemetry labels (dot/cross + readout text) around the edges */
-  _spawnStarCoordinates() {
-    const heroEl = document.getElementById('hero');
-    if (!heroEl || typeof gsap === 'undefined') return;
-
-    const container = document.createElement('div');
-    container.className = 'hero-fx-overlay';
-    container.setAttribute('aria-hidden', 'true');
-    container.style.cssText = 'position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden;';
-    heroEl.appendChild(container);
-
-    const coords = [
-      "RA 14h 29m  Dec +02°53'",  'EVENT HORIZON · STABLE',
-      '[134.6, −08.1]',           'r_s 2.95e3 m',
-      "RA 06h 12m  Dec −17°40'",  'M ≈ 4.1e6 M☉',
-      'α 198.4° · δ +05.7°',  'LENSING · b_c 2.598',
-      '[267.1, −33.8]',           'ACCRETION · NOMINAL',
-      "RA 18h 36m  Dec −29°00'",  'z 1.62 · REDSHIFT',
-    ];
-
-    // Positions around the edges — avoid the centre where the hole lives
-    const positions = [
-      [6, 10],  [80, 8],  [12, 78], [82, 75],
-      [38, 6],  [62, 88], [3, 42],  [90, 38],
-      [48, 3],  [20, 90], [72, 12], [88, 62],
-    ];
-
-    const count = window.innerWidth < 768 ? 5 : positions.length;
-
-    for (let i = 0; i < count; i++) {
-      const [lPct, rawTop] = positions[i];
-      const tPct     = this._safeTopPct(rawTop);   // keep clear of the nav bar
-      const baseOp   = randFloat(0.09, 0.18);
-      const useCross = (i % 3 === 1); // alternate dot vs crosshair marker
-
-      const wrap = document.createElement('div');
-      wrap.style.cssText = [
-        'position:absolute',
-        `left:${lPct}%`,
-        `top:${tPct}%`,
-        'display:flex',
-        'align-items:center',
-        'gap:5px',
-        `opacity:${baseOp.toFixed(2)}`,
-      ].join(';');
-
-      const marker = document.createElement('span');
-      if (useCross) {
-        marker.textContent = '+';
-        marker.style.cssText = 'font-family:var(--ff-mono);font-size:9px;color:#fff;line-height:1;flex-shrink:0;';
-      } else {
-        marker.style.cssText = 'display:inline-block;width:3px;height:3px;border-radius:50%;background:#fff;flex-shrink:0;margin-top:1px;';
-      }
-
-      const label = document.createElement('span');
-      label.textContent = coords[i % coords.length];
-      label.style.cssText = [
-        'font-family:var(--ff-mono)',
-        `font-size:${randFloat(8, 10).toFixed(1)}px`,
-        'color:#fff',
-        'letter-spacing:0.06em',
-        'white-space:nowrap',
-        'user-select:none',
-      ].join(';');
-
-      wrap.appendChild(marker);
-      wrap.appendChild(label);
-      container.appendChild(wrap);
-
-      // Slow independent drift
-      gsap.to(wrap, {
-        y: randFloat(-12, 12),
-        x: randFloat(-6, 6),
-        duration: randFloat(16, 32),
-        repeat: -1, yoyo: true,
-        delay: randFloat(0, 12),
-        ease: 'sine.inOut',
-      });
-      // Appear → hold → disappear cycle (start hidden)
-      gsap.set(wrap, { opacity: 0 });
-      gsap.timeline({ repeat: -1, delay: randFloat(0, 20) })
-        .to(wrap, { opacity: Math.min(baseOp * 2.2, 0.42), duration: randFloat(1.2, 2.5), ease: 'power2.in' })
-        .to(wrap, { opacity: 0, duration: randFloat(1.0, 2.0), ease: 'power2.out', delay: randFloat(4, 14) })
-        .to(wrap, { duration: randFloat(6, 18) }); // dark pause before next cycle
-    }
-  },
-
-  animate() {
-    if (this._paused) return;
-    const now = performance.now();
-
-    // Self-heal: some embedded browsers report a zero-size viewport during the
-    // first layout, which onResize ignores — re-sync as soon as it reads sane.
-    if (this._lastW !== window.innerWidth || this._lastH !== window.innerHeight) {
-      this.onResize();
-    }
-
-    // Reduced motion drops the cursor-steered camera entirely — that swing is
-    // the parallax the preference exists to suppress. The autonomous drift in
-    // the shader stays, just slowed by CALM_RATE.
-    if (this._calm) { this.targetMouse.x = 0; this.targetMouse.y = 0; }
-
-    // Smooth camera parallax — two easing rates so roll/dolly trail the tilt
-    this.mouse.x  += (this.targetMouse.x - this.mouse.x)  * 0.04;
-    this.mouse.y  += (this.targetMouse.y - this.mouse.y)  * 0.04;
-    this.mouse2.x += (this.targetMouse.x - this.mouse2.x) * 0.012;
-    this.mouse2.y += (this.targetMouse.y - this.mouse2.y) * 0.012;
-
-    // Emergency tier renders every third frame (~20fps) — the scene drifts
-    // slowly enough that it still reads as smooth, at a third of the cost
-    this._flip = (this._flip || 0) + 1;
-    if (this._tier === 0 && (this._flip % 3) !== 0) {
-      requestAnimationFrame(() => this.animate());
+    // No WebGL2, no float targets, or a shader that won't compile: show the
+    // CSS silhouette instead of an empty black box
+    const fallback = () => heroEl.classList.add('hero-fallback');
+    if (typeof THREE === 'undefined' || !window.Hero || typeof Hero.init !== 'function') {
+      fallback();
       return;
     }
-
-    const u = this.material.uniforms;
-    u.uTime.value = now * 0.001 * (this._calm ? this.CALM_RATE : 1);
-    u.uMouse.value.set(this.mouse.x, this.mouse.y);
-    u.uMouse2.value.set(this.mouse2.x, this.mouse2.y);
-
-    this.renderer.render(this.scene, this.camera);
-
-    this._watchFps(now);
-    requestAnimationFrame(() => this.animate());
+    this._ok = Hero.init({
+      canvas,
+      contentEl: heroEl.querySelector('.hero-content'),
+      avoidEls: [document.getElementById('nav')],        // rifts stay clear of the copy and the nav
+      onFirstFrame: () => canvas.classList.add('is-ready'),
+      onFallback: () => { this._ok = false; fallback(); },
+    });
+    if (!this._ok) fallback();
   },
 
-  onResize() {
-    if (!this.renderer) return;
-    const w = window.innerWidth, h = window.innerHeight;
-    if (w < 2 || h < 2) return;   // ignore transient zero-size reports
-    this._lastW = w;
-    this._lastH = h;
-    const scale = this.TIERS[this._tier][1];
-
-    // Low tiers also cap DPR at 1 — retina resolution is wasted on a soft effect
-    const dprCap = this._tier <= 1 ? 1 : 2;
-    const ratio  = Math.min(Math.min(window.devicePixelRatio, dprCap) * scale,
-                            this.TIERS[this._tier][2] / w);
-    this.renderer.setPixelRatio(ratio);
-    this.renderer.setSize(w, h);
-
-    const buf = this.renderer.getDrawingBufferSize(new THREE.Vector2());
-    this.material.uniforms.uRes.value.set(buf.x, buf.y);
-
-    // Narrow viewports widen the field of view rather than pulling the camera back:
-    // distance is what keeps the ray march dense enough to resolve the disk, so
-    // moving the camera out would leave the outer disk beyond the step budget.
-    const aspect = w / h;
-    this.material.uniforms.uFov.value = 0.62 * clamp(1.15 / aspect, 1.0, 1.9);
-
-    if (this._paused) this.renderer.render(this.scene, this.camera);
-  },
-
-  pause()  { this._paused = true; },
-  resume() { if (this._paused) { this._paused = false; this._fpsStart = performance.now(); this._fpsFrames = 0; this.animate(); } },
+  pause()  { if (this._ok) Hero.pause(); },
+  resume() { if (this._ok) Hero.resume(); },
 };
 
 /* ============================================================
-   5. HERO ANIMATIONS — GSAP text reveal after loader
+   5. HERO ANIMATIONS — GSAP text reveal, played at boot
 ============================================================ */
 const heroAnimations = {
   play() {
     const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#';
+
+    // Without GSAP the copy (opacity 0 in CSS) just appears
+    if (typeof gsap === 'undefined') {
+      document.querySelectorAll('.hero-eyebrow, .hero-name, .hero-tagline, .hero-cta, .hud-corner')
+        .forEach(el => { el.style.opacity = '1'; });
+      return;
+    }
 
     // Set initial states BEFORE the timeline runs
     gsap.set(['.hero-eyebrow', '.hero-name', '.hero-tagline', '.hero-cta'], { opacity: 0, y: 24 });
@@ -3315,11 +2675,11 @@ const lowPerf = {
     const btn = document.getElementById('low-perf-btn');
     if (btn) btn.setAttribute('aria-pressed', String(this.active));
     if (this.active) {
-      heroScene.pause();
+      hero.pause();
       cursor._enabled = false;
       glitchEffects.pause();
     } else {
-      heroScene.resume();
+      hero.resume();
       cursor.ringPos.x = cursor.target.x;
       cursor.ringPos.y = cursor.target.y;
       cursor._enabled = true;
@@ -3354,18 +2714,18 @@ const pageIdle = {
 };
 
 /* ============================================================
-   14. BOOT SEQUENCE — wait for GSAP + Three.js then start
+   14. BOOT SEQUENCE — wait for GSAP, Three.js and the hero, then start
 ============================================================ */
 function waitForLibraries(callback, maxWait = 5000) {
   const start = Date.now();
   const check = () => {
-    if (typeof gsap !== 'undefined' && typeof THREE !== 'undefined') {
+    if (typeof gsap !== 'undefined' && typeof THREE !== 'undefined' && window.Hero && window.Hero.init) {
       callback();
     } else if (Date.now() - start < maxWait) {
       setTimeout(check, 50);
     } else {
       // Libraries timed out — run without them (graceful degradation)
-      console.warn('Portfolio: GSAP or Three.js did not load. Running in fallback mode.');
+      console.warn('Portfolio: GSAP, Three.js or the hero scripts did not load. Running in fallback mode.');
       callback();
     }
   };
@@ -3373,13 +2733,19 @@ function waitForLibraries(callback, maxWait = 5000) {
 }
 
 function boot() {
+  window.__bootAt = performance.now();
+
   // Register GSAP plugin if available
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
   }
 
-  // Init Three.js hero scene early (canvas is hidden under loader)
-  heroScene.init();
+  // No loader: the page is already fading in (CSS), so the copy animates now
+  if (!LOADER_ENABLED) heroAnimations.play();
+
+  // The hero sets up over the next few frames and fades its canvas in on
+  // its first real frame
+  hero.init();
 
   // Custom cursor (dot + ring)
   cursor.init();
@@ -3424,7 +2790,7 @@ function boot() {
   lowPerf.init();
 
   // Fire the loader last — its exit callback triggers hero animations
-  loader.init();
+  if (LOADER_ENABLED) loader.init();
 
   // Deep-link: open project modal from URL hash on load (e.g. #project-clipstack)
   (function checkDeepLink() {

@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="robots" content="noindex" />
 <title>Hero Diagnostics | brucelsprouts</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
 <style>
   :root { color-scheme: dark; }
   * { box-sizing: border-box; }
@@ -30,11 +31,9 @@
   .detail:empty { display: none; }
   .verdict { border: 1px solid #2a2a34; background: #0d0d12; padding: 14px; margin: 22px 0; white-space: pre-wrap; }
   .verdict b { color: #fff; }
-  canvas { border: 1px solid #23232c; background: #000; display: block; }
-  .pair { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 10px; }
-  .pair figure { margin: 0; }
-  .pair figcaption { color: #6f6f7a; font-size: 11px; margin-top: 5px; }
-  .filtered { filter: blur(0px); }
+  .preview { position: relative; width: 100%; max-width: 480px; aspect-ratio: 16 / 9; border: 1px solid #23232c; background: #000; }
+  .preview canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .preview .note { position: absolute; left: 10px; bottom: 8px; font-size: 11px; color: #6f6f7a; pointer-events: none; }
   textarea { width: 100%; height: 190px; margin-top: 8px; background: #0d0d12;
              color: #b9b9c4; border: 1px solid #23232c; padding: 10px;
              font: inherit; font-size: 11.5px; resize: vertical; }
@@ -47,16 +46,18 @@
 <div class="wrap">
   <h1>Hero Animation Diagnostics</h1>
   <p class="sub">Checks why the homepage black hole may not render on this device. Takes about ten seconds. Nothing is uploaded &mdash; copy the report at the bottom and send it back.</p>
+  <!-- Kept above the checks: the renderer pauses while its canvas is off
+       screen, so the start-up checks only see frames if this is in view -->
+  <h1 style="font-size:13px">Live preview</h1>
+  <p class="sub" style="margin-bottom:8px">The same renderer the homepage runs. Click inside it to shatter the glass.</p>
+  <div class="preview" id="preview" style="margin-bottom:24px">
+    <canvas id="hero-canvas" aria-hidden="true"></canvas>
+    <span class="note" id="preview-note">starting&hellip;</span>
+  </div>
+
   <div id="tests"></div>
 
   <div class="verdict" id="verdict">Running&hellip;</div>
-
-  <h1 style="font-size:13px;margin-top:28px">Visual check</h1>
-  <p class="sub" style="margin-bottom:8px">Both squares below should look identical and pulse slowly. If the right one is black, blank, or frozen while the left one moves, this device has the CSS-filter-on-WebGL bug.</p>
-  <div class="pair">
-    <figure><canvas id="cv-plain"    width="150" height="150"></canvas><figcaption>plain canvas</figcaption></figure>
-    <figure><canvas id="cv-filtered" width="150" height="150" class="filtered"></canvas><figcaption>filter: blur(0px)</figcaption></figure>
-  </div>
 
   <h1 style="font-size:13px;margin-top:28px">Report</h1>
   <textarea id="report" readonly></textarea>
@@ -76,6 +77,7 @@
     d.querySelector('.name').textContent = name;
     testsEl.appendChild(d);
     return {
+      pending: function () { return !(id in results); },
       set: function (status, detail) {
         d.className = 'test ' + status;
         d.querySelector('.badge').textContent = status.toUpperCase();
@@ -93,8 +95,7 @@
   tEnv.set(reduced ? 'warn' : 'pass', [
     'ua      : ' + navigator.userAgent,
     'viewport: ' + window.innerWidth + 'x' + window.innerHeight + ' css, dpr ' + window.devicePixelRatio,
-    'starts  : tier ' + (window.innerWidth < 768 ? '1 (mobile path)' : '3 (desktop path)'),
-    'reduced : ' + (reduced ? 'YES -- hero runs at quarter speed with no cursor steering (was: frozen still frame)' : 'no'),
+    'reduced : ' + (reduced ? 'YES -- hero runs at quarter speed, no cursor steering, cracks fade in without sparks, shards settle instead of falling' : 'no'),
     'cores   : ' + (navigator.hardwareConcurrency || '?') +
       '   memory: ' + (navigator.deviceMemory || '?') + 'GB'
   ].join('\n'));
@@ -107,6 +108,7 @@
       var t0 = performance.now();
       var s = document.createElement('script');
       s.src = url;
+      s.async = false;
       s.onload  = function () { res({ ok: true,  ms: Math.round(performance.now() - t0) }); };
       s.onerror = function () { res({ ok: false, ms: Math.round(performance.now() - t0) }); };
       document.head.appendChild(s);
@@ -114,90 +116,22 @@
   }
 
   /* ---- 3+. WebGL ------------------------------------------------------ */
-  var tCtx     = add('ctx',     'WebGL context');
-  var tGpu     = add('gpu',     'GPU / driver');
-  var tPrec    = add('prec',    'highp float in fragment shaders');
-  var tCompile = add('compile', 'Hero shader compiles');
-  var tMedium  = add('medium',  'Hero shader compiles as mediump');
-  var tDraw    = add('draw',    'Hero shader produces a real image');
-  var tPerf    = add('perf',    'Render speed at each quality tier');
+  var tCtx    = add('ctx',    'WebGL 2 context');
+  var tGpu    = add('gpu',    'GPU / driver');
+  var tPrec   = add('prec',   'highp float in fragment shaders');
+  var tHero   = add('hero',   'Hero renderer starts (shaders compile, first frame)');
+  var tLut    = add('lut',    'Geodesic lookup table matches direct integration');
+  var tDraw   = add('draw',   'Hero produces a real image');
+  var tPerf   = add('perf',   'Render speed per pass (1280x720)');
+  var tLive   = add('live',   'Live frame rate and quality chosen');
 
-  var canvas = document.createElement('canvas');
-  canvas.width = 256; canvas.height = 256;
-  var gl = null;
-  try {
-    gl = canvas.getContext('webgl', { antialias: false, alpha: false })
-      || canvas.getContext('experimental-webgl');
-  } catch (e) { /* leave gl null */ }
-
-  function compileShader(type, src) {
-    var s = gl.createShader(type);
-    gl.shaderSource(s, src);
-    gl.compileShader(s);
-    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
-      var log = gl.getShaderInfoLog(s);
-      gl.deleteShader(s);
-      return { ok: false, log: log };
-    }
-    return { ok: true, shader: s };
+  var probe = document.createElement('canvas');
+  var gl2 = null, gl1 = null;
+  try { gl2 = probe.getContext('webgl2'); } catch (e) { /* leave null */ }
+  if (!gl2) {
+    try { gl1 = document.createElement('canvas').getContext('webgl'); } catch (e) { /* leave null */ }
   }
-
-  function buildProgram(fragSrc) {
-    var v = compileShader(gl.VERTEX_SHADER,
-      'attribute vec2 aPos;\nvoid main(){ gl_Position = vec4(aPos, 0.0, 1.0); }');
-    if (!v.ok) return { ok: false, log: 'vertex: ' + v.log };
-    var f = compileShader(gl.FRAGMENT_SHADER, fragSrc);
-    if (!f.ok) return { ok: false, log: f.log };
-    var p = gl.createProgram();
-    gl.attachShader(p, v.shader);
-    gl.attachShader(p, f.shader);
-    gl.linkProgram(p);
-    if (!gl.getProgramParameter(p, gl.LINK_STATUS)) {
-      return { ok: false, log: 'link: ' + gl.getProgramInfoLog(p) };
-    }
-    return { ok: true, program: p };
-  }
-
-  /* Pull the REAL hero shader out of the live main.js, so this always tests
-     exactly what the homepage runs rather than a copy that can drift. */
-  function getHeroFrag() {
-    return fetch('js/main.js?diag=' + Date.now())
-      .then(function (r) {
-        if (!r.ok) throw new Error('main.js HTTP ' + r.status);
-        return r.text();
-      })
-      .then(function (src) {
-        var m = src.match(/const HERO_FRAG = `([\s\S]*?)`;/);
-        if (!m) throw new Error('HERO_FRAG block not found in main.js');
-        return m[1];
-      });
-  }
-
-  var quadBuf = null;
-  function drawOnce(program, w, h, steps) {
-    gl.viewport(0, 0, w, h);
-    gl.useProgram(program);
-    if (!quadBuf) {
-      quadBuf = gl.createBuffer();
-      gl.bindBuffer(gl.ARRAY_BUFFER, quadBuf);
-      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
-    }
-    gl.bindBuffer(gl.ARRAY_BUFFER, quadBuf);
-    var loc = gl.getAttribLocation(program, 'aPos');
-    gl.enableVertexAttribArray(loc);
-    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-    function u(n) { return gl.getUniformLocation(program, n); }
-    gl.uniform2f(u('uRes'), w, h);
-    gl.uniform1f(u('uTime'), 1.0);
-    gl.uniform2f(u('uMouse'), 0, 0);
-    gl.uniform2f(u('uMouse2'), 0, 0);
-    gl.uniform1i(u('uSteps'), steps);
-    gl.uniform1f(u('uCamDist'), 13.0);
-    gl.uniform1f(u('uFov'), 0.62);
-    gl.uniform1f(u('uYShift'), 0.02);
-    gl.uniform1f(u('uElev'), 0.10);
-    gl.drawArrays(gl.TRIANGLES, 0, 3);
-  }
+  var gl = gl2 || gl1;
 
   function finish() {
     var fails = [], warns = [];
@@ -208,7 +142,7 @@
     var v = document.getElementById('verdict');
     if (fails.length) {
       v.innerHTML = '<b>The hero animation will NOT work on this device.</b>\nFailing checks: ' +
-        fails.join(', ') + '\nCopy the report below and send it to Bruce.';
+        fails.join(', ') + '\nThe homepage shows a static silhouette instead. Copy the report below and send it to Bruce.';
     } else if (warns.length) {
       v.innerHTML = '<b>The hero should appear, but degraded.</b>\nWarnings: ' +
         warns.join(', ') + '\nCopy the report below and send it to Bruce.';
@@ -220,17 +154,47 @@
       '\n======================================================\n' + lines.join('\n');
   }
 
-  /* Visual filter test -- two identical animated WebGL squares, one filtered */
-  ['cv-plain', 'cv-filtered'].forEach(function (id) {
-    var c = document.getElementById(id);
-    var g = c.getContext('webgl');
-    if (!g) { c.style.outline = '2px solid #d2453f'; return; }
-    (function frame(t) {
-      g.clearColor(0.10 + 0.10 * Math.abs(Math.sin(t / 900)), 0.11, 0.17, 1);
-      g.clear(g.COLOR_BUFFER_BIT);
-      requestAnimationFrame(frame);
-    })(0);
-  });
+  function skipRest(reason) {
+    [tHero, tLut, tDraw, tPerf, tLive].forEach(function (t) { t.set('fail', 'skipped -- ' + reason); });
+    finish();
+  }
+
+  /* The real hero, loaded fresh from the site so this always tests exactly
+     what the homepage runs rather than a copy that can drift */
+  function loadHero() {
+    var v = Date.now();
+    var files = ['config', 'geodesics', 'shaders', 'particles', 'pane', 'rifts', 'renderer'];
+    return Promise.all(files.map(function (f) {
+      return loadScript('js/hero/' + f + '.js?diag=' + v);
+    })).then(function (r) {
+      var bad = r.filter(function (x) { return !x.ok; }).length;
+      if (bad || !window.Hero || !window.Hero.init) throw new Error(bad + ' of ' + files.length + ' hero scripts failed to load');
+    });
+  }
+
+  function startHero() {
+    return new Promise(function (resolve) {
+      var canvas = document.getElementById('hero-canvas');
+      var t0 = performance.now();
+      var done = false;
+      var timer = setTimeout(function () { if (!done) { done = true; resolve({ ok: false, why: 'no frame after 15 s' }); } }, 15000);
+      var ok = Hero.init({
+        canvas: canvas,
+        contentEl: null,
+        onFirstFrame: function () {
+          if (done) return;
+          done = true; clearTimeout(timer);
+          resolve({ ok: true, ms: Math.round(performance.now() - t0) });
+        },
+        onFallback: function () {
+          if (done) return;
+          done = true; clearTimeout(timer);
+          resolve({ ok: false, why: 'a shader failed to compile or link (see the console)' });
+        }
+      });
+      if (!ok && !done) { done = true; clearTimeout(timer); resolve({ ok: false, why: 'unsupported: needs WebGL 2 with half-float render targets' }); }
+    });
+  }
 
   /* ---- run the chain -------------------------------------------------- */
   Promise.all([
@@ -248,129 +212,79 @@
         : '\nBlocked by a network, DNS filter, ad-blocker or firewall. The site keeps no local copy, so the hero cannot render.'));
 
     if (!gl) {
-      tCtx.set('fail', 'Could not create a WebGL context. This alone explains a black hero -- the site has no 2D fallback.');
+      tCtx.set('fail', 'Could not create any WebGL context. The homepage shows a static silhouette instead.');
       tGpu.set('fail', 'skipped -- no context');
       tPrec.set('fail', 'skipped -- no context');
-      tCompile.set('fail', 'skipped -- no context');
-      tMedium.set('fail', 'skipped -- no context');
-      tDraw.set('fail', 'skipped -- no context');
-      tPerf.set('fail', 'skipped -- no context');
-      finish();
+      skipRest('no context');
       return;
     }
-
-    var hasWebgl2 = !!document.createElement('canvas').getContext('webgl2');
-    tCtx.set('pass', 'WebGL 1 context created. WebGL 2 available: ' + (hasWebgl2 ? 'yes' : 'no'));
+    tCtx.set(gl2 ? 'pass' : 'fail', gl2
+      ? 'WebGL 2 context created.'
+      : 'Only WebGL 1 is available. The hero needs WebGL 2, so the homepage shows a static silhouette instead.');
 
     var dbg = gl.getExtension('WEBGL_debug_renderer_info');
     var gpu = dbg ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : '(masked by browser privacy settings)';
     var soft = /swiftshader|llvmpipe|software|basic render|microsoft basic/i.test(String(gpu));
     tGpu.set(soft ? 'warn' : 'pass', gpu +
-      (soft ? '\nSOFTWARE RENDERER -- hardware acceleration is off. The raymarched hero cannot run at usable speed here.' : ''));
+      (soft ? '\nSOFTWARE RENDERER -- hardware acceleration is off. The hero still runs, at a lower render scale.' : ''));
 
     var hp = gl.getShaderPrecisionFormat(gl.FRAGMENT_SHADER, gl.HIGH_FLOAT);
     var hasHighp = !!(hp && hp.precision > 0);
     tPrec.set(hasHighp ? 'pass' : 'fail', 'precision bits: ' + (hp ? hp.precision : 'n/a') +
-      (hasHighp ? '' : '\nThis GPU has no highp in fragment shaders. The hero shader hard-codes "precision highp float", so it CANNOT compile here.'));
+      (hasHighp ? '' : '\nThis GPU has no highp in fragment shaders; the hero shaders need it.'));
 
-    return getHeroFrag().then(function (frag) {
-      var res = buildProgram(frag);
-      tCompile.set(res.ok ? 'pass' : 'fail', res.ok
-        ? 'Compiled and linked successfully.'
-        : 'COMPILE FAILED -- this is why the hero is black.\n' + res.log);
+    if (!gl2 || !three.ok) { skipRest(!gl2 ? 'no WebGL 2' : 'three.js did not load'); return; }
 
-      var med = buildProgram(frag.replace(/precision\s+highp\s+float\s*;/, 'precision mediump float;'));
-      tMedium.set(med.ok ? 'pass' : 'warn', med.ok
-        ? 'mediump also compiles, so a mediump fallback would work on GPUs without highp.'
-        : 'mediump build also fails:\n' + med.log);
-
-      if (!res.ok) {
-        tDraw.set('fail', 'skipped -- shader did not compile');
-        tPerf.set('fail', 'skipped -- shader did not compile');
+    return loadHero().then(startHero).then(function (h) {
+      if (!h.ok) {
+        tHero.set('fail', h.why);
+        [tLut, tDraw, tPerf, tLive].forEach(function (t) { t.set('fail', 'skipped -- the renderer did not start'); });
         finish();
         return;
       }
+      var s = Hero.stats();
+      tHero.set('pass', 'First frame ' + h.ms + ' ms after init. Setup steps (ms): ' + JSON.stringify(s.setupMs));
+      document.getElementById('preview-note').textContent = 'tier ' + s.tier + ', scale ' + s.scale;
 
-      /* Draw and read back -- catches all-black output and NaN blowout */
-      canvas.width = 128; canvas.height = 128;
-      drawOnce(res.program, 128, 128, 24);
-      var px = new Uint8Array(128 * 128 * 4);
-      gl.readPixels(0, 0, 128, 128, gl.RGBA, gl.UNSIGNED_BYTE, px);
-      var lit = 0, white = 0, total = 128 * 128;
-      for (var i = 0; i < px.length; i += 4) {
-        if (px[i] > 8 || px[i + 1] > 8 || px[i + 2] > 8) lit++;
-        if (px[i] > 250 && px[i + 1] > 250 && px[i + 2] > 250) white++;
-      }
-      var pctLit = Math.round(lit / total * 100), pctWhite = Math.round(white / total * 100);
-      if (lit === 0) {
-        tDraw.set('fail', 'The shader ran but every pixel came out black. The GPU compiled it but produced no image.');
-      } else if (pctWhite > 20) {
-        tDraw.set('fail', pctWhite + '% of pixels are pure white -- NaN blowout, most likely pow() with a negative base. The hero will look wrong here.');
-      } else {
-        tDraw.set('pass', pctLit + '% of pixels lit, ' + pctWhite + '% blown out -- the image looks sane.');
-      }
+      var lut = Hero.geo.selfTest(Hero._debug.state.tables);
+      tLut.set(lut.pass ? 'pass' : 'fail',
+        'crossing radius error: max ' + lut.radiusErrMaxPct + '%, mean ' + lut.radiusErrMeanPct + '% (limit 0.5%)\n' +
+        'escape angle error   : max ' + lut.escapeErrMaxRad + ' rad, mean ' + lut.escapeErrMeanRad + ' rad (limit 0.01)\n' +
+        'glass seen through it: max ' + lut.glassErrMax + ' lens units off (limit 0.02), there and back ' + lut.glassRoundTripMax + ' (limit 0.01)\n' +
+        lut.rays + ' rays, ' + lut.crossings + ' disk crossings, ' + lut.escapes + ' escapes, ' + lut.glassPoints + ' points of glass');
 
-      /* Benchmark the four tiers the site actually uses */
-      var STEPS  = [14, 24, 34, 44];
-      var SCALES = [0.30, 0.50, 0.65, 0.78];
-      var CAPS   = [480, 900, 1500, 2400];
-      var vw = window.innerWidth, vh = window.innerHeight, dpr = window.devicePixelRatio;
-      var out = [], fpsByTier = [];
+      // Let it run a few seconds — past the disk's ignition — then read what
+      // the renderer settled on, and only then benchmark (it blocks briefly)
+      setTimeout(function () {
+        var s2 = Hero.stats();
+        var good = s2.fps >= 45;
+        tLive.set(good ? 'pass' : (s2.fps >= 25 ? 'warn' : 'fail'),
+          'fps ' + s2.fps + ', tier ' + s2.tier + ', render scale ' + s2.scale + ' (buffer ' + s2.buffer.join('x') + ')' +
+          ', rifts ' + s2.rifts + ', particles ' + s2.particles +
+          (good ? '' : '\nBelow 45 fps; the render scale keeps stepping down (floor 0.4) until it holds.'));
+        document.getElementById('preview-note').textContent = 'tier ' + s2.tier + ', scale ' + s2.scale + ', ' + s2.fps + ' fps';
 
-      /* drawArrays only queues work, so timing a loop of draws measures CPU
-         submission, not the GPU. Submit a batch, then force a sync with a 1px
-         readPixels and time the whole batch -- that wall time is real GPU work.
-         The batch grows until it is long enough to swamp the sync overhead. */
-      var sync1px = new Uint8Array(4);
-      function timeBatch(program, w, h, steps, n) {
-        var t0 = performance.now();
-        for (var i = 0; i < n; i++) drawOnce(program, w, h, steps);
-        gl.readPixels(0, 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, sync1px);  // blocks until done
-        return performance.now() - t0;
-      }
-
-      for (var t = 0; t < 4; t++) {
-        var ratio = Math.min(Math.min(dpr, t <= 1 ? 1 : 2) * SCALES[t], CAPS[t] / vw);
-        var w = Math.max(32, Math.round(vw * ratio));
-        var h = Math.max(32, Math.round(vh * ratio));
-        canvas.width = w; canvas.height = h;
-        timeBatch(res.program, w, h, STEPS[t], 1);      // warm up + compile any lazy state
-
-        var n = 2, ms = 0;
-        while (n <= 8192) {                             // grow until the sample is meaningful
-          ms = timeBatch(res.program, w, h, STEPS[t], n);
-          if (ms >= 120) break;
-          n *= 2;
+        var b = Hero.benchmark();
+        if (b.image.litPct < 1) {
+          tDraw.set('fail', 'Every pixel came out black. The GPU compiled the shaders but produced no image.');
+        } else if (b.image.whitePct > 20) {
+          tDraw.set('fail', b.image.whitePct + '% of pixels are pure white -- the image is blown out, most likely NaNs.');
+        } else {
+          tDraw.set('pass', b.image.litPct + '% of pixels lit, ' + b.image.whitePct + '% blown out -- the image looks sane.');
         }
-        var msPerFrame = ms / n;
-        var fps = Math.round(1000 / msPerFrame);
-        fpsByTier.push(fps);
-        out.push('tier ' + t + ' (' + STEPS[t] + ' steps, ' + w + 'x' + h + '): ' +
-                 (fps > 1000 ? '1000+ fps (not a bottleneck)'
-                             : '~' + fps + ' fps  (' + msPerFrame.toFixed(1) + ' ms/frame)'));
-      }
-
-      var startTier = vw < 768 ? 1 : 3;
-      var actual = fpsByTier[startTier];
-      tPerf.set(actual >= 60 ? 'pass' : (actual >= 25 ? 'warn' : 'fail'),
-        out.join('\n') +
-        '\n\nRaw shader throughput only -- the real page also spends time on GSAP,' +
-        '\nthe DOM and compositing, so on-page fps is lower than these numbers.' +
-        '\n\nThis device starts on tier ' + startTier + ': ' +
-        (actual > 1000 ? '1000+ fps.' : 'about ' + actual + ' fps.') +
-        (actual < 25
-          ? '\nThat is slow enough to look broken, and because the on-page rate would sit' +
-            '\nunder 20 fps the auto-downgrade CANNOT fire -- it only works between 20 and' +
-            '\n45 fps -- so it stays stuck at this tier forever.'
-          : ''));
-      finish();
-    }).catch(function (e) {
-      tCompile.set('fail', 'Could not fetch or parse main.js: ' + e.message);
-      tMedium.set('fail', 'skipped');
-      tDraw.set('fail', 'skipped');
-      tPerf.set('fail', 'skipped');
-      finish();
+        var perPass = 'lens ' + b.lens + ' ms, overlay ' + b.overlay + ' ms, bloom ' + b.bloom +
+          ' ms, composite ' + b.composite + ' ms  =  ' + b.total + ' ms per 1280x720 frame (' + b.tier + ' tier)';
+        tPerf.set(b.total <= 12 ? 'pass' : (b.total <= 60 ? 'warn' : 'fail'), perPass +
+          '\nGPU time only, at full 1280x720. The site renders below that on slow devices' +
+          '\n(dynamic resolution), so on-page cost is lower than this.' +
+          (b.total > 12 ? '\nToo slow for full resolution here; the hero drops its render scale to keep every frame.' : ''));
+        finish();
+      }, 4000);
     });
+  }).catch(function (e) {
+    var why = 'Could not load or start the hero: ' + (e && e.message ? e.message : e);
+    [tHero, tLut, tDraw, tPerf, tLive].forEach(function (t, i) { if (t.pending()) t.set('fail', i ? 'skipped' : why); });
+    finish();
   });
 
   document.getElementById('copy').addEventListener('click', function () {

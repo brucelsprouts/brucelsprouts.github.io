@@ -57,6 +57,16 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
 
+  <!-- Until styles.css arrives, paint only black. The script below re-points
+       its link for cache busting, which stops it blocking the first paint, so
+       without this the unstyled page flashes. styles.css overrides these rules
+       (it comes later) and fades the site in — no JS gate either way. -->
+  <style>
+    html, body { background: #000; }
+    #loader, #project-modal { display: none; }
+    #site-wrapper { opacity: 0; }
+  </style>
+
   <link rel="stylesheet" id="site-stylesheet" href="css/styles.css" />
   <script>
     (function() {
@@ -95,9 +105,9 @@
   </div>
 
   <!-- ============================================================
-       MAIN SITE (hidden until load complete)
+       MAIN SITE (fades in via CSS — no JS gate)
   ============================================================ -->
-  <div id="site-wrapper" style="opacity:0; visibility:hidden;">
+  <div id="site-wrapper">
 
     <!-- ── NAVIGATION ── -->
     <nav id="nav">
@@ -365,13 +375,26 @@
   <div id="cursor-dot"  aria-hidden="true"></div>
   <div id="cursor-ring" aria-hidden="true"></div>
 
-  <!-- Main script — loads with automatic cache-busting to prevent stale project data -->
+  <!-- Hero renderer, then the main script — injected in order with automatic
+       cache-busting to prevent stale project data -->
   <script>
     (function() {
-      var script = document.createElement('script');
-      script.src = 'js/main.js?v=' + encodeURIComponent(window.__assetVersion || Date.now().toString());
-      script.defer = true;
-      document.body.appendChild(script);
+      var v = encodeURIComponent(window.__assetVersion || Date.now().toString());
+      [
+        'js/hero/config.js',
+        'js/hero/geodesics.js',
+        'js/hero/shaders.js',
+        'js/hero/particles.js',
+        'js/hero/pane.js',
+        'js/hero/rifts.js',
+        'js/hero/renderer.js',
+        'js/main.js'
+      ].forEach(function(src) {
+        var script = document.createElement('script');
+        script.src = src + '?v=' + v;
+        script.async = false;   // injected scripts run in insertion order
+        document.body.appendChild(script);
+      });
     })();
   </script>
   <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "5320cf96ca3b447a8a418366451da3c4"}'></script><!-- End Cloudflare Web Analytics -->

@@ -312,6 +312,11 @@ section {
   overflow: hidden;
 }
 
+/* Hidden while LOADER_ENABLED is false in js/main.js. The markup and code are
+   kept for a future redesign — remove this rule (and #loader in the critical
+   <style> in index.html) when re-enabling it. */
+#loader { display: none; }
+
 #loader-canvas {
   position: absolute;
   inset: 0;
@@ -660,6 +665,20 @@ section {
 }
 
 /* ── 6. HERO ── */
+
+/* The page fades straight in, with no JS gate, so it shows even if a script
+   fails. (index.html hides the wrapper until this sheet loads; the explicit
+   opacity here lifts that.) Backwards fill only: once finished, the wrapper
+   carries no animation state that could change how its fixed children stack. */
+#site-wrapper {
+  opacity: 1;
+  animation: site-fade-in 0.6s ease backwards;
+}
+@keyframes site-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
 #hero {
   min-height: 100vh;
   display: flex;
@@ -675,7 +694,39 @@ section {
   width: 100%;
   height: 100%;
   z-index: 0;
-  opacity: 0; /* faded in by loader exit crossfade */
+  opacity: 0;                     /* until the renderer's first real frame */
+  transition: opacity 0.8s ease;
+}
+#hero-canvas.is-ready { opacity: 1; }
+
+/* No WebGL2 (or a shader that won't compile): a static CSS silhouette of the
+   black hole, so the hero is never an empty black box. Sized like the render:
+   the shadow spans ~0.65 of the hero's height. */
+#hero.hero-fallback::before,
+#hero.hero-fallback::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+/* the disk, almost edge-on, passing behind the shadow */
+#hero.hero-fallback::before {
+  width: min(190vh, 135vw);
+  height: 15vh;
+  background: radial-gradient(ellipse closest-side,
+    rgba(255, 200, 150, 0.30) 0%, rgba(255, 165, 95, 0.12) 45%, transparent 100%);
+}
+/* the shadow and its warm photon-ring glow */
+#hero.hero-fallback::after {
+  width: min(80vh, 95vw);
+  height: min(80vh, 95vw);
+  background: radial-gradient(circle closest-side,
+    #000 0 80.5%, rgba(255, 224, 186, 0.78) 82.5%, rgba(255, 178, 110, 0.28) 86%,
+    rgba(255, 150, 80, 0.07) 93%, transparent 100%);
 }
 
 .hero-content {
@@ -1859,7 +1910,8 @@ body.low-perf #cursor-dot,
 body.low-perf #cursor-ring,
 body.low-perf .hud-corner,
 body.low-perf .scroll-side-label,
-body.low-perf .hero-fx-overlay { display: none !important; }
+body.low-perf #hero.hero-fallback::before,
+body.low-perf #hero.hero-fallback::after { display: none !important; }
 
 /* Dot-matrix motif behind every section below the hero */
 body.low-perf #about::before,
