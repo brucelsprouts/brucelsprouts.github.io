@@ -23,6 +23,7 @@ Hey, I'm **Bruce Lin** — a B.Sc. Computer Science student at Western Universit
 ## Site Features
 
 - Three.js hero: a gravitationally lensed black hole that shatters like glass (click it to crack it yourself)
+- Glass accents below the hero: cracks of light between the sections, titles that focus in through split light, and a glint across project cards
 - GSAP-powered scroll animations and section reveals
 - Project modal with inline YouTube embeds and image gallery
 - Skills grid with hover tooltips

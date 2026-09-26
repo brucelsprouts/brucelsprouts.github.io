@@ -1,7 +1,8 @@
 /**
- * main.js — Cyber-tech Portfolio
- * Sections: Config · Data · Loader (disabled) · Hero adapter · Nav ·
- *           Skills · History · Projects · Contact · Utilities
+ * main.js — Portfolio
+ * Sections: Data · Utilities · Loader (disabled) · Hero adapter · Hero copy ·
+ *           Nav · Skills · Projects · Project modal · Contact · Reveal ·
+ *           Seams · Low performance · Page idle · Boot
  *
  * Dependencies (loaded via CDN in index.html, injected before this script):
  *   - Three.js r128
@@ -322,6 +323,21 @@ const randFloat = (min, max) => Math.random() * (max - min) + min;
 
 /** Clamp a value between lo and hi */
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+
+/** True once GSAP and its ScrollTrigger plugin have both loaded */
+const scrollTriggerReady = () => typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined';
+
+/** Seeded random numbers in [0, 1): the same seed gives the same sequence.
+ *  Local to this file, so it doesn't depend on the hero having loaded. */
+function mulberry32(seed) {
+  let a = seed >>> 0;
+  return function () {
+    a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
 
 /** Format YYYY-MM-DD project date for display */
 function formatProjectDate(dateStr) {
@@ -1105,46 +1121,30 @@ const hero = {
 };
 
 /* ============================================================
-   5. HERO ANIMATIONS — GSAP text reveal, played at boot
+   5. HERO COPY — GSAP timeline, played at boot
+   The name focuses in (styles.css "Focus-in") when the timeline
+   gives it .is-in. The rest of the copy fades up.
 ============================================================ */
 const heroAnimations = {
   play() {
-    const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#';
+    const nameEl = document.querySelector('.hero-name');
 
-    // Without GSAP the copy (opacity 0 in CSS) just appears
+    // Without GSAP the rest of the copy (opacity 0 in CSS) just appears.
+    // The name still focuses in, since CSS runs that.
     if (typeof gsap === 'undefined') {
-      document.querySelectorAll('.hero-eyebrow, .hero-name, .hero-tagline, .hero-cta, .hud-corner')
+      document.querySelectorAll('.hero-eyebrow, .hero-tagline, .hero-cta, .hud-corner')
         .forEach(el => { el.style.opacity = '1'; });
+      if (nameEl) nameEl.classList.add('is-in');
       return;
     }
 
     // Set initial states BEFORE the timeline runs
-    gsap.set(['.hero-eyebrow', '.hero-name', '.hero-tagline', '.hero-cta'], { opacity: 0, y: 24 });
+    gsap.set(['.hero-eyebrow', '.hero-tagline', '.hero-cta'], { opacity: 0, y: 24 });
     gsap.set('.hud-corner', { opacity: 0 });
 
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
-    // Eyebrow fades in first
     tl.to('.hero-eyebrow', { opacity: 1, y: 0, duration: 0.7 }, 0.15);
-
-    // Hero name: simultaneous scramble-reveal + fade-in (tightened to 16 frames × 45ms)
-    tl.add(() => {
-      const nameEl = document.querySelector('.hero-name');
-      if (!nameEl) return;
-      const original = nameEl.getAttribute('data-text') || nameEl.textContent;
-      let frame = 0, maxFrames = 16;
-      const iv = setInterval(() => {
-        frame++;
-        nameEl.textContent = original.split('').map((ch, i) => {
-          if (ch === ' ' || ch === '.') return ch;
-          return frame / maxFrames > i / original.length
-            ? ch : CHARS[randInt(0, CHARS.length - 1)];
-        }).join('');
-        if (frame >= maxFrames) { clearInterval(iv); nameEl.textContent = original; }
-      }, 45);
-    }, 0.5);
-
-    tl.to('.hero-name',    { opacity: 1, y: 0, duration: 0.85 }, 0.5);
+    tl.add(() => { if (nameEl) nameEl.classList.add('is-in'); }, 0.5);
     tl.to('.hero-tagline', { opacity: 1, y: 0, duration: 0.65 }, 1.0);
     tl.to('.hero-cta',     { opacity: 1, y: 0, duration: 0.55 }, 1.45);
     tl.to('.hud-corner',   { opacity: 1, duration: 0.5  },        1.75);
@@ -1224,109 +1224,18 @@ const nav = {
 };
 
 /* ============================================================
-   7. CURSOR — dot (immediate) + lagged ring + ambient glow
-   Works by:
-    · #cursor-dot  snaps each mousemove frame via style
-    · #cursor-ring lerps toward the target in rAF loop (~12% per frame)
-    · Hover state expands the ring and shrinks the dot
-    · Mousedown pulses the ring inward then back
-============================================================ */
-const cursor = {
-  dot:       null,
-  ring:      null,
-  target:    { x: 0, y: 0 },
-  ringPos:   { x: 0, y: 0 },
-  _raf:      null,
-  _enabled:  false,
-
-  init() {
-    // No custom cursor on touch devices
-    if (window.matchMedia('(hover: none)').matches) return;
-
-    this.dot  = document.getElementById('cursor-dot');
-    this.ring = document.getElementById('cursor-ring');
-    if (!this.dot || !this.ring) return;
-
-    this._enabled = true;
-
-    // Hide cursor elements until first mouse move (avoid top-left flash)
-    this.dot.style.opacity  = '0';
-    this.ring.style.opacity = '0';
-
-    window.addEventListener('mousemove', (e) => {
-      const x = e.clientX, y = e.clientY;
-      this.target.x = x;
-      this.target.y = y;
-
-      // Dot snaps immediately
-      this.dot.style.left = `${x}px`;
-      this.dot.style.top  = `${y}px`;
-
-      // First move — reveal
-      if (this.dot.style.opacity === '0') {
-        this.dot.style.opacity  = '1';
-        this.ring.style.opacity = '1';
-        this.ringPos.x = x;
-        this.ringPos.y = y;
-      }
-    }, { passive: true });
-
-    // Lerp ring toward target in animation loop
-    this._startLoop();
-
-    // Hover expansion over interactive elements
-    const hoverSel = 'a, button, input, textarea, select, .project-card, .skill-card, .filter-btn';
-    document.addEventListener('mouseover', (e) => {
-      if (e.target.closest(hoverSel)) {
-        this.dot .classList.add('hovering');
-        this.ring.classList.add('hovering');
-      }
-    });
-    document.addEventListener('mouseout', (e) => {
-      if (e.target.closest(hoverSel)) {
-        this.dot .classList.remove('hovering');
-        this.ring.classList.remove('hovering');
-      }
-    });
-
-    // Click pulse
-    document.addEventListener('mousedown', () => {
-      this.ring.classList.add('clicking');
-    });
-    document.addEventListener('mouseup', () => {
-      this.ring.classList.remove('clicking');
-    });
-  },
-
-  _startLoop() {
-    const tick = () => {
-      this._raf = requestAnimationFrame(tick);
-      if (!this._enabled) return;
-
-      // Exponential lerp — smooth lag without overshoot
-      const lf = 0.13;
-      this.ringPos.x += (this.target.x - this.ringPos.x) * lf;
-      this.ringPos.y += (this.target.y - this.ringPos.y) * lf;
-
-      this.ring.style.left = `${this.ringPos.x}px`;
-      this.ring.style.top  = `${this.ringPos.y}px`;
-    };
-    tick();
-  },
-};
-
-/* ============================================================
-   8. SKILLS SECTION
+   7. SKILLS SECTION
 ============================================================ */
 const skills = {
   init() {
     const grid = document.getElementById('skills-grid');
     if (!grid) return;
 
-    // Populate skill cards
+    // Populate skill cards; they rise in with the page (reveal)
     DATA.skills.forEach(skill => {
       const card = document.createElement('div');
       card.className = 'skill-card';
+      card.setAttribute('data-reveal', '');
       card.innerHTML = `
         <span class="skill-icon">
           <img src="${skill.icon}" alt="${skill.name}" />
@@ -1341,47 +1250,18 @@ const skills = {
       img.addEventListener('error', () => { img.style.display = 'none'; fb.style.display = 'block'; });
       grid.appendChild(card);
     });
-
-    // Scroll-in animations via GSAP ScrollTrigger
-    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-      gsap.registerPlugin(ScrollTrigger);
-
-      const cards = grid.querySelectorAll('.skill-card');
-      cards.forEach((card, i) => {
-        gsap.to(card, {
-          scrollTrigger: {
-            trigger: card,
-            start: 'top 88%',
-            toggleActions: 'play none none reverse',
-          },
-          opacity: 1,
-          y: 0,
-          duration: 0.55,
-          delay: (i % 4) * 0.07,  // stagger by column
-          ease: 'power3.out',
-          onStart() {
-            // Brief glitch on entry
-            card.style.filter = 'brightness(2) saturate(0)';
-            setTimeout(() => { card.style.filter = ''; }, 120);
-          },
-        });
-      });
-    }
   },
 };
 
 /* ============================================================
-   9. HISTORY / TIMELINE
-============================================================ */
-
-/* ============================================================
-   10. PROJECTS — render, filter, search
+   8. PROJECTS — render, filter, search
 ============================================================ */
 const projects = {
   all: [],
   currentFilter: 'all',
   currentSort: 'date-desc',
   searchQuery: '',
+  _rendered: false,
 
   init() {
     this.all = DATA.projects;
@@ -1389,13 +1269,18 @@ const projects = {
     this.bindSort();
     this.bindSearch();
     this.filter();
-    this.bindScrollAnimations();
   },
 
   renderAll(list) {
     const grid = document.getElementById('projects-grid');
     const noResults = document.getElementById('no-results');
     if (!grid) return;
+
+    // Only the first render rises in with the page (reveal). Filtering,
+    // sorting and searching render cards that are already in: no triggers
+    // per render, and nothing replays while you type.
+    const first = !this._rendered;
+    this._rendered = true;
 
     // Update result count
     const countEl = document.getElementById('project-result-count');
@@ -1407,57 +1292,15 @@ const projects = {
     }
 
     grid.innerHTML = '';
-
-    if (list.length === 0) {
-      noResults.style.display = 'block';
-      return;
-    }
-    noResults.style.display = 'none';
-
-    list.forEach((project, i) => {
+    noResults.style.display = list.length ? 'none' : 'block';
+    list.forEach(project => {
       const card = this.buildCard(project);
+      if (first) card.setAttribute('data-reveal', '');
       grid.appendChild(card);
-
-      // Scroll-in animation
-      if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-        gsap.to(card, {
-          scrollTrigger: {
-            trigger: card,
-            start: 'top 90%',
-            toggleActions: 'play none none none',
-          },
-          opacity: 1,
-          y: 0,
-          duration: 0.55,
-          delay: (i % 3) * 0.08,
-          ease: 'power3.out',
-          onStart() {
-            // Mini glitch flash on card entry
-            card.style.filter = 'brightness(2)';
-            setTimeout(() => { card.style.filter = ''; }, 80);
-            // Scramble the project title on card reveal
-            const titleEl = card.querySelector('.project-title');
-            if (titleEl) {
-              const orig = titleEl.textContent;
-              const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@!';
-              let frame = 0, maxFrames = 10;
-              const iv = setInterval(() => {
-                frame++;
-                titleEl.textContent = orig.split('').map((ch, i) =>
-                  ch === ' ' ? ' ' : frame / maxFrames > i / orig.length
-                    ? ch : CHARS[randInt(0, CHARS.length - 1)]
-                ).join('');
-                if (frame >= maxFrames) { clearInterval(iv); titleEl.textContent = orig; }
-              }, 45);
-            }
-          },
-        });
-      } else {
-        // Fallback: show immediately
-        card.style.opacity = '1';
-        card.style.transform = 'none';
-      }
     });
+
+    // Everything below the grid may have moved
+    if (!first) reveal.refresh();
   },
 
   buildCard(project) {
@@ -1608,10 +1451,6 @@ const projects = {
     });
   },
 
-  bindScrollAnimations() {
-    // Section header is handled by the global .section-header ScrollTrigger in initScrollAnimations
-  },
-
   setTagSearch(tag) {
     const input = document.getElementById('project-search');
     if (!input) return;
@@ -1630,7 +1469,7 @@ const projects = {
 };
 
 /* ============================================================
-   11. PROJECT MODAL — click a card to view details inline
+   9. PROJECT MODAL — click a card to view details inline
 ============================================================ */
 const projectModal = {
   _el:     null,
@@ -1917,7 +1756,7 @@ const projectModal = {
 };
 
 /* ============================================================
-   12. CONTACT FORM
+   10. CONTACT FORM
 ============================================================ */
 const contact = {
   init() {
@@ -1998,661 +1837,293 @@ const contact = {
 };
 
 /* ============================================================
-   12. SCROLL ANIMATIONS — section headers + contact + scramble reveals
+   11. REVEAL — content rises into place once, as it scrolls in
+   Elements marked data-reveal (static ones in index.html, cards
+   as they're built) get .is-in once, when their top reaches 88%
+   of the viewport's height, and CSS does the move (styles.css
+   "Reveals"). One ScrollTrigger.batch does the triggering, and
+   each trigger is killed once it has fired, so nothing reverses.
+   The hidden state only exists under html.reveal-on, set here,
+   so a script that fails never hides content.
 ============================================================ */
-const scrollAnimations = {
-  init() {
-    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-
-    gsap.registerPlugin(ScrollTrigger);
-
-    // ── Section headers ──
-    document.querySelectorAll('.section-header').forEach(header => {
-      gsap.from(header, {
-        scrollTrigger: {
-          trigger: header,
-          start: 'top 85%',
-          toggleActions: 'play none none reverse',
-        },
-        opacity: 0,
-        y: 40,
-        duration: 0.7,
-        ease: 'power3.out',
-      });
-    });
-
-    // ── Skill card text scramble on entry ──
-    // Each skill name glitches through random chars before settling
-    document.querySelectorAll('.skill-card').forEach(card => {
-      const nameEl = card.querySelector('.skill-name');
-      if (!nameEl) return;
-      const original = nameEl.textContent;
-      const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@!';
-
-      ScrollTrigger.create({
-        trigger: card,
-        start:   'top 90%',
-        once:    true,
-        onEnter: () => {
-          let frame = 0;
-          const maxFrames = 14;
-          const iv = setInterval(() => {
-            frame++;
-            nameEl.textContent = original
-              .split('')
-              .map((ch, i) => {
-                if (ch === ' ') return ' ';
-                return frame / maxFrames > i / original.length
-                  ? ch
-                  : CHARS[randInt(0, CHARS.length - 1)];
-              })
-              .join('');
-            if (frame >= maxFrames) {
-              clearInterval(iv);
-              nameEl.textContent = original;
-            }
-          }, 45);
-        },
-      });
-    });
-
-    // ── Timeline item text scramble on entry ──
-    document.querySelectorAll('.timeline-title').forEach(el => {
-      const original = el.textContent;
-      const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ01';
-      ScrollTrigger.create({
-        trigger: el,
-        start:   'top 88%',
-        once:    true,
-        onEnter: () => {
-          let frame = 0;
-          const maxFrames = 12;
-          const iv = setInterval(() => {
-            frame++;
-            el.textContent = original
-              .split('')
-              .map((ch, i) => {
-                if (ch === ' ') return ' ';
-                return frame / maxFrames > i / original.length
-                  ? ch
-                  : CHARS[randInt(0, CHARS.length - 1)];
-              })
-              .join('');
-            if (frame >= maxFrames) { clearInterval(iv); el.textContent = original; }
-          }, 40);
-        },
-      });
-    });
-
-    // ── Section tag line reveals (section-tag monospace labels) ──
-    document.querySelectorAll('.section-tag').forEach(el => {
-      gsap.from(el, {
-        scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none reverse' },
-        opacity: 0,
-        x: -20,
-        duration: 0.5,
-        ease: 'power2.out',
-      });
-    });
-
-    // ── Section titles scramble in on first reveal ──
-    document.querySelectorAll('.section-title').forEach(el => {
-      const original = el.textContent;
-      const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ01#!';
-      ScrollTrigger.create({
-        trigger: el,
-        start:   'top 88%',
-        once:    true,
-        onEnter: () => {
-          let frame = 0;
-          const maxFrames = 20;
-          const iv = setInterval(() => {
-            frame++;
-            el.textContent = original.split('').map((ch, i) => {
-              if (ch === ' ' || ch === '&' || ch === '/') return ch;
-              return frame / maxFrames > i / original.length
-                ? ch : CHARS[randInt(0, CHARS.length - 1)];
-            }).join('');
-            if (frame >= maxFrames) { clearInterval(iv); el.textContent = original; }
-          }, 50);
-        },
-      });
-    });
-
-    // ── Contact section fade-in ──
-    gsap.from('#contact .contact-layout', {
-      scrollTrigger: {
-        trigger: '#contact',
-        start: 'top 80%',
-        toggleActions: 'play none none none',
-      },
-      opacity: 0,
-      y: 40,
-      duration: 0.8,
-      ease: 'power3.out',
-    });
-
-    // ── Social links stagger — use 'to' not 'from' to avoid stuck-invisible state ──
-    gsap.set('.social-link', { opacity: 0, x: 20 });
-    ScrollTrigger.create({
-      trigger: '#contact',
-      start: 'top 85%',
-      once: true,
-      onEnter: () => {
-        gsap.to('.social-link', {
-          opacity: 1,
-          x: 0,
-          stagger: 0.12,
-          duration: 0.55,
-          ease: 'power3.out',
-          delay: 0.2,
-        });
-      },
-    });
-
-    // ── Timeline vertical line draw ──
-    gsap.from('.timeline::before', {
-      scrollTrigger: {
-        trigger: '#history',
-        start: 'top 70%',
-        end:   'bottom 30%',
-        scrub: 1,
-      },
-      scaleY: 0,
-      transformOrigin: 'top',
-      ease: 'none',
-    });
-  },
-};
-
-/* ============================================================
-   13. GLITCH SCANLINE FLICKER — occasional ambient random flicker
-============================================================ */
-const glitchEffects = {
-  init() {
-    // Occasional full-screen scanline sweep
-    this._iv1 = setInterval(() => {
-      if (Math.random() < 0.15) { this._scanFlash(); }
-    }, 4000);
-
-    // VHS-style horizontal noise lines — subtle, atmospheric
-    this._iv2 = setInterval(() => {
-      if (Math.random() < 0.28) { this._vhsLines(); }
-    }, 2200);
-
-    // Brief pixel-shift block — rare, striking
-    this._iv3 = setInterval(() => {
-      if (Math.random() < 0.12) { this._pixelShift(); }
-    }, 5500);
-  },
-  pause()  { clearInterval(this._iv1); clearInterval(this._iv2); clearInterval(this._iv3); },
-  resume() { this.init(); },
-
-  _scanFlash() {
-    const flash = document.createElement('div');
-    flash.style.cssText = `
-      position: fixed;
-      inset: 0;
-      z-index: 9998;
-      pointer-events: none;
-      background: repeating-linear-gradient(
-        to bottom,
-        transparent 0px, transparent 2px,
-        rgba(255,255,255,0.015) 2px, rgba(255,255,255,0.015) 3px
-      );
-      opacity: 0;
-    `;
-    flash.setAttribute('aria-hidden', 'true');
-    document.body.appendChild(flash);
-
-    if (typeof gsap !== 'undefined') {
-      gsap.to(flash, {
-        opacity: 1, duration: 0.05,
-        yoyo: true, repeat: 3,
-        onComplete: () => flash.remove(),
-      });
-    } else {
-      setTimeout(() => flash.remove(), 200);
+const reveal = {
+  /* Calls fn(el, i) once for each element, when its top reaches `start`
+     (a ScrollTrigger start such as 'top 88%'). i counts the elements that
+     arrived on screen together, for staggers. After a jump (a nav link),
+     everything scrolled past arrives too; those get 0 and don't count, so
+     they don't hold up what's in view. Without ScrollTrigger it calls fn
+     for every element now. The seams use this too. */
+  when(els, start, fn) {
+    if (!els.length) return;
+    if (!scrollTriggerReady()) {
+      els.forEach((el) => fn(el, 0));
+      return;
     }
-  },
-
-  // Short horizontal VHS noise strips at random Y positions
-  _vhsLines() {
-    const count = randInt(1, 3);
-    for (let i = 0; i < count; i++) {
-      const line = document.createElement('div');
-      line.style.cssText = `
-        position: fixed;
-        left: 0; right: 0;
-        top: ${randFloat(5, 92)}vh;
-        height: ${randFloat(1, 4)}px;
-        background: rgba(255,255,255,${randFloat(0.02, 0.07).toFixed(3)});
-        pointer-events: none;
-        z-index: 9994;
-        will-change: opacity;
-      `;
-      line.setAttribute('aria-hidden', 'true');
-      document.body.appendChild(line);
-      if (typeof gsap !== 'undefined') {
-        gsap.to(line, {
-          opacity: 0,
-          duration: randFloat(0.06, 0.28),
-          ease: 'steps(1)',
-          onComplete: () => line.remove(),
-        });
-      } else {
-        setTimeout(() => line.remove(), 300);
-      }
-    }
-  },
-
-  // Brief horizontal block with lateral offset — simulates VHS tape dropout
-  _pixelShift() {
-    const shiftX = randFloat(-18, 18);
-    const block   = document.createElement('div');
-    block.style.cssText = `
-      position: fixed;
-      left: 0; right: 0;
-      top: ${randFloat(8, 88)}vh;
-      height: ${randFloat(3, 10)}px;
-      background: rgba(255,255,255,0.04);
-      pointer-events: none;
-      z-index: 9993;
-      transform: translateX(${shiftX}px);
-    `;
-    block.setAttribute('aria-hidden', 'true');
-    document.body.appendChild(block);
-    if (typeof gsap !== 'undefined') {
-      gsap.to(block, {
-        opacity: 0, x: shiftX + randFloat(-6, 6),
-        duration: 0.12, ease: 'steps(2)',
-        onComplete: () => block.remove(),
-      });
-    } else {
-      setTimeout(() => block.remove(), 120);
-    }
-  },
-};
-
-/* ============================================================
-   14. SIDE LABELS — thin vertical HUD text on viewport edges
-   Each section maps to a set of left/right monospace labels.
-   They typewriter-in on section enter, fade out on leave.
-============================================================ */
-const sideLabels = {
-  leftEl:  null,
-  rightEl: null,
-  _typeTimers: [],
-
-  // Per-section label pairs
-  MAP: {
-    hero:     { l: '// HERO_ONLINE',       r: 'STATUS·ACTIVE'     },
-    skills:   { l: '// MODULE_02',          r: 'SCANNING·MODULES'  },
-    history:  { l: '// TIMELINE_NODE',      r: 'RETRIEVING·DATA'   },
-    projects: { l: '// PROJECT_MATRIX',     r: 'ACCESSING·FILES'   },
-    contact:  { l: '// ESTABLISH_LINK',     r: 'AWAITING·INPUT'    },
-  },
-
-  init() {
-    if (typeof ScrollTrigger === 'undefined' || typeof gsap === 'undefined') return;
-
-    this.leftEl  = this._create('left');
-    this.rightEl = this._create('right');
-    document.body.appendChild(this.leftEl);
-    document.body.appendChild(this.rightEl);
-
-    Object.entries(this.MAP).forEach(([id, labels]) => {
-      const section = document.getElementById(id);
-      if (!section) return;
-
-      ScrollTrigger.create({
-        trigger: section,
-        start:   'top 55%',
-        end:     'bottom 45%',
-        onEnter:      () => this._show(labels.l, labels.r),
-        onLeave:      () => this._hide(),
-        onEnterBack:  () => this._show(labels.l, labels.r),
-        onLeaveBack:  () => this._hide(),
-      });
-    });
-  },
-
-  _create(side) {
-    const el = document.createElement('div');
-    el.className   = `scroll-side-label scroll-side-label--${side}`;
-    el.setAttribute('aria-hidden', 'true');
-    return el;
-  },
-
-  _show(leftText, rightText) {
-    if (document.body.classList.contains('low-perf')) return;
-    this._clearTimers();
-    gsap.to([this.leftEl, this.rightEl], { opacity: 1, duration: 0.3 });
-    this.leftEl .classList.add('active');
-    this.rightEl.classList.add('active');
-    this._type(this.leftEl,  leftText);
-    this._type(this.rightEl, rightText);
-  },
-
-  _hide() {
-    this._clearTimers();
-    gsap.to([this.leftEl, this.rightEl], {
-      opacity: 0, duration: 0.25,
-      onComplete: () => {
-        this.leftEl .textContent = '';
-        this.rightEl.textContent = '';
-        this.leftEl .classList.remove('active');
-        this.rightEl.classList.remove('active');
+    ScrollTrigger.batch(els, {
+      start,
+      onEnter: (batch, triggers) => {
+        let i = 0;
+        batch.forEach((el) => fn(el, el.getBoundingClientRect().bottom > 0 ? i++ : 0));
+        triggers.forEach((st) => st.kill());
       },
     });
   },
 
-  _type(el, text) {
-    el.textContent = '';
-    let i = 0;
-    const step = () => {
-      if (i >= text.length) { el.textContent = text; return; }
-      // One-frame glitch char chance
-      const ch = Math.random() < 0.18
-        ? String.fromCharCode(randInt(33, 90))
-        : text[i];
-      el.textContent = text.slice(0, i) + ch;
-      i++;
-      this._typeTimers.push(setTimeout(step, 38 + randInt(0, 25)));
-    };
-    step();
-  },
-
-  _clearTimers() {
-    this._typeTimers.forEach(clearTimeout);
-    this._typeTimers = [];
-  },
-};
-
-/* ============================================================
-   15. SECTION FLASH — brief ASCII overlay on first section entry
-   Gives the "being decoded / hacked" impression as sections appear.
-============================================================ */
-const sectionFlash = {
-  CHARS: '01 +|#~=.:[]{}<>!?/@',
-
   init() {
-    if (typeof ScrollTrigger === 'undefined') return;
-
-    // #hero is excluded: the flash block centres on the black hole's
-    // shadow, and that void has to stay clean.
-    document.querySelectorAll('section[id]:not(#hero)').forEach(section => {
-      let done = false;
-      ScrollTrigger.create({
-        trigger: section,
-        start:   'top 78%',
-        onEnter: () => {
-          if (done) return;
-          done = true;
-          this._flash(section);
-        },
-      });
+    const line = window.innerHeight * 0.88;
+    const waiting = [...document.querySelectorAll('[data-reveal]')].filter((el) => {
+      if (el.getBoundingClientRect().top >= line) return true;
+      el.removeAttribute('data-reveal');     // already on screen (a #contact link): leave it be
+      return false;
     });
+    this.when(waiting, 'top 88%', (el, i) => {
+      el.style.setProperty('--i', Math.min(i, 5));
+      el.classList.add('is-in');
+    });
+    document.documentElement.classList.add('reveal-on');
   },
 
-  _flash(section) {
-    if (document.body.classList.contains('low-perf')) return;
-    const overlay = document.createElement('div');
-    overlay.className = 'ascii-flash-overlay';
-
-    // Generate random ASCII block
-    const rows = 10, cols = 55;
-    let content = '';
-    for (let r = 0; r < rows; r++) {
-      let line = '';
-      for (let c = 0; c < cols; c++) {
-        line += this.CHARS[randInt(0, this.CHARS.length - 1)];
-      }
-      content += line + '\n';
-    }
-    overlay.textContent = content;
-    section.appendChild(overlay);
-
-    if (typeof gsap !== 'undefined') {
-      gsap.fromTo(overlay,
-        { opacity: 0 },
-        {
-          opacity: 0.1,
-          duration: 0.08,
-          yoyo: true,
-          repeat: 5,
-          ease: 'steps(1)',
-          onComplete: () => overlay.remove(),
-        }
-      );
-    } else {
-      setTimeout(() => overlay.remove(), 400);
-    }
+  /* After the layout changes under the triggers (the project grid
+     re-renders): drop the triggers of elements that are gone, and
+     re-measure the rest, which may have moved */
+  refresh() {
+    if (!scrollTriggerReady()) return;
+    ScrollTrigger.getAll().forEach((st) => {
+      if (st.trigger && !st.trigger.isConnected) st.kill();
+    });
+    ScrollTrigger.refresh();
   },
 };
 
 /* ============================================================
-   16. SCAN SWEEP — horizontal light line that sweeps through
-   each section on first scroll-in, reinforcing the HUD "scan" feel.
+   12. SEAMS — cracks of light between the sections
+   Each panel's top hairline becomes a crack, and the crack is
+   the panel's edge: above it, a cover in the colour of the panel
+   above fills down from the straight edge, so the two panels meet
+   along the zigzag. The crack is drawn as light: a warm-white
+   core with red 1 px above and blue 1 px below (styles.css
+   "Seams"). Each seam has its own seed, so it's the
+   same crack on every visit, and it's laid out in CSS px, so its
+   kinks keep their angles at any width (it's rebuilt with the
+   same seed when the width changes). Once, as it scrolls into
+   view, a bright tip runs it across. Reduced motion and LITE
+   leave it at rest, and without this script the hairline stays.
 ============================================================ */
-const scanSweep = {
-  init() {
-    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-
-    // #hero is excluded: a bright line crossing the hole reads as a
-    // scanline over the shadow.
-    document.querySelectorAll('section[id]:not(#hero)').forEach(section => {
-      let swept = false;
-      ScrollTrigger.create({
-        trigger: section,
-        start:   'top 75%',
-        onEnter: () => {
-          if (swept) return;
-          swept = true;
-          this._sweep(section);
-        },
-      });
-    });
-  },
-
-  _sweep(section) {
-    if (document.body.classList.contains('low-perf')) return;
-    const line = document.createElement('div');
-    line.className = 'scan-sweep-line';
-    section.appendChild(line);
-
-    gsap.fromTo(line,
-      { top: '0%',   opacity: 0.7 },
-      { top: '100%', opacity: 0,
-        duration: 1.0,
-        ease: 'power1.inOut',
-        onComplete: () => line.remove(),
-      }
-    );
-  },
-};
-
-/* ============================================================
-   17. HACK-STYLE SCROLL TEXT — side floating labels that appear
-   momentarily at the scroll position as the user passes sections,
-   giving the impression of a system "rendering" the page data.
-============================================================ */
-const hackScroll = {
-  PHRASES: [
-    '> LOADING_ASSET...',
-    '> DECRYPT_SEQUENCE',
-    '> MODULE_ONLINE',
-    '> RENDERING_DATA',
-    '> SYNC_COMPLETE',
-    '> ACCESS_GRANTED',
-    '> INIT_SUBSYSTEM',
-    '> BUFFER_FLUSH',
+const seams = {
+  // One per panel. Directions alternate, and three of the four branch.
+  LIST: [
+    { id: 'about',    seed: 0x51a3, dir:  1, branch: true  },
+    { id: 'skills',   seed: 0x7c21, dir: -1, branch: false },
+    { id: 'projects', seed: 0x2e8f, dir:  1, branch: true  },
+    { id: 'contact',  seed: 0x9b46, dir: -1, branch: true  },
   ],
-  _last: -1,
+  Y0: 8,              // the centre line, px below the section's top edge
+  BAND: 5,            // the main line stays within ±BAND px of it
+  RUN: 0.55,          // s for the front to cross
+  ACCEL: 0.3,         // the share of the run spent getting up to speed
+  TIP: 60,            // px of bright front
+  SETTLE: 0.8,        // s for the line behind the front to settle to rest
+  FADE: 0.15,         // s for the tip to go out at the end
+  BRANCH_PACE: 0.8,   // a branch runs at this share of the front's top speed
+  _list: [],
 
   init() {
-    if (typeof gsap === 'undefined') return;
-
-    let ticking = false;
-    window.addEventListener('scroll', () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        if (Math.random() < 0.3) this._spawnPhrase();
-        ticking = false;
-      });
-    }, { passive: true });
-  },
-
-  _spawnPhrase() {
-    if (document.body.classList.contains('low-perf')) return;
-    // Pick a phrase (not the same as last)
-    let idx;
-    do { idx = randInt(0, this.PHRASES.length - 1); } while (idx === this._last);
-    this._last = idx;
-
-    const el = document.createElement('div');
-    const onLeft = Math.random() < 0.5;
-
-    el.style.cssText = `
-      position: fixed;
-      top: ${randFloat(20, 75)}vh;
-      ${onLeft ? 'left: clamp(8px, 2vw, 32px)' : 'right: clamp(8px, 2vw, 32px)'};
-      font-family: var(--ff-mono, monospace);
-      font-size: 0.58rem;
-      letter-spacing: 0.18em;
-      color: rgba(255,255,255,0.18);
-      pointer-events: none;
-      z-index: 300;
-      opacity: 0;
-      white-space: nowrap;
-      user-select: none;
-    `;
-    el.setAttribute('aria-hidden', 'true');
-    el.textContent = this.PHRASES[idx];
-    document.body.appendChild(el);
-
-    gsap.to(el, {
-      opacity: 1, duration: 0.15,
-      onComplete: () => {
-        gsap.to(el, {
-          opacity: 0, duration: 0.4, delay: 0.6,
-          onComplete: () => el.remove(),
-        });
-      },
+    const still = !scrollTriggerReady() || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const line = window.innerHeight * 0.85;
+    const waiting = [];
+    this.LIST.forEach((cfg) => {
+      const section = document.getElementById(cfg.id);
+      if (!section) return;
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('class', 'seam');
+      svg.setAttribute('aria-hidden', 'true');
+      section.prepend(svg);
+      const seam = { cfg, section, svg, width: 0, lines: [] };
+      this._list.push(seam);
+      this.build(seam);
+      section.classList.add('has-seam');
+      // Reduced motion, no ScrollTrigger, or already on screen: at rest from the start
+      if (still || svg.getBoundingClientRect().top < line) return;
+      svg.classList.add('is-armed');
+      waiting.push(svg);
     });
-  },
-};
+    reveal.when(waiting, 'top 85%', (svg) => this.run(this._list.find((s) => s.svg === svg)));
 
-/* ============================================================
-   18. CLICK RIPPLE — radial burst of ASCII chars + expanding
-   rings on every click, giving a "digital pool ripple" feel.
-============================================================ */
-const clickRipple = {
-  CHARS: '01!@#%^*<>[]{}|~;:,./?',
-
-  init() {
-    document.addEventListener('click', (e) => {
-      // Skip clicks inside form controls to avoid disrupting input
-      if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) return;
-      this._spawn(e.clientX, e.clientY);
-    });
-  },
-
-  _spawn(x, y) {
-    if (document.body.classList.contains('low-perf')) return;
-    const wrap = document.createElement('div');
-    wrap.setAttribute('aria-hidden', 'true');
-    wrap.style.cssText = [
-      'position:fixed',
-      `left:${x}px`,
-      `top:${y}px`,
-      'width:0;height:0',
-      'pointer-events:none',
-      'z-index:9500',
-    ].join(';');
-    document.body.appendChild(wrap);
-
-    // Text characters only — radial burst, no rings
-    const charCount = 14;
-    for (let i = 0; i < charCount; i++) {
-      const ch    = document.createElement('span');
-      ch.textContent = this.CHARS[randInt(0, this.CHARS.length - 1)];
-      const angle = (i / charCount) * Math.PI * 2 + randFloat(-0.2, 0.2);
-      const dist  = randFloat(38, 110);
-      ch.style.cssText = [
-        'position:absolute',
-        `font-family:var(--ff-mono)`,
-        `font-size:${randFloat(10, 15)}px`,
-        `color:rgba(255,255,255,${randFloat(0.3, 0.55).toFixed(2)})`,
-        'top:0;left:0',
-        'transform:translate(-50%,-50%)',
-        'white-space:nowrap',
-        'user-select:none',
-      ].join(';');
-      wrap.appendChild(ch);
-      if (typeof gsap !== 'undefined') {
-        gsap.to(ch, {
-          x:        Math.cos(angle) * dist,
-          y:        Math.sin(angle) * dist,
-          opacity:  0,
-          scale:    randFloat(0.6, 1.3),
-          duration: randFloat(0.5, 0.95),
-          delay:    randFloat(0, 0.06),
-          ease:     'power2.out',
-        });
-      }
+    // Same seed, new width: rebuild. Heights change all the time (the project
+    // grid); build() ignores anything but the width.
+    if ('ResizeObserver' in window) {
+      const ro = new ResizeObserver((entries) => entries.forEach((e) => {
+        const seam = this._list.find((s) => s.section === e.target);
+        if (seam) this.build(seam);
+      }));
+      this._list.forEach((s) => ro.observe(s.section));
     }
-    setTimeout(() => wrap.remove(), 1100);
   },
-};
 
-/* ============================================================
-   19. HOVER GLITCH — brief character scramble on hover over
-   interactive text elements, giving dynamic "hacked" feedback.
-============================================================ */
-const hoverGlitch = {
-  CHARS: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@!',
-
-  init() {
-    if (window.matchMedia('(hover: none)').matches) return;
-
-    const sel = '.skill-name, .project-title, .nav-links a, .timeline-title';
-    document.addEventListener('mouseover', (e) => {
-      const el = e.target.closest(sel);
-      if (!el || el.dataset.glitching) return;
-      this._glitch(el);
+  /* Lays the crack out for the section's current width */
+  build(seam) {
+    const W = Math.round(seam.section.clientWidth);
+    if (!W || W === seam.width) return;
+    seam.width = W;
+    const rnd = mulberry32(seam.cfg.seed);
+    const lines = [{ pts: this.mainLine(W, rnd) }];
+    // A branch ends at least 16 px above the section's content. The top
+    // padding is clamp(80px, 10vw, 140px), so this mostly bites on narrow
+    // screens.
+    const maxDrop = parseFloat(getComputedStyle(seam.section).paddingTop) - this.Y0 - 16;
+    const branch = seam.cfg.branch && this.branchLine(lines[0].pts, W, rnd, maxDrop);
+    if (branch) lines.push(branch);
+    lines.forEach((l) => {
+      // Right-to-left seams are mirrored, so their path (and front) starts at the right
+      l.pts = l.pts.map((p) => ({
+        x: +(seam.cfg.dir < 0 ? W - p.x : p.x).toFixed(1),
+        y: +(this.Y0 + p.y).toFixed(1),
+      }));
+      l.len = this.length(l.pts);
     });
+    if (branch) branch.rootAt = this.length(lines[0].pts.slice(0, branch.root + 1)) / lines[0].len;
+    const H = Math.ceil(Math.max(...lines.flatMap((l) => l.pts.map((p) => p.y))) + 4);
+
+    const d = (pts) => 'M' + pts.map((p) => `${p.x} ${p.y}`).join('L');
+    const layers = (l) =>
+      `<path class="seam-fr" d="${d(l.pts)}" transform="translate(0 -1)"/>` +
+      `<path class="seam-fb" d="${d(l.pts)}" transform="translate(0 1)"/>` +
+      `<path class="seam-core" d="${d(l.pts)}"/>`;
+    // The cover: the panel above, from the straight top edge down to the main line
+    const main = lines[0].pts, end = main[main.length - 1];
+    const cover = `<path class="seam-cover" d="${d(main)}L${end.x} 0L${main[0].x} 0Z"/>`;
+    if (seam.svg.getAnimations) seam.svg.getAnimations({ subtree: true }).forEach((a) => a.cancel());
+    seam.svg.setAttribute('width', W);
+    seam.svg.setAttribute('height', H);
+    seam.svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    // Under the lines, the cover. Then each line: the part at rest, and its
+    // tip, a TIP px dash parked at the far end.
+    seam.svg.innerHTML = cover + lines.map((l) =>
+      `<g class="seam-rest">${layers(l)}</g>` +
+      `<g class="seam-tip" style="stroke-dasharray:${this.TIP} ${l.len + this.TIP};stroke-dashoffset:${this.TIP - l.len}">${layers(l)}</g>`
+    ).join('');
+    const rests = seam.svg.querySelectorAll('.seam-rest'), tips = seam.svg.querySelectorAll('.seam-tip');
+    lines.forEach((l, i) => { l.rest = rests[i]; l.tip = tips[i]; });
+    seam.lines = lines;
   },
 
-  _glitch(el) {
-    if (document.body.classList.contains('low-perf')) return;
-    const original = el.textContent.trim();
-    if (!original || original.length > 45) return;
-
-    el.dataset.glitching = '1';
-    let frame = 0;
-    const maxFrames = 7;
-    const iv = setInterval(() => {
-      frame++;
-      el.textContent = original.split('').map((ch, i) => {
-        if (ch === ' ' || ch === '/' || ch === '.') return ch;
-        return frame / maxFrames > i / original.length
-          ? ch : this.CHARS[randInt(0, this.CHARS.length - 1)];
-      }).join('');
-      if (frame >= maxFrames) {
-        clearInterval(iv);
-        el.textContent = original;
-        delete el.dataset.glitching;
+  /* The main line: straight runs of 80–200 px that kink 4–10° at every
+     joint, zigzagging within ±BAND px of the centre line. Each run ends
+     30–100% of the way to the far side of the band, which always leaves
+     room for the next kink (a run ending mid-band on a shallow heading
+     wouldn't). Left to right, x from 0 to W, y from the centre line. */
+  mainLine(W, rnd) {
+    const deg = Math.PI / 180, B = this.BAND;
+    const side = () => B * (0.3 + rnd() * 0.7);
+    const pts = [{ x: 0, y: (rnd() < 0.5 ? -1 : 1) * side() }];
+    let h = null;                                   // heading of the last run
+    while (pts[pts.length - 1].x < W) {
+      const { x, y } = pts[pts.length - 1];
+      let L = 80, y2 = y > 0 ? -B : B;              // (never needed in testing)
+      for (let t = 0; t < 40; t++) {
+        const l = 80 + rnd() * 120, e = (y > 0 ? -1 : 1) * side();
+        const turn = h === null ? 5 * deg : Math.abs(Math.atan2(e - y, l) - h);
+        if (turn >= 4 * deg && turn <= 10 * deg) { L = l; y2 = e; break; }
       }
-    }, 38);
+      const run = Math.min(L, W - x);               // the last run stops at the edge
+      h = Math.atan2(y2 - y, L);
+      pts.push({ x: x + run, y: y + (y2 - y) * run / L });
+    }
+    return pts;
+  },
+
+  /* A branch off a kink 20–80% of the way across: 40–120 px long, leaving
+     25–55° below the line in the direction the crack runs, with a small
+     kink of its own. It's shortened, keeping its angles, so it ends no more
+     than maxDrop px below the centre line. Null if no kink is in range, or
+     if that would leave it shorter than 40 px. */
+  branchLine(main, W, rnd, maxDrop = Infinity) {
+    const deg = Math.PI / 180;
+    const roots = [];
+    for (let i = 1; i < main.length - 1; i++) {
+      if (main[i].x >= 0.2 * W && main[i].x <= 0.8 * W) roots.push(i);
+    }
+    if (!roots.length) return null;
+    const root = roots[Math.floor(rnd() * roots.length)];
+    let len = 40 + rnd() * 80;
+    const a1 = (25 + rnd() * 30) * deg;
+    const a2 = a1 + (rnd() < 0.5 ? -1 : 1) * (4 + rnd() * 6) * deg;
+    const f = 0.4 + rnd() * 0.2;                    // where it kinks, as a share of its length
+    const p0 = main[root];
+    len = Math.min(len, (maxDrop - p0.y) / (f * Math.sin(a1) + (1 - f) * Math.sin(a2)));
+    if (len < 40) return null;
+    const p1 = { x: p0.x + f * len * Math.cos(a1), y: p0.y + f * len * Math.sin(a1) };
+    const p2 = { x: p1.x + (1 - f) * len * Math.cos(a2), y: p1.y + (1 - f) * len * Math.sin(a2) };
+    return { pts: [p0, p1, p2], root };
+  },
+
+  length(pts) {
+    let s = 0;
+    for (let i = 1; i < pts.length; i++) s += Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y);
+    return s;
+  },
+
+  /* The front gets up to speed at a steady rate over the first ACCEL of
+     the run, then holds its top speed, as the hero's cracks do. Returns
+     the share of the run at which it has covered share f of the line. */
+  frontAt(f) {
+    const a = this.ACCEL;
+    return f <= a / (2 - a) ? Math.sqrt(f * a * (2 - a)) : (f * (2 - a) + a) / 2;
+  },
+
+  /* Runs a seam once: the front crosses in RUN s with a bright tip riding
+     it, and the line behind settles to rest over SETTLE s. A branch starts
+     as the front passes its root. In LITE it goes straight to rest. */
+  run(seam) {
+    if (!seam) return;
+    seam.svg.classList.remove('is-armed');
+    if (document.body.classList.contains('low-perf')) return;
+    const [main, branch] = seam.lines;
+    const a = this.ACCEL;
+    // Speeding up, the share drawn is (share of run / a)² × a / (2 − a):
+    // exactly this bezier over the first keyframe. Then top speed, linear.
+    this.draw(main, 0, this.RUN, [
+      { at: 0, f: 0, easing: 'cubic-bezier(0.333, 0, 0.667, 0.333)' },
+      { at: a, f: a / (2 - a) },
+      { at: 1, f: 1 },
+    ]);
+    if (branch) {
+      const top = main.len / (this.RUN * (1 - a / 2));        // px/s
+      this.draw(branch, this.frontAt(branch.rootAt) * this.RUN, branch.len / (this.BRANCH_PACE * top), [
+        { at: 0, f: 0 },
+        { at: 1, f: 1 },
+      ]);
+    }
+  },
+
+  /* One line's run, starting `delay` s in and lasting `dur` s. `curve`
+     gives the share of the line drawn (f) at shares of the run (at). Every
+     animation has backwards fill only, so when they're done the line is
+     back to its styles at rest and nothing is left running. */
+  draw(line, delay, dur, curve) {
+    const L = line.len, T = this.TIP, ms = (s) => s * 1000;
+    const frames = (value) => curve.map((k) => ({ offset: k.at, easing: k.easing || 'linear', ...value(k.f) }));
+    const timing = { delay: ms(delay), duration: ms(dur), fill: 'backwards' };
+    // Drawn up to the front
+    line.rest.animate(frames((f) => ({ strokeDasharray: `${L} ${L}`, strokeDashoffset: `${L * (1 - f)}` })), timing);
+    // The tip ends at the front
+    line.tip.animate(frames((f) => ({ strokeDashoffset: `${T - L * f}` })), timing);
+    // Lit as it's drawn, then settling to rest
+    const rest = getComputedStyle(line.rest).opacity;
+    const ease = getComputedStyle(document.documentElement).getPropertyValue('--ease').trim() || 'ease-out';
+    line.rest.animate([{ opacity: 1 }, { opacity: rest }],
+      { delay: ms(delay), duration: ms(dur + this.SETTLE), easing: ease, fill: 'backwards' });
+    // The tip goes out once the front is home
+    line.tip.animate([{ opacity: 1 }, { opacity: 1, offset: dur / (dur + this.FADE) }, { opacity: 0 }],
+      { delay: ms(delay), duration: ms(dur + this.FADE), fill: 'backwards' });
   },
 };
 
 /* ============================================================
-   20. LOW PERFORMANCE MODE
-   Pauses/hides all decorative effects. Nav, content, projects,
-   contact form, and all page content stay fully functional.
+   13. LOW PERFORMANCE MODE
+   Pauses the hero and hides decoration (CSS: body.low-perf).
+   Every accent below the hero goes to rest. Content, nav,
+   projects and the contact form stay fully functional.
 ============================================================ */
 const lowPerf = {
   active: false,
@@ -2674,22 +2145,13 @@ const lowPerf = {
     document.body.classList.toggle('low-perf', this.active);
     const btn = document.getElementById('low-perf-btn');
     if (btn) btn.setAttribute('aria-pressed', String(this.active));
-    if (this.active) {
-      hero.pause();
-      cursor._enabled = false;
-      glitchEffects.pause();
-    } else {
-      hero.resume();
-      cursor.ringPos.x = cursor.target.x;
-      cursor.ringPos.y = cursor.target.y;
-      cursor._enabled = true;
-      glitchEffects.resume();
-    }
+    if (this.active) hero.pause();
+    else hero.resume();
   },
 };
 
 /* ============================================================
-   21. TAB VISIBILITY HANDLER — Dynamic title & icon
+   14. TAB VISIBILITY HANDLER — Dynamic title & icon
 ============================================================ */
 const pageIdle = {
   originalTitle: document.title,
@@ -2714,7 +2176,7 @@ const pageIdle = {
 };
 
 /* ============================================================
-   14. BOOT SEQUENCE — wait for GSAP, Three.js and the hero, then start
+   15. BOOT SEQUENCE — wait for GSAP, Three.js and the hero, then start
 ============================================================ */
 function waitForLibraries(callback, maxWait = 5000) {
   const start = Date.now();
@@ -2747,9 +2209,6 @@ function boot() {
   // its first real frame
   hero.init();
 
-  // Custom cursor (dot + ring)
-  cursor.init();
-
   // Navigation
   nav.init();
 
@@ -2759,29 +2218,12 @@ function boot() {
   projectModal.init();
   contact.init();
 
-  // Scroll animations (ScrollTrigger)
-  scrollAnimations.init();
+  // Reveals: everything marked data-reveal rises in once, as it scrolls
+  // into view (after the cards above exist)
+  reveal.init();
 
-  // Ambient full-page scanline glitch flicker
-  glitchEffects.init();
-
-  // Side HUD labels that track active section
-  sideLabels.init();
-
-  // ASCII flash overlay on first section entry
-  sectionFlash.init();
-
-  // Scan sweep line through each section
-  scanSweep.init();
-
-  // Floating "system" phrases on scroll
-  hackScroll.init();
-
-  // Click ripple — digital pool ripple of ASCII chars on every click
-  clickRipple.init();
-
-  // Hover glitch — brief char scramble on hover over interactive elements
-  hoverGlitch.init();
+  // Seams: cracks of light between the sections, run once as they come in
+  seams.init();
 
   // Page idle — dynamic title and favicon on blur
   pageIdle.init();

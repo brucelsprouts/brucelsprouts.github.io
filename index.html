@@ -75,6 +75,12 @@
       style.href = 'css/styles.css?v=' + encodeURIComponent(window.__assetVersion || Date.now().toString());
     })();
   </script>
+  <!-- Without JavaScript, show the hero copy the script would fade in -->
+  <noscript>
+    <style>
+      html .hero-eyebrow, html .hero-name, html .hero-tagline, html .hero-cta { opacity: 1; }
+    </style>
+  </noscript>
 </head>
 <body>
 
@@ -165,12 +171,9 @@
            shader canvas and produce moiré across the accretion disk. -->
       <canvas id="hero-canvas" aria-hidden="true"></canvas>
 
-      <!-- Cursor glow follower -->
-      <div id="cursor-glow" aria-hidden="true"></div>
-
       <div class="hero-content">
-        <p class="hero-eyebrow glitch-text" data-text="// brucelsprouts.com">// brucelsprouts.com</p>
-        <h1 class="hero-name glitch-text" data-text="Bruce Lin">Bruce Lin</h1>
+        <p class="hero-eyebrow">// brucelsprouts.com</p>
+        <h1 class="hero-name">Bruce Lin</h1>
         <p class="hero-tagline">Developer &amp; CS Student at Western</p>
         <div class="hero-cta">
           <a href="#projects" class="btn-primary">View Projects</a>
@@ -194,7 +197,7 @@
     <!-- ── ABOUT ── -->
     <section id="about">
       <div class="section-inner">
-        <div class="section-header">
+        <div class="section-header" data-reveal>
           <span class="section-tag">// MODULE_01</span>
           <h2 class="section-title">About</h2>
           <p class="section-sub">A bit about who I am.</p>
@@ -226,7 +229,7 @@
     <!-- ── SKILLS ── -->
     <section id="skills">
       <div class="section-inner">
-        <div class="section-header">
+        <div class="section-header" data-reveal>
           <span class="section-tag">// MODULE_02</span>
           <h2 class="section-title">Skills &amp; Stack</h2>
           <p class="section-sub">Technologies I work with.</p>
@@ -241,7 +244,7 @@
     <!-- ── PROJECTS ── -->
     <section id="projects">
       <div class="section-inner">
-        <div class="section-header">
+        <div class="section-header" data-reveal>
           <span class="section-tag">// MODULE_03</span>
           <h2 class="section-title">Projects</h2>
           <p class="section-sub">Selected works &mdash; filtered and searchable.</p>
@@ -280,13 +283,13 @@
     <!-- ── CONTACT ── -->
     <section id="contact">
       <div class="section-inner">
-        <div class="section-header">
+        <div class="section-header" data-reveal>
           <span class="section-tag">// MODULE_04</span>
           <h2 class="section-title">Connect</h2>
           <p class="section-sub">Open to opportunities, collaborations, and conversations.</p>
         </div>
 
-        <div class="contact-layout">
+        <div class="contact-layout" data-reveal>
           <!-- Contact form -->
           <form class="contact-form" id="contact-form" novalidate>
             <div class="form-row">
@@ -318,19 +321,19 @@
           <div class="contact-links">
             <h3 class="contact-links-title">Find me at</h3>
             <ul class="social-list">
-              <li>
+              <li data-reveal>
                 <a href="https://github.com/brucelsprouts" target="_blank" rel="noopener noreferrer" class="social-link">
                   <span class="social-icon">&#60;/&#62;</span>
                   <span>GitHub</span>
                 </a>
               </li>
-              <li>
+              <li data-reveal>
                 <a href="https://www.linkedin.com/in/bruce-lin-6284b323b/" target="_blank" rel="noopener noreferrer" class="social-link">
                   <span class="social-icon">in</span>
                   <span>LinkedIn</span>
                 </a>
               </li>
-              <li>
+              <li data-reveal>
                 <a href="mailto:email@brucelsprouts.com" class="social-link">
                   <span class="social-icon">&#9993;</span>
                   <span>Email</span>
@@ -370,10 +373,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Custom cursor: dot (immediate) + ring (lagged) + ambient glow -->
-  <div id="cursor-dot"  aria-hidden="true"></div>
-  <div id="cursor-ring" aria-hidden="true"></div>
 
   <!-- Hero renderer, then the main script — injected in order with automatic
        cache-busting to prevent stale project data -->
