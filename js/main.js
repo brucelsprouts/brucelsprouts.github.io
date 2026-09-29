@@ -326,6 +326,25 @@ const DATA = {
       ],
       contain: true,
     },
+    {
+      id: 20,
+      title: 'Nocturne',
+      category: 'coding',
+      date: '2026-09-29',
+      desc: 'A touch typing trainer that isn\'t a game. Every keystroke is timed, and running scores for every key, letter pair and finger decide what comes next: keys unlock one at a time, then practice goes to the pairs that cost the most time in everyday English. Typing works like a real text box, so a typo stays red until you backspace it. Finger colours, hints and a read-ahead cue fade as each skill gets solid and come back only if you slip. On Home the moon in a solar eclipse is a keyboard key; at totality it becomes a raymarched black hole, the corona drains into an accretion disk, and starting practice dives into the horizon. Key sounds are synthesized in the browser. Progress saves locally first and syncs to a self-hosted Supabase on an Oracle server. Direction, design, and coding by me — built with AI assistance. Media order: Home, the eclipse at totality during the intro, the keyboard map, a focus drill.',
+      stack: ['React', 'TypeScript', 'React Three Fiber', 'GLSL', 'Supabase', 'Oracle Cloud'],
+      youtube: null,
+      github: null,
+      demo: 'https://nocturne.brucelsprouts.com',
+      thumb: 'assets/images/projects/nocturne/nocturne-1.png',
+      images: [
+        'assets/images/projects/nocturne/nocturne-1.png',
+        'assets/images/projects/nocturne/nocturne-2.png',
+        'assets/images/projects/nocturne/nocturne-3.png',
+        'assets/images/projects/nocturne/nocturne-4.png',
+      ],
+      contain: true,
+    },
   ],
 };
 
