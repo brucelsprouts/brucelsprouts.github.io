@@ -345,6 +345,26 @@ const DATA = {
       ],
       contain: true,
     },
+    {
+      id: 21,
+      title: 'Brutalism II',
+      category: 'blender',
+      date: '2026-10-01',
+      desc: 'A second go at brutalism, this time recreating a photo of a concrete building as closely as I could so the render lines up with the original when you flip between them. The concrete, stairs, vents and metal roof are all procedural, no imported assets. Made with help from Claude Code. Then a short found footage clip in the same scene with something standing in the background. Media order: render, original reference photo, found footage clip.',
+      stack: ['Blender', 'Python', 'Video Post', 'Claude Code'],
+      youtube: null,
+      github: null,
+      demo: null,
+      thumb: 'assets/images/projects/brutalism-2/brutalism-2-1.png',
+      media: [
+        { type: 'image', src: 'assets/images/projects/brutalism-2/brutalism-2-1.png' },
+        { type: 'image', src: 'assets/images/projects/brutalism-2/brutalism-2-2.png' },
+        { type: 'video', src: 'assets/videos/brutalism-2/brutalism-2-3.mp4' },
+      ],
+      images: ['assets/images/projects/brutalism-2/brutalism-2-1.png', 'assets/images/projects/brutalism-2/brutalism-2-2.png'],
+      videos: ['assets/videos/brutalism-2/brutalism-2-3.mp4'],
+      contain: true,
+    },
   ],
 };
 
