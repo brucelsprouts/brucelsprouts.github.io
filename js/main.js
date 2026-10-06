@@ -93,6 +93,7 @@ const DATA = {
     {
       id: 5,
       title: 'XPWaste',
+      hidden: true,
       category: 'coding',
       date: '2026-03-10',
       desc: 'Focus timer made for Old School RuneScape players who want to stay on task while grinding. Tracks study sessions, logs history, plays custom notification sounds, and ships as a standalone Windows exe. OSRS and normal mode themes included.',
@@ -170,6 +171,7 @@ const DATA = {
     {
       id: 10,
       title: 'ClipStack',
+      hidden: true,
       category: 'coding',
       date: '2026-04-03',
       desc: 'A desktop clipboard manager built with Tauri. Supports pinning clips, image previews, searchable history, a global shortcut, and light/dark themes.',
@@ -184,6 +186,7 @@ const DATA = {
     {
       id: 11,
       title: 'Flora Discord Bot',
+      hidden: true,
       category: 'coding',
       date: '2026-04-14',
       desc: 'Simple Discord bot for friend servers with welcome/goodbye helper messages and a reaction role panel that assigns one color role at a time.',
@@ -202,6 +205,7 @@ const DATA = {
     {
       id: 12,
       title: 'huh?',
+      hidden: true,
       category: 'coding',
       date: '2026-05-17',
       desc: 'Chrome extension and web app that explains dense text in plain English using Gemini. Highlight anything on the web, right-click, and get an ELI5 breakdown — hit "simpler" until it clicks. Supports multiple draggable cards, local history, and dark mode. No backend, no accounts — your API key stays in your browser.',
@@ -363,6 +367,23 @@ const DATA = {
       ],
       images: ['assets/images/projects/brutalism-2/brutalism-2-1.png', 'assets/images/projects/brutalism-2/brutalism-2-2.png'],
       videos: ['assets/videos/brutalism-2/brutalism-2-3.mp4'],
+      contain: true,
+    },
+    {
+      id: 22,
+      title: 'Wallpaper Rig',
+      category: 'coding',
+      date: '2026-10-05',
+      desc: 'I wanted to make a Steins;Gate wallpaper, then realised Wallpaper Engine’s character rig only works on scene wallpapers, not web ones. So I built my own: a WebGL rig that sways Makise’s hair, swings her arms and makes her blink and breathe from one flat picture, plus an editor to paint how each part moves. Around her are turning clockwork, living ink and a drafting drawing that grows like a crystal, all drawn in code. Unofficial fan work. Direction, design, and coding by me. Media order: the wallpaper, the rig editor.',
+      stack: ['JavaScript', 'Canvas', 'WebGL', 'Wallpaper Engine', 'Python', 'Claude Code'],
+      youtube: null,
+      github: 'https://github.com/brucelsprouts/steinsgatewallpaper',
+      demo: null,
+      thumb: 'assets/images/projects/divergence-meter/divergence-meter-1.jpg',
+      images: [
+        'assets/images/projects/divergence-meter/divergence-meter-1.jpg',
+        'assets/images/projects/divergence-meter/divergence-meter-2.png',
+      ],
       contain: true,
     },
   ],
@@ -1321,7 +1342,7 @@ const projects = {
   _rendered: false,
 
   init() {
-    this.all = DATA.projects;
+    this.all = DATA.projects.filter(p => !p.hidden);
     this.bindFilter();
     this.bindSort();
     this.bindSearch();
@@ -2296,7 +2317,7 @@ function boot() {
     const hash = location.hash;
     if (!hash.startsWith('#project-')) return;
     const slug = hash.slice('#project-'.length);
-    const match = DATA.projects.find(p => projectSlug(p.title) === slug);
+    const match = DATA.projects.find(p => !p.hidden && projectSlug(p.title) === slug);
     if (match) projectModal.open(match);
   })();
 }
