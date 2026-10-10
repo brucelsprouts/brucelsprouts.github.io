@@ -15,23 +15,43 @@
 /* ============================================================
    1. SITE DATA  — edit this to personalise the portfolio
 ============================================================ */
+const SI = 'https://cdn.jsdelivr.net/npm/simple-icons@13.0.0/icons/';
+
 const DATA = {
+  // Rendered in this group order; keep in sync with the resume's skills rows.
   skills: [
-    // Web / Front-end
-    { name: 'HTML',          icon: 'assets/icons/html5.svg',                    desc: 'Solid foundation in semantic markup. Built multiple personal projects and this portfolio from scratch.' },
-    { name: 'CSS',           icon: 'assets/icons/css.svg',                     desc: 'Comfortable with layouts, animations, custom properties, and responsive design — no frameworks needed.' },
-    { name: 'JavaScript',    icon: 'assets/icons/javascript.svg',              desc: 'Front-end scripting: DOM manipulation, fetch/async, canvas, and Three.js for interactive experiences.' },
     // Languages
-    { name: 'Java',          icon: 'assets/icons/java-coffee-cup-logo.png',    desc: 'Primary language for CS coursework at Western — OOP, data structures, algorithms, and system design.' },
-    { name: 'Python',        icon: 'assets/icons/python.svg',                  desc: 'Used in university projects and personal scripts; comfortable with core syntax and standard libraries.' },
-    // Systems
-    { name: 'Git',           icon: 'assets/icons/git.svg',                     desc: 'Daily driver for version control — branching, committing, and managing personal projects and repositories on GitHub.' },
-    { name: 'Unix / Linux',  icon: 'assets/icons/linux.svg',                   desc: 'Comfortable in the terminal: shell scripting, file system navigation, and course lab environments.' },
-    { name: 'Claude Code',   icon: 'assets/icons/claude.svg',                  desc: 'Proficient at creating projects using Claude Code, from planning and structure to implementation and iteration.' },
+    { group: 'Languages', name: 'TypeScript',    icon: `${SI}typescript.svg`,                  desc: 'Default language for recent work: Deckira, Tempo, Deflect, and brucekit.' },
+    { group: 'Languages', name: 'JavaScript',    icon: 'assets/icons/javascript.svg',          desc: 'DOM, canvas, and Three.js work, including this portfolio, built without frameworks.' },
+    { group: 'Languages', name: 'Python',        icon: 'assets/icons/python.svg',              desc: 'University projects, scripts, and small desktop tools.' },
+    { group: 'Languages', name: 'Java',          icon: 'assets/icons/java-coffee-cup-logo.png', desc: 'Main language for CS coursework at Western: OOP, data structures, and algorithms.' },
+    { group: 'Languages', name: 'Rust',          icon: `${SI}rust.svg`,                        desc: 'Tauri back ends for desktop apps like brucekit.' },
+    { group: 'Languages', name: 'SQL',           icon: `${SI}postgresql.svg`,                  desc: 'Postgres schemas and queries for Supabase-backed apps like Tempo and Deckira.' },
+    { group: 'Languages', name: 'PHP',           icon: `${SI}php.svg`,                         desc: 'Server-side scripting in earlier web projects.' },
+    { group: 'Languages', name: 'HTML',          icon: 'assets/icons/html5.svg',               desc: 'Semantic, accessible markup; this portfolio is hand-written HTML.' },
+    { group: 'Languages', name: 'CSS',           icon: 'assets/icons/css.svg',                 desc: 'Layout, animation, custom properties, and responsive design, with or without frameworks.' },
+    // Frameworks
+    { group: 'Frameworks', name: 'React',        icon: `${SI}react.svg`,                       desc: 'Main UI library: Deckira, Tempo, TSE Camp, and brucekit.' },
+    { group: 'Frameworks', name: 'Next.js',      icon: `${SI}nextdotjs.svg`,                   desc: 'The app framework behind Tempo.' },
+    { group: 'Frameworks', name: 'React Native', icon: `${SI}expo.svg`,                        desc: 'Deckira’s mobile app, built with Expo.' },
+    { group: 'Frameworks', name: 'Tauri',        icon: `${SI}tauri.svg`,                       desc: 'Lightweight desktop apps with a Rust core: Deckira desktop and brucekit.' },
+    { group: 'Frameworks', name: 'Vite',         icon: `${SI}vite.svg`,                        desc: 'Build tool for TSE Camp, Deflect, and other React and TypeScript projects.' },
+    { group: 'Frameworks', name: 'Tailwind CSS', icon: `${SI}tailwindcss.svg`,                 desc: 'Utility-first styling for TSE Camp and Tempo.' },
+    { group: 'Frameworks', name: 'Three.js',     icon: `${SI}threedotjs.svg`,                  desc: 'WebGL scenes, including the black hole at the top of this page.' },
+    { group: 'Frameworks', name: 'GSAP',         icon: `${SI}greensock.svg`,                   desc: 'Scroll and reveal animation on this portfolio.' },
+    // Tools & Platforms
+    { group: 'Tools & Platforms', name: 'Git',          icon: 'assets/icons/git.svg',          desc: 'Daily version control: branching, commits, and every project on GitHub.' },
+    { group: 'Tools & Platforms', name: 'Supabase',     icon: `${SI}supabase.svg`,             desc: 'Postgres, auth, and edge functions for Tempo and Deckira.' },
+    { group: 'Tools & Platforms', name: 'Node.js',      icon: `${SI}nodedotjs.svg`,            desc: 'Scripts, build tooling, and small servers.' },
+    { group: 'Tools & Platforms', name: 'Vercel',       icon: `${SI}vercel.svg`,               desc: 'Deploys for TSE Camp and other web projects.' },
+    { group: 'Tools & Platforms', name: 'Oracle Cloud', icon: `${SI}oracle.svg`,               desc: 'Hosting for always-on bots and services.' },
+    { group: 'Tools & Platforms', name: 'Unix / Linux', icon: 'assets/icons/linux.svg',        desc: 'At home in the terminal: shell scripting and course lab environments.' },
+    { group: 'Tools & Platforms', name: 'Claude Code',  icon: 'assets/icons/claude.svg',       desc: 'Planning, building, and iterating on projects with Claude Code.' },
     // Creative
-    { name: 'Blender',       icon: 'assets/icons/blender.svg',                 desc: 'Just getting started — learning 3D modelling, lighting, and rendering. Still early but enjoying the process.' },
-    { name: 'After Effects', icon: 'assets/icons/aftereffects.svg',            desc: 'Used professionally during a video editing internship at AMG. Motion graphics, cuts, and transitions.' },
-    { name: 'Photoshop',     icon: 'assets/icons/photoshop.svg',               desc: 'Image editing, compositing, and asset creation for web and creative projects.' },
+    { group: 'Creative', name: 'Blender',        icon: 'assets/icons/blender.svg',             desc: '3D modelling, lighting, and rendering for personal pieces.' },
+    { group: 'Creative', name: 'After Effects',  icon: 'assets/icons/aftereffects.svg',        desc: 'Motion graphics and compositing for client work at AMG.' },
+    { group: 'Creative', name: 'Premiere Pro',   icon: `${SI}adobepremierepro.svg`,            desc: 'Cutting and delivering client video at AMG.' },
+    { group: 'Creative', name: 'Photoshop',      icon: 'assets/icons/photoshop.svg',           desc: 'Image editing, compositing, and assets for web and creative projects.' },
   ],
 
   projects: [
@@ -262,6 +282,7 @@ const DATA = {
     {
       id: 16,
       title: 'TSE Camp',
+      featured: 2,
       category: 'coding',
       date: '2026-08-14',
       desc: 'Logo, design, and build for Toronto STEM Exploration Camp, a free week-long STEM camp for youth aged 8 to 13 in North York, funded by the Government of Canada and run with VWAT Family Services. It had one job: tell a parent what the camp was, who it was for, and how to register, on a phone, in under a minute. Registration ran through the site, no backend, nothing to go down on a bad connection. All 30 spots filled. I also facilitated during the week, teaching and running experiments with the kids. Media order: landing page, disciplines, daily schedule.',
@@ -297,6 +318,7 @@ const DATA = {
     {
       id: 18,
       title: 'Tempo',
+      featured: 3,
       category: 'coding',
       date: '2026-09-20',
       desc: 'A calendar that doesn\'t paginate. Months are alternating bands and a label in the gutter instead of a view you navigate to, so a year is one unbroken scroll of week rows. A recurring event is one stored row expanded at render time, so a birthday spanning eighty years is one row, not eighty. Because expansion is per occurrence, that row renders “Wedding — 12th anniversary” this year and “13th” the next. Monochrome and hairline-ruled, so category colour is the only thing colour means. One account, no sign-up, no tenancy. Media order: the continuous scroll, the entry editor, the list view on mobile.',
@@ -385,6 +407,22 @@ const DATA = {
         'assets/images/projects/divergence-meter/divergence-meter-2.png',
       ],
       contain: true,
+    },
+    {
+      // PLACEHOLDER: swap in the real description, date, site link and media
+      // (assets/images/projects/deckira/) once Deckira is ready to announce.
+      id: 23,
+      title: 'Deckira',
+      featured: 1,
+      category: 'coding',
+      date: '2026-10-10',
+      desc: 'Placeholder. A spaced-repetition flashcard app for students, co-developed with a partner and coming to the App Store. One shared TypeScript core runs the web app, a Tauri desktop client, and an Expo mobile app. I built the front end across all three and work on the Supabase back end. Full write-up, screenshots, and link coming soon.',
+      stack: ['TypeScript', 'React', 'React Native', 'Tauri', 'Supabase'],
+      youtube: null,
+      github: null,
+      demo: null,
+      thumb: null,
+      images: [],
     },
   ],
 };
@@ -1309,8 +1347,16 @@ const skills = {
     const grid = document.getElementById('skills-grid');
     if (!grid) return;
 
-    // Populate skill cards; they rise in with the page (reveal)
+    // One labelled grid per group, in data order; cards rise in with the page (reveal)
+    const groups = new Map();
     DATA.skills.forEach(skill => {
+      if (!groups.has(skill.group)) {
+        const wrap = document.createElement('div');
+        wrap.className = 'skill-group';
+        wrap.innerHTML = `<h3 class="skill-group-title monospace">${skill.group}</h3><div class="skills-grid"></div>`;
+        grid.appendChild(wrap);
+        groups.set(skill.group, wrap.querySelector('.skills-grid'));
+      }
       const card = document.createElement('div');
       card.className = 'skill-card';
       card.setAttribute('data-reveal', '');
@@ -1326,7 +1372,7 @@ const skills = {
       const fb  = card.querySelector('.skill-icon-fb');
       img.addEventListener('load',  () => { fb.style.display = 'none'; });
       img.addEventListener('error', () => { img.style.display = 'none'; fb.style.display = 'block'; });
-      grid.appendChild(card);
+      groups.get(skill.group).appendChild(card);
     });
   },
 };
@@ -1343,10 +1389,25 @@ const projects = {
 
   init() {
     this.all = DATA.projects.filter(p => !p.hidden);
+    this.renderFeatured();
     this.bindFilter();
     this.bindSort();
     this.bindSearch();
     this.filter();
+  },
+
+  // Rendered once, in `featured` order; filters and sorts don't touch it
+  renderFeatured() {
+    const grid = document.getElementById('featured-grid');
+    if (!grid) return;
+    this.all
+      .filter(p => p.featured)
+      .sort((a, b) => a.featured - b.featured)
+      .forEach(project => {
+        const card = this.buildCard(project);
+        card.setAttribute('data-reveal', '');
+        grid.appendChild(card);
+      });
   },
 
   renderAll(list) {
@@ -1363,7 +1424,10 @@ const projects = {
     // Update result count
     const countEl = document.getElementById('project-result-count');
     if (countEl) {
-      const total = this.all.length;
+      // Out of what the list can show: featured only join it during a search
+      const total = this.searchQuery.trim()
+        ? this.all.length
+        : this.all.filter(p => !p.featured).length;
       countEl.textContent = list.length === total
         ? `${total} projects`
         : `${list.length} / ${total}`;
@@ -1383,7 +1447,7 @@ const projects = {
 
   buildCard(project) {
     const card = document.createElement('article');
-    card.className = 'project-card';
+    card.className = project.featured ? 'project-card project-card--featured' : 'project-card';
     card.dataset.category = project.category;
     card.dataset.title    = project.title.toLowerCase();
     card.dataset.desc     = project.desc.toLowerCase();
@@ -1428,8 +1492,7 @@ const projects = {
       </div>
       <div class="project-body">
         <p class="project-meta monospace">
-          <span class="project-category">${project.category}</span>
-          <span class="project-date">${dateLabel}</span>
+          <span class="project-category">${project.category}</span>          <span class="project-date">${dateLabel}</span>
         </p>
         <h3 class="project-title">${project.title}</h3>
         <p class="project-desc">${project.desc}</p>
@@ -1477,6 +1540,10 @@ const projects = {
       list = list.filter(p => p.category === this.currentFilter);
     }
 
+    // Featured projects have their own block above, so the list leaves them
+    // out, except when searching, so a search still finds everything
+    if (!this.searchQuery.trim()) list = list.filter(p => !p.featured);
+
     if (this.searchQuery.trim()) {
       const q = this.searchQuery.toLowerCase();
       list = list.filter(p =>
@@ -1492,6 +1559,7 @@ const projects = {
       case 'alpha-asc': list.sort((a, b) => a.title.localeCompare(b.title)); break;
       case 'alpha-desc':list.sort((a, b) => b.title.localeCompare(a.title)); break;
     }
+
 
     this.renderAll(list);
   },

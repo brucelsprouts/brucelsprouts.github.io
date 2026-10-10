@@ -30,6 +30,15 @@
         "8903"
       ],
       "port": 8903
+    },
+    {
+      "name": "static-node",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "-e",
+        "const h=require('http'),f=require('fs'),p=require('path');const R='/Users/brucelin/Documents/GitHub/brucelsprouts.github.io';const T={'.html':'text/html','.js':'text/javascript','.css':'text/css','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.pdf':'application/pdf','.mp4':'video/mp4','.webm':'video/webm'};h.createServer((q,s)=>{let u=decodeURIComponent(q.url.split('?')[0]);if(u.endsWith('/'))u+='index.html';const fp=p.join(R,u);f.readFile(fp,(e,d)=>{if(e){s.writeHead(404);return s.end()}s.writeHead(200,{'Content-Type':T[p.extname(fp)]||'application/octet-stream'});s.end(d)})}).listen(8905)"
+      ],
+      "port": 8905
     }
   ]
 }

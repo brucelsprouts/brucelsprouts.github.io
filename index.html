@@ -215,7 +215,11 @@
             </div>
             <div class="currently-item">
               <span class="currently-label">EXPERIENCE</span>
-              <span class="currently-value">Lead Developer &amp; Designer &middot; Toronto STEM Exploration Camp &mdash; Apr&ndash;Aug 2026 &nbsp;&bull;&nbsp; Facilitator &middot; Toronto STEM Exploration Camp &mdash; Aug 2026 &nbsp;&bull;&nbsp; Video Editing Intern &middot; AMG &mdash; Summer 2024 &nbsp;&bull;&nbsp; English Tutor &middot; Ignite Youth Club &mdash; 2021&ndash;2023</span>
+              <ul class="xp-list">
+                <li><span class="xp-role">Lead Developer, Designer &amp; Facilitator</span><span class="xp-meta">Toronto STEM Exploration Camp &middot; Apr&ndash;Aug 2026</span></li>
+                <li><span class="xp-role">Freelance Video Editor</span><span class="xp-meta">AMG &middot; Mar 2024&ndash;Present</span></li>
+                <li><span class="xp-role">English Tutor</span><span class="xp-meta">Ignite Youth Club &middot; 2021&ndash;2023</span></li>
+              </ul>
             </div>
             <div class="currently-item">
               <span class="currently-label">INTERESTS</span>
@@ -235,7 +239,7 @@
           <p class="section-sub">Technologies I work with.</p>
         </div>
 
-        <div class="skills-grid" id="skills-grid">
+        <div class="skill-groups" id="skills-grid">
           <!-- Skills are injected by JS -->
         </div>
       </div>
@@ -249,6 +253,14 @@
           <h2 class="section-title">Projects</h2>
           <p class="section-sub">Selected works &mdash; filtered and searchable.</p>
         </div>
+
+        <!-- Featured: its own block, outside the filterable list -->
+        <div class="projects-group-label monospace" data-reveal>// FEATURED</div>
+        <div class="projects-grid projects-grid--featured" id="featured-grid">
+          <!-- Featured cards injected by JS -->
+        </div>
+
+        <div class="projects-group-label monospace" data-reveal>// ALL PROJECTS</div>
 
         <!-- Search + filter bar -->
         <div class="projects-controls">

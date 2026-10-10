@@ -896,10 +896,26 @@ body.low-perf .seam.is-armed .seam-rest { visibility: visible; }
   position: relative;
 }
 
+.skill-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.skill-group-title {
+  font-family: var(--ff-mono);
+  font-size: 0.62rem;
+  font-weight: normal;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--clr-dim);
+  margin-bottom: 14px;
+}
+
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  gap: 14px;
 }
 
 .skill-card {
@@ -1033,6 +1049,34 @@ body.low-perf .seam.is-armed .seam-rest { visibility: visible; }
   font-size: 0.92rem;
   color: rgba(232,232,232,0.85);
   line-height: 1.5;
+}
+
+/* Experience: one role per row, with the org and dates underneath */
+.xp-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.xp-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.xp-role {
+  font-size: 0.92rem;
+  color: rgba(232,232,232,0.85);
+  line-height: 1.4;
+}
+
+.xp-meta {
+  font-family: var(--ff-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  color: var(--clr-dim);
 }
 
 @media (max-width: 680px) {
@@ -1174,6 +1218,29 @@ body.low-perf .seam.is-armed .seam-rest { visibility: visible; }
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 24px;
+}
+
+/* "// FEATURED" and "// ALL PROJECTS": a label with a hairline running out
+   to the right, the same move as the section tags */
+.projects-group-label {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--ff-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  color: var(--clr-dim);
+  margin-bottom: 18px;
+}
+.projects-group-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--bd-1);
+}
+
+.projects-grid--featured {
+  margin-bottom: clamp(48px, 7vw, 80px);
 }
 
 /* Project cards are the one component on the page that lifts on hover — they
@@ -1323,6 +1390,11 @@ body.low-perf .project-card::after { display: none; }
   font-size: 0.62rem;
   letter-spacing: 0.18em;
   color: var(--clr-dim);
+}
+
+/* Featured cards sit one border rung up */
+.project-card--featured {
+  border-color: var(--bd-3);
 }
 
 .project-date {
