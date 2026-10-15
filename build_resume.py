@@ -38,12 +38,12 @@ def make_styles():
         textColor=DARK_GREY, spaceBefore=2)
 
     contact_style = ParagraphStyle('Contact',
-        fontName='Helvetica', fontSize=8.5, leading=11,
-        textColor=DARK_GREY, spaceBefore=3)
+        fontName='Helvetica', fontSize=9, leading=12,
+        textColor=DARK_GREY, spaceBefore=2)
 
     section_style = ParagraphStyle('Section',
-        fontName='Helvetica-Bold', fontSize=8, leading=10,
-        textColor=MID_GREY, spaceBefore=6, spaceAfter=3,
+        fontName='Helvetica-Bold', fontSize=9, leading=11,
+        textColor=BLACK, spaceBefore=6, spaceAfter=3,
         letterSpacing=1.5)
 
     entry_title_style = ParagraphStyle('EntryTitle',
@@ -90,6 +90,12 @@ def make_styles():
 
 S = make_styles()
 
+# Reportlab frames pad 6pt each side; scale tables to fit so they align with paragraphs.
+FRAME_FIT = (7.2*inch - 12) / (7.2*inch)
+
+def link(url, text=None):
+    return f'<a href="{url}" color="#1a4fa0">{text or url.split("://",1)[-1].rstrip("/")}</a>'
+
 # ── Helpers ──────────────────────────────────────────────────
 def rule(thickness=0.6, color=RULE_GREY, space=3):
     return HRFlowable(width='100%', thickness=thickness,
@@ -97,7 +103,7 @@ def rule(thickness=0.6, color=RULE_GREY, space=3):
 
 def section(title):
     return [
-        Spacer(1, 6),
+        Spacer(1, 11),
         Paragraph(title.upper(), S['section']),
         rule(),
     ]
@@ -113,7 +119,7 @@ def entry_row(left_top, left_sub, right_text, bullets=None):
     right_cell = [Paragraph(right_text, S['entry_date'])]
 
     t = Table([[left_cell, right_cell]],
-              colWidths=[5.4*inch, 1.8*inch])
+              colWidths=[5.4*inch*FRAME_FIT, 1.8*inch*FRAME_FIT])
     t.setStyle(TableStyle([
         ('VALIGN',      (0,0), (-1,-1), 'TOP'),
         ('LEFTPADDING', (0,0), (-1,-1), 0),
@@ -126,15 +132,16 @@ def entry_row(left_top, left_sub, right_text, bullets=None):
     if bullets:
         for b in bullets:
             items.append(bullet(b))
-        items.append(Spacer(1, 5))
+        items.append(Spacer(1, 9))
     return KeepTogether(items)
 
-def project_block(title, url_text, stack, bullets):
-    header_left  = Paragraph(f'<b>{title}</b>', S['entry_title'])
+def project_block(title, url_text, stack, bullets, tag=''):
+    tag_html = f'<font name="Helvetica" size="9.5" color="#555555">  \u00b7  {tag}</font>' if tag else ''
+    header_left  = Paragraph(f'<b>{title}</b>{tag_html}', S['entry_title'])
     header_right = Paragraph(url_text, S['link'])
 
     t = Table([[header_left, header_right]],
-              colWidths=[4.18*inch, 3.02*inch])
+              colWidths=[4.18*inch*FRAME_FIT, 3.02*inch*FRAME_FIT])
     t.setStyle(TableStyle([
         ('VALIGN',       (0,0), (-1,-1), 'TOP'),
         ('LEFTPADDING',  (0,0), (-1,-1), 0),
@@ -146,13 +153,13 @@ def project_block(title, url_text, stack, bullets):
     items = [t, Paragraph(stack, S['proj_stack'])]
     for b in bullets:
         items.append(bullet(b))
-    items.append(Spacer(1, 5))
+    items.append(Spacer(1, 9))
     return KeepTogether(items)
 
 def skills_row(label, value):
     t = Table([[Paragraph(label, S['skill_label']),
                 Paragraph(value, S['skill_val'])]],
-              colWidths=[1.3*inch, 5.9*inch])
+              colWidths=[1.3*inch*FRAME_FIT, 5.9*inch*FRAME_FIT])
     t.setStyle(TableStyle([
         ('VALIGN',       (0,0), (-1,-1), 'TOP'),
         ('LEFTPADDING',  (0,0), (-1,-1), 0),
@@ -177,10 +184,13 @@ def build():
 
     # ── HEADER ──────────────────────────────────────────────
     story.append(Paragraph('Bruce Lin', S['name']))
-    story.append(Paragraph('Computer Science Student &amp; Full-Stack Developer', S['tagline']))
+    story.append(Paragraph('Full-Stack Developer  \u00b7  Seeking full-time roles from Spring 2027', S['tagline']))
     story.append(Paragraph(
-        '(437) 988-4102  \u00b7  email@brucelsprouts.com  \u00b7  brucelsprouts.com  \u00b7  '
-        'github.com/brucelsprouts  \u00b7  linkedin.com/in/bruce-lin-6284b323b',
+        '(437) 988-4102  \u00b7  ' + link('mailto:email@brucelsprouts.com', 'email@brucelsprouts.com'),
+        S['contact']))
+    story.append(Paragraph(
+        link('https://brucelsprouts.com') + '  \u00b7  ' + link('https://github.com/brucelsprouts') +
+        '  \u00b7  ' + link('https://www.linkedin.com/in/bruce-lin-6284b323b/', 'linkedin.com/in/bruce-lin-6284b323b'),
         S['contact']))
     story.append(Spacer(1, 4))
     story.append(rule(thickness=1.2, color=BLACK, space=0))
@@ -193,66 +203,51 @@ def build():
         'London, ON  \u00b7  2023\u2013Present',
     ))
 
-    # ── TECHNICAL SKILLS ────────────────────────────────────
-    story += section('Technical Skills')
-    story.append(skills_row(
-        'Languages',
-        'TypeScript  \u00b7  JavaScript  \u00b7  Python  \u00b7  Java  \u00b7  Rust  \u00b7  SQL  \u00b7  PHP  \u00b7  HTML  \u00b7  CSS'
-    ))
-    story.append(skills_row(
-        'Frameworks',
-        'React  \u00b7  Next.js  \u00b7  React Native (Expo)  \u00b7  Tauri  \u00b7  Vite  \u00b7  Tailwind CSS  \u00b7  Three.js  \u00b7  GSAP'
-    ))
-    story.append(skills_row(
-        'Tools & Platforms',
-        'Git  \u00b7  Supabase (Postgres)  \u00b7  Node.js  \u00b7  Vercel  \u00b7  Oracle Cloud  \u00b7  Linux / Unix  \u00b7  Claude Code'
-    ))
-    story.append(skills_row(
-        'Creative',
-        'After Effects  \u00b7  Premiere Pro  \u00b7  Photoshop  \u00b7  Blender'
-    ))
-    story.append(Spacer(1, 2))
-
     # ── PROJECTS ────────────────────────────────────────────
     story += section('Projects')
 
     story.append(project_block(
         'Deckira',
         'Website live  \u00b7  App Store release in progress',
-        'Tauri  \u00b7  React  \u00b7  TypeScript  \u00b7  React Native (Expo)  \u00b7  Supabase',
+        'TypeScript  \u00b7  React  \u00b7  Tauri  \u00b7  React Native (Expo)  \u00b7  Supabase',
         [
             'Co-developing a spaced-repetition flashcard app for students on web, desktop, and mobile.',
-            'Own the front end (FSRS scheduling, offline sync, media cards) and contribute to the Supabase backend.',
-        ]
+            'Own the front end on all three (FSRS scheduling, offline sync, media cards) and contribute to the Supabase back end.',
+        ],
+        tag='Flashcard app for students',
+    ))
+
+    story.append(project_block(
+        'Ladder',
+        link('https://ladder.brucelsprouts.com/demo', 'ladder.brucelsprouts.com/demo'),
+        'Next.js  \u00b7  TypeScript  \u00b7  Supabase (Postgres)  \u00b7  Gmail API  \u00b7  Vitest  \u00b7  PM2',
+        [
+            'Built a job tracker whose worker polls Greenhouse, Lever, Ashby, and SmartRecruiters and scores postings.',
+            'Reads Gmail over OAuth (encrypted tokens) to update application statuses, with live Sankey stats and a Vitest suite.',
+        ],
+        tag='Job-application tracker',
+    ))
+
+    story.append(project_block(
+        'Nocturne',
+        link('https://nocturne.brucelsprouts.com'),
+        'React  \u00b7  TypeScript  \u00b7  React Three Fiber  \u00b7  GLSL  \u00b7  Supabase  \u00b7  Oracle Cloud',
+        [
+            'Built an adaptive typing trainer that scores each key, letter pair, and finger and drills the slowest pairs.',
+            'Shipped end to end: a raymarched WebGL interface, with progress synced to self-hosted Supabase.',
+        ],
+        tag='Touch-typing trainer',
     ))
 
     story.append(project_block(
         'Tempo',
-        'github.com/brucelsprouts/tempo',
+        link('https://github.com/brucelsprouts/tempo'),
         'Next.js  \u00b7  TypeScript  \u00b7  Supabase  \u00b7  Tailwind CSS',
         [
-            'Built a calendar with no month pages: one virtualised, continuous scroll of week rows.',
-            'Stored each recurring event as one RFC 5545 rule, expanded at render time instead of per date.',
-        ]
-    ))
-
-    story.append(project_block(
-        'Brucekit',
-        'github.com/brucelsprouts/brucekit',
-        'Tauri  \u00b7  Rust  \u00b7  React  \u00b7  TypeScript',
-        [
-            'Built a keyboard-first Windows launcher: clipboard history, OCR, and a focus timer behind one hotkey.',
-            'Runs fully local, with no backend or telemetry.',
-        ]
-    ))
-
-    story.append(project_block(
-        'Personal Portfolio',
-        'brucelsprouts.com',
-        'JavaScript  \u00b7  Three.js  \u00b7  GSAP  \u00b7  HTML  \u00b7  CSS',
-        [
-            'Hand-built without frameworks: a Three.js hero, GSAP scroll animation, and a low-power mode.',
-        ]
+            'Designed a calendar with no month pages: one virtualised, continuous scroll of week rows.',
+            'Stored each recurring event as one RFC 5545 rule expanded at render time, not as a row per date.',
+        ],
+        tag='Continuous-scroll calendar',
     ))
 
     # ── EXPERIENCE ──────────────────────────────────────────
@@ -260,33 +255,34 @@ def build():
 
     story.append(entry_row(
         'Lead Developer, Designer &amp; Facilitator',
-        'Toronto STEM Exploration Camp  \u00b7  tsecamp.ca',
+        'Toronto STEM Exploration Camp  \u00b7  ' + link('https://tsecamp.ca'),
         'Apr\u2013Aug 2026',
         bullets=[
-            'Built and shipped the camp website solo for a STEM camp serving under-resourced youth.',
-            'Designed the camp logo and visual identity, carried through the full site.',
-            'Facilitated on-site STEM sessions and kept daily schedules on track.',
-        ]
+            'Designed and built the camp website solo (React, Vite, Tailwind CSS, Vercel) for a free STEM camp for youth aged 8\u201313; phone-first, no backend, and registration filled all 30 spots.',
+            'Designed the camp logo and visual identity, and taught hands-on STEM sessions on site during camp week.',
+        ],
     ))
 
     story.append(entry_row(
-        'Freelance Video Editor',
-        'AMG',
+        'Video Editor',
+        'AMG (freelance)  \u00b7  Independent, YouTube',
         'Mar 2024\u2013Present',
         bullets=[
-            'Edit client video in After Effects and Premiere Pro: motion graphics, compositing, transitions.',
-            'Started as an on-site intern in 2024; now freelance across several concurrent projects.',
-        ]
+            'Edit client video across several concurrent projects in After Effects (motion graphics, compositing, transitions); started as an on-site intern, now freelance.',
+            'Run a YouTube channel (2.4K subscribers) of edits and tutorials; one edit reached 880K views.',
+        ],
     ))
 
-    story.append(entry_row(
-        'English Tutor',
-        'Ignite Youth Club',
-        '2021\u20132023',
-        bullets=[
-            'Tutored students in English reading and writing, adapting to each learner.',
-        ]
-    ))
+    # ── TECHNICAL SKILLS ────────────────────────────────────
+    story += section('Technical Skills')
+    story.append(skills_row('Languages',
+        'TypeScript  \u00b7  JavaScript  \u00b7  Python  \u00b7  Java  \u00b7  SQL  \u00b7  Rust  \u00b7  HTML / CSS'))
+    story.append(skills_row('Frameworks',
+        'React  \u00b7  Next.js  \u00b7  React Native (Expo)  \u00b7  Tauri  \u00b7  Tailwind CSS  \u00b7  Three.js'))
+    story.append(skills_row('Tools & Platforms',
+        'Git  \u00b7  Supabase (Postgres)  \u00b7  Node.js  \u00b7  Vercel  \u00b7  Oracle Cloud  \u00b7  Linux  \u00b7  Claude Code'))
+    story.append(skills_row('Creative',
+        'After Effects  \u00b7  Photoshop  \u00b7  Blender'))
 
     doc.build(story)
     print(f'PDF written to {OUT}')

@@ -54,6 +54,7 @@
     }
 
     .contact-row span { margin-right: 16px; }
+    .contact-row + .contact-row { margin-top: 2px; }
 
     .contact-row a { color: #333; text-decoration: none; }
     .contact-row a:hover { text-decoration: underline; }
@@ -62,11 +63,11 @@
     section { margin-bottom: 13px; }
 
     .section-title {
-      font-size: 9.5px;
+      font-size: 10.5px;
       font-weight: 700;
-      letter-spacing: 1.8px;
+      letter-spacing: 1.6px;
       text-transform: uppercase;
-      color: #555;
+      color: #111;
       border-bottom: 1px solid #ddd;
       padding-bottom: 3px;
       margin-bottom: 8px;
@@ -122,6 +123,7 @@
     }
 
     .project-title { font-weight: 700; font-size: 11.5px; }
+    .project-tag { font-size: 10.5px; color: #555; }
 
     .project-links { font-size: 10px; color: #555; white-space: nowrap; }
     .project-links a { color: #333; text-decoration: none; }
@@ -163,10 +165,12 @@
   <!-- HEADER -->
   <header>
     <div class="name">Bruce Lin</div>
-    <div class="tagline">Computer Science Student &amp; Full-Stack Developer</div>
+    <div class="tagline">Full-Stack Developer &middot; Seeking full-time roles from Spring 2027</div>
     <div class="contact-row">
       <span>(437) 988-4102</span>
       <span>email@brucelsprouts.com</span>
+    </div>
+    <div class="contact-row">
       <span><a href="https://brucelsprouts.com">brucelsprouts.com</a></span>
       <span><a href="https://github.com/brucelsprouts">github.com/brucelsprouts</a></span>
       <span><a href="https://www.linkedin.com/in/bruce-lin-6284b323b/">linkedin.com/in/bruce-lin-6284b323b</a></span>
@@ -185,79 +189,62 @@
     </div>
   </section>
 
-  <!-- TECHNICAL SKILLS -->
-  <section>
-    <div class="section-title">Technical Skills</div>
-    <div class="skills-grid">
-      <div class="skills-label">Languages</div>
-      <div class="skills-value">TypeScript &middot; JavaScript &middot; Python &middot; Java &middot; Rust &middot; SQL &middot; PHP &middot; HTML &middot; CSS</div>
-
-      <div class="skills-label">Frameworks</div>
-      <div class="skills-value">React &middot; Next.js &middot; React Native (Expo) &middot; Tauri &middot; Vite &middot; Tailwind CSS &middot; Three.js &middot; GSAP</div>
-
-      <div class="skills-label">Tools &amp; Platforms</div>
-      <div class="skills-value">Git &middot; Supabase (Postgres) &middot; Node.js &middot; Vercel &middot; Oracle Cloud &middot; Linux / Unix &middot; Claude Code</div>
-
-      <div class="skills-label">Creative</div>
-      <div class="skills-value">After Effects &middot; Premiere Pro &middot; Photoshop &middot; Blender</div>
-    </div>
-  </section>
-
   <!-- PROJECTS -->
   <section>
     <div class="section-title">Projects</div>
 
     <div class="project-entry">
       <div class="project-header">
-        <span class="project-title">Deckira</span>
+        <span><span class="project-title">Deckira</span><span class="project-tag"> &nbsp;&middot;&nbsp; Flashcard app for students</span></span>
         <span class="project-links">Website live &nbsp;&middot;&nbsp; App Store release in progress</span>
       </div>
-      <div class="project-stack">Tauri &middot; React &middot; TypeScript &middot; React Native (Expo) &middot; Supabase</div>
+      <div class="project-stack">TypeScript &middot; React &middot; Tauri &middot; React Native (Expo) &middot; Supabase</div>
       <div class="project-body">
         <ul>
           <li>Co-developing a spaced-repetition flashcard app for students on web, desktop, and mobile.</li>
-          <li>Own the front end (FSRS scheduling, offline sync, media cards) and contribute to the Supabase backend.</li>
+          <li>Own the front end on all three (FSRS scheduling, offline sync, media cards) and contribute to the Supabase back end.</li>
         </ul>
       </div>
     </div>
 
     <div class="project-entry">
       <div class="project-header">
-        <span class="project-title">Tempo</span>
+        <span><span class="project-title">Ladder</span><span class="project-tag"> &nbsp;&middot;&nbsp; Job-application tracker</span></span>
+        <span class="project-links"><a href="https://ladder.brucelsprouts.com/demo">ladder.brucelsprouts.com/demo</a></span>
+      </div>
+      <div class="project-stack">Next.js &middot; TypeScript &middot; Supabase (Postgres) &middot; Gmail API &middot; Vitest &middot; PM2</div>
+      <div class="project-body">
+        <ul>
+          <li>Built a job tracker whose worker polls Greenhouse, Lever, Ashby, and SmartRecruiters and scores postings.</li>
+          <li>Reads Gmail over OAuth (encrypted tokens) to update application statuses, with live Sankey stats and a Vitest suite.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="project-entry">
+      <div class="project-header">
+        <span><span class="project-title">Nocturne</span><span class="project-tag"> &nbsp;&middot;&nbsp; Touch-typing trainer</span></span>
+        <span class="project-links"><a href="https://nocturne.brucelsprouts.com">nocturne.brucelsprouts.com</a></span>
+      </div>
+      <div class="project-stack">React &middot; TypeScript &middot; React Three Fiber &middot; GLSL &middot; Supabase &middot; Oracle Cloud</div>
+      <div class="project-body">
+        <ul>
+          <li>Built an adaptive typing trainer that scores each key, letter pair, and finger and drills the slowest pairs.</li>
+          <li>Shipped end to end: a raymarched WebGL interface, with progress synced to self-hosted Supabase.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="project-entry">
+      <div class="project-header">
+        <span><span class="project-title">Tempo</span><span class="project-tag"> &nbsp;&middot;&nbsp; Continuous-scroll calendar</span></span>
         <span class="project-links"><a href="https://github.com/brucelsprouts/tempo">github.com/brucelsprouts/tempo</a></span>
       </div>
       <div class="project-stack">Next.js &middot; TypeScript &middot; Supabase &middot; Tailwind CSS</div>
       <div class="project-body">
         <ul>
-          <li>Built a calendar with no month pages: one virtualised, continuous scroll of week rows.</li>
-          <li>Stored each recurring event as one RFC 5545 rule, expanded at render time instead of per date.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="project-entry">
-      <div class="project-header">
-        <span class="project-title">Brucekit</span>
-        <span class="project-links"><a href="https://github.com/brucelsprouts/brucekit">github.com/brucelsprouts/brucekit</a></span>
-      </div>
-      <div class="project-stack">Tauri &middot; Rust &middot; React &middot; TypeScript</div>
-      <div class="project-body">
-        <ul>
-          <li>Built a keyboard-first Windows launcher: clipboard history, OCR, and a focus timer behind one hotkey.</li>
-          <li>Runs fully local, with no backend or telemetry.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="project-entry">
-      <div class="project-header">
-        <span class="project-title">Personal Portfolio</span>
-        <span class="project-links"><a href="https://brucelsprouts.com">brucelsprouts.com</a> &nbsp;&middot;&nbsp; <a href="https://github.com/brucelsprouts/brucelsprouts.github.io">GitHub</a></span>
-      </div>
-      <div class="project-stack">JavaScript &middot; Three.js &middot; GSAP &middot; HTML &middot; CSS</div>
-      <div class="project-body">
-        <ul>
-          <li>Hand-built without frameworks: a Three.js hero, GSAP scroll animation, and a low-power mode.</li>
+          <li>Designed a calendar with no month pages: one virtualised, continuous scroll of week rows.</li>
+          <li>Stored each recurring event as one RFC 5545 rule expanded at render time, not as a row per date.</li>
         </ul>
       </div>
     </div>
@@ -276,38 +263,42 @@
       <div class="entry-date">Apr &ndash; Aug 2026</div>
       <div class="entry-body">
         <ul>
-          <li>Built and shipped the camp website solo for a STEM camp serving under-resourced youth.</li>
-          <li>Designed the camp logo and visual identity, carried through the full site.</li>
-          <li>Facilitated on-site STEM sessions and kept daily schedules on track.</li>
+          <li>Designed and built the camp website solo (React, Vite, Tailwind CSS, Vercel) for a free STEM camp for youth aged 8&ndash;13; phone-first, no backend, and registration filled all 30 spots.</li>
+          <li>Designed the camp logo and visual identity, and taught hands-on STEM sessions on site during camp week.</li>
         </ul>
       </div>
     </div>
 
     <div class="entry">
       <div>
-        <div class="entry-title">Freelance Video Editor</div>
-        <div class="entry-sub">AMG</div>
+        <div class="entry-title">Video Editor</div>
+        <div class="entry-sub">AMG (freelance) &nbsp;&middot;&nbsp; Independent, YouTube</div>
       </div>
       <div class="entry-date">Mar 2024 &ndash; Present</div>
       <div class="entry-body">
         <ul>
-          <li>Edit client video in After Effects and Premiere Pro: motion graphics, compositing, transitions.</li>
-          <li>Started as an on-site intern in 2024; now freelance across several concurrent projects.</li>
+          <li>Edit client video across several concurrent projects in After Effects (motion graphics, compositing, transitions); started as an on-site intern, now freelance.</li>
+          <li>Run a YouTube channel (2.4K subscribers) of edits and tutorials; one edit reached 880K views.</li>
         </ul>
       </div>
     </div>
+  </section>
 
-    <div class="entry">
-      <div>
-        <div class="entry-title">English Tutor</div>
-        <div class="entry-sub">Ignite Youth Club</div>
-      </div>
-      <div class="entry-date">2021 &ndash; 2023</div>
-      <div class="entry-body">
-        <ul>
-          <li>Tutored students in English reading and writing, adapting to each learner.</li>
-        </ul>
-      </div>
+  <!-- TECHNICAL SKILLS -->
+  <section>
+    <div class="section-title">Technical Skills</div>
+    <div class="skills-grid">
+      <div class="skills-label">Languages</div>
+      <div class="skills-value">TypeScript &middot; JavaScript &middot; Python &middot; Java &middot; SQL &middot; Rust &middot; HTML / CSS</div>
+
+      <div class="skills-label">Frameworks</div>
+      <div class="skills-value">React &middot; Next.js &middot; React Native (Expo) &middot; Tauri &middot; Tailwind CSS &middot; Three.js</div>
+
+      <div class="skills-label">Tools &amp; Platforms</div>
+      <div class="skills-value">Git &middot; Supabase (Postgres) &middot; Node.js &middot; Vercel &middot; Oracle Cloud &middot; Linux &middot; Claude Code</div>
+
+      <div class="skills-label">Creative</div>
+      <div class="skills-value">After Effects &middot; Photoshop &middot; Blender</div>
     </div>
   </section>
 
