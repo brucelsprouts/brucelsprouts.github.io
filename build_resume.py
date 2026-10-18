@@ -184,7 +184,7 @@ def build():
 
     # ── HEADER ──────────────────────────────────────────────
     story.append(Paragraph('Bruce Lee Lin', S['name']))
-    story.append(Paragraph('Full-Stack Developer  \u00b7  Seeking full-time roles from Spring 2027', S['tagline']))
+    story.append(Paragraph('Full-Stack Developer  \u00b7  Seeking full-time roles from May 2027', S['tagline']))
     story.append(Paragraph(
         '(437) 988-4102  \u00b7  ' + link('mailto:bruce700982@gmail.com', 'bruce700982@gmail.com'),
         S['contact']))
@@ -199,7 +199,7 @@ def build():
     story += section('Education')
     story.append(entry_row(
         'Western University',
-        'Bachelor of Science, Computer Science  \u00b7  Expected Graduation: Spring 2027',
+        'Bachelor of Science, Computer Science  \u00b7  Expected Graduation: 2027',
         'London, ON  \u00b7  2023\u2013Present',
     ))
 
