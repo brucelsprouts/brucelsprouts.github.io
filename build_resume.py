@@ -183,10 +183,10 @@ def build():
     story = []
 
     # ── HEADER ──────────────────────────────────────────────
-    story.append(Paragraph('Bruce Lin', S['name']))
+    story.append(Paragraph('Bruce Lee Lin', S['name']))
     story.append(Paragraph('Full-Stack Developer  \u00b7  Seeking full-time roles from Spring 2027', S['tagline']))
     story.append(Paragraph(
-        '(437) 988-4102  \u00b7  ' + link('mailto:email@brucelsprouts.com', 'email@brucelsprouts.com'),
+        '(437) 988-4102  \u00b7  ' + link('mailto:bruce700982@gmail.com', 'bruce700982@gmail.com'),
         S['contact']))
     story.append(Paragraph(
         link('https://brucelsprouts.com') + '  \u00b7  ' + link('https://github.com/brucelsprouts') +
@@ -208,7 +208,7 @@ def build():
 
     story.append(project_block(
         'Deckira',
-        'Website live  \u00b7  App Store release in progress',
+        link('https://www.deckira.com', 'deckira.com'),
         'TypeScript  \u00b7  React  \u00b7  Tauri  \u00b7  React Native (Expo)  \u00b7  Supabase',
         [
             'Co-developing a spaced-repetition flashcard app for students on web, desktop, and mobile.',
@@ -264,11 +264,11 @@ def build():
     ))
 
     story.append(entry_row(
-        'Video Editor',
-        'AMG (freelance)  \u00b7  Independent, YouTube',
+        'Video Editor Intern',
+        'AMG  \u00b7  Independent, YouTube',
         'Mar 2024\u2013Present',
         bullets=[
-            'Edit client video across several concurrent projects in After Effects (motion graphics, compositing, transitions); started as an on-site intern, now freelance.',
+            'Edit client video across several concurrent projects in After Effects (motion graphics, compositing, transitions).',
             'Run a YouTube channel (2.4K subscribers) of edits and tutorials; one edit reached 880K views.',
         ],
     ))
