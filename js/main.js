@@ -268,6 +268,7 @@ const DATA = {
     {
       id: 15,
       title: 'Brutalism',
+      hidden: true,
       category: 'blender',
       date: '2026-07-26',
       desc: 'An experiment to see how far Claude could drive Blender through an MCP connector. Working from a reference photo of a derelict brutalist housing block in freezing fog, the entire scene was generated from a Python script — no modelling by hand and no imported assets. Every mass is built as a solid and boolean-unioned into one watertight shell, with procedural weathering, an arcaded base, spalled slab edges with exposed rebar, and volumetric fog. Media order: final render, then a clay and wireframe breakdown of the generated geometry.',
@@ -374,6 +375,7 @@ const DATA = {
     {
       id: 21,
       title: 'Brutalism II',
+      hidden: true,
       category: 'blender',
       date: '2026-10-01',
       desc: 'A second go at brutalism, this time recreating a photo of a concrete building as closely as I could so the render lines up with the original when you flip between them. The concrete, stairs, vents and metal roof are all procedural, no imported assets. Made with help from Claude Code. Then a short found footage clip in the same scene with something standing in the background. Media order: render, original reference photo, found footage clip.',
